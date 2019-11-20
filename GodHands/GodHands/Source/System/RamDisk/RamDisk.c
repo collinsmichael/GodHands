@@ -42,7 +42,7 @@ static int RamDisk_Open(char *path) {
         Logger.Warn("RamDisk.Open", "Not aligned to sector boundary");
     }
     size = size/2352;
-    return Logger.Pass("RamDisk.Open", "Not Implemented");
+    return Logger.Pass("RamDisk.Open", "Succeeded");
 }
 
 static int RamDisk_Reset(void) {
@@ -59,8 +59,9 @@ static int RamDisk_Read(int lba, int len, char *buf) {
     }
     for (pos = 0; pos < len; pos++, lba++) {
         if (map[lba] != 'x') {
+            DWORD word;
             SetFilePointer(file, lba*2352 + 24, 0, 0);
-            if (!ReadFile(file, &disk[lba*2*KB], 2*KB, &size, 0)) {
+            if (!ReadFile(file, &disk[lba*2*KB], 2*KB, &word, 0)) {
                 return Logger.Fail("RamDisk.Read", "Failed lba=%08X", lba);
             }
             map[lba] = 'x';
@@ -77,9 +78,10 @@ static int RamDisk_Write(int lba, int len, char *buf) {
         return Logger.Fail("RamDisk.Write", "Out of bounds lba=%08X", lba);
     }
     for (pos = 0; pos < len; pos++) {
+        DWORD word;
         memcpy(&disk[lba*2*KB], buf, 2*KB);
         SetFilePointer(file, lba*2352 + 24, 0, 0);
-        if (!WriteFile(file, &disk[lba*2*KB], 2*KB, &size, 0)) {
+        if (!WriteFile(file, &disk[lba*2*KB], 2*KB, &word, 0)) {
             return Logger.Fail("RamDisk.Write", "Failed lba=%08X", lba);
         }
         map[lba] = 'x';
