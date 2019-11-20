@@ -170,8 +170,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Control\Control.c" />
     <ClCompile Include="Source\Main.c" />
+    <ClCompile Include="Source\Mission\Control\Control.c" />
     <ClCompile Include="Source\Mission\Mission.c" />
     <ClCompile Include="Source\Mission\Model\Model.c" />
     <ClCompile Include="Source\Mission\View\View.c" />
@@ -185,7 +185,7 @@
     <ClCompile Include="Source\UnitTest\UnitTest.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Control\Control.h" />
+    <ClInclude Include="Source\Mission\Control\Control.h" />
     <ClInclude Include="Source\Mission\Mission.h" />
     <ClInclude Include="Source\Mission\Model\Model.h" />
     <ClInclude Include="Source\Mission\View\View.h" />

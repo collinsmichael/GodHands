@@ -60,9 +60,6 @@
     <ClCompile Include="Source\Mission\View\View.c">
       <Filter>Source\Mission\View</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Control\Control.c">
-      <Filter>Source\Mission\Control</Filter>
-    </ClCompile>
     <ClCompile Include="Source\UnitTest\UnitTest.c">
       <Filter>Source\UnitTest</Filter>
     </ClCompile>
@@ -74,6 +71,9 @@
     </ClCompile>
     <ClCompile Include="Source\System\Memory\Memory.c">
       <Filter>Source\System\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Control\Control.c">
+      <Filter>Source\Mission\Control</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -98,9 +98,6 @@
     <ClInclude Include="Source\Mission\View\View.h">
       <Filter>Source\Mission\View</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Control\Control.h">
-      <Filter>Source\Mission\Control</Filter>
-    </ClInclude>
     <ClInclude Include="Source\UnitTest\utest.h">
       <Filter>Source\UnitTest</Filter>
     </ClInclude>
@@ -109,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="Source\System\Memory\Memory.h">
       <Filter>Source\System\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Control\Control.h">
+      <Filter>Source\Mission\Control</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
