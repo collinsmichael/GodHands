@@ -1,6 +1,9 @@
 # Third party
 *utest.h
 
+# Directories
+*Object/
+
 # Prerequisites
 *.d
 
