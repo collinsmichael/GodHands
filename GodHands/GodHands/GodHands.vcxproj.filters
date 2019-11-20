@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{b1d59649-bc03-4fed-85e2-1312a92b6399}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\System">
+      <UniqueIdentifier>{2ba82fe9-717d-4658-84e8-71b7b1e25444}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\System\RamDisk">
+      <UniqueIdentifier>{663a23f9-2192-44b2-a66e-2b2e37981835}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\System\Logger">
+      <UniqueIdentifier>{e27abe0e-ec33-4d8e-879f-925462b458d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mission">
+      <UniqueIdentifier>{5353ca7a-05e3-45ef-8c8d-c850c2b13a29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\System\Config">
+      <UniqueIdentifier>{11293d11-5e4a-43ec-8524-af7374a72e33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mission\Model">
+      <UniqueIdentifier>{d5e1ecde-3b28-49aa-be1f-4bfa1a9e68dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mission\View">
+      <UniqueIdentifier>{c46e305b-1754-4a3b-864f-b8bb6c7518c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mission\Control">
+      <UniqueIdentifier>{02532840-a5d9-4519-8a9f-31a810ad08a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UnitTest">
+      <UniqueIdentifier>{c27f9cbb-c8d2-4b86-9d65-94129dc10bc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\System\Memory">
+      <UniqueIdentifier>{1f8e2a39-6592-4160-a02b-8da98d30b58c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\System\RamDisk\RamDisk.c">
+      <Filter>Source\System\RamDisk</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\Logger\Logger.c">
+      <Filter>Source\System\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Main.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\Config\Config.c">
+      <Filter>Source\System\Config</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\System.c">
+      <Filter>Source\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Mission.c">
+      <Filter>Source\Mission</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\Model.c">
+      <Filter>Source\Mission\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\View\View.c">
+      <Filter>Source\Mission\View</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Control\Control.c">
+      <Filter>Source\Mission\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UnitTest\UnitTest.c">
+      <Filter>Source\UnitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\RamDisk\RamDiskTest.c">
+      <Filter>Source\System\RamDisk</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Start.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\Memory\Memory.c">
+      <Filter>Source\System\Memory</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\System\RamDisk\RamDisk.h">
+      <Filter>Source\System\RamDisk</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\Logger\Logger.h">
+      <Filter>Source\System\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\System.h">
+      <Filter>Source\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\Config\Config.h">
+      <Filter>Source\System\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Mission.h">
+      <Filter>Source\Mission</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Model\Model.h">
+      <Filter>Source\Mission\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\View\View.h">
+      <Filter>Source\Mission\View</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Control\Control.h">
+      <Filter>Source\Mission\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UnitTest\utest.h">
+      <Filter>Source\UnitTest</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UnitTest\UnitTest.h">
+      <Filter>Source\UnitTest</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\Memory\Memory.h">
+      <Filter>Source\System\Memory</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
