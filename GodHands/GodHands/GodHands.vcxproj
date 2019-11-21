@@ -177,6 +177,8 @@
     <ClCompile Include="Source\Mission\View\View.c" />
     <ClCompile Include="Source\Start.c" />
     <ClCompile Include="Source\System\Config\Config.c" />
+    <ClCompile Include="Source\System\JobQueue\JobQueue.c" />
+    <ClCompile Include="Source\System\JobQueue\JobQueue_Test.c" />
     <ClCompile Include="Source\System\Logger\Logger.c" />
     <ClCompile Include="Source\System\Memory\Memory.c" />
     <ClCompile Include="Source\System\RamDisk\RamDisk.c" />
@@ -190,6 +192,7 @@
     <ClInclude Include="Source\Mission\Model\Model.h" />
     <ClInclude Include="Source\Mission\View\View.h" />
     <ClInclude Include="Source\System\Config\Config.h" />
+    <ClInclude Include="Source\System\JobQueue\JobQueue.h" />
     <ClInclude Include="Source\System\Logger\Logger.h" />
     <ClInclude Include="Source\System\Memory\Memory.h" />
     <ClInclude Include="Source\System\RamDisk\RamDisk.h" />

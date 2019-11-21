@@ -34,6 +34,9 @@
     <Filter Include="Source\System\Memory">
       <UniqueIdentifier>{1f8e2a39-6592-4160-a02b-8da98d30b58c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\System\JobQueue">
+      <UniqueIdentifier>{7c9fc58f-2903-4724-9908-1bed57d4dc1b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\System\RamDisk\RamDisk.c">
@@ -75,6 +78,12 @@
     <ClCompile Include="Source\Mission\Control\Control.c">
       <Filter>Source\Mission\Control</Filter>
     </ClCompile>
+    <ClCompile Include="Source\System\JobQueue\JobQueue.c">
+      <Filter>Source\System\JobQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\JobQueue\JobQueue_Test.c">
+      <Filter>Source\System\JobQueue</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\RamDisk\RamDisk.h">
@@ -109,6 +118,9 @@
     </ClInclude>
     <ClInclude Include="Source\Mission\Control\Control.h">
       <Filter>Source\Mission\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\JobQueue\JobQueue.h">
+      <Filter>Source\System\JobQueue</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
