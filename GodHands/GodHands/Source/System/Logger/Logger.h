@@ -3,6 +3,7 @@
 
 typedef struct LOGGER {
     int (*Enable)(int mask);
+    int (*Done)(char *func, char *format, ...);
     int (*Info)(char *func, char *format, ...);
     int (*Pass)(char *func, char *format, ...);
     int (*Warn)(char *func, char *format, ...);

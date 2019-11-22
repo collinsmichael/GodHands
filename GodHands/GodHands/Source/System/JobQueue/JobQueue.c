@@ -22,7 +22,7 @@ static DWORD WINAPI Worker(void *arg) {
     queue[job] = 0;
     param[job] = 0;
     handle[job] = 0;
-    return Logger.Pass("JobQueue.Worker", "Job %02X complete", job);
+    return Logger.Done("JobQueue.Worker", "Done");
 }
 
 static DWORD WINAPI Broker(LPVOID arg) {
@@ -34,22 +34,22 @@ static DWORD WINAPI Broker(LPVOID arg) {
             Logger.Fail("JobQueue.StartUp", "Job Queue failure");
         }
     }
-    return Logger.Pass("JobQueue.Schedule", "Job Queue cleaned up");
+    return Logger.Done("JobQueue.Schedule", "Done");
 }
 
 static int JobQueue_Schedule(int(*callback)(void*), void *args) {
     uint8_t next = head + 1;
-    if (next != tail) {
-        if (!callback) {
-            return Logger.Fail("JobQueue.Schedule", "Invalid parameters");
-        }
-        param[next] = args;
-        queue[next] = callback;
-        head = next;
-        Sleep(0);
-        return Logger.Pass("JobQueue.Schedule", "Job %02X scheduled", head);
+    if (next == tail) {
+        return Logger.Fail("JobQueue.Schedule", "Queue full, try again later");
     }
-    return Logger.Fail("JobQueue.Schedule", "Queue full, try again later");
+    if (!callback) {
+        return Logger.Fail("JobQueue.Schedule", "Invalid parameters");
+    }
+    param[next] = args;
+    queue[next] = callback;
+    head = next;
+    Sleep(0);
+    return Logger.Done("JobQueue.Schedule", "Done");
 }
 
 static int JobQueue_StartUp(void) {
@@ -57,7 +57,7 @@ static int JobQueue_StartUp(void) {
     if (!broker) {
         return Logger.Fail("JobQueue.StartUp", "Job Queue failure");
     }
-    return Logger.Pass("JobQueue.StartUp", "Job Queue started");
+    return Logger.Done("JobQueue.StartUp", "Done");
 }
 
 static int JobQueue_CleanUp(void) {
@@ -67,7 +67,7 @@ static int JobQueue_CleanUp(void) {
     for (pos = 0; pos < 256; pos++) { 
         if (handle[pos]) CloseHandle(handle[pos]);
     }
-    return Logger.Pass("JobQueue.CleanUp", "Job Queue stopped");
+    return Logger.Done("JobQueue.CleanUp", "Done");
 }
 
 

@@ -24,7 +24,7 @@ static int RamDisk_Close(void) {
     CloseHandle(file);
     file = 0;
     size = 0;
-    return Logger.Pass("RamDisk.Close", "Succeeded");
+    return Logger.Done("RamDisk.Close", "Done");
 }
 
 static int RamDisk_Open(char *path) {
@@ -42,13 +42,13 @@ static int RamDisk_Open(char *path) {
         Logger.Warn("RamDisk.Open", "Not aligned to sector boundary");
     }
     size = size/2352;
-    return Logger.Pass("RamDisk.Open", "Succeeded");
+    return Logger.Done("RamDisk.Open", "Done");
 }
 
 static int RamDisk_Reset(void) {
     if (file) RamDisk_Close();
     stosd(map, ' ', sizeof(map)/4);
-    return Logger.Info("RamDisk.Reset", "Succeeded");
+    return Logger.Done("RamDisk.Reset", "Done");
 }
 
 static int RamDisk_Read(int lba, int len, char *buf) {
@@ -68,7 +68,7 @@ static int RamDisk_Read(int lba, int len, char *buf) {
         }
         memcpy(buf, &disk[lba*2*KB], 2*KB);
     }
-    return Logger.Pass("RamDisk.Read", "Succeeded lba=%08X", lba);
+    return Logger.Done("RamDisk.Read", "Done");
 }
 
 static int RamDisk_Write(int lba, int len, char *buf) {
@@ -86,7 +86,7 @@ static int RamDisk_Write(int lba, int len, char *buf) {
         }
         map[lba] = 'x';
     }
-    return Logger.Pass("RamDisk.Write", "Succeeded lba=%08X", lba);
+    return Logger.Done("RamDisk.Write", "Done");
 }
 
 

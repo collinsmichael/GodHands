@@ -16,6 +16,17 @@ static int Logger_Enable(int mask) {
     return 1;
 }
 
+static int Logger_Done(char *func, char *format, ...) {
+    va_list list;
+    va_start(list, format);
+    wvsprintfA(msg, format, list);
+    va_end(list);
+
+    wsprintfA(err, "[DONE] %s\n\n%s", func, msg);
+    if ((enabled & 0x04)) MessageBoxA(0, msg, func, MB_OK);
+    return 1;
+}
+
 static int Logger_Info(char *func, char *format, ...) {
     va_list list;
     va_start(list, format);
@@ -70,6 +81,7 @@ static int Logger_Fail(char *func, char *format, ...) {
 
 struct LOGGER Logger = {
     Logger_Enable,
+    Logger_Done,
     Logger_Info,
     Logger_Pass,
     Logger_Warn,
