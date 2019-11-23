@@ -18,12 +18,21 @@ static int StatusBar_StartUp(void) {
 static int StatusBar_SetStatus(char *status, char *text) {
     SendMessageA(hwnd[WinStatusBar], SB_SETTEXT, (WPARAM)1, (LPARAM)status);
     SendMessageA(hwnd[WinStatusBar], SB_SETTEXT, (WPARAM)2, (LPARAM)text);
+
+    SendMessageA(hwnd[WinProgressBar], PBM_SETRANGE, (WPARAM)0, (LPARAM)100);
+    SendMessageA(hwnd[WinProgressBar], PBM_SETSTEP,  (WPARAM)1, 0);
+    SendMessageA(hwnd[WinProgressBar], PBM_DELTAPOS, (WPARAM)1, 0);
+    SendMessageA(hwnd[WinProgressBar], PBM_SETPOS,   (WPARAM)0, 0);
+
     ToolTip.SetToolTip(WinStatusBar, text);
     return 1;
 }
 
 static int StatusBar_SetProgress(int percent) {
-    return Logger.Done("StatusBar.SetProgress", "Done");
+    if (percent < 0) percent = 0;
+    if (percent > 100) percent = 100;
+    SendMessageA(hwnd[WinProgressBar], PBM_SETPOS, (WPARAM)percent, 0);
+    return 1;
 }
 
 

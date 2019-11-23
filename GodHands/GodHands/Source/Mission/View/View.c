@@ -19,11 +19,13 @@ static struct WINCLASS cx[] = {
     { "MdiFrame",MdiFrameProc,IDI_APPLICATION,IDC_ARROW,0x7F7F7F },
     { "MdiChild",MdiChildProc,IDI_APPLICATION,IDC_ARROW,0x7F7F7F },
 };
-static struct WINDOW wx[] = {
+
+struct WINDOW wx[16] = {
     { 0 },
-    { 0,"MdiFrame","GodHands", 0x16CF0000,0x80000000,0x80000000,640,480,          0,0x01,0, "GodHands" },
-    { 0,"tooltips_class32",0,  0x00000001,0x80000000,0x80000000,  0,  0,          0,0x00,0, 0},
-    { 0,"msctls_statusbar32",0,0x56000100,0x80000000,0x80000000,  0,  0,WinMdiFrame,0x00,0, "StatusBar" },
+    { 0,"MdiFrame","GodHands", 0x16CF0000,0,0,640,480,           0,0x01,0, "GodHands" },
+    { 0,"tooltips_class32",0,  0x00000001,0,0,  0,  0,           0,0x00,0, 0},
+    { 0,"msctls_statusbar32",0,0x56000100,0,0,  0,  0, WinMdiFrame,0x00,0, "StatusBar" },
+    { 0,"msctls_progress32", 0,0x56000000,4,4,128, -6,WinStatusBar,0x00,0, "ProgressBar" },
 };
 
 ATOM atom[elementsof(cx)];
@@ -79,6 +81,7 @@ static int View_StartUp(void) {
     }
 
     StatusBar.SetStatus("TEST", "TESTING STATUSBAR");
+    StatusBar.SetProgress(100);
     return Logger.Done("View.StartUp", "Done");
 }
 
