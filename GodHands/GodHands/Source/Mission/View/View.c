@@ -5,8 +5,11 @@
 
 extern LRESULT CALLBACK MdiFrameProc(HWND,UINT,WPARAM,LPARAM);
 extern LRESULT CALLBACK MdiChildProc(HWND,UINT,WPARAM,LPARAM);
-extern struct LOGGER Logger;
+
+extern struct LOGGER  Logger;
 extern struct MENUBAR MenuBar;
+extern struct TOOLTIP ToolTip;
+
 extern HMENU hmenu[64];
 extern HACCEL hAccel;
 
@@ -17,7 +20,8 @@ static struct WINCLASS cx[] = {
 };
 static struct WINDOW wx[] = {
     { 0 },
-    { 0,"MdiFrame","GodHands",0x16CF0000,0x80000000,0x80000000,640,480,0,0x01,0 },
+    { 0,"MdiFrame","GodHands",0x16CF0000,0x80000000,0x80000000,640,480,0,0x01,0, "GodHands" },
+    { 0,"tooltips_class32",0, 0x00000001,0x80000000,0x80000000,  0,  0,0,0x00,0 },
 };
 
 ATOM atom[elementsof(cx)];
@@ -30,6 +34,9 @@ static int View_StartUp(void) {
 
     InitCommonControls();
     OleInitialize(0);
+
+    hwnd[WinConsole] = GetConsoleWindow();
+    ShowWindow(hwnd[WinConsole], SW_HIDE);
 
     hInstance = GetModuleHandle(0);
     if (!MenuBar.StartUp()) return 0;
@@ -52,7 +59,8 @@ static int View_StartUp(void) {
         }
     }
 
-    for (i = 1; i < elementsof(wx); i++) {
+    for (i = 0; i < elementsof(wx); i++) {
+        if (!wx[i].Class) continue;
         hwnd[i] = CreateWindowExA(wx[i].ExStyle, wx[i].Class, wx[i].Window,
             wx[i].Style, wx[i].PosX, wx[i].PosY, wx[i].Width, wx[i].Height,
             hwnd[wx[i].Parent], hmenu[wx[i].Menu], hInstance, wx[i].Param);
@@ -60,8 +68,12 @@ static int View_StartUp(void) {
             return Logger.Fail("View.StartUp", "Error creating window");
         }
     }
-    hwnd[0] = GetConsoleWindow();
-    ShowWindow(hwnd[0], SW_HIDE);
+
+    for (i = 0; i < elementsof(wx); i++) {
+        if (wx[i].ToolTip) {
+            ToolTip.SetToolTip(i, wx[i].ToolTip);
+        }
+    }
     return Logger.Done("View.StartUp", "Done");
 }
 
@@ -74,8 +86,8 @@ static int View_CleanUp(void) {
     }
     MenuBar.CleanUp();
     OleUninitialize();
-    ShowWindow(hwnd[0], SW_SHOW);
-    SetForegroundWindow(hwnd[0]);
+    ShowWindow(hwnd[WinConsole], SW_SHOW);
+    SetForegroundWindow(hwnd[WinConsole]);
     return Logger.Done("View.CleanUp", "Done");
 }
 

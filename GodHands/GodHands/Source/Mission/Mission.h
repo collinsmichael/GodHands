@@ -5,6 +5,7 @@
 #include "Mission/Model/Model.h"
 #include "Mission/View/View.h"
 #include "Mission/View/MenuBar/MenuBar.h"
+#include "Mission/View/ToolTip/ToolTip.h"
 
 
 typedef struct MISSION {

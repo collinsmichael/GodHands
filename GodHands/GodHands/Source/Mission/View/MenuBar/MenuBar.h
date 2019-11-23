@@ -1,6 +1,5 @@
 #ifndef MENUBAR_H
 #define MENUBAR_H
-#include <Windows.h>
 
 
 typedef struct MENUBAR {

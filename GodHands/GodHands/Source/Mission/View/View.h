@@ -29,7 +29,15 @@ typedef struct WINDOW {
     int   Parent;
     int   Menu;
     void *Param;
+    char *ToolTip;
 } WINDOW;
+
+#define WinConsole     0x00
+#define WinMdiFrame    0x01
+#define WinToolTip     0x02
+#define WinMenuBar     0x03
+#define WinStatusBar   0x04
+#define WinProgressBar 0x05
 
 
 #endif // VIEW_H

@@ -46,6 +46,9 @@
     <Filter Include="Source\Mission\View\MenuBar">
       <UniqueIdentifier>{12c35a53-bead-4a1a-82d1-eb510eae64d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Mission\View\ToolTip">
+      <UniqueIdentifier>{f750a588-a60b-4201-8bce-e9481e4b5253}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\System\RamDisk\RamDisk.c">
@@ -102,6 +105,9 @@
     <ClCompile Include="Source\Mission\View\MenuBar\MenuBar.c">
       <Filter>Source\Mission\View\MenuBar</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mission\View\ToolTip\ToolTip.c">
+      <Filter>Source\Mission\View\ToolTip</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\RamDisk\RamDisk.h">
@@ -145,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="Source\Mission\View\MenuBar\MenuBar.h">
       <Filter>Source\Mission\View\MenuBar</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\View\ToolTip\ToolTip.h">
+      <Filter>Source\Mission\View\ToolTip</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
