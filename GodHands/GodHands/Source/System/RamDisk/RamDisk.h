@@ -1,10 +1,6 @@
 #ifndef RAMDISK_H
 #define RAMDISK_H
 
-#define KB (1024)
-#define MB (1024*KB)
-#define GB (1024*MB)
-
 typedef struct RAMDISK {
     int (*Reset)(void);
     int (*Open)(char *path);

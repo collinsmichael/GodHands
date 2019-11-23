@@ -6,4 +6,12 @@
 #include "System/RamDisk/RamDisk.h"
 #include "System/JobQueue/JobQueue.h"
 
+
+typedef struct SYSTEM {
+    int (*StartUp)(int argc, char *argv[]);
+    int (*CleanUp)(void);
+    int (*Execute)(void);
+} SYSTEM;
+
+
 #endif // SYSTEM_H

@@ -37,6 +37,15 @@
     <Filter Include="Source\System\JobQueue">
       <UniqueIdentifier>{7c9fc58f-2903-4724-9908-1bed57d4dc1b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Mission\View\WndProc">
+      <UniqueIdentifier>{cdec38ed-d9a6-460c-9807-da2be5237632}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\ThirdParty">
+      <UniqueIdentifier>{d5794d4e-e85e-4e53-ae10-be17507371ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mission\View\MenuBar">
+      <UniqueIdentifier>{12c35a53-bead-4a1a-82d1-eb510eae64d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\System\RamDisk\RamDisk.c">
@@ -84,6 +93,15 @@
     <ClCompile Include="Source\System\JobQueue\JobQueue_Test.c">
       <Filter>Source\System\JobQueue</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mission\View\WndProc\MdiFrame.c">
+      <Filter>Source\Mission\View\WndProc</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\View\WndProc\MdiChild.c">
+      <Filter>Source\Mission\View\WndProc</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\View\MenuBar\MenuBar.c">
+      <Filter>Source\Mission\View\MenuBar</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\RamDisk\RamDisk.h">
@@ -107,9 +125,6 @@
     <ClInclude Include="Source\Mission\View\View.h">
       <Filter>Source\Mission\View</Filter>
     </ClInclude>
-    <ClInclude Include="Source\UnitTest\utest.h">
-      <Filter>Source\UnitTest</Filter>
-    </ClInclude>
     <ClInclude Include="Source\UnitTest\UnitTest.h">
       <Filter>Source\UnitTest</Filter>
     </ClInclude>
@@ -121,6 +136,15 @@
     </ClInclude>
     <ClInclude Include="Source\System\JobQueue\JobQueue.h">
       <Filter>Source\System\JobQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GodHands.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ThirdParty\utest.h">
+      <Filter>Source\ThirdParty</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\View\MenuBar\MenuBar.h">
+      <Filter>Source\Mission\View\MenuBar</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

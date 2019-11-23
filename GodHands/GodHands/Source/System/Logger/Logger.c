@@ -5,7 +5,7 @@
 /* ************************************************************************** */
 #include <stdarg.h>
 #include <windows.h>
-#include "System/System.h"
+#include "GodHands.h"
 
 static int enabled;
 static char err[0x200];
@@ -23,7 +23,7 @@ static int Logger_Done(char *func, char *format, ...) {
     va_end(list);
 
     wsprintfA(err, "[DONE] %s\n\n%s", func, msg);
-    if ((enabled & 0x04)) MessageBoxA(0, msg, func, MB_OK);
+    if ((enabled & 0x10)) MessageBoxA(0, msg, func, MB_OK);
     return 1;
 }
 

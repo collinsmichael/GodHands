@@ -1,4 +1,5 @@
-#include "System\System.h"
+#include "GodHands.h"
+
 
 int cmpsd(void *dst, void *src, int len) {
     int equal = 0;

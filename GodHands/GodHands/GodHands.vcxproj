@@ -96,6 +96,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;comctl32.lib;comdlg32.lib;shell32.lib;ole32.lib;oleaut32.lib;opengl32.lib;winspool.lib;advapi32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -174,7 +175,10 @@
     <ClCompile Include="Source\Mission\Control\Control.c" />
     <ClCompile Include="Source\Mission\Mission.c" />
     <ClCompile Include="Source\Mission\Model\Model.c" />
+    <ClCompile Include="Source\Mission\View\MenuBar\MenuBar.c" />
     <ClCompile Include="Source\Mission\View\View.c" />
+    <ClCompile Include="Source\Mission\View\WndProc\MdiChild.c" />
+    <ClCompile Include="Source\Mission\View\WndProc\MdiFrame.c" />
     <ClCompile Include="Source\Start.c" />
     <ClCompile Include="Source\System\Config\Config.c" />
     <ClCompile Include="Source\System\JobQueue\JobQueue.c" />
@@ -187,9 +191,11 @@
     <ClCompile Include="Source\UnitTest\UnitTest.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\GodHands.h" />
     <ClInclude Include="Source\Mission\Control\Control.h" />
     <ClInclude Include="Source\Mission\Mission.h" />
     <ClInclude Include="Source\Mission\Model\Model.h" />
+    <ClInclude Include="Source\Mission\View\MenuBar\MenuBar.h" />
     <ClInclude Include="Source\Mission\View\View.h" />
     <ClInclude Include="Source\System\Config\Config.h" />
     <ClInclude Include="Source\System\JobQueue\JobQueue.h" />
@@ -197,8 +203,8 @@
     <ClInclude Include="Source\System\Memory\Memory.h" />
     <ClInclude Include="Source\System\RamDisk\RamDisk.h" />
     <ClInclude Include="Source\System\System.h" />
+    <ClInclude Include="Source\ThirdParty\utest.h" />
     <ClInclude Include="Source\UnitTest\UnitTest.h" />
-    <ClInclude Include="Source\UnitTest\utest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

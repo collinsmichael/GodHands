@@ -1,7 +1,6 @@
 #ifdef UNITTEST
 #include <windows.h>
-#include "System/System.h"
-#include "UnitTest/UnitTest.h"
+#include "GodHands.h"
 
 
 extern struct JOBQUEUE JobQueue;

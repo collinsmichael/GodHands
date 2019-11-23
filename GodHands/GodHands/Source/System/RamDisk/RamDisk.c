@@ -5,10 +5,10 @@
 /* ************************************************************************** */
 #include <memory.h>
 #include <windows.h>
-#include "System/System.h"
+#include "GodHands.h"
 
 
-extern LOGGER Logger;
+extern struct LOGGER Logger;
 
 
 static char disk[0x26F57800];

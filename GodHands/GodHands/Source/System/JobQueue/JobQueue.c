@@ -1,6 +1,6 @@
 #include <stdint.h>
 #include <windows.h>
-#include "System\System.h"
+#include "GodHands.h"
 
 
 extern struct LOGGER Logger;

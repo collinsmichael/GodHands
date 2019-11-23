@@ -1,21 +1,36 @@
 #ifndef UNITTEST
-#include "System/System.h"
+#include "GodHands.h"
 
 
+extern struct MISSION Mission;
+extern struct SYSTEM System;
 extern struct LOGGER Logger;
-extern struct RAMDISK RamDisk;
 
-    char expect[2*KB];
-    char actual[2*KB];
+
+static int StartUp(int argc, char *argv[]) {
+    Logger.Enable(0x0F);
+    if (!System.StartUp(argc, argv)) return 0;
+    if (!Mission.StartUp(argc, argv)) return 0;
+    return 1;
+}
+
+static int CleanUp(void) {
+    System.CleanUp();
+    Mission.CleanUp();
+    return 1;
+}
+
+static int Execute(void) {
+    if (!System.Execute()) return 0;
+    if (!Mission.Execute()) return 0;
+    return 1;
+}
 
 int main(int argc, char *argv[]) {
-    Logger.Enable(3);
-    stosb(expect, 'x', sizeof(expect));
-    RamDisk.Open("does not exist");
-    RamDisk.Write(15, 1, expect);
-    RamDisk.Read(15, 1, actual);
-    RamDisk.Close();
-
+    if (StartUp(argc, argv)) {
+        Execute();
+    }
+    CleanUp();
     return 0;
 }
 
