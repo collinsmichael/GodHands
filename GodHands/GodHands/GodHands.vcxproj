@@ -177,6 +177,7 @@
     <ClCompile Include="Source\Mission\Mission.c" />
     <ClCompile Include="Source\Mission\Model\Model.c" />
     <ClCompile Include="Source\Mission\View\MenuBar\MenuBar.c" />
+    <ClCompile Include="Source\Mission\View\StatusBar\StatusBar.c" />
     <ClCompile Include="Source\Mission\View\ToolTip\ToolTip.c" />
     <ClCompile Include="Source\Mission\View\View.c" />
     <ClCompile Include="Source\Mission\View\WndProc\MdiChild.c" />
@@ -198,6 +199,7 @@
     <ClInclude Include="Source\Mission\Mission.h" />
     <ClInclude Include="Source\Mission\Model\Model.h" />
     <ClInclude Include="Source\Mission\View\MenuBar\MenuBar.h" />
+    <ClInclude Include="Source\Mission\View\StatusBar\StatusBar.h" />
     <ClInclude Include="Source\Mission\View\ToolTip\ToolTip.h" />
     <ClInclude Include="Source\Mission\View\View.h" />
     <ClInclude Include="Source\System\Config\Config.h" />

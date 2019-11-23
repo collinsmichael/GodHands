@@ -31,7 +31,7 @@ static DWORD WINAPI Broker(LPVOID arg) {
         tail++;
         handle[tail] = CreateThread(0,0,Worker,(void*)tail,0,0);
         if (!handle[tail]) {
-            Logger.Fail("JobQueue.StartUp", "Job Queue failure");
+            Logger.Error("JobQueue.StartUp", "Job Queue failure");
         }
     }
     return Logger.Done("JobQueue.Schedule", "Done");
@@ -55,7 +55,7 @@ static int JobQueue_Schedule(int(*callback)(void*), void *args) {
 static int JobQueue_StartUp(void) {
     broker = CreateThread(0,0,Broker,0,0,0);
     if (!broker) {
-        return Logger.Fail("JobQueue.StartUp", "Job Queue failure");
+        return Logger.Error("JobQueue.StartUp", "Job Queue failure");
     }
     return Logger.Done("JobQueue.StartUp", "Done");
 }

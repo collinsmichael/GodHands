@@ -19,7 +19,7 @@ static int size;
 
 static int RamDisk_Close(void) {
     if ((!file) || (file == INVALID_HANDLE_VALUE)) {
-        return Logger.Fail("RamDisk.Close", "No disk");
+        return Logger.Error("RamDisk.Close", "No disk");
     }
     CloseHandle(file);
     file = 0;
@@ -31,7 +31,7 @@ static int RamDisk_Open(char *path) {
     if (file) RamDisk_Close();
     file = CreateFileA(path, 0xC0000000, 0x03,0,0x03,0x80,0);
     if (file == INVALID_HANDLE_VALUE) {
-        return Logger.Fail("RamDisk.Open", "File not found %s", path);
+        return Logger.Error("RamDisk.Open", "File not found %s", path);
     }
     size = GetFileSize(file, 0);
     if (size > sizeof(disk)) {
@@ -62,7 +62,7 @@ static int RamDisk_Read(int lba, int len, char *buf) {
             DWORD word;
             SetFilePointer(file, lba*2352 + 24, 0, 0);
             if (!ReadFile(file, &disk[lba*2*KB], 2*KB, &word, 0)) {
-                return Logger.Fail("RamDisk.Read", "Failed lba=%08X", lba);
+                return Logger.Error("RamDisk.Read", "Failed lba=%08X", lba);
             }
             map[lba] = 'x';
         }
@@ -82,7 +82,7 @@ static int RamDisk_Write(int lba, int len, char *buf) {
         memcpy(&disk[lba*2*KB], buf, 2*KB);
         SetFilePointer(file, lba*2352 + 24, 0, 0);
         if (!WriteFile(file, &disk[lba*2*KB], 2*KB, &word, 0)) {
-            return Logger.Fail("RamDisk.Write", "Failed lba=%08X", lba);
+            return Logger.Error("RamDisk.Write", "Failed lba=%08X", lba);
         }
         map[lba] = 'x';
     }

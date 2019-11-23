@@ -60,7 +60,7 @@ static int MenuBar_StartUp(void) {
             }
             parent = menu[i].Parent;
             if (!InsertMenuItemA(hmenu[parent], 0, TRUE, &mii)) {
-                return Logger.Fail("MenuBar.StartUp",
+                return Logger.Error("MenuBar.StartUp",
                     "Failed to add menu %s/%s",
                     menu[parent].Name, menu[i].Name);
             }
@@ -71,7 +71,7 @@ static int MenuBar_StartUp(void) {
         if (menu[i].Type == MENUBAR_POPUP) {
             HMENU hMenu = hmenu[menu[i].Parent];
             if (!AppendMenuA(hMenu, MF_POPUP, (UINT)hmenu[i], menu[i].Name)) {
-                return Logger.Fail("MenuBar.StartUp", "Failed to add menu %s",
+                return Logger.Error("MenuBar.StartUp", "Failed to add menu %s",
                     menu[i].Name);
             }
         }

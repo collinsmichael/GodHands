@@ -6,9 +6,10 @@
 extern LRESULT CALLBACK MdiFrameProc(HWND,UINT,WPARAM,LPARAM);
 extern LRESULT CALLBACK MdiChildProc(HWND,UINT,WPARAM,LPARAM);
 
-extern struct LOGGER  Logger;
-extern struct MENUBAR MenuBar;
-extern struct TOOLTIP ToolTip;
+extern struct LOGGER    Logger;
+extern struct MENUBAR   MenuBar;
+extern struct STATUSBAR StatusBar;
+extern struct TOOLTIP   ToolTip;
 
 extern HMENU hmenu[64];
 extern HACCEL hAccel;
@@ -20,8 +21,9 @@ static struct WINCLASS cx[] = {
 };
 static struct WINDOW wx[] = {
     { 0 },
-    { 0,"MdiFrame","GodHands",0x16CF0000,0x80000000,0x80000000,640,480,0,0x01,0, "GodHands" },
-    { 0,"tooltips_class32",0, 0x00000001,0x80000000,0x80000000,  0,  0,0,0x00,0 },
+    { 0,"MdiFrame","GodHands", 0x16CF0000,0x80000000,0x80000000,640,480,          0,0x01,0, "GodHands" },
+    { 0,"tooltips_class32",0,  0x00000001,0x80000000,0x80000000,  0,  0,          0,0x00,0, 0},
+    { 0,"msctls_statusbar32",0,0x56000100,0x80000000,0x80000000,  0,  0,WinMdiFrame,0x00,0, "StatusBar" },
 };
 
 ATOM atom[elementsof(cx)];
@@ -54,7 +56,7 @@ static int View_StartUp(void) {
         wc.hbrBackground = CreateSolidBrush(cx[i].hBackground);
         atom[i] = RegisterClassA(&wc);
         if (!atom[i]) {
-            return Logger.Fail("View.StartUp",
+            return Logger.Error("View.StartUp",
                 "Class not registered '%s'", cx[i].ClassName);
         }
     }
@@ -65,15 +67,18 @@ static int View_StartUp(void) {
             wx[i].Style, wx[i].PosX, wx[i].PosY, wx[i].Width, wx[i].Height,
             hwnd[wx[i].Parent], hmenu[wx[i].Menu], hInstance, wx[i].Param);
         if (!hwnd[i]) {
-            return Logger.Fail("View.StartUp", "Error creating window");
+            return Logger.Error("View.StartUp", "Error creating window");
         }
     }
 
+    StatusBar.StartUp();
     for (i = 0; i < elementsof(wx); i++) {
         if (wx[i].ToolTip) {
             ToolTip.SetToolTip(i, wx[i].ToolTip);
         }
     }
+
+    StatusBar.SetStatus("TEST", "TESTING STATUSBAR");
     return Logger.Done("View.StartUp", "Done");
 }
 
