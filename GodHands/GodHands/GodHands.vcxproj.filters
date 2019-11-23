@@ -52,6 +52,9 @@
     <Filter Include="Source\Mission\View\StatusBar">
       <UniqueIdentifier>{53473318-b7da-4f21-a401-02a6d8f75a02}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Mission\View\Dialogs">
+      <UniqueIdentifier>{b37c111e-b0ed-4490-b879-2d06dfa72434}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\System\RamDisk\RamDisk.c">
@@ -114,6 +117,9 @@
     <ClCompile Include="Source\Mission\View\StatusBar\StatusBar.c">
       <Filter>Source\Mission\View\StatusBar</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mission\View\Dialogs\Dialogs.c">
+      <Filter>Source\Mission\View\Dialogs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\RamDisk\RamDisk.h">
@@ -163,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="Source\Mission\View\StatusBar\StatusBar.h">
       <Filter>Source\Mission\View\StatusBar</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\View\Dialogs\Dialogs.h">
+      <Filter>Source\Mission\View\Dialogs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

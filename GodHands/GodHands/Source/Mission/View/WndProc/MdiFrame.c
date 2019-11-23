@@ -2,6 +2,7 @@
 #include "GodHands.h"
 
 
+extern struct DIALOG Dialog;
 extern struct WINDOW wx[16];
 extern HWND hwnd[16];
 
@@ -33,10 +34,61 @@ LRESULT CALLBACK MdiFrame_OnSize(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
     return 1;
 }
 
+LRESULT CALLBACK MdiFrame_OnCommand(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    char *path;
+    switch (LOWORD(wParam)) {
+    case WM_USER+0x0101:
+        path = Dialog.OpenFileDialog(
+            "All files (*.*)\0*.*\0"
+            "BIN files (*.bin)\0*.bin\0"
+            "IMG files (*.img)\0*.img\0"
+            "ISO files (*.iso)\0*.iso\0\0"
+        );
+        break;
+    case WM_USER+0x0102:
+        path = Dialog.SaveFileDialog(
+            "All files (*.*)\0*.*\0"
+            "BIN files (*.bin)\0*.bin\0"
+            "IMG files (*.img)\0*.img\0"
+            "ISO files (*.iso)\0*.iso\0\0"
+        );
+        break;
+    case WM_USER+0x0103:
+        MessageBoxA(0,"File/Close", "Menu", 0);
+        break;
+    case WM_USER+0x0104:
+        MessageBoxA(0,"File/Exit", "Menu", 0);
+        break;
+    case WM_USER+0x0201:
+        MessageBoxA(0,"Edit/Undo", "Menu", 0);
+        break;
+    case WM_USER+0x0202:
+        MessageBoxA(0,"Edit/Redo", "Menu", 0);
+        break;
+    case WM_USER+0x0203:
+        MessageBoxA(0,"Edit/Cut", "Menu", 0);
+        break;
+    case WM_USER+0x0204:
+        MessageBoxA(0,"Edit/Cut", "Copy", 0);
+        break;
+    case WM_USER+0x0205:
+        MessageBoxA(0,"Edit/Cut", "Paste", 0);
+        break;
+    case WM_USER+0x0301:
+        MessageBoxA(0,"Help/About", "Menu", 0);
+        break;
+    }
+    return 1;
+}
 
 LRESULT CALLBACK MdiFrameProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     switch (uMsg) {
-    case WM_SIZE: MdiFrame_OnSize(hWnd, uMsg, wParam, lParam); break;
+    case WM_COMMAND:
+        MdiFrame_OnCommand(hWnd, uMsg, wParam, lParam);
+        break;
+    case WM_SIZE:
+        MdiFrame_OnSize(hWnd, uMsg, wParam, lParam);
+        break;
     case WM_CLOSE:
         PostQuitMessage(0);
         break;

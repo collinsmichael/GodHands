@@ -4,6 +4,7 @@
 #include "Mission/Control/Control.h"
 #include "Mission/Model/Model.h"
 #include "Mission/View/View.h"
+#include "Mission/View/Dialogs/Dialogs.h"
 #include "Mission/View/MenuBar/MenuBar.h"
 #include "Mission/View/ToolTip/ToolTip.h"
 #include "Mission/View/StatusBar/StatusBar.h"
