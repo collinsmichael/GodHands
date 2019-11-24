@@ -3,8 +3,11 @@
 #include "GodHands.h"
 
 
+extern struct LOGGER Logger;
 extern struct DIALOG Dialog;
 extern struct STATUSBAR StatusBar;
+extern struct MDICLIENT MdiClient;
+extern struct MENUBAR MenuBar;
 extern struct WINDOW wx[16];
 extern HWND hwnd[16];
 
@@ -15,28 +18,34 @@ LRESULT CALLBACK MdiFrame_OnSize(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
         RECT rect;
         RECT rc;
 
-        if (!wx[i].Class) continue;
+        if (!wx[i].Parent) continue;
         if ((wx[i].Style & WS_CHILD) == 0) continue;
 
         GetClientRect(hwnd[wx[i].Parent], &rect);
         rc.left = (wx[i].PosX < 0)
-            ? rect.right + wx[i].PosX
+            ? rect.right + 1 + wx[i].PosX
             : wx[i].PosX;
         rc.top = (wx[i].PosY < 0)
-            ? rect.bottom + wx[i].PosY
+            ? rect.bottom + 1 + wx[i].PosY
             : wx[i].PosY;
         rc.right = (wx[i].Width < 0)
-            ? rect.right + wx[i].Width
+            ? rect.right + 1 + wx[i].Width
             : wx[i].Width;
         rc.bottom = (wx[i].Height < 0)
-            ? rect.bottom + wx[i].Height
+            ? rect.bottom + 1 + wx[i].Height
             : wx[i].Height;
-        MoveWindow(hwnd[i], rc.left, rc.top, rc.right, rc.bottom, TRUE);
+
+        if (i == WinMdiClient) {
+            SetWindowPos(hwnd[i], 0, rc.left, rc.top, rc.right, rc.bottom, SWP_NOZORDER);
+        } else {
+            MoveWindow(hwnd[i], rc.left, rc.top, rc.right, rc.bottom, TRUE);
+        }
     }
     return 1;
 }
 
 LRESULT CALLBACK MdiFrame_OnCommand(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    MDICREATESTRUCT mc;
     DWORD style;
     char *path;
     switch (LOWORD(wParam)) {
@@ -107,7 +116,65 @@ LRESULT CALLBACK MdiFrame_OnCommand(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
         break;
 
     case WM_USER+0x0501:
+        SendMessageA(hwnd[WinMdiClient], WM_MDITILE, MDITILE_HORIZONTAL, 0);
+        break;
+    case WM_USER+0x0502:
+        SendMessageA(hwnd[WinMdiClient], WM_MDITILE, MDITILE_VERTICAL, 0);
+        break;
+    case WM_USER+0x0503:
+        SendMessageA(hwnd[WinMdiClient], WM_MDICASCADE, MDITILE_SKIPDISABLED, 0);
+        break;
+    case WM_USER+0x0504:
+        SendMessageA(hwnd[WinMdiClient], WM_MDIICONARRANGE, 0, 0);
+        break;
+
+    case WM_USER+0x0601:
         MessageBoxA(0,"Help/About", "Menu", 0);
+        break;
+
+    case WM_USER+0x0701:
+        mc.style   = WS_OVERLAPPEDWINDOW | WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
+        mc.szClass = "MdiChild";
+
+        mc.szTitle = "document.pdf";
+        mc.x       = CW_USEDEFAULT;
+        mc.y       = CW_USEDEFAULT;
+        mc.cx      = CW_USEDEFAULT;
+        mc.cy      = CW_USEDEFAULT;
+        mc.hOwner  = GetModuleHandleA(0);
+        mc.lParam  = 0;
+        hwnd[WinMdiChild] = (HWND)SendMessageA(hwnd[WinMdiClient], WM_MDICREATE, 0, (LPARAM)&mc);
+        if (!hwnd[WinMdiChild]) {
+            return Logger.Error("Menu.New", "Error WM_MDICREATE");
+        }
+        #if 0
+        Path = "document.pdf";
+        Name = Path;
+        //Attributes = GetFileAttributes(Path);
+        Attributes = FILE_ATTRIBUTE_NORMAL;
+        fi = (HIMAGELIST)SHGetFileInfo(Path, Attributes, &sfi, sizeof(sfi),
+            SHGFI_USEFILEATTRIBUTES | SHGFI_SYSICONINDEX | SHGFI_SMALLICON);
+
+        hIcon = ImageList_GetIcon(fi, sfi.iIcon, ILD_IMAGE | ILD_NORMAL);
+        SendMessageA(hWndMdiChild, WM_SETICON, ICON_BIG,   (LPARAM)hIcon);
+        SendMessageA(hWndMdiChild, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
+
+        him = TabCtrl_SetImageList(hWndTabCtrl, ImageList_Duplicate(fi));
+        if (him) {
+            ImageList_Destroy(him);
+        }
+
+        memset(&tci, 0, sizeof(tci));
+        tci.mask        = TCIF_TEXT | TCIF_IMAGE | TCIF_PARAM;
+        tci.pszText     = Name;
+        tci.cchTextMax  = lstrlenA(Name);
+        tci.iImage      = sfi.iIcon;
+        tci.lParam      = (LPARAM)hWndMdiChild;
+        //SendMessageA(hWndTabCtrl, TCM_INSERTITEM, (WPARAM)1, (LPARAM)&tci);
+        TabIndex = TabCtrl_GetItemCount(hWndTabCtrl);
+        TabCtrl_InsertItem(hWndTabCtrl, TabIndex, &tci);
+        TabCtrl_SetCurSel(hWndTabCtrl, TabIndex);
+        #endif
         break;
     }
     return 1;
@@ -115,6 +182,11 @@ LRESULT CALLBACK MdiFrame_OnCommand(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 
 LRESULT CALLBACK MdiFrameProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     switch (uMsg) {
+    case WM_CREATE:
+        hwnd[WinMdiFrame] = hWnd;
+        MenuBar.SetMenu(WinMdiFrame, wx[WinMdiFrame].Menu);
+        MdiClient.Create();
+        break;
     case WM_COMMAND:
         MdiFrame_OnCommand(hWnd, uMsg, wParam, lParam);
         break;
@@ -129,5 +201,9 @@ LRESULT CALLBACK MdiFrameProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
         PostQuitMessage(0);
         break;
     }
-    return DefWindowProcA(hWnd, uMsg, wParam, lParam);
+    if (hwnd[WinMdiClient]) {
+        return DefFrameProcA(hWnd, hwnd[WinMdiClient], uMsg, wParam, lParam);
+    } else {
+        return DefWindowProcA(hWnd, uMsg, wParam, lParam);
+    }
 }

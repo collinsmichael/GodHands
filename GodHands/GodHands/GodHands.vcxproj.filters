@@ -67,6 +67,9 @@
     <Filter Include="Source\Mission\View\Widgets\ListView">
       <UniqueIdentifier>{0ba1ea53-a473-405e-8fb6-39c40047f8ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Mission\View\Widgets\MdiClient">
+      <UniqueIdentifier>{9ca916f5-b117-43ea-a2e0-5c7bc1fad96e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\System\RamDisk\RamDisk.c">
@@ -147,6 +150,9 @@
     <ClCompile Include="Source\Mission\View\Resources\Icon.c">
       <Filter>Source\Mission\View\Resources</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mission\View\Widgets\MdiClient\MdiClient.c">
+      <Filter>Source\Mission\View\Widgets\MdiClient</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\RamDisk\RamDisk.h">
@@ -211,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="Source\Mission\View\Resources\Icon.h">
       <Filter>Source\Mission\View\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\View\Widgets\MdiClient\MdiClient.h">
+      <Filter>Source\Mission\View\Widgets\MdiClient</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -25,8 +25,9 @@ static MENUX menu[] = {
     /* 0x02 */ { MENUBAR_POPUP, 0x01, 0x0000, "File" },
     /* 0x03 */ { MENUBAR_POPUP, 0x01, 0x0000, "Edit" },
     /* 0x04 */ { MENUBAR_POPUP, 0x01, 0x0000, "View" },
-    /* 0x05 */ { MENUBAR_POPUP, 0x01, 0x0000, "Help" },
-    /* 0x06 */ { MENUBAR_POPUP, 0x01, 0x0000, "Dev" },
+    /* 0x05 */ { MENUBAR_POPUP, 0x01, 0x0000, "Window" },
+    /* 0x06 */ { MENUBAR_POPUP, 0x01, 0x0000, "Help" },
+    /* 0x07 */ { MENUBAR_POPUP, 0x01, 0x0000, "Dev" },
 
     /* .... */ { MENUBAR_ITEM,  0x02, 0x0201, "Open ..." },
     /* .... */ { MENUBAR_ITEM,  0x02, 0x0202, "Save ..." },
@@ -45,8 +46,14 @@ static MENUX menu[] = {
     /* .... */ { MENUBAR_ITEM,  0x04, 0x0403, "Small Icons" },
     /* .... */ { MENUBAR_ITEM,  0x04, 0x0404, "List View" },
     /* .... */ { MENUBAR_ITEM,  0x04, 0x0405, "Details" },
-    /* .... */ { MENUBAR_ITEM,  0x05, 0x0501, "About" },
-    /* .... */ { MENUBAR_ITEM,  0x06, 0x0601, "New" },
+
+    /* .... */ { MENUBAR_ITEM,  0x05, 0x0501, "Tile Vertical" },
+    /* .... */ { MENUBAR_ITEM,  0x05, 0x0502, "Tile Horizontal" },
+    /* .... */ { MENUBAR_ITEM,  0x05, 0x0503, "Cascade" },
+    /* .... */ { MENUBAR_ITEM,  0x05, 0x0504, "Arrange Icons" },
+
+    /* .... */ { MENUBAR_ITEM,  0x06, 0x0601, "About" },
+    /* .... */ { MENUBAR_ITEM,  0x07, 0x0701, "New" },
 };
 HMENU hmenu[64];
 HACCEL hAccel;

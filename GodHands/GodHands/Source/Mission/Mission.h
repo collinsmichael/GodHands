@@ -7,11 +7,12 @@
 #include "Mission/View/Dialogs/Dialogs.h"
 #include "Mission/View/Resources/Font.h"
 #include "Mission/View/Resources/Icon.h"
-#include "Mission/View/Widgets/MenuBar/MenuBar.h"
-#include "Mission/View/Widgets/ToolTip/ToolTip.h"
-#include "Mission/View/Widgets/StatusBar/StatusBar.h"
-#include "Mission/View/Widgets/TreeView/TreeView.h"
 #include "Mission/View/Widgets/ListView/ListView.h"
+#include "Mission/View/Widgets/MdiClient/MdiClient.h"
+#include "Mission/View/Widgets/MenuBar/MenuBar.h"
+#include "Mission/View/Widgets/StatusBar/StatusBar.h"
+#include "Mission/View/Widgets/ToolTip/ToolTip.h"
+#include "Mission/View/Widgets/TreeView/TreeView.h"
 
 
 typedef struct MISSION {

@@ -25,6 +25,41 @@ static HIMAGELIST Icon_GetLargeIcons(void) {
     return hIconLarge;
 }
 
+static int Icon_GetIndexFromAttributes(char *path, DWORD Attributes) {
+    if (UsingShell) {
+        fi = (HIMAGELIST)SHGetFileInfoA(path, Attributes, &sfi, sizeof(sfi),
+            SHGFI_USEFILEATTRIBUTES | SHGFI_SYSICONINDEX | SHGFI_SMALLICON);
+        if (!fi) {
+            return Logger.Error("Icon.GetIndexFromAttribute",
+                "Failed to retrieve file info '%s'", path);
+        }
+        ImageList_Destroy(fi);
+        return sfi.iIcon;
+    } else {
+        if (Attributes & FILE_ATTRIBUTE_DIRECTORY) {
+            return 38;
+        } else {
+            int i;
+            for (i = lstrlenA(path)-1; i >= 0; i--) {
+                if (path[i] == '.') {
+                    char x = path[i+1];
+                    if (x >= 'a' && x <= 'z') return x - 'a';
+                    if (x >= 'A' && x <= 'Z') return x - 'A';
+                    if (x >= '0' && x <= '9') return x - '0';
+                    return 36;
+                }
+            }
+        }
+        return 36;
+    }
+    return 0;
+}
+
+static int Icon_GetIndex(char *path) {
+    Attributes = FILE_ATTRIBUTE_NORMAL;
+    return Icon_GetIndexFromAttributes(path, Attributes);
+}
+
 static HICON Icon_GetSmallIcon(char *path) {
     if (UsingShell) {
         Attributes = GetFileAttributesA(path);
@@ -181,41 +216,6 @@ static int Icon_CleanUp(void) {
     hIconSmall = hIconLarge = 0;
     hShell32 = 0;
     return 1;
-}
-
-static int Icon_GetIndexFromAttributes(char *path, DWORD Attributes) {
-    if (UsingShell) {
-        fi = (HIMAGELIST)SHGetFileInfoA(path, Attributes, &sfi, sizeof(sfi),
-            SHGFI_USEFILEATTRIBUTES | SHGFI_SYSICONINDEX | SHGFI_SMALLICON);
-        if (!fi) {
-            return Logger.Error("Icon.GetIndexFromAttribute",
-                "Failed to retrieve file info '%s'", path);
-        }
-        ImageList_Destroy(fi);
-        return sfi.iIcon;
-    } else {
-        if (Attributes & FILE_ATTRIBUTE_DIRECTORY) {
-            return 38;
-        } else {
-            int i;
-            for (i = lstrlenA(path)-1; i >= 0; i--) {
-                if (path[i] == '.') {
-                    char x = path[i+1];
-                    if (x >= 'a' && x <= 'z') return x - 'a';
-                    if (x >= 'A' && x <= 'Z') return x - 'A';
-                    if (x >= '0' && x <= '9') return x - '0';
-                    return 36;
-                }
-            }
-        }
-        return 36;
-    }
-    return 0;
-}
-
-static int Icon_GetIndex(char *path) {
-    Attributes = FILE_ATTRIBUTE_NORMAL;
-    return Icon_GetIndexFromAttributes(path, Attributes);
 }
 
 
