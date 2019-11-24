@@ -184,6 +184,7 @@
     <ClCompile Include="Source\Mission\View\Widgets\MdiClient\MdiClient.c" />
     <ClCompile Include="Source\Mission\View\Widgets\MenuBar\MenuBar.c" />
     <ClCompile Include="Source\Mission\View\Widgets\StatusBar\StatusBar.c" />
+    <ClCompile Include="Source\Mission\View\Widgets\TabBar\TabBar.c" />
     <ClCompile Include="Source\Mission\View\Widgets\ToolTip\ToolTip.c" />
     <ClCompile Include="Source\Mission\View\Widgets\TreeView\TreeView.c" />
     <ClCompile Include="Source\Mission\View\Widgets\WndProc\FlickerFree.c" />
@@ -213,6 +214,7 @@
     <ClInclude Include="Source\Mission\View\Widgets\MdiClient\MdiClient.h" />
     <ClInclude Include="Source\Mission\View\Widgets\MenuBar\MenuBar.h" />
     <ClInclude Include="Source\Mission\View\Widgets\StatusBar\StatusBar.h" />
+    <ClInclude Include="Source\Mission\View\Widgets\TabBar\TabBar.h" />
     <ClInclude Include="Source\Mission\View\Widgets\ToolTip\ToolTip.h" />
     <ClInclude Include="Source\Mission\View\Widgets\TreeView\TreeView.h" />
     <ClInclude Include="Source\System\Config\Config.h" />

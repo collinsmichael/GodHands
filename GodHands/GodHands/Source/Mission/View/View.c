@@ -13,6 +13,7 @@ extern struct FONT      Font;
 extern struct ICON      Icon;
 extern struct MENUBAR   MenuBar;
 extern struct STATUSBAR StatusBar;
+extern struct TABBAR    TabBar;
 extern struct TOOLTIP   ToolTip;
 extern struct MDICLIENT MdiClient;
 extern struct TREEVIEW  TreeView;
@@ -35,6 +36,7 @@ struct WINDOW wx[16] = {
     { 0x00000000,"tooltips_class32",  0,0x00000001,0,0,  0,  0,0,           0,0x00, "MS Sans Serif", "ToolTip" },
     { 0x00000000,"msctls_statusbar32",0,0x56000100,0,0,  0,  0,WinMdiFrame, 0,0x00, "MS Sans Serif", "StatusBar" },
     { 0x00000000,"msctls_progress32", 0,0x56000000,4,4,128, -6,WinStatusBar,0,0x00, "MS Sans Serif", "ProgressBar" },
+    { 0x00000000,"SysTabControl32",   0,0x56000000,0,0, -1, 24,WinMdiFrame, 0,0x00, "MS Sans Serif", "TabBar" },
     { 0x00000000,"SysTreeView32",     0,0x5600000F,0,0, -1, -1,WinMdiFrame, 0,0x00, "MS Sans Serif", "TreeView" },
     { 0x00000000,"SysListView32",     0,0x56000249,0,0, -1, -1,WinMdiFrame, 0,0x00, "MS Sans Serif", "ListView" },
     { 0x00000000,0,                   0,0x00000000,0,0,  0,  0,0,           0,0x00, "MS Sans Serif", "ListViewHeader" },
@@ -94,6 +96,7 @@ static int View_StartUp(void) {
 
     StatusBar.StartUp();
     MdiClient.StartUp();
+    TabBar.StartUp();
     TreeView.StartUp();
     ListView.StartUp();
 

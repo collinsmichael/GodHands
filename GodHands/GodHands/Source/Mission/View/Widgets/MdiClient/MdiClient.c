@@ -35,6 +35,10 @@ static int MdiClient_StartUp(void) {
     wx[WinMdiClient].PosY = 0;
     wx[WinMdiClient].Width = -1;
     wx[WinMdiClient].Height = -(rc.bottom-rc.top);
+
+    GetWindowRect(hwnd[WinTabBar], &rc);
+    wx[WinMdiClient].PosY += rc.bottom - rc.top;
+    wx[WinMdiClient].Height -= rc.bottom - rc.top;
     return Logger.Done("MdiClient.StartUp", "Done");
 }
 

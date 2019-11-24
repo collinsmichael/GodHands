@@ -11,6 +11,13 @@ extern struct MENUBAR MenuBar;
 extern struct WINDOW wx[16];
 extern HWND hwnd[16];
 
+static SHFILEINFO sfi;
+static HIMAGELIST fi;
+static TC_ITEM tci;
+static HIMAGELIST him;
+static HICON hIcon;
+static int TabIndex;
+static DWORD Attributes;
 
 LRESULT CALLBACK MdiFrame_OnSize(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     int i;
@@ -147,34 +154,51 @@ LRESULT CALLBACK MdiFrame_OnCommand(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
         if (!hwnd[WinMdiChild]) {
             return Logger.Error("Menu.New", "Error WM_MDICREATE");
         }
-        #if 0
-        Path = "document.pdf";
-        Name = Path;
-        //Attributes = GetFileAttributes(Path);
+
         Attributes = FILE_ATTRIBUTE_NORMAL;
-        fi = (HIMAGELIST)SHGetFileInfo(Path, Attributes, &sfi, sizeof(sfi),
+        fi = (HIMAGELIST)SHGetFileInfo(mc.szTitle, Attributes, &sfi, sizeof(sfi),
             SHGFI_USEFILEATTRIBUTES | SHGFI_SYSICONINDEX | SHGFI_SMALLICON);
 
         hIcon = ImageList_GetIcon(fi, sfi.iIcon, ILD_IMAGE | ILD_NORMAL);
-        SendMessageA(hWndMdiChild, WM_SETICON, ICON_BIG,   (LPARAM)hIcon);
-        SendMessageA(hWndMdiChild, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
+        SendMessageA(hwnd[WinMdiChild], WM_SETICON, ICON_BIG,   (LPARAM)hIcon);
+        SendMessageA(hwnd[WinMdiChild], WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
 
-        him = TabCtrl_SetImageList(hWndTabCtrl, ImageList_Duplicate(fi));
+        him = TabCtrl_SetImageList(hwnd[WinTabBar], ImageList_Duplicate(fi));
         if (him) {
             ImageList_Destroy(him);
         }
 
         memset(&tci, 0, sizeof(tci));
         tci.mask        = TCIF_TEXT | TCIF_IMAGE | TCIF_PARAM;
-        tci.pszText     = Name;
-        tci.cchTextMax  = lstrlenA(Name);
+        tci.pszText     = (char*)mc.szTitle;
+        tci.cchTextMax  = lstrlenA(mc.szTitle);
         tci.iImage      = sfi.iIcon;
-        tci.lParam      = (LPARAM)hWndMdiChild;
+        tci.lParam      = (LPARAM)hwnd[WinMdiChild];
         //SendMessageA(hWndTabCtrl, TCM_INSERTITEM, (WPARAM)1, (LPARAM)&tci);
-        TabIndex = TabCtrl_GetItemCount(hWndTabCtrl);
-        TabCtrl_InsertItem(hWndTabCtrl, TabIndex, &tci);
-        TabCtrl_SetCurSel(hWndTabCtrl, TabIndex);
-        #endif
+        TabIndex = TabCtrl_GetItemCount(hwnd[WinTabBar]);
+        TabCtrl_InsertItem(hwnd[WinTabBar], TabIndex, &tci);
+        TabCtrl_SetCurSel(hwnd[WinTabBar], TabIndex);
+        break;
+    }
+    return 1;
+}
+
+static LRESULT CALLBACK MdiFrame_OnNotify(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    TCITEM tci;
+    RECT rc;
+    int TabIndex;
+    NMHDR *NmHdr = (NMHDR*)lParam;
+
+    switch (NmHdr->code) {
+    case TCN_SELCHANGE:
+        TabIndex = TabCtrl_GetCurSel(hwnd[WinTabBar]);
+        tci.mask = TCIF_PARAM;
+        TabCtrl_GetItem(hwnd[WinTabBar], TabIndex, &tci);
+        if (tci.lParam) {
+            SendMessageA(hwnd[WinMdiClient], WM_MDIACTIVATE, (WPARAM)tci.lParam, 0);
+            GetClientRect(hwnd[WinMdiClient], &rc);
+            InvalidateRect(hwnd[WinMdiClient], &rc, TRUE);
+        }
         break;
     }
     return 1;
@@ -189,6 +213,9 @@ LRESULT CALLBACK MdiFrameProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
         break;
     case WM_COMMAND:
         MdiFrame_OnCommand(hWnd, uMsg, wParam, lParam);
+        break;
+    case WM_NOTIFY:
+        MdiFrame_OnNotify(hWnd, uMsg, wParam, lParam);
         break;
     case WM_ENTERSIZEMOVE:     case WM_EXITSIZEMOVE:
     case WM_SIZING:            case WM_SIZE:

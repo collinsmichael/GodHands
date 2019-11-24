@@ -70,6 +70,9 @@
     <Filter Include="Source\Mission\View\Widgets\MdiClient">
       <UniqueIdentifier>{9ca916f5-b117-43ea-a2e0-5c7bc1fad96e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Mission\View\Widgets\TabBar">
+      <UniqueIdentifier>{97312b5c-ce97-43dc-9b38-b5eec48d7ff1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\System\RamDisk\RamDisk.c">
@@ -153,6 +156,9 @@
     <ClCompile Include="Source\Mission\View\Widgets\MdiClient\MdiClient.c">
       <Filter>Source\Mission\View\Widgets\MdiClient</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mission\View\Widgets\TabBar\TabBar.c">
+      <Filter>Source\Mission\View\Widgets\TabBar</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\RamDisk\RamDisk.h">
@@ -220,6 +226,9 @@
     </ClInclude>
     <ClInclude Include="Source\Mission\View\Widgets\MdiClient\MdiClient.h">
       <Filter>Source\Mission\View\Widgets\MdiClient</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\View\Widgets\TabBar\TabBar.h">
+      <Filter>Source\Mission\View\Widgets\TabBar</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

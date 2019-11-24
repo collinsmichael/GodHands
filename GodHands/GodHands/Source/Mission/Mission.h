@@ -11,6 +11,7 @@
 #include "Mission/View/Widgets/MdiClient/MdiClient.h"
 #include "Mission/View/Widgets/MenuBar/MenuBar.h"
 #include "Mission/View/Widgets/StatusBar/StatusBar.h"
+#include "Mission/View/Widgets/TabBar/TabBar.h"
 #include "Mission/View/Widgets/ToolTip/ToolTip.h"
 #include "Mission/View/Widgets/TreeView/TreeView.h"
 
