@@ -6,6 +6,18 @@ int FlickerFree(HWND hwnd);
 extern struct LOGGER Logger;
 extern HWND hwnd[64];
 
+static ACCEL accel[] = {
+    { FCONTROL|FVIRTKEY,        'O', WM_USER + 0x0101 }, // File/Open
+    { FCONTROL|FVIRTKEY,        'S', WM_USER + 0x0102 }, // File/Save
+    { FCONTROL|FVIRTKEY|FSHIFT, 'C', WM_USER + 0x0103 }, // File/Close
+    { FCONTROL|FVIRTKEY,        'Q', WM_USER + 0x0104 }, // File/Exit
+    { FCONTROL|FVIRTKEY,        'Z', WM_USER + 0x0201 }, // Edit/Undo
+    { FCONTROL|FVIRTKEY,        'Y', WM_USER + 0x0202 }, // Edit/Redo
+    { FCONTROL|FVIRTKEY,        'X', WM_USER + 0x0203 }, // Edit/Cut
+    { FCONTROL|FVIRTKEY,        'C', WM_USER + 0x0204 }, // Edit/Copy
+    { FCONTROL|FVIRTKEY,        'V', WM_USER + 0x0205 }, // Edit/Paste
+    { FVIRTKEY,               VK_F1, WM_USER + 0x0301 }, // Help/About
+};
 
 static MENUX menu[] = {
     /* 0x00 */ { 0 },
@@ -78,10 +90,16 @@ static int MenuBar_StartUp(void) {
             }
         }
     }
+
+    hAccel = CreateAcceleratorTableA(accel, elementsof(accel));
+    if (!hAccel) {
+        return Logger.Error("MenuBar.StartUp", "Failed to create hot keys");
+    }
     return Logger.Done("MenuBar.StartUp", "Done");
 }
 
 static int MenuBar_CleanUp(void) {
+    DestroyAcceleratorTable(hAccel);
     return Logger.Done("MenuBar.CleanUp", "Done");
 }
 

@@ -123,13 +123,13 @@ static int View_CleanUp(void) {
 }
 
 static int View_Execute(void) {
-    MSG msg;
-    do {
-        if (GetMessageA(&msg,0,0,0)) {
+    static MSG msg;
+    for (; msg.message != WM_QUIT; GetMessageA(&msg, 0, 0, 0)) {
+        if (!TranslateAcceleratorA(hwnd[WinMdiFrame], hAccel, &msg)) {
             TranslateMessage(&msg);
             DispatchMessageA(&msg);
         }
-    } while (msg.message != WM_QUIT);
+    }
     return Logger.Done("View.Execute", "Done");
 }
 
