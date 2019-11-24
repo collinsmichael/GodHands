@@ -18,6 +18,7 @@ extern struct TOOLTIP   ToolTip;
 extern struct MDICLIENT MdiClient;
 extern struct TREEVIEW  TreeView;
 extern struct LISTVIEW  ListView;
+extern struct SPLITTER  Splitter;
 
 extern HMENU hmenu[64];
 extern HACCEL hAccel;
@@ -26,20 +27,22 @@ extern HACCEL hAccel;
 static struct WINCLASS cx[] = {
     { "MdiFrame",MdiFrameProc,IDI_APPLICATION,IDC_ARROW, 0x7F7F7F },
     { "MdiChild",MdiChildProc,IDI_APPLICATION,IDC_ARROW, 0x7F7F7F },
+    { "Splitter",SplitterProc,IDI_APPLICATION,IDC_SIZEWE, -(COLOR_3DFACE+1) },
 };
 
 struct WINDOW wx[16] = {
     { 0x00000000 },
-    { 0x02000000,"MdiFrame","GodHands", 0x06CF0000,0,0,640,480,0,           0,0x01, "MS Sans Serif", "GodHands" },
-    { 0x00000000,0,                   0,0x56000000,0,0,  0,  0,WinMdiFrame, 0,0x00, "MS Sans Serif", "MdiClient" },
+    { 0x02000000,"MdiFrame", "GodHands",0x06CF0000,  0, 0, 800,600,0,           0,0x01, "MS Sans Serif", "GodHands" },
+    { 0x00000000,0,                   0,0x56000000,134,24, 666,552,WinMdiFrame, 0,0x00, "MS Sans Serif", "MdiClient" },
     { 0x00000000 },
-    { 0x00000000,"tooltips_class32",  0,0x00000001,0,0,  0,  0,0,           0,0x00, "MS Sans Serif", "ToolTip" },
-    { 0x00000000,"msctls_statusbar32",0,0x56000100,0,0,  0,  0,WinMdiFrame, 0,0x00, "MS Sans Serif", "StatusBar" },
-    { 0x00000000,"msctls_progress32", 0,0x56000000,4,4,128, -6,WinStatusBar,0,0x00, "MS Sans Serif", "ProgressBar" },
-    { 0x00000000,"SysTabControl32",   0,0x56000000,0,0, -1, 24,WinMdiFrame, 0,0x00, "MS Sans Serif", "TabBar" },
-    { 0x00000000,"SysTreeView32",     0,0x5600000F,0,0, -1, -1,WinMdiFrame, 0,0x00, "MS Sans Serif", "TreeView" },
-    { 0x00000000,"SysListView32",     0,0x56000249,0,0, -1, -1,WinMdiFrame, 0,0x00, "MS Sans Serif", "ListView" },
-    { 0x00000000,0,                   0,0x00000000,0,0,  0,  0,0,           0,0x00, "MS Sans Serif", "ListViewHeader" },
+    { 0x00000000,"tooltips_class32",  0,0x00000001,  0, 0,   0,  0,0,           0,0x00, "MS Sans Serif", "ToolTip" },
+    { 0x00000000,"msctls_statusbar32",0,0x56000100,  0, 0,   0, 24,WinMdiFrame, 0,0x00, "MS Sans Serif", "StatusBar" },
+    { 0x00000000,"msctls_progress32", 0,0x56000000,  4, 4, 128, -6,WinStatusBar,0,0x00, "MS Sans Serif", "ProgressBar" },
+    { 0x00000000,"SysTabControl32",   0,0x56000000,134, 0, 666, 24,WinMdiFrame, 0,0x00, "MS Sans Serif", "TabBar" },
+    { 0x00000000,"SysTreeView32",     0,0x5600000F,  0, 0, 128,552,WinMdiFrame, 0,0x00, "MS Sans Serif", "TreeView" },
+    { 0x00000000,"SysListView32",     0,0x56000249,  0, 0, 128,552,WinMdiFrame, 0,0x00, "MS Sans Serif", "ListView" },
+    { 0x00000000,0,                   0,0x00000000,  0, 0,   0,  0,0,           0,0x00, "MS Sans Serif", "ListViewHeader" },
+    { 0x00000000,"Splitter",          0,0x56000000,128, 0,   6,552,WinMdiFrame, 0,0x00, "MS Sans Serif", "Splitter" },
     { 0x00000000 },
 };
 static PIXELFORMATDESCRIPTOR pfd = {
@@ -99,6 +102,7 @@ static int View_StartUp(void) {
     TabBar.StartUp();
     TreeView.StartUp();
     ListView.StartUp();
+    Splitter.StartUp();
 
     for (i = 0; i < elementsof(wx); i++) {
         if (!hwnd[i]) continue;
@@ -127,10 +131,6 @@ static int View_StartUp(void) {
     UpdateWindow(hwnd[WinMdiFrame]);
     hwnd[WinConsole] = GetConsoleWindow();
     ShowWindow(hwnd[WinConsole], SW_HIDE);
-
-
-    ShowWindow(hwnd[WinTreeView], SW_HIDE);
-    ShowWindow(hwnd[WinListView], SW_HIDE);
 
     StatusBar.SetStatus("No Disk", "Idle");
     StatusBar.SetProgress(0);

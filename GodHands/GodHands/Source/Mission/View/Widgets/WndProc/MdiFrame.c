@@ -20,34 +20,50 @@ static int TabIndex;
 static DWORD Attributes;
 
 LRESULT CALLBACK MdiFrame_OnSize(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-    int i;
-    for (i = 0; i < elementsof(wx); i++) {
-        RECT rect;
-        RECT rc;
+    RECT frame;
+  //RECT toolbar;
+    RECT tabbar;
+    RECT status;
+    RECT tree;
+    RECT list;
+    RECT client;
 
-        if (!wx[i].Parent) continue;
-        if ((wx[i].Style & WS_CHILD) == 0) continue;
+    GetClientRect(hwnd[WinMdiFrame], &frame);
+    MoveWindow(hwnd[WinStatusBar], frame.left, frame.top, frame.right, frame.bottom, TRUE);
+    GetClientRect(hwnd[WinTabBar], &tabbar);
+    GetClientRect(hwnd[WinStatusBar], &status);
+    frame.bottom -= status.bottom;
 
-        GetClientRect(hwnd[wx[i].Parent], &rect);
-        rc.left = (wx[i].PosX < 0)
-            ? rect.right + 1 + wx[i].PosX
-            : wx[i].PosX;
-        rc.top = (wx[i].PosY < 0)
-            ? rect.bottom + 1 + wx[i].PosY
-            : wx[i].PosY;
-        rc.right = (wx[i].Width < 0)
-            ? rect.right + 1 + wx[i].Width
-            : wx[i].Width;
-        rc.bottom = (wx[i].Height < 0)
-            ? rect.bottom + 1 + wx[i].Height
-            : wx[i].Height;
+  //GetClientRect(hwnd[WinToolBar], &toolbar);
+  //frame.top += toolbar.bottom;
+  //frame.bottom -= toolbar.bottom;
+    GetWindowRect(hwnd[WinTreeView], &tree);
+    GetWindowRect(hwnd[WinListView], &list);
 
-        if (i == WinMdiClient) {
-            SetWindowPos(hwnd[i], 0, rc.left, rc.top, rc.right, rc.bottom, SWP_NOZORDER);
-        } else {
-            MoveWindow(hwnd[i], rc.left, rc.top, rc.right, rc.bottom, TRUE);
-        }
-    }
+    tree.right = tree.right - tree.left;
+    tree.left = 0;
+    tree.top = frame.top;
+    tree.bottom = frame.bottom;
+
+    list.right = list.right - list.left;
+    list.left = 0;
+    list.top = frame.top;
+    list.bottom = frame.bottom;
+
+    tabbar.top = frame.top;
+    tabbar.left = tree.right + 4;
+    tabbar.right = frame.right - tabbar.left;
+
+    client.top = frame.top + tabbar.bottom;
+    client.bottom = frame.bottom - client.top;
+    client.left = tabbar.left;
+    client.right = tabbar.right;
+
+    MoveWindow(hwnd[WinTabBar], tabbar.left, tabbar.top, tabbar.right, tabbar.bottom, TRUE);
+    MoveWindow(hwnd[WinTreeView], tree.left, tree.top, tree.right, tree.bottom, TRUE);
+    MoveWindow(hwnd[WinListView], list.left, list.top, list.right, list.bottom, TRUE);
+    MoveWindow(hwnd[WinSplitter], tree.right, tree.top, 4, tree.bottom, TRUE);
+    SetWindowPos(hwnd[WinMdiClient], 0, client.left, client.top, client.right, client.bottom, SWP_NOZORDER);
     return 1;
 }
 

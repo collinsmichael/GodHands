@@ -44,6 +44,8 @@ typedef struct WINDOW {
 #define WinTreeView       0x08
 #define WinListView       0x09
 #define WinListViewHeader 0x0A
-#define WinMdiChild       0x0B
+#define WinSplitter       0x0B
+#define WinMdiChild       0x0C
+
 
 #endif // VIEW_H
