@@ -14,7 +14,7 @@ typedef struct WINCLASS {
     WNDPROC  WndProc;
     char    *hIcon;
     char    *hCursor;
-    COLORREF hBackground;
+    int      hBackground;
 } WINCLASS;
 
 typedef struct WINDOW {
@@ -27,8 +27,9 @@ typedef struct WINDOW {
     int   Width;
     int   Height;
     int   Parent;
-    int   Menu;
     void *Param;
+    int   Menu;
+    char *Font;
     char *ToolTip;
 } WINDOW;
 

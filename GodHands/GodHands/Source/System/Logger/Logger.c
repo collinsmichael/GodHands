@@ -109,5 +109,6 @@ struct LOGGER Logger = {
     Logger_Info,
     Logger_Pass,
     Logger_Warn,
-    Logger_Fail
+    Logger_Fail,
+    Logger_Error
 };

@@ -7,6 +7,7 @@ extern LRESULT CALLBACK MdiFrameProc(HWND,UINT,WPARAM,LPARAM);
 extern LRESULT CALLBACK MdiChildProc(HWND,UINT,WPARAM,LPARAM);
 
 extern struct LOGGER    Logger;
+extern struct FONT      Font;
 extern struct MENUBAR   MenuBar;
 extern struct STATUSBAR StatusBar;
 extern struct TOOLTIP   ToolTip;
@@ -16,16 +17,17 @@ extern HACCEL hAccel;
 
 
 static struct WINCLASS cx[] = {
-    { "MdiFrame",MdiFrameProc,IDI_APPLICATION,IDC_ARROW,0x7F7F7F },
-    { "MdiChild",MdiChildProc,IDI_APPLICATION,IDC_ARROW,0x7F7F7F },
+    { "MdiFrame",MdiFrameProc,IDI_APPLICATION,IDC_ARROW, 0x7F7F7F },
+    { "MdiChild",MdiChildProc,IDI_APPLICATION,IDC_ARROW, 0x7F7F7F },
 };
 
 struct WINDOW wx[16] = {
     { 0 },
-    { 0,"MdiFrame","GodHands", 0x16CF0000,0,0,640,480,           0,0x01,0, "GodHands" },
-    { 0,"tooltips_class32",0,  0x00000001,0,0,  0,  0,           0,0x00,0, 0},
-    { 0,"msctls_statusbar32",0,0x56000100,0,0,  0,  0, WinMdiFrame,0x00,0, "StatusBar" },
-    { 0,"msctls_progress32", 0,0x56000000,4,4,128, -6,WinStatusBar,0x00,0, "ProgressBar" },
+    { 0,"MdiFrame","GodHands", 0x06CF0000,0,0,640,480,           0,0,0x01, "MS Sans Serif", "GodHands"    },
+    { 0,"tooltips_class32",0,  0x00000001,0,0,  0,  0,           0,0,0x00, "MS Sans Serif", 0,            },
+    { 0,"msctls_statusbar32",0,0x56000100,0,0,  0,  0, WinMdiFrame,0,0x00, "MS Sans Serif", "StatusBar"   },
+    { 0,"msctls_progress32", 0,0x56000000,4,4,128, -6,WinStatusBar,0,0x00, "MS Sans Serif", "ProgressBar" },
+    { 0 }
 };
 
 ATOM atom[elementsof(cx)];
@@ -39,10 +41,8 @@ static int View_StartUp(void) {
     InitCommonControls();
     OleInitialize(0);
 
-    hwnd[WinConsole] = GetConsoleWindow();
-    ShowWindow(hwnd[WinConsole], SW_HIDE);
-
     hInstance = GetModuleHandle(0);
+    if (!Font.StartUp()) return 0;
     if (!MenuBar.StartUp()) return 0;
 
     for (i = 0; i < elementsof(cx); i++) {
@@ -55,7 +55,11 @@ static int View_StartUp(void) {
         wc.hInstance = hInstance;
         wc.hIcon = LoadIconA(0, cx[i].hIcon);
         wc.hCursor = LoadCursorA(0, cx[i].hCursor);
-        wc.hbrBackground = CreateSolidBrush(cx[i].hBackground);
+        if (cx[i].hBackground < 0) {
+            wc.hbrBackground = (HBRUSH)(-cx[i].hBackground);
+        } else {
+            wc.hbrBackground = CreateSolidBrush(cx[i].hBackground);
+        }
         atom[i] = RegisterClassA(&wc);
         if (!atom[i]) {
             return Logger.Error("View.StartUp",
@@ -63,6 +67,8 @@ static int View_StartUp(void) {
         }
     }
 
+    wx[WinMdiFrame].PosX = CW_USEDEFAULT;
+    wx[WinMdiFrame].PosY = CW_USEDEFAULT;
     for (i = 0; i < elementsof(wx); i++) {
         if (!wx[i].Class) continue;
         hwnd[i] = CreateWindowExA(wx[i].ExStyle, wx[i].Class, wx[i].Window,
@@ -74,23 +80,32 @@ static int View_StartUp(void) {
     }
 
     StatusBar.StartUp();
+
     for (i = 0; i < elementsof(wx); i++) {
-        if (wx[i].ToolTip) {
-            ToolTip.SetToolTip(i, wx[i].ToolTip);
-        }
+        if (wx[i].Font) Font.SetFont(hwnd[i], wx[i].Font);
     }
 
-    StatusBar.SetStatus("TEST", "TESTING STATUSBAR");
-    StatusBar.SetProgress(100);
+    for (i = 0; i < elementsof(wx); i++) {
+        if (wx[i].ToolTip) ToolTip.SetToolTip(i, wx[i].ToolTip);
+    }
+
+    ShowWindow(hwnd[WinMdiFrame], SW_SHOW);
+    UpdateWindow(hwnd[WinMdiFrame]);
+    hwnd[WinConsole] = GetConsoleWindow();
+    ShowWindow(hwnd[WinConsole], SW_HIDE);
+
+    StatusBar.SetStatus("No Disk", "Idle");
+    StatusBar.SetProgress(0);
     return Logger.Done("View.StartUp", "Done");
 }
 
 static int View_CleanUp(void) {
     int i;
-
     hInstance = GetModuleHandle(0);
-    for (i = elementsof(wx)-1; i >= 0; i--) {
-        if (atom[i]) UnregisterClassA(cx[i].ClassName, hInstance);
+    for (i = elementsof(cx)-1; i >= 0; i--) {
+        if (atom[i]) {
+            UnregisterClassA(cx[i].ClassName, hInstance);
+        }
     }
     MenuBar.CleanUp();
     OleUninitialize();

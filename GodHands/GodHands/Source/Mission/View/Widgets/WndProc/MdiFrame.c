@@ -3,6 +3,7 @@
 
 
 extern struct DIALOG Dialog;
+extern struct STATUSBAR StatusBar;
 extern struct WINDOW wx[16];
 extern HWND hwnd[16];
 
@@ -39,19 +40,19 @@ LRESULT CALLBACK MdiFrame_OnCommand(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
     switch (LOWORD(wParam)) {
     case WM_USER+0x0101:
         path = Dialog.OpenFileDialog(
-            "All files (*.*)\0*.*\0"
-            "BIN files (*.bin)\0*.bin\0"
-            "IMG files (*.img)\0*.img\0"
-            "ISO files (*.iso)\0*.iso\0\0"
-        );
+            "CD Images (img bin iso)\0*.img;*.bin;*.iso\0"
+            "All Files\0*.*\0\0");
+        if (path) {
+            StatusBar.SetStatus("In Progress", path);
+        }
         break;
     case WM_USER+0x0102:
         path = Dialog.SaveFileDialog(
-            "All files (*.*)\0*.*\0"
-            "BIN files (*.bin)\0*.bin\0"
-            "IMG files (*.img)\0*.img\0"
-            "ISO files (*.iso)\0*.iso\0\0"
-        );
+            "CD Images (img bin iso)\0*.img;*.bin;*.iso\0"
+            "All Files\0*.*\0\0");
+        if (path) {
+            StatusBar.SetStatus("In Progress", path);
+        }
         break;
     case WM_USER+0x0103:
         MessageBoxA(0,"File/Close", "Menu", 0);

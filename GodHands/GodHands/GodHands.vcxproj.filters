@@ -37,23 +37,29 @@
     <Filter Include="Source\System\JobQueue">
       <UniqueIdentifier>{7c9fc58f-2903-4724-9908-1bed57d4dc1b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Mission\View\WndProc">
-      <UniqueIdentifier>{cdec38ed-d9a6-460c-9807-da2be5237632}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\ThirdParty">
       <UniqueIdentifier>{d5794d4e-e85e-4e53-ae10-be17507371ce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Mission\View\MenuBar">
-      <UniqueIdentifier>{12c35a53-bead-4a1a-82d1-eb510eae64d6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Mission\View\ToolTip">
-      <UniqueIdentifier>{f750a588-a60b-4201-8bce-e9481e4b5253}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Mission\View\StatusBar">
-      <UniqueIdentifier>{53473318-b7da-4f21-a401-02a6d8f75a02}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Mission\View\Dialogs">
       <UniqueIdentifier>{b37c111e-b0ed-4490-b879-2d06dfa72434}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mission\View\Widgets">
+      <UniqueIdentifier>{0c48e2de-79a3-49ef-9958-82829f9dd288}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mission\View\Widgets\MenuBar">
+      <UniqueIdentifier>{12c35a53-bead-4a1a-82d1-eb510eae64d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mission\View\Resources">
+      <UniqueIdentifier>{263e249e-1a4b-4500-ac1f-679e7e0f5027}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mission\View\Widgets\StatusBar">
+      <UniqueIdentifier>{53473318-b7da-4f21-a401-02a6d8f75a02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mission\View\Widgets\ToolTip">
+      <UniqueIdentifier>{f750a588-a60b-4201-8bce-e9481e4b5253}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mission\View\Widgets\WndProc">
+      <UniqueIdentifier>{cdec38ed-d9a6-460c-9807-da2be5237632}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -102,23 +108,26 @@
     <ClCompile Include="Source\System\JobQueue\JobQueue_Test.c">
       <Filter>Source\System\JobQueue</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Mission\View\WndProc\MdiFrame.c">
-      <Filter>Source\Mission\View\WndProc</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mission\View\WndProc\MdiChild.c">
-      <Filter>Source\Mission\View\WndProc</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mission\View\MenuBar\MenuBar.c">
-      <Filter>Source\Mission\View\MenuBar</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mission\View\ToolTip\ToolTip.c">
-      <Filter>Source\Mission\View\ToolTip</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mission\View\StatusBar\StatusBar.c">
-      <Filter>Source\Mission\View\StatusBar</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Mission\View\Dialogs\Dialogs.c">
       <Filter>Source\Mission\View\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\View\Resources\Font.c">
+      <Filter>Source\Mission\View\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\View\Widgets\MenuBar\MenuBar.c">
+      <Filter>Source\Mission\View\Widgets\MenuBar</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\View\Widgets\StatusBar\StatusBar.c">
+      <Filter>Source\Mission\View\Widgets\StatusBar</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\View\Widgets\ToolTip\ToolTip.c">
+      <Filter>Source\Mission\View\Widgets\ToolTip</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\View\Widgets\WndProc\MdiChild.c">
+      <Filter>Source\Mission\View\Widgets\WndProc</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\View\Widgets\WndProc\MdiFrame.c">
+      <Filter>Source\Mission\View\Widgets\WndProc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,17 +170,20 @@
     <ClInclude Include="Source\ThirdParty\utest.h">
       <Filter>Source\ThirdParty</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Mission\View\MenuBar\MenuBar.h">
-      <Filter>Source\Mission\View\MenuBar</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Mission\View\ToolTip\ToolTip.h">
-      <Filter>Source\Mission\View\ToolTip</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Mission\View\StatusBar\StatusBar.h">
-      <Filter>Source\Mission\View\StatusBar</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Mission\View\Dialogs\Dialogs.h">
       <Filter>Source\Mission\View\Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\View\Resources\Font.h">
+      <Filter>Source\Mission\View\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\View\Widgets\MenuBar\MenuBar.h">
+      <Filter>Source\Mission\View\Widgets\MenuBar</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\View\Widgets\StatusBar\StatusBar.h">
+      <Filter>Source\Mission\View\Widgets\StatusBar</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\View\Widgets\ToolTip\ToolTip.h">
+      <Filter>Source\Mission\View\Widgets\ToolTip</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

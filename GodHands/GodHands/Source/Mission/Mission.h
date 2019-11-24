@@ -5,9 +5,10 @@
 #include "Mission/Model/Model.h"
 #include "Mission/View/View.h"
 #include "Mission/View/Dialogs/Dialogs.h"
-#include "Mission/View/MenuBar/MenuBar.h"
-#include "Mission/View/ToolTip/ToolTip.h"
-#include "Mission/View/StatusBar/StatusBar.h"
+#include "Mission/View/Resources/Font.h"
+#include "Mission/View/Widgets/MenuBar/MenuBar.h"
+#include "Mission/View/Widgets/ToolTip/ToolTip.h"
+#include "Mission/View/Widgets/StatusBar/StatusBar.h"
 
 
 typedef struct MISSION {

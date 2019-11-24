@@ -1,3 +1,4 @@
+#include <stdarg.h>
 #include <windows.h>
 #include <commctrl.h>
 #include "GodHands.h"
@@ -7,23 +8,26 @@ extern struct LOGGER Logger;
 extern struct TOOLTIP ToolTip;
 
 extern HWND hwnd[16];
+static char text[0x100];
 
 
 static int StatusBar_StartUp(void) {
-    int sb[3] = { 136, 192, -1 };
+    int sb[3] = { 136, 256, -1 };
     SendMessageA(hwnd[WinStatusBar], SB_SETPARTS, (WPARAM)elementsof(sb), (LPARAM)&sb);
-    return 1;
-}
-
-static int StatusBar_SetStatus(char *status, char *text) {
-    SendMessageA(hwnd[WinStatusBar], SB_SETTEXT, (WPARAM)1, (LPARAM)status);
-    SendMessageA(hwnd[WinStatusBar], SB_SETTEXT, (WPARAM)2, (LPARAM)text);
-
     SendMessageA(hwnd[WinProgressBar], PBM_SETRANGE, (WPARAM)0, (LPARAM)100);
     SendMessageA(hwnd[WinProgressBar], PBM_SETSTEP,  (WPARAM)1, 0);
     SendMessageA(hwnd[WinProgressBar], PBM_DELTAPOS, (WPARAM)1, 0);
     SendMessageA(hwnd[WinProgressBar], PBM_SETPOS,   (WPARAM)0, 0);
+    return 1;
+}
 
+static int StatusBar_SetStatus(char *status, char *format, ...) {
+    va_list list;
+    va_start(list, format);
+    wvsprintfA(text, format, list);
+    va_end(list);
+    SendMessageA(hwnd[WinStatusBar], SB_SETTEXT, (WPARAM)1, (LPARAM)status);
+    SendMessageA(hwnd[WinStatusBar], SB_SETTEXT, (WPARAM)2, (LPARAM)text);
     ToolTip.SetToolTip(WinStatusBar, text);
     return 1;
 }

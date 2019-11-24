@@ -4,7 +4,7 @@
 
 typedef struct STATUSBAR {
     int (*StartUp)(void);
-    int (*SetStatus)(char *status, char *text);
+    int (*SetStatus)(char *status, char *format, ...);
     int (*SetProgress)(int percent);
 } STATUSBAR;
 
