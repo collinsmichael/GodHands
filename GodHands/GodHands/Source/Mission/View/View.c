@@ -5,6 +5,8 @@
 
 extern LRESULT CALLBACK MdiFrameProc(HWND,UINT,WPARAM,LPARAM);
 extern LRESULT CALLBACK MdiChildProc(HWND,UINT,WPARAM,LPARAM);
+int FlickerFree(HWND hwnd);
+
 
 extern struct LOGGER    Logger;
 extern struct FONT      Font;
@@ -79,6 +81,7 @@ static int View_StartUp(void) {
         }
     }
 
+    //MenuBar.SetMenu(WinMdiFrame, wx[WinMdiFrame].Menu);
     StatusBar.StartUp();
 
     for (i = 0; i < elementsof(wx); i++) {
@@ -87,6 +90,11 @@ static int View_StartUp(void) {
 
     for (i = 0; i < elementsof(wx); i++) {
         if (wx[i].ToolTip) ToolTip.SetToolTip(i, wx[i].ToolTip);
+    }
+
+    for (i = 0; i < elementsof(wx); i++) {
+        if (i == WinToolTip) continue;
+        if (hwnd[i]) FlickerFree(hwnd[i]);
     }
 
     ShowWindow(hwnd[WinMdiFrame], SW_SHOW);

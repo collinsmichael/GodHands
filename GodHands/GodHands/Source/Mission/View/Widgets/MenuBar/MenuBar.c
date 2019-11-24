@@ -2,7 +2,9 @@
 #include "GodHands.h"
 
 
+int FlickerFree(HWND hwnd);
 extern struct LOGGER Logger;
+extern HWND hwnd[64];
 
 
 static MENUX menu[] = {
@@ -83,8 +85,29 @@ static int MenuBar_CleanUp(void) {
     return Logger.Done("MenuBar.CleanUp", "Done");
 }
 
+static int MenuBar_SetMenu(int win, int menu) {
+    //*****************************************************
+    //My best attempt at making the menubar flicker free...
+    //Always fails to return a valid mbi.hwndMenu
+    //*****************************************************
+    MENUBARINFO mbi;
+    stosb(&mbi, 0, sizeof(mbi));
+    mbi.cbSize = sizeof(mbi);
+
+    SetMenu(hwnd[win], hmenu[menu]);
+    if (!GetMenuBarInfo(hwnd[win], OBJID_MENU, 0, &mbi)) {
+        Logger.Error("Menu.SetMenu", "Failed to retrieve menubar info");
+    }
+    hwnd[WinMenuBar] = mbi.hwndMenu;
+    if (hwnd[WinMenuBar]) {
+        FlickerFree(hwnd[WinMenuBar]);
+    }
+    return Logger.Done("MenuBar.SetMenu", "Done");
+}
+
 
 struct MENUBAR MenuBar = {
     MenuBar_StartUp,
     MenuBar_CleanUp,
+    MenuBar_SetMenu,
 };

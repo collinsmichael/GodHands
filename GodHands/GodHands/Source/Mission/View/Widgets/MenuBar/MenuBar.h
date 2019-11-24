@@ -5,6 +5,7 @@
 typedef struct MENUBAR {
     int (*StartUp)(void);
     int (*CleanUp)(void);
+    int (*SetMenu)(int win, int menu);
 } MENUBAR;
 
 typedef struct MENUX {

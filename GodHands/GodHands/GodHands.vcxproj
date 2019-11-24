@@ -182,6 +182,7 @@
     <ClCompile Include="Source\Mission\View\Widgets\MenuBar\MenuBar.c" />
     <ClCompile Include="Source\Mission\View\Widgets\StatusBar\StatusBar.c" />
     <ClCompile Include="Source\Mission\View\Widgets\ToolTip\ToolTip.c" />
+    <ClCompile Include="Source\Mission\View\Widgets\WndProc\FlickerFree.c" />
     <ClCompile Include="Source\Mission\View\Widgets\WndProc\MdiChild.c" />
     <ClCompile Include="Source\Mission\View\Widgets\WndProc\MdiFrame.c" />
     <ClCompile Include="Source\Start.c" />
