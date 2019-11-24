@@ -76,6 +76,9 @@
     <Filter Include="Source\Mission\View\Widgets\Splitter">
       <UniqueIdentifier>{99173980-2553-48d6-b094-f3abfcf02bf9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Mission\View\Widgets\ToolBar">
+      <UniqueIdentifier>{ca30e908-ae5f-43b8-a936-1413f6dcf1cc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\System\RamDisk\RamDisk.c">
@@ -165,6 +168,9 @@
     <ClCompile Include="Source\Mission\View\Widgets\Splitter\Splitter.c">
       <Filter>Source\Mission\View\Widgets\Splitter</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mission\View\Widgets\ToolBar\ToolBar.c">
+      <Filter>Source\Mission\View\Widgets\ToolBar</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\RamDisk\RamDisk.h">
@@ -238,6 +244,9 @@
     </ClInclude>
     <ClInclude Include="Source\Mission\View\Widgets\Splitter\Splitter.h">
       <Filter>Source\Mission\View\Widgets\Splitter</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\View\Widgets\ToolBar\ToolBar.h">
+      <Filter>Source\Mission\View\Widgets\ToolBar</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -12,6 +12,7 @@ extern struct LOGGER    Logger;
 extern struct FONT      Font;
 extern struct ICON      Icon;
 extern struct MENUBAR   MenuBar;
+extern struct TOOLBAR   ToolBar;
 extern struct STATUSBAR StatusBar;
 extern struct TABBAR    TabBar;
 extern struct TOOLTIP   ToolTip;
@@ -35,6 +36,7 @@ struct WINDOW wx[16] = {
     { 0x02000000,"MdiFrame", "GodHands",0x06CF0000,  0, 0, 800,600,0,           0,0x01, "MS Sans Serif", "GodHands" },
     { 0x00000000,0,                   0,0x56000000,134,24, 666,552,WinMdiFrame, 0,0x00, "MS Sans Serif", "MdiClient" },
     { 0x00000000 },
+    { 0x00000000,"ToolbarWindow32",   0,0x56000101,  0, 0, 800, 32,WinMdiFrame, 0,0x00, "MS Sans Serif", 0 },
     { 0x00000000,"tooltips_class32",  0,0x00000001,  0, 0,   0,  0,0,           0,0x00, "MS Sans Serif", "ToolTip" },
     { 0x00000000,"msctls_statusbar32",0,0x56000100,  0, 0,   0, 24,WinMdiFrame, 0,0x00, "MS Sans Serif", "StatusBar" },
     { 0x00000000,"msctls_progress32", 0,0x56000000,  4, 4, 128, -6,WinStatusBar,0,0x00, "MS Sans Serif", "ProgressBar" },
@@ -99,6 +101,7 @@ static int View_StartUp(void) {
 
     StatusBar.StartUp();
     MdiClient.StartUp();
+    ToolBar.StartUp();
     TabBar.StartUp();
     TreeView.StartUp();
     ListView.StartUp();
@@ -133,7 +136,7 @@ static int View_StartUp(void) {
     ShowWindow(hwnd[WinConsole], SW_HIDE);
 
     StatusBar.SetStatus("No Disk", "Idle");
-    StatusBar.SetProgress(0);
+    StatusBar.SetProgress(100);
     return Logger.Done("View.StartUp", "Done");
 }
 

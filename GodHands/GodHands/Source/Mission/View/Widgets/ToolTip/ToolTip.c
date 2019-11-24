@@ -15,7 +15,7 @@ static int ToolTip_SetToolTip(int win, char *text) {
     tti.uId      = (UINT)hwnd[win];
     tti.lpszText = text;
     SendMessageA(hwnd[WinToolTip], TTM_ADDTOOLA, 0, (LPARAM)&tti);
-    return Logger.Done("ToolTip.CleanUp", "Done");
+    return Logger.Done("ToolTip.SetToolTip", "Done");
 }
 
 

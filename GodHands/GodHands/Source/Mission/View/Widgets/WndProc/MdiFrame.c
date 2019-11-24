@@ -21,7 +21,7 @@ static DWORD Attributes;
 
 LRESULT CALLBACK MdiFrame_OnSize(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     RECT frame;
-  //RECT toolbar;
+    RECT toolbar;
     RECT tabbar;
     RECT status;
     RECT tree;
@@ -30,25 +30,28 @@ LRESULT CALLBACK MdiFrame_OnSize(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 
     GetClientRect(hwnd[WinMdiFrame], &frame);
     MoveWindow(hwnd[WinStatusBar], frame.left, frame.top, frame.right, frame.bottom, TRUE);
-    GetClientRect(hwnd[WinTabBar], &tabbar);
     GetClientRect(hwnd[WinStatusBar], &status);
+    MoveWindow(hwnd[WinProgressBar], status.left+2, status.top+4, 132, status.bottom-6, TRUE);
+    GetClientRect(hwnd[WinTabBar], &tabbar);
     frame.bottom -= status.bottom;
 
-  //GetClientRect(hwnd[WinToolBar], &toolbar);
-  //frame.top += toolbar.bottom;
-  //frame.bottom -= toolbar.bottom;
+    GetClientRect(hwnd[WinToolBar], &toolbar);
+    frame.top += toolbar.bottom;
+    toolbar.left = frame.left;
+    toolbar.right = frame.right;
+    MoveWindow(hwnd[WinToolBar], toolbar.left, toolbar.top, toolbar.right, toolbar.bottom, TRUE);
+
     GetWindowRect(hwnd[WinTreeView], &tree);
     GetWindowRect(hwnd[WinListView], &list);
-
     tree.right = tree.right - tree.left;
     tree.left = 0;
     tree.top = frame.top;
-    tree.bottom = frame.bottom;
+    tree.bottom = frame.bottom - toolbar.bottom;
 
     list.right = list.right - list.left;
     list.left = 0;
     list.top = frame.top;
-    list.bottom = frame.bottom;
+    list.bottom = frame.bottom - toolbar.bottom;
 
     tabbar.top = frame.top;
     tabbar.left = tree.right + 4;

@@ -37,15 +37,16 @@ typedef struct WINDOW {
 #define WinMdiFrame       0x01
 #define WinMdiClient      0x02
 #define WinMenuBar        0x03
-#define WinToolTip        0x04
-#define WinStatusBar      0x05
-#define WinProgressBar    0x06
-#define WinTabBar         0x07
-#define WinTreeView       0x08
-#define WinListView       0x09
-#define WinListViewHeader 0x0A
-#define WinSplitter       0x0B
-#define WinMdiChild       0x0C
+#define WinToolBar        0x04
+#define WinToolTip        0x05
+#define WinStatusBar      0x06
+#define WinProgressBar    0x07
+#define WinTabBar         0x08
+#define WinTreeView       0x09
+#define WinListView       0x0A
+#define WinListViewHeader 0x0B
+#define WinSplitter       0x0C
+#define WinMdiChild       0x0D
 
 
 #endif // VIEW_H
