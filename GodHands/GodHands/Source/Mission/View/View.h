@@ -33,13 +33,15 @@ typedef struct WINDOW {
     char *ToolTip;
 } WINDOW;
 
-#define WinConsole     0x00
-#define WinMdiFrame    0x01
-#define WinMenuBar     0x02
-#define WinToolTip     0x03
-#define WinStatusBar   0x04
-#define WinProgressBar 0x05
-#define WinTreeView    0x06
+#define WinConsole        0x00
+#define WinMdiFrame       0x01
+#define WinMenuBar        0x02
+#define WinToolTip        0x03
+#define WinStatusBar      0x04
+#define WinProgressBar    0x05
+#define WinTreeView       0x06
+#define WinListView       0x07
+#define WinListViewHeader 0x08
 
 
 #endif // VIEW_H

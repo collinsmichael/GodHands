@@ -179,6 +179,7 @@
     <ClCompile Include="Source\Mission\View\Dialogs\Dialogs.c" />
     <ClCompile Include="Source\Mission\View\Resources\Font.c" />
     <ClCompile Include="Source\Mission\View\View.c" />
+    <ClCompile Include="Source\Mission\View\Widgets\ListView\ListView.c" />
     <ClCompile Include="Source\Mission\View\Widgets\MenuBar\MenuBar.c" />
     <ClCompile Include="Source\Mission\View\Widgets\StatusBar\StatusBar.c" />
     <ClCompile Include="Source\Mission\View\Widgets\ToolTip\ToolTip.c" />
@@ -205,6 +206,7 @@
     <ClInclude Include="Source\Mission\View\Dialogs\Dialogs.h" />
     <ClInclude Include="Source\Mission\View\Resources\Font.h" />
     <ClInclude Include="Source\Mission\View\View.h" />
+    <ClInclude Include="Source\Mission\View\Widgets\ListView\ListView.h" />
     <ClInclude Include="Source\Mission\View\Widgets\MenuBar\MenuBar.h" />
     <ClInclude Include="Source\Mission\View\Widgets\StatusBar\StatusBar.h" />
     <ClInclude Include="Source\Mission\View\Widgets\ToolTip\ToolTip.h" />

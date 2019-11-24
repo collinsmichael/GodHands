@@ -14,6 +14,7 @@ extern struct MENUBAR   MenuBar;
 extern struct STATUSBAR StatusBar;
 extern struct TOOLTIP   ToolTip;
 extern struct TREEVIEW  TreeView;
+extern struct LISTVIEW  ListView;
 
 extern HMENU hmenu[64];
 extern HACCEL hAccel;
@@ -28,12 +29,13 @@ struct WINDOW wx[16] = {
     { 0 },
     { 0,"MdiFrame","GodHands", 0x06CF0000,0,0,640,480,0,           0,0x01, "MS Sans Serif", "GodHands" },
     { 0 },
-    { 0,"tooltips_class32",0,  0x00000001,0,0,  0,  0,0,           0,0x00, "MS Sans Serif", 0 },
+    { 0,"tooltips_class32",  0,0x00000001,0,0,  0,  0,0,           0,0x00, "MS Sans Serif", 0 },
     { 0,"msctls_statusbar32",0,0x56000100,0,0,  0,  0,WinMdiFrame, 0,0x00, "MS Sans Serif", "StatusBar" },
     { 0,"msctls_progress32", 0,0x56000000,4,4,128, -6,WinStatusBar,0,0x00, "MS Sans Serif", "ProgressBar" },
-    { 0,"SysTreeView32",     0,0x5600000F,0,0, -1, -1,WinMdiFrame, 0,0x00, "MS Sans Serif", "TreeView" },
+    { 0 },//{ 0,"SysTreeView32",     0,0x5600000F,0,0, -1, -1,WinMdiFrame, 0,0x00, "MS Sans Serif", "TreeView" },
+    { 0,"SysListView32",     0,0x56000249,0,0, -1, -1,WinMdiFrame, 0,0x00, "MS Sans Serif", "ListView" },
+    { 0,0,                   0,0x00000000,0,0,  0,  0,0,           0,0x00, "MS Sans Serif", "ListViewHeader" },
 };
-
 
 ATOM atom[elementsof(cx)];
 HWND hwnd[64];
@@ -84,8 +86,10 @@ static int View_StartUp(void) {
         }
     }
 
-    //MenuBar.SetMenu(WinMdiFrame, wx[WinMdiFrame].Menu);
+    MenuBar.SetMenu(WinMdiFrame, wx[WinMdiFrame].Menu);
     StatusBar.StartUp();
+    TreeView.StartUp();
+    ListView.StartUp();
 
     for (i = 0; i < elementsof(wx); i++) {
         if (wx[i].Font) Font.SetFont(hwnd[i], wx[i].Font);
@@ -107,7 +111,6 @@ static int View_StartUp(void) {
 
     StatusBar.SetStatus("No Disk", "Idle");
     StatusBar.SetProgress(0);
-    TreeView.StartUp();
 
     return Logger.Done("View.StartUp", "Done");
 }

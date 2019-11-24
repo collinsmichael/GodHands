@@ -64,6 +64,9 @@
     <Filter Include="Source\Mission\View\Widgets\TreeView">
       <UniqueIdentifier>{1f29b3ed-3985-4fcd-89e9-aa012ec95bd9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Mission\View\Widgets\ListView">
+      <UniqueIdentifier>{0ba1ea53-a473-405e-8fb6-39c40047f8ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\System\RamDisk\RamDisk.c">
@@ -138,6 +141,9 @@
     <ClCompile Include="Source\Mission\View\Widgets\TreeView\TreeView.c">
       <Filter>Source\Mission\View\Widgets\TreeView</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mission\View\Widgets\ListView\ListView.c">
+      <Filter>Source\Mission\View\Widgets\ListView</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\RamDisk\RamDisk.h">
@@ -196,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="Source\Mission\View\Widgets\TreeView\TreeView.h">
       <Filter>Source\Mission\View\Widgets\TreeView</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\View\Widgets\ListView\ListView.h">
+      <Filter>Source\Mission\View\Widgets\ListView</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
