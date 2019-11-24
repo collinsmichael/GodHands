@@ -6,6 +6,7 @@
 #include "Mission/View/View.h"
 #include "Mission/View/Dialogs/Dialogs.h"
 #include "Mission/View/Resources/Font.h"
+#include "Mission/View/Resources/Icon.h"
 #include "Mission/View/Widgets/MenuBar/MenuBar.h"
 #include "Mission/View/Widgets/ToolTip/ToolTip.h"
 #include "Mission/View/Widgets/StatusBar/StatusBar.h"

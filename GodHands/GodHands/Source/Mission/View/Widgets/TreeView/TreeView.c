@@ -6,6 +6,7 @@
 #include "GodHands.h"
 
 
+extern ICON Icon;
 extern HWND hwnd[64];
 
 static TV_INSERTSTRUCT tvi;
@@ -20,12 +21,12 @@ static char path[256];
 int TreeView_StartUp(void) {
     int i;
     int j;
-    //hSmallIcons = ShellGetSmallIcons();
-    //TreeView_SetImageList(hwnd[WinTreeView], hSmallIcons, TVSIL_NORMAL);
+    hSmallIcons = Icon.GetSmallIcons();
+    TreeView_SetImageList(hwnd[WinTreeView], hSmallIcons, TVSIL_NORMAL);
     for (i = 0; i < 4; i++) {
         int iIcon;
         wsprintfA(path, "folder %d", i);
-        iIcon = 0;//ShellGetIconIndexGivenAttributes(path, FILE_ATTRIBUTE_DIRECTORY);
+        iIcon = Icon.GetIndexFromAttributes(path, FILE_ATTRIBUTE_DIRECTORY);
         tvi.hParent             = TVI_ROOT;
         tvi.hInsertAfter        = TVI_LAST;
         tvi.item.mask           = TVIF_TEXT | TVIF_HANDLE | TVIF_IMAGE | TVIF_PARAM | TVIF_SELECTEDIMAGE; // | TVIF_CHILDREN | TVIF_STATE;
@@ -41,7 +42,7 @@ int TreeView_StartUp(void) {
         tvi.hParent             = TreeView_InsertItem(hwnd[WinTreeView], &tvi);
         for (j = 1; j < elementsof(ext); j++) {
             wsprintfA(path, "document%s", ext[j]);
-            iIcon = 0;//ShellGetIconIndexGivenAttributes(path, FILE_ATTRIBUTE_NORMAL);
+            iIcon = Icon.GetIndexFromAttributes(path, FILE_ATTRIBUTE_NORMAL);
             tvi.item.iImage         = iIcon;
             tvi.item.iSelectedImage = iIcon;
             tvi.item.pszText        = path;

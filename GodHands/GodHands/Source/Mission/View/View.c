@@ -10,6 +10,7 @@ int FlickerFree(HWND hwnd);
 
 extern struct LOGGER    Logger;
 extern struct FONT      Font;
+extern struct ICON      Icon;
 extern struct MENUBAR   MenuBar;
 extern struct STATUSBAR StatusBar;
 extern struct TOOLTIP   ToolTip;
@@ -26,17 +27,19 @@ static struct WINCLASS cx[] = {
 };
 
 struct WINDOW wx[16] = {
-    { 0 },
-    { 0,"MdiFrame","GodHands", 0x06CF0000,0,0,640,480,0,           0,0x01, "MS Sans Serif", "GodHands" },
-    { 0 },
-    { 0,"tooltips_class32",  0,0x00000001,0,0,  0,  0,0,           0,0x00, "MS Sans Serif", 0 },
-    { 0,"msctls_statusbar32",0,0x56000100,0,0,  0,  0,WinMdiFrame, 0,0x00, "MS Sans Serif", "StatusBar" },
-    { 0,"msctls_progress32", 0,0x56000000,4,4,128, -6,WinStatusBar,0,0x00, "MS Sans Serif", "ProgressBar" },
-    { 0 },//{ 0,"SysTreeView32",     0,0x5600000F,0,0, -1, -1,WinMdiFrame, 0,0x00, "MS Sans Serif", "TreeView" },
-    { 0,"SysListView32",     0,0x56000249,0,0, -1, -1,WinMdiFrame, 0,0x00, "MS Sans Serif", "ListView" },
-    { 0,0,                   0,0x00000000,0,0,  0,  0,0,           0,0x00, "MS Sans Serif", "ListViewHeader" },
+    { 0x00000000 },
+    { 0x02000000,"MdiFrame","GodHands", 0x06CF0000,0,0,640,480,0,           0,0x01, "MS Sans Serif", "GodHands" },
+    { 0x00000000 },
+    { 0x00000000,"tooltips_class32",  0,0x00000001,0,0,  0,  0,0,           0,0x00, "MS Sans Serif", 0 },
+    { 0x00000000,"msctls_statusbar32",0,0x56000100,0,0,  0,  0,WinMdiFrame, 0,0x00, "MS Sans Serif", "StatusBar" },
+    { 0x00000000,"msctls_progress32", 0,0x56000000,4,4,128, -6,WinStatusBar,0,0x00, "MS Sans Serif", "ProgressBar" },
+    { 0x00000000,"SysTreeView32",     0,0x5600000F,0,0, -1, -1,WinMdiFrame, 0,0x00, "MS Sans Serif", "TreeView" },
+    { 0x00000000,"SysListView32",     0,0x56000249,0,0, -1, -1,WinMdiFrame, 0,0x00, "MS Sans Serif", "ListView" },
+    { 0x00000000,0,                   0,0x00000000,0,0,  0,  0,0,           0,0x00, "MS Sans Serif", "ListViewHeader" },
 };
-
+static PIXELFORMATDESCRIPTOR pfd = {
+    sizeof(pfd),0x01,0x35,0,0x20,0,0,0,0,0,0,0,0,0,0,0,0,0,0x20,0,0,0,0,0,0,0
+};
 ATOM atom[elementsof(cx)];
 HWND hwnd[64];
 HDC hdc[64];
@@ -50,6 +53,7 @@ static int View_StartUp(void) {
 
     hInstance = GetModuleHandle(0);
     if (!Font.StartUp()) return 0;
+    if (!Icon.StartUp()) return 0;
     if (!MenuBar.StartUp()) return 0;
 
     for (i = 0; i < elementsof(cx); i++) {
@@ -57,7 +61,6 @@ static int View_StartUp(void) {
         stosb(&wc, 0, sizeof(wc));
         wc.lpfnWndProc = cx[i].WndProc;
         wc.lpszClassName = cx[i].ClassName;
-
         wc.style = 0x23;
         wc.hInstance = hInstance;
         wc.hIcon = LoadIconA(0, cx[i].hIcon);
@@ -92,6 +95,15 @@ static int View_StartUp(void) {
     ListView.StartUp();
 
     for (i = 0; i < elementsof(wx); i++) {
+        if (!hwnd[i]) continue;
+        hdc[i] = GetDC(hwnd[i]);
+        if (!hdc[i]) {
+            return Logger.Error("View.StartUp", "Error no device context");
+        }
+        SetPixelFormat(hdc[i], ChoosePixelFormat(hdc[i], &pfd), &pfd);
+    }
+
+    for (i = 0; i < elementsof(wx); i++) {
         if (wx[i].Font) Font.SetFont(hwnd[i], wx[i].Font);
     }
 
@@ -124,6 +136,7 @@ static int View_CleanUp(void) {
         }
     }
     MenuBar.CleanUp();
+    Icon.CleanUp();
     OleUninitialize();
     ShowWindow(hwnd[WinConsole], SW_SHOW);
     SetForegroundWindow(hwnd[WinConsole]);

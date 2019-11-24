@@ -6,6 +6,7 @@
 #include "GodHands.h"
 
 
+extern ICON Icon;
 extern HWND hwnd[64];
 
 static HIMAGELIST hSmallIcons;
@@ -26,10 +27,10 @@ int ListView_StartUp(void) {
     int row;
 
     hwnd[WinListViewHeader] = (HWND)SendMessageA(hwnd[WinListView], LVM_GETHEADER, 0, 0);
-    //hSmallIcons = ShellGetSmallIcons();
-    //ListView_SetImageList(hwnd[WinListView], hSmallIcons, LVSIL_SMALL);
-    //hLargeIcons = ShellGetLargeIcons();
-    //ListView_SetImageList(hwnd[WinListView], hLargeIcons, LVSIL_NORMAL);
+    hSmallIcons = Icon.GetSmallIcons();
+    ListView_SetImageList(hwnd[WinListView], hSmallIcons, LVSIL_SMALL);
+    hLargeIcons = Icon.GetLargeIcons();
+    ListView_SetImageList(hwnd[WinListView], hLargeIcons, LVSIL_NORMAL);
 
     ListView_DeleteAllItems(hwnd[WinListView]);
     lvc.mask       = LVCF_TEXT | LVCF_WIDTH;
@@ -61,7 +62,7 @@ int ListView_StartUp(void) {
         Attribute = (ext[row][0] == '.')
             ? FILE_ATTRIBUTE_NORMAL : FILE_ATTRIBUTE_DIRECTORY;
 
-        iIcon = 0;//ShellGetIconIndexGivenAttributes(path, Attribute);
+        iIcon = Icon.GetIndexFromAttributes(path, Attribute);
         //if (row == 0) iIcon = 38;
         //else iIcon = ext[row][1]-'a';
 

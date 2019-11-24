@@ -1,4 +1,5 @@
 #include <windows.h>
+#include <commctrl.h>
 #include "GodHands.h"
 
 
@@ -36,9 +37,10 @@ LRESULT CALLBACK MdiFrame_OnSize(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 }
 
 LRESULT CALLBACK MdiFrame_OnCommand(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    DWORD style;
     char *path;
     switch (LOWORD(wParam)) {
-    case WM_USER+0x0101:
+    case WM_USER+0x0201:
         path = Dialog.OpenFileDialog(
             "CD Images (img bin iso)\0*.img;*.bin;*.iso\0"
             "All Files\0*.*\0\0");
@@ -46,7 +48,7 @@ LRESULT CALLBACK MdiFrame_OnCommand(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
             StatusBar.SetStatus("In Progress", path);
         }
         break;
-    case WM_USER+0x0102:
+    case WM_USER+0x0202:
         path = Dialog.SaveFileDialog(
             "CD Images (img bin iso)\0*.img;*.bin;*.iso\0"
             "All Files\0*.*\0\0");
@@ -54,28 +56,57 @@ LRESULT CALLBACK MdiFrame_OnCommand(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
             StatusBar.SetStatus("In Progress", path);
         }
         break;
-    case WM_USER+0x0103:
+    case WM_USER+0x0203:
         MessageBoxA(0,"File/Close", "Menu", 0);
         break;
-    case WM_USER+0x0104:
+    case WM_USER+0x0204:
         MessageBoxA(0,"File/Exit", "Menu", 0);
         break;
-    case WM_USER+0x0201:
+    case WM_USER+0x0301:
         MessageBoxA(0,"Edit/Undo", "Menu", 0);
         break;
-    case WM_USER+0x0202:
+    case WM_USER+0x0302:
         MessageBoxA(0,"Edit/Redo", "Menu", 0);
         break;
-    case WM_USER+0x0203:
+    case WM_USER+0x0303:
         MessageBoxA(0,"Edit/Cut", "Menu", 0);
         break;
-    case WM_USER+0x0204:
+    case WM_USER+0x0304:
         MessageBoxA(0,"Edit/Cut", "Copy", 0);
         break;
-    case WM_USER+0x0205:
+    case WM_USER+0x0305:
         MessageBoxA(0,"Edit/Cut", "Paste", 0);
         break;
-    case WM_USER+0x0301:
+    case WM_USER+0x0401:
+        ShowWindow(hwnd[WinTreeView], SW_SHOW);
+        ShowWindow(hwnd[WinListView], SW_HIDE);
+        break;
+    case WM_USER+0x0402:
+        ShowWindow(hwnd[WinTreeView], SW_HIDE);
+        ShowWindow(hwnd[WinListView], SW_SHOW);
+        style = GetWindowLongA(hwnd[WinListView], GWL_STYLE) & (~LVS_TYPEMASK);
+        SetWindowLongA(hwnd[WinListView], GWL_STYLE, style | LVS_ICON);
+        break;
+    case WM_USER+0x0403:
+        ShowWindow(hwnd[WinTreeView], SW_HIDE);
+        ShowWindow(hwnd[WinListView], SW_SHOW);
+        style = GetWindowLongA(hwnd[WinListView], GWL_STYLE) & (~LVS_TYPEMASK);
+        SetWindowLongA(hwnd[WinListView], GWL_STYLE, style| LVS_SMALLICON);
+        break;
+    case WM_USER+0x0404:
+        ShowWindow(hwnd[WinTreeView], SW_HIDE);
+        ShowWindow(hwnd[WinListView], SW_SHOW);
+        style = GetWindowLongA(hwnd[WinListView], GWL_STYLE) & (~LVS_TYPEMASK);
+        SetWindowLongA(hwnd[WinListView], GWL_STYLE, style | LVS_LIST);
+        break;
+    case WM_USER+0x0405:
+        ShowWindow(hwnd[WinTreeView], SW_HIDE);
+        ShowWindow(hwnd[WinListView], SW_SHOW);
+        style = GetWindowLongA(hwnd[WinListView], GWL_STYLE) & (~LVS_TYPEMASK);
+        SetWindowLongA(hwnd[WinListView], GWL_STYLE, style | LVS_REPORT);
+        break;
+
+    case WM_USER+0x0501:
         MessageBoxA(0,"Help/About", "Menu", 0);
         break;
     }

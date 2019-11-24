@@ -144,6 +144,9 @@
     <ClCompile Include="Source\Mission\View\Widgets\ListView\ListView.c">
       <Filter>Source\Mission\View\Widgets\ListView</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mission\View\Resources\Icon.c">
+      <Filter>Source\Mission\View\Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\RamDisk\RamDisk.h">
@@ -205,6 +208,9 @@
     </ClInclude>
     <ClInclude Include="Source\Mission\View\Widgets\ListView\ListView.h">
       <Filter>Source\Mission\View\Widgets\ListView</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\View\Resources\Icon.h">
+      <Filter>Source\Mission\View\Resources</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

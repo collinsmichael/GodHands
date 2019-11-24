@@ -7,16 +7,16 @@ extern struct LOGGER Logger;
 extern HWND hwnd[64];
 
 static ACCEL accel[] = {
-    { FCONTROL|FVIRTKEY,        'O', WM_USER + 0x0101 }, // File/Open
-    { FCONTROL|FVIRTKEY,        'S', WM_USER + 0x0102 }, // File/Save
-    { FCONTROL|FVIRTKEY|FSHIFT, 'C', WM_USER + 0x0103 }, // File/Close
-    { FCONTROL|FVIRTKEY,        'Q', WM_USER + 0x0104 }, // File/Exit
-    { FCONTROL|FVIRTKEY,        'Z', WM_USER + 0x0201 }, // Edit/Undo
-    { FCONTROL|FVIRTKEY,        'Y', WM_USER + 0x0202 }, // Edit/Redo
-    { FCONTROL|FVIRTKEY,        'X', WM_USER + 0x0203 }, // Edit/Cut
-    { FCONTROL|FVIRTKEY,        'C', WM_USER + 0x0204 }, // Edit/Copy
-    { FCONTROL|FVIRTKEY,        'V', WM_USER + 0x0205 }, // Edit/Paste
-    { FVIRTKEY,               VK_F1, WM_USER + 0x0301 }, // Help/About
+    { FCONTROL|FVIRTKEY,        'O', WM_USER + 0x0201 }, // File/Open
+    { FCONTROL|FVIRTKEY,        'S', WM_USER + 0x0202 }, // File/Save
+    { FCONTROL|FVIRTKEY|FSHIFT, 'C', WM_USER + 0x0203 }, // File/Close
+    { FCONTROL|FVIRTKEY,        'Q', WM_USER + 0x0204 }, // File/Exit
+    { FCONTROL|FVIRTKEY,        'Z', WM_USER + 0x0301 }, // Edit/Undo
+    { FCONTROL|FVIRTKEY,        'Y', WM_USER + 0x0302 }, // Edit/Redo
+    { FCONTROL|FVIRTKEY,        'X', WM_USER + 0x0303 }, // Edit/Cut
+    { FCONTROL|FVIRTKEY,        'C', WM_USER + 0x0304 }, // Edit/Copy
+    { FCONTROL|FVIRTKEY,        'V', WM_USER + 0x0305 }, // Edit/Paste
+    { FVIRTKEY,               VK_F1, WM_USER + 0x0501 }, // Help/About
 };
 
 static MENUX menu[] = {
@@ -24,19 +24,29 @@ static MENUX menu[] = {
     /* 0x01 */ { MENUBAR_MENU,  0x00, 0x0000, "Menu" },
     /* 0x02 */ { MENUBAR_POPUP, 0x01, 0x0000, "File" },
     /* 0x03 */ { MENUBAR_POPUP, 0x01, 0x0000, "Edit" },
-    /* 0x04 */ { MENUBAR_POPUP, 0x01, 0x0000, "Help" },
-    /* .... */ { MENUBAR_ITEM,  0x02, 0x0101, "Open ..." },
-    /* .... */ { MENUBAR_ITEM,  0x02, 0x0102, "Save ..." },
-    /* .... */ { MENUBAR_ITEM,  0x02, 0x0103, "Close" },
+    /* 0x04 */ { MENUBAR_POPUP, 0x01, 0x0000, "View" },
+    /* 0x05 */ { MENUBAR_POPUP, 0x01, 0x0000, "Help" },
+    /* 0x06 */ { MENUBAR_POPUP, 0x01, 0x0000, "Dev" },
+
+    /* .... */ { MENUBAR_ITEM,  0x02, 0x0201, "Open ..." },
+    /* .... */ { MENUBAR_ITEM,  0x02, 0x0202, "Save ..." },
+    /* .... */ { MENUBAR_ITEM,  0x02, 0x0203, "Close" },
     /* .... */ { MENUBAR_ITEM,  0x02, 0x0000, "-" },
-    /* .... */ { MENUBAR_ITEM,  0x02, 0x0104, "Exit" },
-    /* .... */ { MENUBAR_ITEM,  0x03, 0x0201, "Undo" },
-    /* .... */ { MENUBAR_ITEM,  0x03, 0x0202, "Redo" },
+    /* .... */ { MENUBAR_ITEM,  0x02, 0x0204, "Exit" },
+    /* .... */ { MENUBAR_ITEM,  0x03, 0x0301, "Undo" },
+    /* .... */ { MENUBAR_ITEM,  0x03, 0x0302, "Redo" },
     /* .... */ { MENUBAR_ITEM,  0x03, 0x0000, "-" },
-    /* .... */ { MENUBAR_ITEM,  0x03, 0x0203, "Cut" },
-    /* .... */ { MENUBAR_ITEM,  0x03, 0x0204, "Copy" },
-    /* .... */ { MENUBAR_ITEM,  0x03, 0x0205, "Paste" },
-    /* .... */ { MENUBAR_ITEM,  0x04, 0x0301, "About" },
+    /* .... */ { MENUBAR_ITEM,  0x03, 0x0303, "Cut" },
+    /* .... */ { MENUBAR_ITEM,  0x03, 0x0304, "Copy" },
+    /* .... */ { MENUBAR_ITEM,  0x03, 0x0305, "Paste" },
+
+    /* .... */ { MENUBAR_ITEM,  0x04, 0x0401, "Tree View" },
+    /* .... */ { MENUBAR_ITEM,  0x04, 0x0402, "Large Icons" },
+    /* .... */ { MENUBAR_ITEM,  0x04, 0x0403, "Small Icons" },
+    /* .... */ { MENUBAR_ITEM,  0x04, 0x0404, "List View" },
+    /* .... */ { MENUBAR_ITEM,  0x04, 0x0405, "Details" },
+    /* .... */ { MENUBAR_ITEM,  0x05, 0x0501, "About" },
+    /* .... */ { MENUBAR_ITEM,  0x06, 0x0601, "New" },
 };
 HMENU hmenu[64];
 HACCEL hAccel;
@@ -104,22 +114,7 @@ static int MenuBar_CleanUp(void) {
 }
 
 static int MenuBar_SetMenu(int win, int menu) {
-    //*****************************************************
-    //My best attempt at making the menubar flicker free...
-    //Always fails to return a valid mbi.hwndMenu
-    //*****************************************************
-    MENUBARINFO mbi;
-    stosb(&mbi, 0, sizeof(mbi));
-    mbi.cbSize = sizeof(mbi);
-
     SetMenu(hwnd[win], hmenu[menu]);
-    if (!GetMenuBarInfo(hwnd[win], OBJID_MENU, 0, &mbi)) {
-        Logger.Error("Menu.SetMenu", "Failed to retrieve menubar info");
-    }
-    hwnd[WinMenuBar] = mbi.hwndMenu;
-    if (hwnd[WinMenuBar]) {
-        FlickerFree(hwnd[WinMenuBar]);
-    }
     return Logger.Done("MenuBar.SetMenu", "Done");
 }
 
