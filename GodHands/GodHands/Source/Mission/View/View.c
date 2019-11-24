@@ -13,6 +13,7 @@ extern struct FONT      Font;
 extern struct MENUBAR   MenuBar;
 extern struct STATUSBAR StatusBar;
 extern struct TOOLTIP   ToolTip;
+extern struct TREEVIEW  TreeView;
 
 extern HMENU hmenu[64];
 extern HACCEL hAccel;
@@ -25,12 +26,14 @@ static struct WINCLASS cx[] = {
 
 struct WINDOW wx[16] = {
     { 0 },
-    { 0,"MdiFrame","GodHands", 0x06CF0000,0,0,640,480,           0,0,0x01, "MS Sans Serif", "GodHands"    },
-    { 0,"tooltips_class32",0,  0x00000001,0,0,  0,  0,           0,0,0x00, "MS Sans Serif", 0,            },
-    { 0,"msctls_statusbar32",0,0x56000100,0,0,  0,  0, WinMdiFrame,0,0x00, "MS Sans Serif", "StatusBar"   },
+    { 0,"MdiFrame","GodHands", 0x06CF0000,0,0,640,480,0,           0,0x01, "MS Sans Serif", "GodHands" },
+    { 0 },
+    { 0,"tooltips_class32",0,  0x00000001,0,0,  0,  0,0,           0,0x00, "MS Sans Serif", 0 },
+    { 0,"msctls_statusbar32",0,0x56000100,0,0,  0,  0,WinMdiFrame, 0,0x00, "MS Sans Serif", "StatusBar" },
     { 0,"msctls_progress32", 0,0x56000000,4,4,128, -6,WinStatusBar,0,0x00, "MS Sans Serif", "ProgressBar" },
-    { 0 }
+    { 0,"SysTreeView32",     0,0x5600000F,0,0, -1, -1,WinMdiFrame, 0,0x00, "MS Sans Serif", "TreeView" },
 };
+
 
 ATOM atom[elementsof(cx)];
 HWND hwnd[64];
@@ -104,6 +107,8 @@ static int View_StartUp(void) {
 
     StatusBar.SetStatus("No Disk", "Idle");
     StatusBar.SetProgress(0);
+    TreeView.StartUp();
+
     return Logger.Done("View.StartUp", "Done");
 }
 

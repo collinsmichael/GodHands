@@ -87,8 +87,12 @@ LRESULT CALLBACK MdiFrameProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
     case WM_COMMAND:
         MdiFrame_OnCommand(hWnd, uMsg, wParam, lParam);
         break;
-    case WM_SIZE:
+    case WM_ENTERSIZEMOVE:     case WM_EXITSIZEMOVE:
+    case WM_SIZING:            case WM_SIZE:
+    case WM_MOVING:            case WM_MOVE:
+    case WM_WINDOWPOSCHANGING: case WM_WINDOWPOSCHANGED:
         MdiFrame_OnSize(hWnd, uMsg, wParam, lParam);
+        if (uMsg == WM_WINDOWPOSCHANGED) return 0;
         break;
     case WM_CLOSE:
         PostQuitMessage(0);

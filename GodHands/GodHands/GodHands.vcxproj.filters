@@ -61,6 +61,9 @@
     <Filter Include="Source\Mission\View\Widgets\WndProc">
       <UniqueIdentifier>{cdec38ed-d9a6-460c-9807-da2be5237632}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Mission\View\Widgets\TreeView">
+      <UniqueIdentifier>{1f29b3ed-3985-4fcd-89e9-aa012ec95bd9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\System\RamDisk\RamDisk.c">
@@ -132,6 +135,9 @@
     <ClCompile Include="Source\Mission\View\Widgets\WndProc\FlickerFree.c">
       <Filter>Source\Mission\View\Widgets\WndProc</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mission\View\Widgets\TreeView\TreeView.c">
+      <Filter>Source\Mission\View\Widgets\TreeView</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\RamDisk\RamDisk.h">
@@ -187,6 +193,9 @@
     </ClInclude>
     <ClInclude Include="Source\Mission\View\Widgets\ToolTip\ToolTip.h">
       <Filter>Source\Mission\View\Widgets\ToolTip</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\View\Widgets\TreeView\TreeView.h">
+      <Filter>Source\Mission\View\Widgets\TreeView</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
