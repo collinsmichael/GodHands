@@ -2,13 +2,16 @@
 
 
 extern struct LOGGER Logger;
+extern struct JOBQUEUE JobQueue;
 
 
 static int System_StartUp(int argc, char *argv[]) {
+    if (!JobQueue.StartUp()) return 0;
     return Logger.Done("System.StartUp", "Done");
 }
 
 static int System_CleanUp(void) {
+    if (!JobQueue.CleanUp()) return 0;
     return Logger.Done("System.CleanUp", "Done");
 }
 

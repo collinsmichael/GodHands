@@ -143,7 +143,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <Optimization>MinSpace</Optimization>
+      <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>false</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;UNITTEST;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -158,7 +158,7 @@
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
     </ClCompile>
@@ -174,6 +174,10 @@
   <ItemGroup>
     <ClCompile Include="Source\Main.c" />
     <ClCompile Include="Source\Mission\Control\Control.c" />
+    <ClCompile Include="Source\Mission\Control\MenuFile\MenuFileClose.c" />
+    <ClCompile Include="Source\Mission\Control\MenuFile\MenuFileExit.c" />
+    <ClCompile Include="Source\Mission\Control\MenuFile\MenuFileOpen.c" />
+    <ClCompile Include="Source\Mission\Control\MenuFile\MenuFileSave.c" />
     <ClCompile Include="Source\Mission\Mission.c" />
     <ClCompile Include="Source\Mission\Model\Model.c" />
     <ClCompile Include="Source\Mission\View\Dialogs\Dialogs.c" />
@@ -194,6 +198,7 @@
     <ClCompile Include="Source\Mission\View\Widgets\WndProc\MdiFrame.c" />
     <ClCompile Include="Source\Start.c" />
     <ClCompile Include="Source\System\Config\Config.c" />
+    <ClCompile Include="Source\System\Iso9660\Iso9660.c" />
     <ClCompile Include="Source\System\JobQueue\JobQueue.c" />
     <ClCompile Include="Source\System\JobQueue\JobQueue_Test.c" />
     <ClCompile Include="Source\System\Logger\Logger.c" />
@@ -222,6 +227,7 @@
     <ClInclude Include="Source\Mission\View\Widgets\ToolTip\ToolTip.h" />
     <ClInclude Include="Source\Mission\View\Widgets\TreeView\TreeView.h" />
     <ClInclude Include="Source\System\Config\Config.h" />
+    <ClInclude Include="Source\System\Iso9660\Iso9660.h" />
     <ClInclude Include="Source\System\JobQueue\JobQueue.h" />
     <ClInclude Include="Source\System\Logger\Logger.h" />
     <ClInclude Include="Source\System\Memory\Memory.h" />

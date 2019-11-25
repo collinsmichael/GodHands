@@ -79,6 +79,12 @@
     <Filter Include="Source\Mission\View\Widgets\ToolBar">
       <UniqueIdentifier>{ca30e908-ae5f-43b8-a936-1413f6dcf1cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Mission\Control\MenuFile">
+      <UniqueIdentifier>{275efccf-9d67-4d0b-b99d-19feb7f8b44b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\System\Iso9660">
+      <UniqueIdentifier>{56fc48eb-9f58-464e-ace7-de4892047418}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\System\RamDisk\RamDisk.c">
@@ -171,6 +177,21 @@
     <ClCompile Include="Source\Mission\View\Widgets\ToolBar\ToolBar.c">
       <Filter>Source\Mission\View\Widgets\ToolBar</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mission\Control\MenuFile\MenuFileOpen.c">
+      <Filter>Source\Mission\Control\MenuFile</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Control\MenuFile\MenuFileClose.c">
+      <Filter>Source\Mission\Control\MenuFile</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Control\MenuFile\MenuFileSave.c">
+      <Filter>Source\Mission\Control\MenuFile</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Control\MenuFile\MenuFileExit.c">
+      <Filter>Source\Mission\Control\MenuFile</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\Iso9660\Iso9660.c">
+      <Filter>Source\System\Iso9660</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\RamDisk\RamDisk.h">
@@ -247,6 +268,9 @@
     </ClInclude>
     <ClInclude Include="Source\Mission\View\Widgets\ToolBar\ToolBar.h">
       <Filter>Source\Mission\View\Widgets\ToolBar</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\Iso9660\Iso9660.h">
+      <Filter>Source\System\Iso9660</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -8,9 +8,9 @@ int cmpsd(void *dst, void *src, int len) {
     _asm mov ecx, [len]
     _asm rep cmpsd
     _asm jz  y
-    _asm mov [equal], 0
+    _asm mov [equal], 1
     _asm jmp z
-y:  _asm mov [equal], 1
+y:  _asm mov [equal], 0
 z:  return equal;
 }
 
@@ -37,9 +37,9 @@ int cmpsw(void *dst, void *src, int len) {
     _asm mov ecx, [len]
     _asm rep cmpsw
     _asm jz  y
-    _asm mov [equal], 0
+    _asm mov [equal], 1
     _asm jmp z
-y:  _asm mov [equal], 1
+y:  _asm mov [equal], 0
 z:  return equal;
 }
 
@@ -66,9 +66,9 @@ int cmpsb(void *dst, void *src, int len) {
     _asm mov ecx, [len]
     _asm rep cmpsb
     _asm jz  y
-    _asm mov [equal], 0
+    _asm mov [equal], 1
     _asm jmp z
-y:  _asm mov [equal], 1
+y:  _asm mov [equal], 0
 z:  return equal;
 }
 

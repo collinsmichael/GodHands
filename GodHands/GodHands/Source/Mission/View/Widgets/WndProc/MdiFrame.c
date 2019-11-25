@@ -5,6 +5,7 @@
 
 extern struct LOGGER Logger;
 extern struct DIALOG Dialog;
+extern struct JOBQUEUE JobQueue;
 extern struct STATUSBAR StatusBar;
 extern struct MDICLIENT MdiClient;
 extern struct MENUBAR MenuBar;
@@ -74,14 +75,18 @@ LRESULT CALLBACK MdiFrame_OnCommand(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
     MDICREATESTRUCT mc;
     DWORD style;
     char *path;
+    int MenuFile_Open(void*);
+    int code = LOWORD(wParam);
+
     switch (LOWORD(wParam)) {
     case WM_USER+0x0201:
-        path = Dialog.OpenFileDialog(
-            "CD Images (img bin iso)\0*.img;*.bin;*.iso\0"
-            "All Files\0*.*\0\0");
-        if (path) {
-            StatusBar.SetStatus("In Progress", path);
-        }
+        JobQueue.Schedule(MenuFile_Open, 0);
+        //path = Dialog.OpenFileDialog(
+        //    "CD Images (img bin iso)\0*.img;*.bin;*.iso\0"
+        //    "All Files\0*.*\0\0");
+        //if (path) {
+        //    StatusBar.SetStatus("In Progress", path);
+        //}
         break;
     case WM_USER+0x0202:
         path = Dialog.SaveFileDialog(

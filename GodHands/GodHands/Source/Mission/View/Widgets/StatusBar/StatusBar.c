@@ -28,6 +28,7 @@ static int StatusBar_SetStatus(char *status, char *format, ...) {
     va_end(list);
     SendMessageA(hwnd[WinStatusBar], SB_SETTEXT, (WPARAM)1, (LPARAM)status);
     SendMessageA(hwnd[WinStatusBar], SB_SETTEXT, (WPARAM)2, (LPARAM)text);
+    UpdateWindow(hwnd[WinStatusBar]);
     ToolTip.SetToolTip(WinStatusBar, text);
     return 1;
 }
@@ -36,6 +37,7 @@ static int StatusBar_SetProgress(int percent) {
     if (percent < 0) percent = 0;
     if (percent > 100) percent = 100;
     SendMessageA(hwnd[WinProgressBar], PBM_SETPOS, (WPARAM)percent, 0);
+    UpdateWindow(hwnd[WinProgressBar]);
     return 1;
 }
 
