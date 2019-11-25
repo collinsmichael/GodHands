@@ -273,4 +273,9 @@
       <Filter>Source\System\Iso9660</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\ReadMe.txt">
+      <Filter>Source</Filter>
+    </None>
+  </ItemGroup>
 </Project>

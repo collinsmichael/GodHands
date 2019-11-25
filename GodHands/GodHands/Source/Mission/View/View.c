@@ -24,7 +24,6 @@ extern struct SPLITTER  Splitter;
 extern HMENU hmenu[64];
 extern HACCEL hAccel;
 
-
 static struct WINCLASS cx[] = {
     { "MdiFrame",MdiFrameProc,IDI_APPLICATION,IDC_ARROW, 0x7F7F7F },
     { "MdiChild",MdiChildProc,IDI_APPLICATION,IDC_ARROW, 0x7F7F7F },

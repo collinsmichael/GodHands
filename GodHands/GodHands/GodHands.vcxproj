@@ -236,6 +236,9 @@
     <ClInclude Include="Source\ThirdParty\utest.h" />
     <ClInclude Include="Source\UnitTest\UnitTest.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\ReadMe.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -15,28 +15,23 @@ int MenuFile_Open(int code) {
 
     if (!RamDisk.Open(path)) return 0;
     StatusBar.SetStatus("File.Open", "In Progress");
-    StatusBar.SetProgress(0);
-
-    Sleep(1*SEC);
-    StatusBar.SetProgress(10);
-    Sleep(1*SEC);
-    StatusBar.SetProgress(20);
-    Sleep(1*SEC);
+    //StatusBar.SetProgress(0);
+    //StatusBar.SetProgress(10);
+    //StatusBar.SetProgress(20);
     StatusBar.SetProgress(30);
+    StatusBar.SetStatus("File.Open", "30%%");
     Sleep(1*SEC);
     StatusBar.SetProgress(40);
+    StatusBar.SetStatus("File.Open", "40%%");
     Sleep(1*SEC);
     StatusBar.SetProgress(50);
+    StatusBar.SetStatus("File.Open", "50%%");
     Sleep(1*SEC);
-    StatusBar.SetProgress(60);
-    Sleep(1*SEC);
-    StatusBar.SetProgress(70);
-    Sleep(1*SEC);
-    StatusBar.SetProgress(80);
-    Sleep(1*SEC);
-    StatusBar.SetProgress(90);
-    Sleep(1*SEC);
-    StatusBar.SetProgress(100);
+    //StatusBar.SetProgress(60);
+    //StatusBar.SetProgress(70);
+    //StatusBar.SetProgress(80);
+    //StatusBar.SetProgress(90);
+    //StatusBar.SetProgress(100);
 
     // Do these quickly
     // [01] Read Primary Volume Descriptor
@@ -62,8 +57,7 @@ int MenuFile_Open(int code) {
 
     // Do these very slowly
     // [19] Scan entire disk
-    Sleep(10*SEC);
     StatusBar.SetStatus("File.Open", "Done");
-    StatusBar.SetProgress(0);
+    //StatusBar.SetProgress(0);
     return Logger.Done("File.Open", "Done");
 }
