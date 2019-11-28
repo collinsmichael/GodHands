@@ -20,7 +20,7 @@ static char lbax[256];
 static char type[256];
 static char size[256]; 
 
-int ListView__DeleteAllItems(void) {
+int ListView_DeleteAll(void) {
     ListView_DeleteAllItems(hwnd[WinListView]);
     return 1;
 }
@@ -38,7 +38,7 @@ int ListView_ResetColumns(void) {
     return 1;
 }
 
-int ListView_AddItem(char *text, char *lba, char *size, char *type, DWORD Attribute) {
+int ListView_AddItem(char *text, char *lba, char *size, char *type, DWORD Attribute, void *param) {
     int iIcon = Icon.GetIndexFromAttributes(path, Attribute);
 
     lvi.mask       = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM | LVIF_STATE;
@@ -48,7 +48,7 @@ int ListView_AddItem(char *text, char *lba, char *size, char *type, DWORD Attrib
     lvi.state      = 0;
     lvi.stateMask  = 0;
     lvi.iItem      = ListView_GetItemCount(hwnd[WinListView]);
-    lvi.lParam     = lvi.iItem;
+    lvi.lParam     = (LPARAM)param;
     lvi.iSubItem   = 0;
     ListView_InsertItem(hwnd[WinListView], &lvi);
 
@@ -86,7 +86,7 @@ int ListView_AddDir(ISO9660_DIR *rec) {
     wsprintfA(lbax, "0x%08X", rec->LsbLenData);
     wsprintfA(size, "%u bytes", rec->LsbLenData);
     lstrcpyA(type, "folder");
-    ListView_AddItem(path, lbax, size, type, FILE_ATTRIBUTE_DIRECTORY);
+    ListView_AddItem(path, lbax, size, type, FILE_ATTRIBUTE_DIRECTORY, rec);
     return 1;
 }
 
@@ -108,7 +108,7 @@ int ListView_AddFile(ISO9660_DIR *rec) {
     wsprintfA(lbax, "0x%08X", rec->LsbLenData);
     wsprintfA(size, "%u bytes", rec->LsbLenData);
     lstrcpyA(type, &path[x]);
-    ListView_AddItem(path, lbax, size, type, FILE_ATTRIBUTE_NORMAL);
+    ListView_AddItem(path, lbax, size, type, FILE_ATTRIBUTE_NORMAL, rec);
     return 1;
 }
 
@@ -127,7 +127,7 @@ int ListView_StartUp(void) {
 
 struct LISTVIEW ListView = {
     ListView_StartUp,
-    ListView__DeleteAllItems,
+    ListView_DeleteAll,
     ListView_ResetColumns,
     ListView_AddItem,
     ListView_AddDir,

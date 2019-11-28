@@ -6,7 +6,7 @@ typedef struct LISTVIEW {
     int (*StartUp)(void);
     int (*DeleteAllItems)(void);
     int (*ResetColumns)(void);
-    int (*AddItem)(char *text, char *lba, char *size, char *type, DWORD Attribute);
+    int (*AddItem)(char *text, char *lba, char *size, char *type, DWORD Attribute, void *param);
     int (*AddDir)(ISO9660_DIR *rec);
     int (*AddFile)(ISO9660_DIR *rec);
 } LISTVIEW;

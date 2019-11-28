@@ -4,12 +4,17 @@
 
 extern LOGGER Logger;
 extern ISO9660 Iso9660;
+extern TREEVIEW TreeView;
 extern LISTVIEW ListView;
 extern DIALOG Dialog;
 extern STATUSBAR StatusBar;
 
 int EnumTreeDir(ISO9660_DIR *rec) {
-    MessageBoxA(0, rec->FileName, 0, 0);
+    if ((rec->FileFlags & ISO9660_DIRECTORY)) {
+        TreeView.AddDir(0, rec);
+    } else {
+        TreeView.AddFile(0, rec);
+    }
     return 1;
 }
 
