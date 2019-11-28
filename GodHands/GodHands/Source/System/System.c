@@ -3,9 +3,11 @@
 
 extern struct LOGGER Logger;
 extern struct JOBQUEUE JobQueue;
+extern struct RAMDISK RamDisk;
 
 
 static int System_StartUp(int argc, char *argv[]) {
+    if (!RamDisk.Reset()) return 0;
     if (!JobQueue.StartUp()) return 0;
     return Logger.Done("System.StartUp", "Done");
 }

@@ -64,13 +64,12 @@ static int RamDisk_Write(int lba, int len) {
 }
 
 static int RamDisk_Close(void) {
-    if ((!file) || (file == INVALID_HANDLE_VALUE)) {
-        return Logger.Error("RamDisk.Close", "No disk");
+    if ((file != 0) && (file != INVALID_HANDLE_VALUE)) {
+        CloseHandle(file);
+        file = 0;
+        size = 0;
+        is_iso = 0;
     }
-    CloseHandle(file);
-    file = 0;
-    size = 0;
-    is_iso = 0;
     return Logger.Done("RamDisk.Close", "Done");
 }
 

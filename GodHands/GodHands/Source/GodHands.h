@@ -14,8 +14,8 @@
 
 
 #define elementsof(x) (sizeof(x)/sizeof(x[0]))
-#include "Mission/Mission.h"
 #include "System/System.h"
+#include "Mission/Mission.h"
 
 
 #ifdef UNITTEST
