@@ -6,6 +6,7 @@
 #include "GodHands.h"
 
 
+extern ISO9660 Iso9660;
 extern ICON Icon;
 extern HWND hwnd[64];
 
@@ -16,15 +17,15 @@ static HIMAGELIST hLargeIcons;
 static char path[256];
 
 
-int TreeView_Reset(void) {
+static int TreeView_Reset(void) {
     return (int)TreeView_DeleteAllItems(hwnd[WinTreeView]);
 }
 
-int TreeView_DeleteAll(void) {
+static int TreeView_DeleteAll(void) {
     return (int)TreeView_DeleteAllItems(hwnd[WinTreeView]);
 }
 
-int TreeView_AddItem(int parent, char *path, DWORD Attribute, void *param) {
+static int TreeView_AddItem(void *parent, char *path, DWORD Attribute, void *param) {
     int iIcon = Icon.GetIndexFromAttributes(path, Attribute);
     tvi.hParent             = (parent) ? (HTREEITEM)parent : TVI_ROOT;
     tvi.hInsertAfter        = TVI_LAST;
@@ -32,11 +33,11 @@ int TreeView_AddItem(int parent, char *path, DWORD Attribute, void *param) {
     tvi.item.pszText        = path;
     tvi.item.cchTextMax     = lstrlenA(path);
     tvi.item.iImage         = iIcon;
-    tvi.item.iSelectedImage = (FILE_ATTRIBUTE_DIRECTORY) ? iIcon+1 : iIcon;
+    tvi.item.iSelectedImage = (Attribute == FILE_ATTRIBUTE_DIRECTORY) ? iIcon+1 : iIcon;
     return (int)TreeView_InsertItem(hwnd[WinTreeView], &tvi);
 }
 
-int TreeView_AddDir(int parent, ISO9660_DIR *rec) {
+static int TreeView_AddDir(void *parent, ISO9660_DIR *rec) {
     int i;
     for (i = 0; i < rec->LenFileName; i++) {
         if (rec->FileName[i] == ';') {
@@ -50,7 +51,7 @@ int TreeView_AddDir(int parent, ISO9660_DIR *rec) {
     return TreeView_AddItem(parent, path, FILE_ATTRIBUTE_DIRECTORY, rec);
 }
 
-int TreeView_AddFile(int parent, ISO9660_DIR *rec) {
+static int TreeView_AddFile(void *parent, ISO9660_DIR *rec) {
     int i;
     for (i = 0; i < rec->LenFileName; i++) {
         if (rec->FileName[i] == ';') {
@@ -62,6 +63,28 @@ int TreeView_AddFile(int parent, ISO9660_DIR *rec) {
     path[i] = 0;
     path[rec->LenFileName] = 0;
     return TreeView_AddItem(parent, path, FILE_ATTRIBUTE_NORMAL, rec);
+}
+
+static int EnumTreeDir(void *parent, ISO9660_DIR *rec) {
+    if ((rec->LenRecord > 0x30)) {
+        if ((rec->FileFlags & ISO9660_DIRECTORY)) {
+            void *child = (void*)TreeView_AddDir(parent, rec);
+            if (!Iso9660.EnumDir(child, rec, EnumTreeDir)) return 0;
+        } else {
+            TreeView_AddFile(parent, rec);
+        }
+    }
+    return 1;
+}
+
+static int TreeView_Mount(void) {
+    void *root;
+    char *name = Iso9660.DiskName();
+    ISO9660_DIR *rec = Iso9660.RootDir();
+    TreeView_DeleteAll();
+    root = (void*)TreeView_AddItem(0, name, FILE_ATTRIBUTE_NORMAL, rec);
+    if (!Iso9660.EnumDir(root, 0, EnumTreeDir)) return 0;
+    return 1;
 }
 
 int TreeView_StartUp(void) {
@@ -104,6 +127,7 @@ int TreeView_StartUp(void) {
 struct TREEVIEW TreeView = {
     TreeView_StartUp,
     TreeView_DeleteAll,
+    TreeView_Mount,
     TreeView_AddItem,
     TreeView_AddDir,
     TreeView_AddFile,

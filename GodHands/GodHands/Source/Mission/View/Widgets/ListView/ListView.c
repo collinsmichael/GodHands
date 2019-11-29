@@ -22,7 +22,7 @@ static char path[256];
 static char lbax[256];
 static char type[256];
 static char size[256]; 
-static ISO9660_DIR *stack[256];
+static ISO9660_DIR *nav_stack[256];
 static int nav;
 static int end;
 
@@ -109,7 +109,7 @@ static int ListView_AddFile(ISO9660_DIR *rec) {
     return 1;
 }
 
-static int ListView_Mount(ISO9660_DIR *rec) {
+static int ListView_Mount(void *param, ISO9660_DIR *rec) {
     if ((rec->FileFlags & ISO9660_DIRECTORY)) {
         ListView_AddDir(rec);
     } else {
@@ -120,9 +120,9 @@ static int ListView_Mount(ISO9660_DIR *rec) {
 
 static int ListView_NavEnter(ISO9660_DIR *rec) {
     ListView_DeleteAll();
-    if (!Iso9660.EnumDir(rec, ListView_Mount)) return 0;
-    if (nav < elementsof(stack)) {
-        stack[++nav] = rec;
+    if (!Iso9660.EnumDir(0, rec, ListView_Mount)) return 0;
+    if (nav < elementsof(nav_stack)-1) {
+        nav_stack[++nav] = rec;
         end = nav;
     }
     return 1;
@@ -130,18 +130,18 @@ static int ListView_NavEnter(ISO9660_DIR *rec) {
 
 static int ListView_NavBack(void) {
     if (nav > 1) {
-        ISO9660_DIR *rec = stack[--nav];
+        ISO9660_DIR *rec = nav_stack[--nav];
         ListView_DeleteAll();
-        if (!Iso9660.EnumDir(rec, ListView_Mount)) return 0;
+        if (!Iso9660.EnumDir(0, rec, ListView_Mount)) return 0;
     }
     return 1;
 }
 
 static int ListView_NavForward(void) {
     if (nav < end) {
-        ISO9660_DIR *rec = stack[++nav];
+        ISO9660_DIR *rec = nav_stack[++nav];
         ListView_DeleteAll();
-        if (!Iso9660.EnumDir(rec, ListView_Mount)) return 0;
+        if (!Iso9660.EnumDir(0, rec, ListView_Mount)) return 0;
     }
     return 1;
 }

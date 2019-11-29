@@ -9,15 +9,6 @@ extern LISTVIEW ListView;
 extern DIALOG Dialog;
 extern STATUSBAR StatusBar;
 
-int EnumTreeDir(ISO9660_DIR *rec) {
-    if ((rec->FileFlags & ISO9660_DIRECTORY)) {
-        TreeView.AddDir(0, rec);
-    } else {
-        TreeView.AddFile(0, rec);
-    }
-    return 1;
-}
-
 int MenuFile_Open(int code) {
     char *path = Dialog.OpenFileDialog(
         "CD Images (img bin iso)\0*.img;*.bin;*.iso\0"
@@ -27,8 +18,7 @@ int MenuFile_Open(int code) {
     if (!Iso9660.Open(path)) return 0;
     ListView.Reset();
     ListView.NavEnter(0);
-    TreeView.Reset();
-    if (!Iso9660.EnumDir(0, EnumTreeDir)) return 0;
+    TreeView.Mount();
 
     //StatusBar.SetStatus("File.Open", "In Progress");
     //StatusBar.SetProgress(30);

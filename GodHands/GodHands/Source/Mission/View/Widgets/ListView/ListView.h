@@ -9,7 +9,7 @@ typedef struct LISTVIEW {
     int (*AddItem)(char *text, char *lba, char *size, DWORD Attribute, void *param);
     int (*AddDir)(ISO9660_DIR *rec);
     int (*AddFile)(ISO9660_DIR *rec);
-    int (*Mount)(ISO9660_DIR *rec);
+    int (*Mount)(void *param, ISO9660_DIR *rec);
     int (*NavEnter)(ISO9660_DIR *rec);
     int (*NavBack)(void);
     int (*NavForward)(void);
