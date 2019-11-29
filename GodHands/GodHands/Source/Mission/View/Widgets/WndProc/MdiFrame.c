@@ -2,11 +2,13 @@
 #include <commctrl.h>
 #include "GodHands.h"
 
+LRESULT CALLBACK OnNotifyProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 extern struct LOGGER Logger;
 extern struct DIALOG Dialog;
 extern struct JOBQUEUE JobQueue;
 extern struct STATUSBAR StatusBar;
+extern struct LISTVIEW ListView;
 extern struct MDICLIENT MdiClient;
 extern struct MENUBAR MenuBar;
 extern struct WINDOW wx[16];
@@ -79,6 +81,12 @@ LRESULT CALLBACK MdiFrame_OnCommand(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
     int code = LOWORD(wParam);
 
     switch (LOWORD(wParam)) {
+    case WM_USER+0x0101:
+        ListView.NavBack();
+        break;
+    case WM_USER+0x0102:
+        ListView.NavForward();
+        break;
     case WM_USER+0x0201:
         JobQueue.Schedule(MenuFile_Open, 0);
         //path = Dialog.OpenFileDialog(
@@ -126,24 +134,28 @@ LRESULT CALLBACK MdiFrame_OnCommand(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
         ShowWindow(hwnd[WinListView], SW_SHOW);
         style = GetWindowLongA(hwnd[WinListView], GWL_STYLE) & (~LVS_TYPEMASK);
         SetWindowLongA(hwnd[WinListView], GWL_STYLE, style | LVS_ICON);
+        ListView_Arrange(hwnd[WinListView], LVA_DEFAULT);
         break;
     case WM_USER+0x0403:
         ShowWindow(hwnd[WinTreeView], SW_HIDE);
         ShowWindow(hwnd[WinListView], SW_SHOW);
         style = GetWindowLongA(hwnd[WinListView], GWL_STYLE) & (~LVS_TYPEMASK);
         SetWindowLongA(hwnd[WinListView], GWL_STYLE, style| LVS_SMALLICON);
+        ListView_Arrange(hwnd[WinListView], LVA_DEFAULT);
         break;
     case WM_USER+0x0404:
         ShowWindow(hwnd[WinTreeView], SW_HIDE);
         ShowWindow(hwnd[WinListView], SW_SHOW);
         style = GetWindowLongA(hwnd[WinListView], GWL_STYLE) & (~LVS_TYPEMASK);
         SetWindowLongA(hwnd[WinListView], GWL_STYLE, style | LVS_LIST);
+        ListView_Arrange(hwnd[WinListView], LVA_DEFAULT);
         break;
     case WM_USER+0x0405:
         ShowWindow(hwnd[WinTreeView], SW_HIDE);
         ShowWindow(hwnd[WinListView], SW_SHOW);
         style = GetWindowLongA(hwnd[WinListView], GWL_STYLE) & (~LVS_TYPEMASK);
         SetWindowLongA(hwnd[WinListView], GWL_STYLE, style | LVS_REPORT);
+        ListView_Arrange(hwnd[WinListView], LVA_DEFAULT);
         break;
 
     case WM_USER+0x0501:
@@ -207,27 +219,6 @@ LRESULT CALLBACK MdiFrame_OnCommand(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
     return 1;
 }
 
-static LRESULT CALLBACK MdiFrame_OnNotify(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-    TCITEM tci;
-    RECT rc;
-    int TabIndex;
-    NMHDR *NmHdr = (NMHDR*)lParam;
-
-    switch (NmHdr->code) {
-    case TCN_SELCHANGE:
-        TabIndex = TabCtrl_GetCurSel(hwnd[WinTabBar]);
-        tci.mask = TCIF_PARAM;
-        TabCtrl_GetItem(hwnd[WinTabBar], TabIndex, &tci);
-        if (tci.lParam) {
-            SendMessageA(hwnd[WinMdiClient], WM_MDIACTIVATE, (WPARAM)tci.lParam, 0);
-            GetClientRect(hwnd[WinMdiClient], &rc);
-            InvalidateRect(hwnd[WinMdiClient], &rc, TRUE);
-        }
-        break;
-    }
-    return 1;
-}
-
 LRESULT CALLBACK MdiFrameProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     switch (uMsg) {
     case WM_CREATE:
@@ -239,7 +230,7 @@ LRESULT CALLBACK MdiFrameProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
         MdiFrame_OnCommand(hWnd, uMsg, wParam, lParam);
         break;
     case WM_NOTIFY:
-        MdiFrame_OnNotify(hWnd, uMsg, wParam, lParam);
+        OnNotifyProc(hWnd, uMsg, wParam, lParam);
         break;
     case WM_ENTERSIZEMOVE:     case WM_EXITSIZEMOVE:
     case WM_SIZING:            case WM_SIZE:

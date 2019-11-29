@@ -196,6 +196,7 @@
     <ClCompile Include="Source\Mission\View\Widgets\WndProc\FlickerFree.c" />
     <ClCompile Include="Source\Mission\View\Widgets\WndProc\MdiChild.c" />
     <ClCompile Include="Source\Mission\View\Widgets\WndProc\MdiFrame.c" />
+    <ClCompile Include="Source\Mission\View\Widgets\WndProc\OnNotify.c" />
     <ClCompile Include="Source\Start.c" />
     <ClCompile Include="Source\System\Config\Config.c" />
     <ClCompile Include="Source\System\Iso9660\Iso9660.c" />

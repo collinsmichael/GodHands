@@ -192,6 +192,9 @@
     <ClCompile Include="Source\System\Iso9660\Iso9660.c">
       <Filter>Source\System\Iso9660</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mission\View\Widgets\WndProc\OnNotify.c">
+      <Filter>Source\Mission\View\Widgets\WndProc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\RamDisk\RamDisk.h">

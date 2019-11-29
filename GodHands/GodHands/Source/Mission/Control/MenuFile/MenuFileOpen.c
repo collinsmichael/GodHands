@@ -25,8 +25,9 @@ int MenuFile_Open(int code) {
     if (!path) return 0;
 
     if (!Iso9660.Open(path)) return 0;
-    TreeView.Reset();
+    ListView.Reset();
     ListView.NavEnter(0);
+    TreeView.Reset();
     if (!Iso9660.EnumDir(0, EnumTreeDir)) return 0;
 
     //StatusBar.SetStatus("File.Open", "In Progress");

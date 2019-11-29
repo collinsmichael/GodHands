@@ -46,7 +46,7 @@ static int ListView_Reset(void) {
         lvc.cchTextMax = lstrlenA(columns[col]);
         ListView_InsertColumn(hwnd[WinListView], col, &lvc);
     }
-    nav = end = 0;
+    end = nav = 0;
     return 1;
 }
 
@@ -119,19 +119,19 @@ static int ListView_Mount(ISO9660_DIR *rec) {
 }
 
 static int ListView_NavEnter(ISO9660_DIR *rec) {
-    ListView_Reset();
+    ListView_DeleteAll();
     if (!Iso9660.EnumDir(rec, ListView_Mount)) return 0;
     if (nav < elementsof(stack)) {
-        stack[nav++] = rec;
+        stack[++nav] = rec;
         end = nav;
     }
     return 1;
 }
 
 static int ListView_NavBack(void) {
-    if (nav > 0) {
+    if (nav > 1) {
         ISO9660_DIR *rec = stack[--nav];
-        ListView_Reset();
+        ListView_DeleteAll();
         if (!Iso9660.EnumDir(rec, ListView_Mount)) return 0;
     }
     return 1;
@@ -140,7 +140,7 @@ static int ListView_NavBack(void) {
 static int ListView_NavForward(void) {
     if (nav < end) {
         ISO9660_DIR *rec = stack[++nav];
-        ListView_Reset();
+        ListView_DeleteAll();
         if (!Iso9660.EnumDir(rec, ListView_Mount)) return 0;
     }
     return 1;
