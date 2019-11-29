@@ -58,7 +58,7 @@ static int Iso9660_EnumDir(ISO9660_DIR *dir, int(*proc)(ISO9660_DIR *rec)) {
     if (!RamDisk.Read(lba, len)) return 0;
 
     rec = (ISO9660_DIR*)&disk[lba*2*KB];
-    for (pos = 0; pos < len*2*KB; pos += rec->LenRecord) {
+    for (pos = 0x30; pos < len*2*KB; pos += rec->LenRecord) {
         rec = (ISO9660_DIR*)&disk[lba*2*KB + pos];
         if (rec->LenRecord == 0) break;
         if ((rec->FileFlags & ISO9660_DIRECTORY) != 0) {
@@ -67,7 +67,7 @@ static int Iso9660_EnumDir(ISO9660_DIR *dir, int(*proc)(ISO9660_DIR *rec)) {
     }
 
     rec = (ISO9660_DIR*)&disk[lba*2*KB];
-    for (pos = 0; pos < len*2*KB; pos += rec->LenRecord) {
+    for (pos = 0x30; pos < len*2*KB; pos += rec->LenRecord) {
         rec = (ISO9660_DIR*)&disk[lba*2*KB + pos];
         if (rec->LenRecord == 0) break;
         if ((rec->FileFlags & ISO9660_DIRECTORY) == 0) {

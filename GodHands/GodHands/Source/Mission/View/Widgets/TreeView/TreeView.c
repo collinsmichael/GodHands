@@ -20,11 +20,11 @@ int TreeView_AddItem(int parent, char *path, DWORD Attribute, void *param) {
     int iIcon = Icon.GetIndexFromAttributes(path, Attribute);
     tvi.hParent             = (parent) ? (HTREEITEM)parent : TVI_ROOT;
     tvi.hInsertAfter        = TVI_LAST;
-    tvi.item.mask           = TVIF_TEXT | TVIF_HANDLE | TVIF_IMAGE | TVIF_PARAM | TVIF_SELECTEDIMAGE; // | TVIF_CHILDREN | TVIF_STATE;
+    tvi.item.mask           = TVIF_TEXT|TVIF_HANDLE|TVIF_PARAM|TVIF_IMAGE|TVIF_SELECTEDIMAGE;
     tvi.item.pszText        = path;
     tvi.item.cchTextMax     = lstrlenA(path);
     tvi.item.iImage         = iIcon;
-    tvi.item.iSelectedImage = iIcon+1;
+    tvi.item.iSelectedImage = (FILE_ATTRIBUTE_DIRECTORY) ? iIcon+1 : iIcon;
     return (int)TreeView_InsertItem(hwnd[WinTreeView], &tvi);
 }
 
