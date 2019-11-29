@@ -6,6 +6,8 @@
 #include "GodHands.h"
 
 
+extern ISO9660 Iso9660;
+
 extern ICON Icon;
 extern HWND hwnd[64];
 
@@ -14,19 +16,28 @@ static HIMAGELIST hLargeIcons;
 
 static LV_COLUMN lvc;
 static LV_ITEM   lvi;
-static char *columns[] = { "Name", "LBA", "Size", "Type" }; 
+static char *columns[] = { "Name", "LBA", "Size" }; 
+static char *format[elementsof(columns)] = { "%s", "0x%08X", "0x%08X" };
 static char path[256];
 static char lbax[256];
 static char type[256];
 static char size[256]; 
+static ISO9660_DIR *stack[256];
+static int nav;
+static int end;
 
-int ListView_DeleteAll(void) {
+
+static int ListView_DeleteAll(void) {
     ListView_DeleteAllItems(hwnd[WinListView]);
     return 1;
 }
 
-int ListView_ResetColumns(void) {
+static int ListView_Reset(void) {
     int col;
+    ListView_DeleteAllItems(hwnd[WinListView]);
+    for (col = elementsof(columns); col >= 0; col--) {
+        ListView_DeleteColumn(hwnd[WinListView], col);
+    }
     for (col = 0; col < elementsof(columns); col++) {
         lvc.mask       = LVCF_TEXT | LVCF_WIDTH;
         lvc.iSubItem   = col;
@@ -35,12 +46,12 @@ int ListView_ResetColumns(void) {
         lvc.cchTextMax = lstrlenA(columns[col]);
         ListView_InsertColumn(hwnd[WinListView], col, &lvc);
     }
+    nav = end = 0;
     return 1;
 }
 
-int ListView_AddItem(char *text, char *lba, char *size, char *type, DWORD Attribute, void *param) {
+static int ListView_AddItem(char *text, char *lba, char *size, DWORD Attribute, void *param) {
     int iIcon = Icon.GetIndexFromAttributes(path, Attribute);
-
     lvi.mask       = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM | LVIF_STATE;
     lvi.iImage     = iIcon;
     lvi.pszText    = path;
@@ -63,73 +74,98 @@ int ListView_AddItem(char *text, char *lba, char *size, char *type, DWORD Attrib
     lvi.pszText    = size;
     lvi.cchTextMax = lstrlenA(size);
     ListView_SetItem(hwnd[WinListView], &lvi);
-
-    lvi.mask = LVIF_TEXT;
-    lvi.iSubItem++;
-    lvi.pszText    = type;
-    lvi.cchTextMax = lstrlenA(type);
-    ListView_SetItem(hwnd[WinListView], &lvi);
     return 1;
 }
 
-int ListView_AddDir(ISO9660_DIR *rec) {
+static int ListView_AddDir(ISO9660_DIR *rec) {
     int i;
+    char *str = path;
     for (i = 0; i < rec->LenFileName; i++) {
-        if (rec->FileName[i] == ';') {
-            break;
-        } else {
-            path[i] = rec->FileName[i];
-        }
+        if (rec->FileName[i] < 0x20) continue;
+        if (rec->FileName[i] == ';') break;
+        *str++ = rec->FileName[i];
     }
-    path[i] = 0;
-    path[rec->LenFileName] = 0;
-    wsprintfA(lbax, "0x%08X", rec->LsbLenData);
-    wsprintfA(size, "%u bytes", rec->LsbLenData);
-    lstrcpyA(type, "folder");
-    ListView_AddItem(path, lbax, size, type, FILE_ATTRIBUTE_DIRECTORY, rec);
+    *str++ = 0;
+    if (lstrlenA(path) > 0) {
+        wsprintfA(lbax, format[1], rec->LsbLenData);
+        wsprintfA(size, format[2], rec->LsbLenData);
+        ListView_AddItem(path, lbax, size, FILE_ATTRIBUTE_DIRECTORY, rec);
+    }
     return 1;
 }
 
-int ListView_AddFile(ISO9660_DIR *rec) {
+static int ListView_AddFile(ISO9660_DIR *rec) {
     int i;
-    int x = 0;
+    char *str = path;
     for (i = 0; i < rec->LenFileName; i++) {
-        if (rec->FileName[i] == '.') {
-            x = i;
-        }
-        if (rec->FileName[i] == ';') {
-            break;
-        } else {
-            path[i] = rec->FileName[i];
-        }
+        if (rec->FileName[i] < 0x20) continue;
+        if (rec->FileName[i] == ';') break;
+        *str++ = rec->FileName[i];
     }
-    path[i] = 0;
-    path[rec->LenFileName] = 0;
-    wsprintfA(lbax, "0x%08X", rec->LsbLenData);
-    wsprintfA(size, "%u bytes", rec->LsbLenData);
-    lstrcpyA(type, &path[x]);
-    ListView_AddItem(path, lbax, size, type, FILE_ATTRIBUTE_NORMAL, rec);
+    *str++ = 0;
+    wsprintfA(lbax, format[1], rec->LsbLenData);
+    wsprintfA(size, format[2], rec->LsbLenData);
+    ListView_AddItem(path, lbax, size, FILE_ATTRIBUTE_NORMAL, rec);
     return 1;
 }
 
-int ListView_StartUp(void) {
+static int ListView_Mount(ISO9660_DIR *rec) {
+    if ((rec->FileFlags & ISO9660_DIRECTORY)) {
+        ListView_AddDir(rec);
+    } else {
+        ListView_AddFile(rec);
+    }
+    return 1;
+}
+
+static int ListView_NavEnter(ISO9660_DIR *rec) {
+    ListView_Reset();
+    if (!Iso9660.EnumDir(rec, ListView_Mount)) return 0;
+    if (nav < elementsof(stack)) {
+        stack[nav++] = rec;
+        end = nav;
+    }
+    return 1;
+}
+
+static int ListView_NavBack(void) {
+    if (nav > 0) {
+        ISO9660_DIR *rec = stack[--nav];
+        ListView_Reset();
+        if (!Iso9660.EnumDir(rec, ListView_Mount)) return 0;
+    }
+    return 1;
+}
+
+static int ListView_NavForward(void) {
+    if (nav < end) {
+        ISO9660_DIR *rec = stack[++nav];
+        ListView_Reset();
+        if (!Iso9660.EnumDir(rec, ListView_Mount)) return 0;
+    }
+    return 1;
+}
+
+static int ListView_StartUp(void) {
     hwnd[WinListViewHeader] = (HWND)SendMessageA(hwnd[WinListView], LVM_GETHEADER, 0, 0);
     hSmallIcons = Icon.GetSmallIcons();
     ListView_SetImageList(hwnd[WinListView], hSmallIcons, LVSIL_SMALL);
     hLargeIcons = Icon.GetLargeIcons();
     ListView_SetImageList(hwnd[WinListView], hLargeIcons, LVSIL_NORMAL);
-
-    ListView_DeleteAllItems(hwnd[WinListView]);
-    ListView_ResetColumns();
+    ListView_Reset();
     return 1;
 }
 
 
 struct LISTVIEW ListView = {
     ListView_StartUp,
+    ListView_Reset,
     ListView_DeleteAll,
-    ListView_ResetColumns,
     ListView_AddItem,
     ListView_AddDir,
     ListView_AddFile,
+    ListView_Mount,
+    ListView_NavEnter,
+    ListView_NavBack,
+    ListView_NavForward,
 };

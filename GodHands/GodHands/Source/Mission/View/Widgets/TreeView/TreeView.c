@@ -16,6 +16,14 @@ static HIMAGELIST hLargeIcons;
 static char path[256];
 
 
+int TreeView_Reset(void) {
+    return (int)TreeView_DeleteAllItems(hwnd[WinTreeView]);
+}
+
+int TreeView_DeleteAll(void) {
+    return (int)TreeView_DeleteAllItems(hwnd[WinTreeView]);
+}
+
 int TreeView_AddItem(int parent, char *path, DWORD Attribute, void *param) {
     int iIcon = Icon.GetIndexFromAttributes(path, Attribute);
     tvi.hParent             = (parent) ? (HTREEITEM)parent : TVI_ROOT;
@@ -95,6 +103,7 @@ int TreeView_StartUp(void) {
 
 struct TREEVIEW TreeView = {
     TreeView_StartUp,
+    TreeView_DeleteAll,
     TreeView_AddItem,
     TreeView_AddDir,
     TreeView_AddFile,

@@ -4,11 +4,15 @@
 
 typedef struct LISTVIEW {
     int (*StartUp)(void);
-    int (*DeleteAllItems)(void);
-    int (*ResetColumns)(void);
-    int (*AddItem)(char *text, char *lba, char *size, char *type, DWORD Attribute, void *param);
+    int (*Reset)(void);
+    int (*DeleteAll)(void);
+    int (*AddItem)(char *text, char *lba, char *size, DWORD Attribute, void *param);
     int (*AddDir)(ISO9660_DIR *rec);
     int (*AddFile)(ISO9660_DIR *rec);
+    int (*Mount)(ISO9660_DIR *rec);
+    int (*NavEnter)(ISO9660_DIR *rec);
+    int (*NavBack)(void);
+    int (*NavForward)(void);
 } LISTVIEW;
 
 

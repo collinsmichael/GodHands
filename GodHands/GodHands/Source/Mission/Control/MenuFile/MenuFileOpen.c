@@ -18,15 +18,6 @@ int EnumTreeDir(ISO9660_DIR *rec) {
     return 1;
 }
 
-int EnumListDir(ISO9660_DIR *rec) {
-    if ((rec->FileFlags & ISO9660_DIRECTORY)) {
-        ListView.AddDir(rec);
-    } else {
-        ListView.AddFile(rec);
-    }
-    return 1;
-}
-
 int MenuFile_Open(int code) {
     char *path = Dialog.OpenFileDialog(
         "CD Images (img bin iso)\0*.img;*.bin;*.iso\0"
@@ -34,10 +25,8 @@ int MenuFile_Open(int code) {
     if (!path) return 0;
 
     if (!Iso9660.Open(path)) return 0;
-
-    ListView.DeleteAllItems();
-    if (!Iso9660.EnumDir(0, EnumListDir)) return 0;
-
+    TreeView.Reset();
+    ListView.NavEnter(0);
     if (!Iso9660.EnumDir(0, EnumTreeDir)) return 0;
 
     //StatusBar.SetStatus("File.Open", "In Progress");
