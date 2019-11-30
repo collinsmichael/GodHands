@@ -135,7 +135,7 @@ static int View_StartUp(void) {
     ShowWindow(hwnd[WinConsole], SW_HIDE);
 
     StatusBar.SetStatus("No Disk", "Idle");
-    StatusBar.SetProgress(100);
+    StatusBar.SetProgress(0);
     return Logger.Done("View.StartUp", "Done");
 }
 
