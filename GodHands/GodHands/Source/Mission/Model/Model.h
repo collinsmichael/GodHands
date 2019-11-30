@@ -6,6 +6,8 @@ typedef struct MODEL {
     int (*StartUp)(void);
     int (*CleanUp)(void);
     int (*Execute)(void);
+
+    int (*OpenDisk)(void *evt);
 } MODEL;
 
 

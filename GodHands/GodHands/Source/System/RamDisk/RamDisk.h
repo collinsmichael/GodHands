@@ -7,6 +7,8 @@ typedef struct RAMDISK {
     int   (*Close)(void);
     int   (*Read)(int lba, int len);
     int   (*Write)(int lba, int len);
+    int   (*Scan)(int lba);
+    int   (*Clear)(int lba, int len);
     char *(*AddressOf)(int lba);
 } RAMDISK;
 

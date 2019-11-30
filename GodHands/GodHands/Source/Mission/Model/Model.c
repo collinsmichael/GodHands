@@ -16,9 +16,11 @@ static int Model_Execute(void) {
     return Logger.Done("Model.Execute", "Done");
 }
 
+int Model_OpenDisk(void *evt);
 
 struct MODEL Model = {
     Model_StartUp,
     Model_CleanUp,
     Model_Execute,
+    Model_OpenDisk,
 };

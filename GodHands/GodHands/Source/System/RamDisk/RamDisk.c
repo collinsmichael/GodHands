@@ -16,6 +16,8 @@ static char map[0x4DEAF];
 static void *file;
 static int size;
 static int is_iso;
+static int consumed;
+static int total;
 
 
 static int RamDisk_Read(int lba, int len) {
@@ -25,7 +27,7 @@ static int RamDisk_Read(int lba, int len) {
         return Logger.Fail("RamDisk.Read", "Out of bounds lba=%08X", lba);
     }
     for (pos = 0; pos < len; pos++, lba++) {
-        if (map[lba] != 'x') {
+        if (map[lba] == ' ') {
             DWORD word;
             if (is_iso) {
                 SetFilePointer(file, lba*2*KB, 0, 0);
@@ -63,14 +65,71 @@ static int RamDisk_Write(int lba, int len) {
     return Logger.Done("RamDisk.Write", "Done");
 }
 
+static int RamDisk_Scan(int lba) {
+    int pos;
+    if (!file) return Logger.Fail("RamDisk.Scan", "No disk");
+    if ((lba < 0) || (lba >= size)) {
+        return Logger.Fail("RamDisk.Scan", "Out of bounds lba=%08X", lba);
+    }
+    if (map[lba] == ' ') {
+        DWORD word;
+        char mark;
+        if (is_iso) {
+            SetFilePointer(file, lba*2*KB, 0, 0);
+        } else {
+            SetFilePointer(file, lba*2352 + 24, 0, 0);
+        }
+        if (!ReadFile(file, &disk[lba*2*KB], 2*KB, &word, 0)) {
+            return Logger.Error("RamDisk.Scan", "Failed lba=%08X", lba);
+        }
+        mark = '-';
+        for (pos = 0; pos < 2*KB; pos++) {
+            if (disk[lba*2*KB + pos] != 0x00) {
+                mark = 'H';
+                break;
+            }
+        }
+        map[lba] = mark;
+    }
+    return Logger.Done("RamDisk.Scan", "Done");
+}
+
+static int RamDisk_Clear(int lba, int len) {
+    int pos;
+    if (!file) return Logger.Fail("RamDisk.Clear", "No disk");
+    if ((lba < 0) || (lba+len > size)) {
+        return Logger.Fail("RamDisk.Clear", "Out of bounds lba=%08X", lba);
+    }
+    stosd(&disk[lba*2*KB], 0, len*2*KB/4);
+    for (pos = 0; pos < len; pos++, lba++) {
+         DWORD word;
+         if (is_iso) {
+             SetFilePointer(file, lba*2*KB, 0, 0);
+         } else {
+             SetFilePointer(file, lba*2352 + 24, 0, 0);
+         }
+         if (!WriteFile(file, &disk[lba*2*KB], 2*KB, &word, 0)) {
+             return Logger.Error("RamDisk.Clear", "Failed lba=%08X", lba);
+         }
+         map[lba] = '-';
+    }
+    return Logger.Done("RamDisk.Clear", "Done");
+}
+
 static int RamDisk_Close(void) {
     if ((file != 0) && (file != INVALID_HANDLE_VALUE)) {
         CloseHandle(file);
-        file = 0;
-        size = 0;
-        is_iso = 0;
     }
+    file = 0;
+    size = 0;
+    is_iso = 0;
+    stosd(map, 0x20202020, sizeof(map)/4);
     return Logger.Done("RamDisk.Close", "Done");
+}
+
+static int RamDisk_Reset(void) {
+    RamDisk_Close();
+    return Logger.Done("RamDisk.Reset", "Done");
 }
 
 static int RamDisk_Open(char *path) {
@@ -78,7 +137,7 @@ static int RamDisk_Open(char *path) {
     char buf[16];
     DWORD word;
 
-    if (file) RamDisk_Close();
+    RamDisk_Close();
     file = CreateFileA(path, 0xC0000000, 0x03,0,0x03,0x80,0);
     if (file == INVALID_HANDLE_VALUE) {
         return Logger.Error("RamDisk.Open", "File not found %s", path);
@@ -111,12 +170,6 @@ static int RamDisk_Open(char *path) {
     return Logger.Done("RamDisk.Open", "Done");
 }
 
-static int RamDisk_Reset(void) {
-    if (file) RamDisk_Close();
-    stosd(map, ' ', sizeof(map)/4);
-    return Logger.Done("RamDisk.Reset", "Done");
-}
-
 static char *RamDisk_AddressOf(int lba) {
     if ((!file) || (lba < 0) || (lba >= size)) return 0;
     return &disk[lba*2*KB];
@@ -129,6 +182,8 @@ struct RAMDISK RamDisk = {
     RamDisk_Close,
     RamDisk_Read,
     RamDisk_Write,
+    RamDisk_Scan,
+    RamDisk_Clear,
     RamDisk_AddressOf
 };
 

@@ -21,7 +21,6 @@ static LRESULT NotifyOnDoubleClick(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
     NMHDR *nm_hdr = (NMHDR*)lParam;
     if (nm_hdr->hwndFrom == hwnd[WinTreeView]) {
         //TabControl.MakeTab(navselection);
-        MessageBoxA(0,"TreeView",0,0);
     } else if (nm_hdr->hwndFrom == hwnd[WinListView]) {
         lvi.iItem = ((LPNMITEMACTIVATE)lParam)->iItem;
         lvi.mask = LVIF_PARAM;

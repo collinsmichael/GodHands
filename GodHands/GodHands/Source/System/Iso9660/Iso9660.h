@@ -76,6 +76,7 @@ typedef struct ISO9660 {
     int   (*Close)(void);
     char *(*DiskPath)(void);
     char *(*DiskName)(void);
+    char *(*FileExt)(ISO9660_DIR *rec);
     ISO9660_DIR *(*RootDir)(void);
     int   (*EnumDir)(void *param, ISO9660_DIR *dir, int(*proc)(void *param, ISO9660_DIR *rec));
 } ISO9660;

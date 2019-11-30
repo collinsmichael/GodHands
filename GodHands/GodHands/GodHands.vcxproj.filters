@@ -195,6 +195,9 @@
     <ClCompile Include="Source\Mission\View\Widgets\WndProc\OnNotify.c">
       <Filter>Source\Mission\View\Widgets\WndProc</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mission\Model\ModelOpenDisk.c">
+      <Filter>Source\Mission\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\RamDisk\RamDisk.h">

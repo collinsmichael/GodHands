@@ -10,12 +10,14 @@ extern struct VIEW View;
 
 
 static int Mission_StartUp(int argc, char *argv[]) {
+    if (!Model.StartUp()) return 0;
     if (!View.StartUp()) return 0;
     return Logger.Done("Mission.StartUp", "Done");
 }
 
 static int Mission_CleanUp(void) {
     if (!View.CleanUp()) return 0;
+    if (!Model.CleanUp()) return 0;
     return Logger.Done("Mission.CleanUp", "Done");
 }
 

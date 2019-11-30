@@ -25,6 +25,11 @@ static int TreeView_DeleteAll(void) {
     return (int)TreeView_DeleteAllItems(hwnd[WinTreeView]);
 }
 
+static int TreeView_ExpandItem(void *hitem) {
+    if (!hitem) hitem = TVI_ROOT;
+    return (int)TreeView_Expand(hwnd[WinTreeView], (HTREEITEM)hitem, TVE_EXPAND);
+}
+
 static int TreeView_AddItem(void *parent, char *path, DWORD Attribute, void *param) {
     int iIcon = Icon.GetIndexFromAttributes(path, Attribute);
     tvi.hParent             = (parent) ? (HTREEITEM)parent : TVI_ROOT;
@@ -127,6 +132,7 @@ int TreeView_StartUp(void) {
 struct TREEVIEW TreeView = {
     TreeView_StartUp,
     TreeView_DeleteAll,
+    TreeView_ExpandItem,
     TreeView_Mount,
     TreeView_AddItem,
     TreeView_AddDir,

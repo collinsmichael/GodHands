@@ -62,6 +62,16 @@ static char *Iso9660_DiskName(void) {
     return name;
 }
 
+static char *Iso9660_FileExt(ISO9660_DIR *rec) {
+    int i;
+    for (i = rec->LenFileName-1; i >= 0; i--) {
+        if (rec->FileName[i] == '.') {
+            return &rec->FileName[i];
+        }
+    }
+    return 0;
+}
+
 static ISO9660_DIR *Iso9660_RootDir(void) {
     return (ISO9660_DIR*)root;
 }
@@ -82,8 +92,14 @@ static int Iso9660_EnumDir(void *param, ISO9660_DIR *dir, int(*proc)(void*,ISO96
 
     rec = (ISO9660_DIR*)&disk[lba*2*KB];
     for (pos = 0x30; pos < len*2*KB; pos += rec->LenRecord) {
+        if ((!disk) || (!root)) {
+            return Logger.Done("Iso9660.EnumDir", "No Disk");
+        }
         rec = (ISO9660_DIR*)&disk[lba*2*KB + pos];
-        if (rec->LenRecord == 0) break;
+        if (rec->LenRecord == 0) {
+            pos++;
+            continue;
+        }
         if ((rec->FileFlags & ISO9660_DIRECTORY) != 0) {
             proc(param, rec);
         }
@@ -91,8 +107,14 @@ static int Iso9660_EnumDir(void *param, ISO9660_DIR *dir, int(*proc)(void*,ISO96
 
     rec = (ISO9660_DIR*)&disk[lba*2*KB];
     for (pos = 0x30; pos < len*2*KB; pos += rec->LenRecord) {
+        if ((!disk) || (!root)) {
+            return Logger.Done("Iso9660.EnumDir", "No Disk");
+        }
         rec = (ISO9660_DIR*)&disk[lba*2*KB + pos];
-        if (rec->LenRecord == 0) break;
+        if (rec->LenRecord == 0) {
+            pos++;
+            continue;
+        }
         if ((rec->FileFlags & ISO9660_DIRECTORY) == 0) {
             proc(param, rec);
         }
@@ -106,6 +128,7 @@ struct ISO9660 Iso9660 = {
     Iso9660_Close,
     Iso9660_DiskPath,
     Iso9660_DiskName,
+    Iso9660_FileExt,
     Iso9660_RootDir,
     Iso9660_EnumDir,
 };

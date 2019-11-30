@@ -76,8 +76,6 @@ LRESULT CALLBACK MdiFrame_OnSize(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 LRESULT CALLBACK MdiFrame_OnCommand(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     MDICREATESTRUCT mc;
     DWORD style;
-    char *path;
-    int MenuFile_Open(void*);
     int code = LOWORD(wParam);
 
     switch (LOWORD(wParam)) {
@@ -88,27 +86,16 @@ LRESULT CALLBACK MdiFrame_OnCommand(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
         ListView.NavForward();
         break;
     case WM_USER+0x0201:
-        JobQueue.Schedule(MenuFile_Open, 0);
-        //path = Dialog.OpenFileDialog(
-        //    "CD Images (img bin iso)\0*.img;*.bin;*.iso\0"
-        //    "All Files\0*.*\0\0");
-        //if (path) {
-        //    StatusBar.SetStatus("In Progress", path);
-        //}
+        MenuFile_Open(0);
         break;
     case WM_USER+0x0202:
-        path = Dialog.SaveFileDialog(
-            "CD Images (img bin iso)\0*.img;*.bin;*.iso\0"
-            "All Files\0*.*\0\0");
-        if (path) {
-            StatusBar.SetStatus("In Progress", path);
-        }
+        JobQueue.Schedule(MenuFile_Save, 0);
         break;
     case WM_USER+0x0203:
-        MessageBoxA(0,"File/Close", "Menu", 0);
+        MenuFile_Close(0);
         break;
     case WM_USER+0x0204:
-        MessageBoxA(0,"File/Exit", "Menu", 0);
+        MenuFile_Exit(0);
         break;
     case WM_USER+0x0301:
         MessageBoxA(0,"Edit/Undo", "Menu", 0);
