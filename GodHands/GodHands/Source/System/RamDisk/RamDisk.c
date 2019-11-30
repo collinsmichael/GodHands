@@ -9,6 +9,7 @@
 
 
 extern struct LOGGER Logger;
+extern struct JOBQUEUE JobQueue;
 
 
 static char disk[0x26F57800];
@@ -118,6 +119,7 @@ static int RamDisk_Clear(int lba, int len) {
 
 static int RamDisk_Close(void) {
     if ((file != 0) && (file != INVALID_HANDLE_VALUE)) {
+        JobQueue.KillAll();
         CloseHandle(file);
     }
     file = 0;

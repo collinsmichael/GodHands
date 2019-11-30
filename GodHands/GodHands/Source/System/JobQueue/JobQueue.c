@@ -60,13 +60,21 @@ static int JobQueue_StartUp(void) {
     return Logger.Done("JobQueue.StartUp", "Done");
 }
 
-static int JobQueue_CleanUp(void) {
+static int JobQueue_KillAll(void) {
     int pos;
-    if (broker) CloseHandle(broker);
-    broker = 0;
     for (pos = 0; pos < 256; pos++) { 
-        if (handle[pos]) CloseHandle(handle[pos]);
+        if (handle[pos]) {
+            TerminateThread(handle[pos], 0);
+            Sleep(0);
+            CloseHandle(handle[pos]);
+        }
     }
+    return Logger.Done("JobQueue.CleanUp", "Done");
+}
+
+static int JobQueue_CleanUp(void) {
+    if (broker) CloseHandle(broker);
+    JobQueue_KillAll();
     return Logger.Done("JobQueue.CleanUp", "Done");
 }
 
@@ -75,4 +83,5 @@ struct JOBQUEUE JobQueue = {
     JobQueue_StartUp,
     JobQueue_CleanUp,
     JobQueue_Schedule,
+    JobQueue_KillAll,
 };

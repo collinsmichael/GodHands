@@ -85,8 +85,8 @@ int Model_OpenDisk(void *evt) {
     if (!Iso9660.EnumDir(0, 0, Model_LoPriority)) return 0;
     StatusBar.SetStatus("Model.OpenDisk", "Loading file system");
     if (!Iso9660.EnumDir(0, 0, Model_LoadAll)) return 0;
-    //StatusBar.SetStatus("Model.OpenDisk", "Finding unused sectors");
-    //Model_FindUnused();
+    StatusBar.SetStatus("Model.OpenDisk", "Finding unused sectors");
+    Model_FindUnused();
     StatusBar.SetStatus("Model.OpenDisk", "Done");
     StatusBar.SetProgress(0);
     return Logger.Done("Model.OpenDisk", "Done");
