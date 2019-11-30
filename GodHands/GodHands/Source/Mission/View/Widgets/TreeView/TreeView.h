@@ -8,8 +8,8 @@ typedef struct TREEVIEW {
     int (*Expand)(void *hitem);
     int (*Mount)(void);
     int (*AddItem)(void *parent, char *path, DWORD Attribute, void *param);
-    int (*AddDir)(void *parent, ISO9660_DIR *rec);
-    int (*AddFile)(void *parent, ISO9660_DIR *rec);
+    int (*AddDir)(void *parent, REC *rec);
+    int (*AddFile)(void *parent, REC *rec);
 } TREEVIEW;
 
 

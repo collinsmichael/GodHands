@@ -181,6 +181,7 @@
     <ClCompile Include="Source\Mission\Mission.c" />
     <ClCompile Include="Source\Mission\Model\Model.c" />
     <ClCompile Include="Source\Mission\Model\ModelOpenDisk.c" />
+    <ClCompile Include="Source\Mission\Model\ZND\ModelZnd.c" />
     <ClCompile Include="Source\Mission\View\Dialogs\Dialogs.c" />
     <ClCompile Include="Source\Mission\View\Resources\Font.c" />
     <ClCompile Include="Source\Mission\View\Resources\Icon.c" />
@@ -215,6 +216,7 @@
     <ClInclude Include="Source\Mission\Control\Control.h" />
     <ClInclude Include="Source\Mission\Mission.h" />
     <ClInclude Include="Source\Mission\Model\Model.h" />
+    <ClInclude Include="Source\Mission\Model\ZND\ModelZnd.h" />
     <ClInclude Include="Source\Mission\View\Dialogs\Dialogs.h" />
     <ClInclude Include="Source\Mission\View\Resources\Font.h" />
     <ClInclude Include="Source\Mission\View\Resources\Icon.h" />

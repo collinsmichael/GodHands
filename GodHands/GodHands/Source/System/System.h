@@ -12,6 +12,7 @@ typedef struct SYSTEM {
     int (*StartUp)(int argc, char *argv[]);
     int (*CleanUp)(void);
     int (*Execute)(void);
+    int (*Reset)(void);
 } SYSTEM;
 
 

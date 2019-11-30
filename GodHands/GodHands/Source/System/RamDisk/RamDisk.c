@@ -8,6 +8,7 @@
 #include "GodHands.h"
 
 
+extern struct SYSTEM System;
 extern struct LOGGER Logger;
 extern struct JOBQUEUE JobQueue;
 
@@ -119,7 +120,7 @@ static int RamDisk_Clear(int lba, int len) {
 
 static int RamDisk_Close(void) {
     if ((file != 0) && (file != INVALID_HANDLE_VALUE)) {
-        JobQueue.KillAll();
+        System.Reset();
         CloseHandle(file);
     }
     file = 0;

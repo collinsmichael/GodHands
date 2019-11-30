@@ -6,6 +6,7 @@
 extern LOGGER Logger;
 extern ISO9660 Iso9660;
 extern RAMDISK RamDisk;
+extern MODELZND ModelZnd;
 extern STATUSBAR StatusBar;
 
 char *extensions[] = {
@@ -14,9 +15,9 @@ char *extensions[] = {
     ".SEQ", ".BIN", ".SYD"
 };
 
-static int Model_HiPriority(void *parent, ISO9660_DIR *rec) {
+static int Model_HiPriority(void *parent, REC *rec) {
     if ((rec->LenRecord > 0x30)) {
-        if ((rec->FileFlags & ISO9660_DIRECTORY)) {
+        if ((rec->FileFlags & RECECTORY)) {
             if (!Iso9660.EnumDir(0, rec, Model_HiPriority)) return 0;
         } else {
             uint32_t *files = (uint32_t*)extensions;
@@ -27,15 +28,17 @@ static int Model_HiPriority(void *parent, ISO9660_DIR *rec) {
                 int lba = rec->LsbLbaData;
                 int len = rec->LsbLenData/(2*KB);
                 RamDisk.Read(lba, len);
+                if (name[0] == files[0]) ModelZnd.AddSlus(rec);
+                if (ext[0] == files[1]) ModelZnd.AddZnd(rec);
             }
         }
     }
     return 1;
 }
 
-static int Model_LoPriority(void *parent, ISO9660_DIR *rec) {
+static int Model_LoPriority(void *parent, REC *rec) {
     if ((rec->LenRecord > 0x30)) {
-        if ((rec->FileFlags & ISO9660_DIRECTORY)) {
+        if ((rec->FileFlags & RECECTORY)) {
             if (!Iso9660.EnumDir(0, rec, Model_LoPriority)) return 0;
         } else {
             uint32_t *files = (uint32_t*)extensions;
@@ -55,9 +58,9 @@ static int Model_LoPriority(void *parent, ISO9660_DIR *rec) {
     return 1;
 }
 
-static int Model_LoadAll(void *parent, ISO9660_DIR *rec) {
+static int Model_LoadAll(void *parent, REC *rec) {
     if ((rec->LenRecord > 0x30)) {
-        if ((rec->FileFlags & ISO9660_DIRECTORY)) {
+        if ((rec->FileFlags & RECECTORY)) {
             if (!Iso9660.EnumDir(0, rec, Model_LoadAll)) return 0;
         } else {
             int lba = rec->LsbLbaData;

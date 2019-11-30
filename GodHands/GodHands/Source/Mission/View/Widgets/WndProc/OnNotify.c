@@ -16,7 +16,7 @@ extern HWND hwnd[16];
 
 static LRESULT NotifyOnDoubleClick(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     LV_ITEMA lvi;
-    ISO9660_DIR *rec;
+    REC *rec;
 
     NMHDR *nm_hdr = (NMHDR*)lParam;
     if (nm_hdr->hwndFrom == hwnd[WinTreeView]) {
@@ -25,8 +25,8 @@ static LRESULT NotifyOnDoubleClick(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
         lvi.iItem = ((LPNMITEMACTIVATE)lParam)->iItem;
         lvi.mask = LVIF_PARAM;
         ListView_GetItem(hwnd[WinListView], &lvi);
-        rec = (ISO9660_DIR*)lvi.lParam;
-        if ((rec->FileFlags & ISO9660_DIRECTORY)) {
+        rec = (REC*)lvi.lParam;
+        if ((rec->FileFlags & RECECTORY)) {
             ListView.NavEnter(rec);
         } else {
             StatusBar.SetStatus("DoubleClick", "TODO Open Selected File");
@@ -103,8 +103,8 @@ static LRESULT NotifyOnTreeViewSelectChanged(HWND hWnd, UINT uMsg, WPARAM wParam
 
 static LRESULT NotifyOnListViewItemChanged(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     //NM_LISTVIEW *nm_lv = (NM_LISTVIEW*)lParam;
-    //ISO9660_DIR *rec = (ISO9660_DIR*)nm_lv->lParam;
-    //if (rec->FileFlags & ISO9660_DIRECTORY) {
+    //REC *rec = (REC*)nm_lv->lParam;
+    //if (rec->FileFlags & RECECTORY) {
     //    return ListView.NavEnter(rec);
     //}
     return 0;

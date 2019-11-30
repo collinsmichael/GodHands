@@ -166,9 +166,14 @@ static int View_Execute(void) {
     return Logger.Done("View.Execute", "Done");
 }
 
+static int View_Reset(void) {
+    return Logger.Done("View.Reset", "Done");
+}
+
 
 struct VIEW View = {
     View_StartUp,
     View_CleanUp,
     View_Execute,
+    View_Reset,
 };

@@ -85,6 +85,9 @@
     <Filter Include="Source\System\Iso9660">
       <UniqueIdentifier>{56fc48eb-9f58-464e-ace7-de4892047418}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Mission\Model\ZND">
+      <UniqueIdentifier>{033f5e78-20e6-40ad-a7e9-264fbe7e9683}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\System\RamDisk\RamDisk.c">
@@ -198,6 +201,9 @@
     <ClCompile Include="Source\Mission\Model\ModelOpenDisk.c">
       <Filter>Source\Mission\Model</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mission\Model\ZND\ModelZnd.c">
+      <Filter>Source\Mission\Model\ZND</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\RamDisk\RamDisk.h">
@@ -277,6 +283,9 @@
     </ClInclude>
     <ClInclude Include="Source\System\Iso9660\Iso9660.h">
       <Filter>Source\System\Iso9660</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Model\ZND\ModelZnd.h">
+      <Filter>Source\Mission\Model\ZND</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

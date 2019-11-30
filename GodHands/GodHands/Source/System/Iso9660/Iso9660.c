@@ -10,8 +10,8 @@
 extern struct LOGGER Logger;
 extern struct RAMDISK RamDisk;
 
-static ISO9660_PVD pvd;
-static ISO9660_DIR dir;
+static PVD pvd;
+static REC dir;
 static char *path;
 static char *name;
 static char *disk;
@@ -62,7 +62,7 @@ static char *Iso9660_DiskName(void) {
     return name;
 }
 
-static char *Iso9660_FileExt(ISO9660_DIR *rec) {
+static char *Iso9660_FileExt(REC *rec) {
     int i;
     for (i = rec->LenFileName-1; i >= 0; i--) {
         if (rec->FileName[i] == '.') {
@@ -72,12 +72,12 @@ static char *Iso9660_FileExt(ISO9660_DIR *rec) {
     return 0;
 }
 
-static ISO9660_DIR *Iso9660_RootDir(void) {
-    return (ISO9660_DIR*)root;
+static REC *Iso9660_RootDir(void) {
+    return (REC*)root;
 }
 
-static int Iso9660_EnumDir(void *param, ISO9660_DIR *dir, int(*proc)(void*,ISO9660_DIR*)) {
-    ISO9660_DIR *rec;
+static int Iso9660_EnumDir(void *param, REC *dir, int(*proc)(void*,REC*)) {
+    REC *rec;
     int lba;
     int len;
     int pos;
@@ -85,37 +85,37 @@ static int Iso9660_EnumDir(void *param, ISO9660_DIR *dir, int(*proc)(void*,ISO96
         return Logger.Done("Iso9660.EnumDir", "No Disk");
     }
 
-    if (dir == 0) dir = (ISO9660_DIR*)root;
+    if (dir == 0) dir = (REC*)root;
     lba = dir->LsbLbaData;
     len = (dir->LsbLenData+2*KB-1) / (2*KB);
     if (!RamDisk.Read(lba, len)) return 0;
 
-    rec = (ISO9660_DIR*)&disk[lba*2*KB];
+    rec = (REC*)&disk[lba*2*KB];
     for (pos = 0x30; pos < len*2*KB; pos += rec->LenRecord) {
         if ((!disk) || (!root)) {
             return Logger.Done("Iso9660.EnumDir", "No Disk");
         }
-        rec = (ISO9660_DIR*)&disk[lba*2*KB + pos];
+        rec = (REC*)&disk[lba*2*KB + pos];
         if (rec->LenRecord == 0) {
             pos++;
             continue;
         }
-        if ((rec->FileFlags & ISO9660_DIRECTORY) != 0) {
+        if ((rec->FileFlags & RECECTORY) != 0) {
             proc(param, rec);
         }
     }
 
-    rec = (ISO9660_DIR*)&disk[lba*2*KB];
+    rec = (REC*)&disk[lba*2*KB];
     for (pos = 0x30; pos < len*2*KB; pos += rec->LenRecord) {
         if ((!disk) || (!root)) {
             return Logger.Done("Iso9660.EnumDir", "No Disk");
         }
-        rec = (ISO9660_DIR*)&disk[lba*2*KB + pos];
+        rec = (REC*)&disk[lba*2*KB + pos];
         if (rec->LenRecord == 0) {
             pos++;
             continue;
         }
-        if ((rec->FileFlags & ISO9660_DIRECTORY) == 0) {
+        if ((rec->FileFlags & RECECTORY) == 0) {
             proc(param, rec);
         }
     }

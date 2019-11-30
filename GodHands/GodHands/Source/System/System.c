@@ -2,6 +2,7 @@
 
 
 extern struct LOGGER Logger;
+extern struct MISSION Mission;
 extern struct JOBQUEUE JobQueue;
 extern struct RAMDISK RamDisk;
 
@@ -22,9 +23,16 @@ static int System_Execute(void) {
     return Logger.Done("System.Execute", "Done");
 }
 
+static int System_Reset(void) {
+    Mission.Reset();
+    JobQueue.KillAll();
+    return Logger.Done("System.Reset", "Done");
+}
+
 
 struct SYSTEM System = {
     System_StartUp,
     System_CleanUp,
     System_Execute,
+    System_Reset,
 };

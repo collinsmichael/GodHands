@@ -22,7 +22,7 @@ static char path[256];
 static char lbax[256];
 static char type[256];
 static char size[256]; 
-static ISO9660_DIR *nav_stack[256];
+static REC *nav_stack[256];
 static int nav;
 static int end;
 
@@ -77,7 +77,7 @@ static int ListView_AddItem(char *text, char *lba, char *size, DWORD Attribute, 
     return 1;
 }
 
-static int ListView_AddDir(ISO9660_DIR *rec) {
+static int ListView_AddDir(REC *rec) {
     int i;
     char *str = path;
     for (i = 0; i < rec->LenFileName; i++) {
@@ -94,7 +94,7 @@ static int ListView_AddDir(ISO9660_DIR *rec) {
     return 1;
 }
 
-static int ListView_AddFile(ISO9660_DIR *rec) {
+static int ListView_AddFile(REC *rec) {
     int i;
     char *str = path;
     for (i = 0; i < rec->LenFileName; i++) {
@@ -109,8 +109,8 @@ static int ListView_AddFile(ISO9660_DIR *rec) {
     return 1;
 }
 
-static int ListView_Mount(void *param, ISO9660_DIR *rec) {
-    if ((rec->FileFlags & ISO9660_DIRECTORY)) {
+static int ListView_Mount(void *param, REC *rec) {
+    if ((rec->FileFlags & RECECTORY)) {
         ListView_AddDir(rec);
     } else {
         ListView_AddFile(rec);
@@ -118,7 +118,7 @@ static int ListView_Mount(void *param, ISO9660_DIR *rec) {
     return 1;
 }
 
-static int ListView_NavEnter(ISO9660_DIR *rec) {
+static int ListView_NavEnter(REC *rec) {
     ListView_DeleteAll();
     if (!Iso9660.EnumDir(0, rec, ListView_Mount)) return 0;
     if (nav < elementsof(nav_stack)-1) {
@@ -130,7 +130,7 @@ static int ListView_NavEnter(ISO9660_DIR *rec) {
 
 static int ListView_NavBack(void) {
     if (nav > 1) {
-        ISO9660_DIR *rec = nav_stack[--nav];
+        REC *rec = nav_stack[--nav];
         ListView_DeleteAll();
         if (!Iso9660.EnumDir(0, rec, ListView_Mount)) return 0;
     }
@@ -139,7 +139,7 @@ static int ListView_NavBack(void) {
 
 static int ListView_NavForward(void) {
     if (nav < end) {
-        ISO9660_DIR *rec = nav_stack[++nav];
+        REC *rec = nav_stack[++nav];
         ListView_DeleteAll();
         if (!Iso9660.EnumDir(0, rec, ListView_Mount)) return 0;
     }

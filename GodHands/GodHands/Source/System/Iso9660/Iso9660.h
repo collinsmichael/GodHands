@@ -4,7 +4,7 @@
 
 
 #pragma pack(push, 1)
-typedef struct ISO9660_PVD {
+typedef struct PVD {
     uint8_t  TypeCode;             // Always 0x01 for a Primary Volume Descriptor
     char     Identifier[5];        // Always 'CD001'
     uint8_t  Version;              // Always 0x01
@@ -43,11 +43,11 @@ typedef struct ISO9660_PVD {
     uint8_t  Unused;               // Always 0x00
     uint8_t  ApplicationData[512]; // Contents not defined by ISO 9660
     uint8_t  Reserved[653];        //  Reserved by ISO
-} ISO9660_PVD;
+} PVD;
 #pragma pack(pop)
 
 #pragma pack(push, 1)
-typedef struct ISO9660_DIR {
+typedef struct REC {
     uint8_t  LenRecord;         // Length of Directory Record.
     uint8_t  LenXA;             // Extended Attribute Record length.
     uint32_t LsbLbaData;        // Location of extent (LBA) in little-endian
@@ -62,9 +62,9 @@ typedef struct ISO9660_DIR {
     uint16_t MsbVolumeSeqNo;    // The volume that this extent is recorded on
     uint8_t  LenFileName;       // Length of file identifier (file name)
     char     FileName[1];       // File Name (size is exactly LenFileName)
-} ISO9660_DIR;
+} REC;
 #define ISO9660_HIDDEN         0x01
-#define ISO9660_DIRECTORY      0x02
+#define RECECTORY      0x02
 #define ISO9660_ASSOCIATED     0x04
 #define ISO9660_XA_FORMAT      0x08
 #define ISO9660_XA_PERMISSIONS 0x10
@@ -76,9 +76,9 @@ typedef struct ISO9660 {
     int   (*Close)(void);
     char *(*DiskPath)(void);
     char *(*DiskName)(void);
-    char *(*FileExt)(ISO9660_DIR *rec);
-    ISO9660_DIR *(*RootDir)(void);
-    int   (*EnumDir)(void *param, ISO9660_DIR *dir, int(*proc)(void *param, ISO9660_DIR *rec));
+    char *(*FileExt)(REC *rec);
+    REC *(*RootDir)(void);
+    int   (*EnumDir)(void *param, REC *dir, int(*proc)(void *param, REC *rec));
 } ISO9660;
 
 

@@ -3,6 +3,7 @@
 
 #include "Mission/Control/Control.h"
 #include "Mission/Model/Model.h"
+#include "Mission/Model/ZND/ModelZnd.h"
 #include "Mission/View/View.h"
 #include "Mission/View/Dialogs/Dialogs.h"
 #include "Mission/View/Resources/Font.h"
@@ -22,6 +23,7 @@ typedef struct MISSION {
     int (*StartUp)(int argc, char *argv[]);
     int (*CleanUp)(void);
     int (*Execute)(void);
+    int (*Reset)(void);
 } MISSION;
 
 

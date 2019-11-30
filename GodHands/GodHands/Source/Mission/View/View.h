@@ -7,6 +7,7 @@ typedef struct VIEW {
     int (*StartUp)(void);
     int (*CleanUp)(void);
     int (*Execute)(void);
+    int (*Reset)(void);
 } VIEW;
 
 typedef struct WINCLASS {

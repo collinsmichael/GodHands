@@ -42,7 +42,7 @@ static int TreeView_AddItem(void *parent, char *path, DWORD Attribute, void *par
     return (int)TreeView_InsertItem(hwnd[WinTreeView], &tvi);
 }
 
-static int TreeView_AddDir(void *parent, ISO9660_DIR *rec) {
+static int TreeView_AddDir(void *parent, REC *rec) {
     int i;
     for (i = 0; i < rec->LenFileName; i++) {
         if (rec->FileName[i] == ';') {
@@ -56,7 +56,7 @@ static int TreeView_AddDir(void *parent, ISO9660_DIR *rec) {
     return TreeView_AddItem(parent, path, FILE_ATTRIBUTE_DIRECTORY, rec);
 }
 
-static int TreeView_AddFile(void *parent, ISO9660_DIR *rec) {
+static int TreeView_AddFile(void *parent, REC *rec) {
     int i;
     for (i = 0; i < rec->LenFileName; i++) {
         if (rec->FileName[i] == ';') {
@@ -70,9 +70,9 @@ static int TreeView_AddFile(void *parent, ISO9660_DIR *rec) {
     return TreeView_AddItem(parent, path, FILE_ATTRIBUTE_NORMAL, rec);
 }
 
-static int EnumTreeDir(void *parent, ISO9660_DIR *rec) {
+static int EnumTreeDir(void *parent, REC *rec) {
     if ((rec->LenRecord > 0x30)) {
-        if ((rec->FileFlags & ISO9660_DIRECTORY)) {
+        if ((rec->FileFlags & RECECTORY)) {
             void *child = (void*)TreeView_AddDir(parent, rec);
             if (!Iso9660.EnumDir(child, rec, EnumTreeDir)) return 0;
         } else {
@@ -85,7 +85,7 @@ static int EnumTreeDir(void *parent, ISO9660_DIR *rec) {
 static int TreeView_Mount(void) {
     void *root;
     char *name = Iso9660.DiskName();
-    ISO9660_DIR *rec = Iso9660.RootDir();
+    REC *rec = Iso9660.RootDir();
     TreeView_DeleteAll();
     root = (void*)TreeView_AddItem(0, name, FILE_ATTRIBUTE_NORMAL, rec);
     if (!Iso9660.EnumDir(root, 0, EnumTreeDir)) return 0;
