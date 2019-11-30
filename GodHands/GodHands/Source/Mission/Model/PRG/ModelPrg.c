@@ -46,7 +46,7 @@ static REC *ModelPrg_GetPrg(char *name) {
     int pos;
     int i;
     int len = lstrlenA(name);
-    for (i = 0; i < len; i++) {
+    for (i = 0; i <= len; i++) {
         if (i == 4) {
             int lba = slus->LsbLbaData;
             int len = slus->LsbLenData/(2*KB);

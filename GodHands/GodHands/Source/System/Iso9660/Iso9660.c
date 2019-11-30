@@ -97,10 +97,10 @@ static int Iso9660_EnumDir(void *param, REC *dir, int(*proc)(void*,REC*)) {
         }
         rec = (REC*)&disk[lba*2*KB + pos];
         if (rec->LenRecord == 0) {
-            pos++;
+            pos = (pos+2*KB-1) & ~(2*KB-1);
             continue;
         }
-        if ((rec->FileFlags & RECECTORY) != 0) {
+        if ((rec->FileFlags & ISO9660_DIRECTORY) != 0) {
             proc(param, rec);
         }
     }
@@ -112,10 +112,10 @@ static int Iso9660_EnumDir(void *param, REC *dir, int(*proc)(void*,REC*)) {
         }
         rec = (REC*)&disk[lba*2*KB + pos];
         if (rec->LenRecord == 0) {
-            pos++;
+            pos = (pos+2*KB-1) & ~(2*KB-1);
             continue;
         }
-        if ((rec->FileFlags & RECECTORY) == 0) {
+        if ((rec->FileFlags & ISO9660_DIRECTORY) == 0) {
             proc(param, rec);
         }
     }

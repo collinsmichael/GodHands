@@ -64,7 +64,7 @@ typedef struct REC {
     char     FileName[1];       // File Name (size is exactly LenFileName)
 } REC;
 #define ISO9660_HIDDEN         0x01
-#define RECECTORY      0x02
+#define ISO9660_DIRECTORY      0x02
 #define ISO9660_ASSOCIATED     0x04
 #define ISO9660_XA_FORMAT      0x08
 #define ISO9660_XA_PERMISSIONS 0x10

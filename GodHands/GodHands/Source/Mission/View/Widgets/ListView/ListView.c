@@ -110,7 +110,7 @@ static int ListView_AddFile(REC *rec) {
 }
 
 static int ListView_Mount(void *param, REC *rec) {
-    if ((rec->FileFlags & RECECTORY)) {
+    if ((rec->FileFlags & ISO9660_DIRECTORY)) {
         ListView_AddDir(rec);
     } else {
         ListView_AddFile(rec);

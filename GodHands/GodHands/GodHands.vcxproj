@@ -178,6 +178,7 @@
     <ClCompile Include="Source\Mission\Control\MenuFile\MenuFileExit.c" />
     <ClCompile Include="Source\Mission\Control\MenuFile\MenuFileOpen.c" />
     <ClCompile Include="Source\Mission\Control\MenuFile\MenuFileSave.c" />
+    <ClCompile Include="Source\Mission\Control\OpenRecord\OpenRecord.c" />
     <ClCompile Include="Source\Mission\Mission.c" />
     <ClCompile Include="Source\Mission\Model\ARM\ModelArm.c" />
     <ClCompile Include="Source\Mission\Model\BIN\ModelBin.c" />

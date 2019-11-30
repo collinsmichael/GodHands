@@ -118,6 +118,9 @@
     <Filter Include="Source\Mission\Model\VSTEXT">
       <UniqueIdentifier>{b1ad6f97-aa9d-44e4-9115-f665c14e9f2c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Mission\Control\OpenRecord">
+      <UniqueIdentifier>{63bf17b2-68bc-437c-a040-039384509c7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\System\RamDisk\RamDisk.c">
@@ -263,6 +266,9 @@
     </ClCompile>
     <ClCompile Include="Source\Mission\Model\VSTEXT\VsText.c">
       <Filter>Source\Mission\Model\VSTEXT</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Control\OpenRecord\OpenRecord.c">
+      <Filter>Source\Mission\Control\OpenRecord</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

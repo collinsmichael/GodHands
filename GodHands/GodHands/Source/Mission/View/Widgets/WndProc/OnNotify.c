@@ -6,6 +6,7 @@
 extern struct LOGGER Logger;
 extern struct DIALOG Dialog;
 extern struct LISTVIEW ListView;
+extern struct CONTROL Control;
 
 extern struct JOBQUEUE JobQueue;
 extern struct STATUSBAR StatusBar;
@@ -20,16 +21,35 @@ static LRESULT NotifyOnDoubleClick(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
 
     NMHDR *nm_hdr = (NMHDR*)lParam;
     if (nm_hdr->hwndFrom == hwnd[WinTreeView]) {
-        //TabControl.MakeTab(navselection);
+        HTREEITEM hItem;
+        TVITEM tvi;
+        TVHITTESTINFO tvhi;
+        stosb(&tvi, 0, sizeof(tvi));
+        stosb(&tvhi, 0, sizeof(tvhi));
+        GetCursorPos(&tvhi.pt);
+        ScreenToClient(hwnd[WinTreeView], &tvhi.pt);
+        hItem = TreeView_HitTest(hwnd[WinTreeView], &tvhi);
+        if (hItem) {
+            tvi.mask = TVIF_HANDLE|TVIF_PARAM;
+            tvi.hItem = hItem;
+            if (TreeView_GetItem(hwnd[WinTreeView], &tvi)) {
+                rec = (REC*)tvi.lParam;
+                if ((rec->FileFlags & ISO9660_DIRECTORY)) {
+                    return 0;
+                } else {
+                    Control.OpenRecord(rec);
+                }
+            }
+        }
     } else if (nm_hdr->hwndFrom == hwnd[WinListView]) {
         lvi.iItem = ((LPNMITEMACTIVATE)lParam)->iItem;
         lvi.mask = LVIF_PARAM;
         ListView_GetItem(hwnd[WinListView], &lvi);
         rec = (REC*)lvi.lParam;
-        if ((rec->FileFlags & RECECTORY)) {
+        if ((rec->FileFlags & ISO9660_DIRECTORY)) {
             ListView.NavEnter(rec);
         } else {
-            StatusBar.SetStatus("DoubleClick", "TODO Open Selected File");
+            Control.OpenRecord(rec);
         }
     }
     return DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -104,7 +124,7 @@ static LRESULT NotifyOnTreeViewSelectChanged(HWND hWnd, UINT uMsg, WPARAM wParam
 static LRESULT NotifyOnListViewItemChanged(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     //NM_LISTVIEW *nm_lv = (NM_LISTVIEW*)lParam;
     //REC *rec = (REC*)nm_lv->lParam;
-    //if (rec->FileFlags & RECECTORY) {
+    //if (rec->FileFlags & ISO9660_DIRECTORY) {
     //    return ListView.NavEnter(rec);
     //}
     return 0;

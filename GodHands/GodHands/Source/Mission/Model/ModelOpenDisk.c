@@ -27,7 +27,7 @@ static char *extensions[] = {
 
 static int Model_HiPriority(void *parent, REC *rec) {
     if ((rec->LenRecord > 0x30)) {
-        if ((rec->FileFlags & RECECTORY)) {
+        if ((rec->FileFlags & ISO9660_DIRECTORY)) {
             if (!Iso9660.EnumDir(0, rec, Model_HiPriority)) return 0;
         } else {
             uint32_t **files = (uint32_t**)extensions;
@@ -51,7 +51,7 @@ static int Model_HiPriority(void *parent, REC *rec) {
 
 static int Model_LoPriority(void *parent, REC *rec) {
     if ((rec->LenRecord > 0x30)) {
-        if ((rec->FileFlags & RECECTORY)) {
+        if ((rec->FileFlags & ISO9660_DIRECTORY)) {
             if (!Iso9660.EnumDir(0, rec, Model_LoPriority)) return 0;
         } else {
             uint32_t **files = (uint32_t**)extensions;
@@ -80,7 +80,7 @@ static int Model_LoPriority(void *parent, REC *rec) {
 
 static int Model_LoadAll(void *parent, REC *rec) {
     if ((rec->LenRecord > 0x30)) {
-        if ((rec->FileFlags & RECECTORY)) {
+        if ((rec->FileFlags & ISO9660_DIRECTORY)) {
             if (!Iso9660.EnumDir(0, rec, Model_LoadAll)) return 0;
         } else {
             int lba = rec->LsbLbaData;

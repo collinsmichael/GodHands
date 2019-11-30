@@ -39,6 +39,7 @@ static int TreeView_AddItem(void *parent, char *path, DWORD Attribute, void *par
     tvi.item.cchTextMax     = lstrlenA(path);
     tvi.item.iImage         = iIcon;
     tvi.item.iSelectedImage = (Attribute == FILE_ATTRIBUTE_DIRECTORY) ? iIcon+1 : iIcon;
+    tvi.item.lParam         = (LPARAM)param;
     return (int)TreeView_InsertItem(hwnd[WinTreeView], &tvi);
 }
 
@@ -72,7 +73,7 @@ static int TreeView_AddFile(void *parent, REC *rec) {
 
 static int EnumTreeDir(void *parent, REC *rec) {
     if ((rec->LenRecord > 0x30)) {
-        if ((rec->FileFlags & RECECTORY)) {
+        if ((rec->FileFlags & ISO9660_DIRECTORY)) {
             void *child = (void*)TreeView_AddDir(parent, rec);
             if (!Iso9660.EnumDir(child, rec, EnumTreeDir)) return 0;
         } else {

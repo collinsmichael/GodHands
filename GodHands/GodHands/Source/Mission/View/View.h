@@ -10,6 +10,10 @@ typedef struct VIEW {
     int (*Reset)(void);
 } VIEW;
 
+typedef struct MDICHILD {
+    int (*Create)(REC *rec);
+} MDICHILD;
+
 typedef struct WINCLASS {
     char    *ClassName;
     WNDPROC  WndProc;

@@ -21,4 +21,5 @@ struct CONTROL Control = {
     Control_StartUp,
     Control_CleanUp,
     Control_Execute,
+    Control_OpenRecord,
 };

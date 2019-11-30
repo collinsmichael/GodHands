@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include "GodHands.h"
 
 
@@ -10,6 +11,7 @@ extern struct MODELPRG ModelPrg;
 static int arm_lba[256];
 static int arm_len[256];
 static REC *arm_rec[256];
+static uint8_t *arm_ptr[256];
 static REC *menu5_prg;
 static int arm;
 static uint32_t *lba_tbl;
@@ -21,6 +23,19 @@ static int ModelArm_Reset(void) {
     arm = 0;
     menu5_prg = 0;
     return 1;
+}
+
+static int ModelArm_AddArm(REC *rec) {
+    if (arm < elementsof(arm_rec)) {
+        arm_lba[arm] = rec->LsbLbaData;
+        arm_len[arm] = rec->LsbLenData;
+        arm_rec[arm] = rec;
+        arm++;
+    }
+    if (arm >= elementsof(arm_rec)) {
+        Logger.Warn("ModelArm.AddArm", "Maximum reached of %d/%d ARM Files", arm, elementsof(arm_rec));
+    }
+    return Logger.Done("ModelArm.AddArm", "Done");
 }
 
 // scan MENU5.PRG for the ARM LBA table
@@ -60,6 +75,8 @@ static int ModelArm_FindLbaTable(void) {
     len_tbl = last - first;
 
     // fixup internal table
+    // this may look pointless with a fresh CD image
+    // but once we start moving/resizing files it will be crucial
     for (i = 0; i < len_tbl/2; i++) {
         REC *tmp = arm_rec[i];
         arm_lba[i] = lba_tbl[2*i + 0];
@@ -76,23 +93,23 @@ static int ModelArm_FindLbaTable(void) {
     return 1;
 }
 
-static int ModelArm_StartUp(void) {
-    ModelArm_FindLbaTable();
+static int ModelArm_LoadArmFiles(void) {
+    int pos;
+    for (pos = 0; pos < arm; pos++) {
+        int lba = arm_rec[pos]->LsbLbaData;
+        int len = arm_rec[pos]->LsbLenData/(2*KB);
+        if (!RamDisk.Read(lba, len)) return 0;
+        arm_ptr[pos] = (uint8_t*)RamDisk.AddressOf(lba);
+    }
     return 1;
 }
 
-static int ModelArm_AddArm(REC *rec) {
-    if (arm < elementsof(arm_rec)) {
-        arm_lba[arm] = rec->LsbLbaData;
-        arm_len[arm] = rec->LsbLenData;
-        arm_rec[arm] = rec;
-        arm++;
-    }
-    if (arm >= elementsof(arm_rec)) {
-        Logger.Warn("ModelArm.AddArm", "Maximum reached of %d/%d ARM Files", arm, elementsof(arm_rec));
-    }
-    return Logger.Done("ModelArm.AddArm", "Done");
+static int ModelArm_StartUp(void) {
+    ModelArm_FindLbaTable();
+    ModelArm_LoadArmFiles();
+    return 1;
 }
+
 
 struct MODELARM ModelArm = {
     ModelArm_StartUp,

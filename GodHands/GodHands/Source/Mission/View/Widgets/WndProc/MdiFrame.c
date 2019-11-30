@@ -10,6 +10,7 @@ extern struct JOBQUEUE JobQueue;
 extern struct STATUSBAR StatusBar;
 extern struct LISTVIEW ListView;
 extern struct MDICLIENT MdiClient;
+extern struct MDICHILD MdiChild;
 extern struct MENUBAR MenuBar;
 extern struct WINDOW wx[16];
 extern HWND hwnd[16];
