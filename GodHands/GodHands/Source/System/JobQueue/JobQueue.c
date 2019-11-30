@@ -65,8 +65,8 @@ static int JobQueue_KillAll(void) {
     for (pos = 0; pos < 256; pos++) { 
         if (handle[pos]) {
             TerminateThread(handle[pos], 0);
+            handle[pos] = 0;
             Sleep(0);
-            CloseHandle(handle[pos]);
         }
     }
     return Logger.Done("JobQueue.CleanUp", "Done");

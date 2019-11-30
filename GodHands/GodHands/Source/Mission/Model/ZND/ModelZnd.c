@@ -12,40 +12,38 @@
 
 extern struct LOGGER Logger;
 
+// 256 x ZND Files
 static char znd_map[256];
 static int znd_lba[256];
 static int znd_len[256];
 static REC *znd_rec[256];
 static int znd;
-static REC *slus;
 
-static int Znd_Reset(void) {
+static int ModelZnd_Reset(void) {
     stosd(znd_map, 0, sizeof(znd_map)/4);
     stosd(znd_lba, 0, sizeof(znd_lba)/4);
     stosd(znd_len, 0, sizeof(znd_len)/4);
     znd = 0;
-    slus = 0;
-    return 0;
+    return 1;
 }
 
-static int Znd_AddSlus(REC *rec) {
-    slus = rec;
-    return Logger.Done("Znd.AddSlus", "Done");
+static int ModelZnd_StartUp(void) {
+    return 1;
 }
 
-static int Znd_AddZnd(REC *rec) {
-    if (znd < 256) {
+static int ModelZnd_AddZnd(REC *rec) {
+    if (znd < elementsof(znd_rec)) {
         znd_lba[znd] = rec->LsbLbaData;
         znd_len[znd] = rec->LsbLenData;
         znd_rec[znd] = rec;
         znd_map[znd] = 'x';
         znd++;
     }
-    return Logger.Done("Znd.AddZnd", "Done");
+    return Logger.Done("Znd.AddZnd", "Loaded %d/%d", znd, elementsof(znd_rec));
 }
 
 struct MODELZND ModelZnd = {
-    Znd_Reset,
-    Znd_AddSlus,
-    Znd_AddZnd,
+    ModelZnd_StartUp,
+    ModelZnd_Reset,
+    ModelZnd_AddZnd,
 };

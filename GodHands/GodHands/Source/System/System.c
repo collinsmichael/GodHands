@@ -24,8 +24,8 @@ static int System_Execute(void) {
 }
 
 static int System_Reset(void) {
-    Mission.Reset();
     JobQueue.KillAll();
+    Mission.Reset();
     return Logger.Done("System.Reset", "Done");
 }
 

@@ -88,6 +88,36 @@
     <Filter Include="Source\Mission\Model\ZND">
       <UniqueIdentifier>{033f5e78-20e6-40ad-a7e9-264fbe7e9683}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Mission\Model\PRG">
+      <UniqueIdentifier>{6274cce6-b27b-4563-a3b3-bf466532e92b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mission\Model\ARM">
+      <UniqueIdentifier>{5f19c09d-00fa-4af7-aeb4-ba150f7ba1a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mission\Model\MPD">
+      <UniqueIdentifier>{2be7d1fc-b240-4a64-93f7-a471e65f8a91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mission\Model\ZUD">
+      <UniqueIdentifier>{ab1d8cab-ece3-4240-9a84-6e7e5e7f8d9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mission\Model\SHP">
+      <UniqueIdentifier>{8a522bc8-18d5-4ab0-afeb-0ced76f58b6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mission\Model\WEP">
+      <UniqueIdentifier>{40f1432c-a7da-46f4-8895-852f809a63eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mission\Model\SEQ">
+      <UniqueIdentifier>{3d06084e-6012-465a-9011-4771600561a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mission\Model\BIN">
+      <UniqueIdentifier>{2d92bfa9-916a-46bc-a07e-167e66803aef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mission\Model\SYD">
+      <UniqueIdentifier>{2bc53de6-9902-4c94-b45e-f9e5d6d4e049}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Mission\Model\VSTEXT">
+      <UniqueIdentifier>{b1ad6f97-aa9d-44e4-9115-f665c14e9f2c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\System\RamDisk\RamDisk.c">
@@ -204,6 +234,36 @@
     <ClCompile Include="Source\Mission\Model\ZND\ModelZnd.c">
       <Filter>Source\Mission\Model\ZND</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mission\Model\PRG\ModelPrg.c">
+      <Filter>Source\Mission\Model\PRG</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\ARM\ModelArm.c">
+      <Filter>Source\Mission\Model\ARM</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\MPD\ModelMpd.c">
+      <Filter>Source\Mission\Model\MPD</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\ZUD\ModelZud.c">
+      <Filter>Source\Mission\Model\ZUD</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\SHP\ModelShp.c">
+      <Filter>Source\Mission\Model\SHP</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\WEP\ModelWep.c">
+      <Filter>Source\Mission\Model\WEP</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\SEQ\ModelSeq.c">
+      <Filter>Source\Mission\Model\SEQ</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\BIN\ModelBin.c">
+      <Filter>Source\Mission\Model\BIN</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\SYD\ModelSyd.c">
+      <Filter>Source\Mission\Model\SYD</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\VSTEXT\VsText.c">
+      <Filter>Source\Mission\Model\VSTEXT</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\RamDisk\RamDisk.h">
@@ -286,6 +346,36 @@
     </ClInclude>
     <ClInclude Include="Source\Mission\Model\ZND\ModelZnd.h">
       <Filter>Source\Mission\Model\ZND</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Model\PRG\ModelPrg.h">
+      <Filter>Source\Mission\Model\PRG</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Model\ARM\ModelArm.h">
+      <Filter>Source\Mission\Model\ARM</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Model\MPD\ModelMpd.h">
+      <Filter>Source\Mission\Model\MPD</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Model\ZUD\ModelZud.h">
+      <Filter>Source\Mission\Model\ZUD</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Model\SHP\ModelShp.h">
+      <Filter>Source\Mission\Model\SHP</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Model\WEP\ModelWep.h">
+      <Filter>Source\Mission\Model\WEP</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Model\SEQ\ModelSeq.h">
+      <Filter>Source\Mission\Model\SEQ</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Model\BIN\ModelBin.h">
+      <Filter>Source\Mission\Model\BIN</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Model\SYD\ModelSyd.h">
+      <Filter>Source\Mission\Model\SYD</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Model\VSTEXT\VsText.h">
+      <Filter>Source\Mission\Model\VSTEXT</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

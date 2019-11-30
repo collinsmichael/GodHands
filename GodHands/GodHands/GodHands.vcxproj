@@ -76,7 +76,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEV;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)Source\;</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -106,7 +106,7 @@
       <Optimization>MinSpace</Optimization>
       <FunctionLevelLinking>false</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEV;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)Source\;</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -146,7 +146,7 @@
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>false</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;UNITTEST;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEV;WIN32;UNITTEST;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)Source\;</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -179,9 +179,19 @@
     <ClCompile Include="Source\Mission\Control\MenuFile\MenuFileOpen.c" />
     <ClCompile Include="Source\Mission\Control\MenuFile\MenuFileSave.c" />
     <ClCompile Include="Source\Mission\Mission.c" />
+    <ClCompile Include="Source\Mission\Model\ARM\ModelArm.c" />
+    <ClCompile Include="Source\Mission\Model\BIN\ModelBin.c" />
     <ClCompile Include="Source\Mission\Model\Model.c" />
     <ClCompile Include="Source\Mission\Model\ModelOpenDisk.c" />
+    <ClCompile Include="Source\Mission\Model\MPD\ModelMpd.c" />
+    <ClCompile Include="Source\Mission\Model\PRG\ModelPrg.c" />
+    <ClCompile Include="Source\Mission\Model\SEQ\ModelSeq.c" />
+    <ClCompile Include="Source\Mission\Model\SHP\ModelShp.c" />
+    <ClCompile Include="Source\Mission\Model\SYD\ModelSyd.c" />
+    <ClCompile Include="Source\Mission\Model\VSTEXT\VsText.c" />
+    <ClCompile Include="Source\Mission\Model\WEP\ModelWep.c" />
     <ClCompile Include="Source\Mission\Model\ZND\ModelZnd.c" />
+    <ClCompile Include="Source\Mission\Model\ZUD\ModelZud.c" />
     <ClCompile Include="Source\Mission\View\Dialogs\Dialogs.c" />
     <ClCompile Include="Source\Mission\View\Resources\Font.c" />
     <ClCompile Include="Source\Mission\View\Resources\Icon.c" />
@@ -215,8 +225,18 @@
     <ClInclude Include="Source\GodHands.h" />
     <ClInclude Include="Source\Mission\Control\Control.h" />
     <ClInclude Include="Source\Mission\Mission.h" />
+    <ClInclude Include="Source\Mission\Model\ARM\ModelArm.h" />
+    <ClInclude Include="Source\Mission\Model\BIN\ModelBin.h" />
     <ClInclude Include="Source\Mission\Model\Model.h" />
+    <ClInclude Include="Source\Mission\Model\MPD\ModelMpd.h" />
+    <ClInclude Include="Source\Mission\Model\PRG\ModelPrg.h" />
+    <ClInclude Include="Source\Mission\Model\SEQ\ModelSeq.h" />
+    <ClInclude Include="Source\Mission\Model\SHP\ModelShp.h" />
+    <ClInclude Include="Source\Mission\Model\SYD\ModelSyd.h" />
+    <ClInclude Include="Source\Mission\Model\VSTEXT\VsText.h" />
+    <ClInclude Include="Source\Mission\Model\WEP\ModelWep.h" />
     <ClInclude Include="Source\Mission\Model\ZND\ModelZnd.h" />
+    <ClInclude Include="Source\Mission\Model\ZUD\ModelZud.h" />
     <ClInclude Include="Source\Mission\View\Dialogs\Dialogs.h" />
     <ClInclude Include="Source\Mission\View\Resources\Font.h" />
     <ClInclude Include="Source\Mission\View\Resources\Icon.h" />

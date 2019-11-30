@@ -13,8 +13,8 @@
 
 
 typedef struct MODELZND {
+    int (*StartUp)(void);
     int (*Reset)(void);
-    int (*AddSlus)(REC *rec);
     int (*AddZnd)(REC *rec);
 } MODELZND;
 
