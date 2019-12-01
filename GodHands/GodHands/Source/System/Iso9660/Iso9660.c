@@ -64,6 +64,7 @@ static char *Iso9660_DiskName(void) {
 
 static char *Iso9660_FileExt(REC *rec) {
     int i;
+    if (!rec) return 0;
     for (i = rec->LenFileName-1; i >= 0; i--) {
         if (rec->FileName[i] == '.') {
             return &rec->FileName[i];

@@ -56,11 +56,15 @@ static int MdiChild_Create(REC *rec) {
     HICON hIcon;
     int i;
 
-    for (i = 0; i < rec->LenFileName; i++) {
-        text[i] = rec->FileName[i];
-        if (text[i] == ';') break;
+    if (rec) {
+        for (i = 0; i < rec->LenFileName; i++) {
+            text[i] = rec->FileName[i];
+            if (text[i] == ';') break;
+        }
+        text[i] = 0;
+    } else {
+        lstrcpyA(text, "document.txt");
     }
-    text[i] = 0;
 
     mc.style   = WS_OVERLAPPEDWINDOW | WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
     mc.szClass = "MdiChild";

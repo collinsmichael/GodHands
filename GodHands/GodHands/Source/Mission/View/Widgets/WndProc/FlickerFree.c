@@ -21,7 +21,7 @@ static LRESULT CALLBACK FlickerFreeProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPA
         hdcMem = CreateCompatibleDC(ps.hdc);
         hbmMem = CreateCompatibleBitmap(ps.hdc, rc.right-rc.left, rc.bottom-rc.top);
         hbmOld = (HBITMAP)SelectObject(hdcMem, hbmMem);
-        hbrBkGnd = (HBRUSH)GetClassLong(hWnd, GCL_HBRBACKGROUND);
+        hbrBkGnd = (HBRUSH)GetClassLongA(hWnd, GCL_HBRBACKGROUND);
         FillRect(hdcMem, &rc, hbrBkGnd);
         DeleteObject(hbrBkGnd);
         CallWindowProcA(WndProc, hWnd, uMsg, (WPARAM)hdcMem, 0);

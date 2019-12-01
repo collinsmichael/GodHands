@@ -1,9 +1,10 @@
 #ifndef TOOLTIP_H
 #define TOOLTIP_H
+#include <windows.h>
 
 
 typedef struct TOOLTIP {
-    int (*SetToolTip)(int win, char *text);
+    int (*SetToolTip)(HWND hWnd, char *text);
 } TOOLTIP;
 
 

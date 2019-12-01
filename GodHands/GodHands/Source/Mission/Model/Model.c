@@ -35,6 +35,7 @@ static WNDPROC WndProc[] = {
 WNDPROC Model_GetWndProc(REC *rec) {
     int i;
     char *ext = Iso9660.FileExt(rec);
+    if (!ext) return 0;
     for (i = 0; i < elementsof(associations); i++) {
         uint32_t *src = (uint32_t*)ext;
         uint32_t *des = (uint32_t*)associations[i];

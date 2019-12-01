@@ -29,7 +29,7 @@ static int StatusBar_SetStatus(char *status, char *format, ...) {
     SendMessageA(hwnd[WinStatusBar], SB_SETTEXT, (WPARAM)1, (LPARAM)status);
     SendMessageA(hwnd[WinStatusBar], SB_SETTEXT, (WPARAM)2, (LPARAM)text);
     UpdateWindow(hwnd[WinStatusBar]);
-    ToolTip.SetToolTip(WinStatusBar, text);
+    ToolTip.SetToolTip(hwnd[WinStatusBar], text);
     SwitchToThread();
     return 1;
 }

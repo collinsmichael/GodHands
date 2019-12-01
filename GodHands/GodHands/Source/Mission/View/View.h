@@ -6,17 +6,6 @@
 int FlickerFree(HWND hwnd);
 
 
-typedef struct VIEW {
-    int (*StartUp)(void);
-    int (*CleanUp)(void);
-    int (*Execute)(void);
-    int (*Reset)(void);
-} VIEW;
-
-typedef struct MDICHILD {
-    int (*Create)(REC *rec);
-} MDICHILD;
-
 typedef struct WINCLASS {
     char    *ClassName;
     WNDPROC  WndProc;
@@ -36,7 +25,7 @@ typedef struct WINDOW {
     int   Height;
     int   Parent;
     void *Param;
-    int   Menu;
+    int   DoubleBuffer;
     char *Font;
     char *ToolTip;
 } WINDOW;
@@ -55,6 +44,18 @@ typedef struct WINDOW {
 #define WinListViewHeader 0x0B
 #define WinSplitter       0x0C
 #define WinMdiChild       0x0D
+
+typedef struct VIEW {
+    int  (*StartUp)(void);
+    int  (*CleanUp)(void);
+    int  (*Execute)(void);
+    int  (*Reset)(void);
+    HWND (*Window)(HWND hParent, WINDOW *wx);
+} VIEW;
+
+typedef struct MDICHILD {
+    int (*Create)(REC *rec);
+} MDICHILD;
 
 
 #endif // VIEW_H
