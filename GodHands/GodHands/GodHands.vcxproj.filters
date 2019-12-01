@@ -121,6 +121,9 @@
     <Filter Include="Source\Mission\Control\OpenRecord">
       <UniqueIdentifier>{63bf17b2-68bc-437c-a040-039384509c7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Mission\View\Widgets\HexEditor">
+      <UniqueIdentifier>{e48350c3-6cc7-4645-892e-86fd601d62f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\System\RamDisk\RamDisk.c">
@@ -234,41 +237,62 @@
     <ClCompile Include="Source\Mission\Model\ModelOpenDisk.c">
       <Filter>Source\Mission\Model</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Mission\Model\ZND\ModelZnd.c">
-      <Filter>Source\Mission\Model\ZND</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mission\Model\PRG\ModelPrg.c">
-      <Filter>Source\Mission\Model\PRG</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mission\Model\ARM\ModelArm.c">
-      <Filter>Source\Mission\Model\ARM</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mission\Model\MPD\ModelMpd.c">
-      <Filter>Source\Mission\Model\MPD</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mission\Model\ZUD\ModelZud.c">
-      <Filter>Source\Mission\Model\ZUD</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mission\Model\SHP\ModelShp.c">
-      <Filter>Source\Mission\Model\SHP</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mission\Model\WEP\ModelWep.c">
-      <Filter>Source\Mission\Model\WEP</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mission\Model\SEQ\ModelSeq.c">
-      <Filter>Source\Mission\Model\SEQ</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mission\Model\BIN\ModelBin.c">
-      <Filter>Source\Mission\Model\BIN</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mission\Model\SYD\ModelSyd.c">
-      <Filter>Source\Mission\Model\SYD</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Mission\Model\VSTEXT\VsText.c">
       <Filter>Source\Mission\Model\VSTEXT</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mission\Control\OpenRecord\OpenRecord.c">
       <Filter>Source\Mission\Control\OpenRecord</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\View\Widgets\HexEditor\HexEditor.c">
+      <Filter>Source\Mission\View\Widgets\HexEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\ARM\ArmWndProc.c">
+      <Filter>Source\Mission\Model\ARM</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\MPD\MpdWndProc.c">
+      <Filter>Source\Mission\Model\MPD</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\SHP\ShpWndProc.c">
+      <Filter>Source\Mission\Model\SHP</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\WEP\WepWndProc.c">
+      <Filter>Source\Mission\Model\WEP</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\ZND\ZndWndProc.c">
+      <Filter>Source\Mission\Model\ZND</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\ZUD\ZudWndProc.c">
+      <Filter>Source\Mission\Model\ZUD</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\ARM\ArmModel.c">
+      <Filter>Source\Mission\Model\ARM</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\BIN\BinModel.c">
+      <Filter>Source\Mission\Model\BIN</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\MPD\MpdModel.c">
+      <Filter>Source\Mission\Model\MPD</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\PRG\PrgModel.c">
+      <Filter>Source\Mission\Model\PRG</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\SEQ\SeqModel.c">
+      <Filter>Source\Mission\Model\SEQ</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\SHP\ShpModel.c">
+      <Filter>Source\Mission\Model\SHP</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\SYD\SydModel.c">
+      <Filter>Source\Mission\Model\SYD</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\WEP\WepModel.c">
+      <Filter>Source\Mission\Model\WEP</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\ZND\ZndModel.c">
+      <Filter>Source\Mission\Model\ZND</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\ZUD\ZudModel.c">
+      <Filter>Source\Mission\Model\ZUD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -350,38 +374,44 @@
     <ClInclude Include="Source\System\Iso9660\Iso9660.h">
       <Filter>Source\System\Iso9660</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Mission\Model\ZND\ModelZnd.h">
-      <Filter>Source\Mission\Model\ZND</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Mission\Model\PRG\ModelPrg.h">
-      <Filter>Source\Mission\Model\PRG</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Mission\Model\ARM\ModelArm.h">
-      <Filter>Source\Mission\Model\ARM</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Mission\Model\MPD\ModelMpd.h">
-      <Filter>Source\Mission\Model\MPD</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Mission\Model\ZUD\ModelZud.h">
-      <Filter>Source\Mission\Model\ZUD</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Mission\Model\SHP\ModelShp.h">
-      <Filter>Source\Mission\Model\SHP</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Mission\Model\WEP\ModelWep.h">
-      <Filter>Source\Mission\Model\WEP</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Mission\Model\SEQ\ModelSeq.h">
-      <Filter>Source\Mission\Model\SEQ</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Mission\Model\BIN\ModelBin.h">
-      <Filter>Source\Mission\Model\BIN</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Mission\Model\SYD\ModelSyd.h">
-      <Filter>Source\Mission\Model\SYD</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Mission\Model\VSTEXT\VsText.h">
       <Filter>Source\Mission\Model\VSTEXT</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\View\Widgets\HexEditor\HexEditor.h">
+      <Filter>Source\Mission\View\Widgets\HexEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Model\ARM\ArmModel.h">
+      <Filter>Source\Mission\Model\ARM</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Model\BIN\BinModel.h">
+      <Filter>Source\Mission\Model\BIN</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Model\MPD\MpdModel.h">
+      <Filter>Source\Mission\Model\MPD</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Model\PRG\PrgModel.h">
+      <Filter>Source\Mission\Model\PRG</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Model\SEQ\SeqModel.h">
+      <Filter>Source\Mission\Model\SEQ</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Model\SHP\ShpModel.h">
+      <Filter>Source\Mission\Model\SHP</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Model\SYD\SydModel.h">
+      <Filter>Source\Mission\Model\SYD</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Model\WEP\WepModel.h">
+      <Filter>Source\Mission\Model\WEP</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Model\ZND\ZndModel.h">
+      <Filter>Source\Mission\Model\ZND</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\Model\ZUD\ZudModel.h">
+      <Filter>Source\Mission\Model\ZUD</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\VagrantStory.h">
+      <Filter>Source\Mission</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

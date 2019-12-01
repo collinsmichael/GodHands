@@ -5,7 +5,6 @@
 
 extern LRESULT CALLBACK MdiFrameProc(HWND,UINT,WPARAM,LPARAM);
 extern LRESULT CALLBACK MdiChildProc(HWND,UINT,WPARAM,LPARAM);
-int FlickerFree(HWND hwnd);
 
 
 extern struct LOGGER    Logger;
@@ -46,7 +45,7 @@ struct WINDOW wx[16] = {
     { 0x00000000,"Splitter",          0,0x56000000,128, 0,   6,552,WinMdiFrame, 0,0x00, "MS Sans Serif", "Splitter" },
     { 0x00000000 },
 };
-static PIXELFORMATDESCRIPTOR pfd = {
+PIXELFORMATDESCRIPTOR pfd = {
     sizeof(pfd),0x01,0x35,0,0x20,0,0,0,0,0,0,0,0,0,0,0,0,0,0x20,0,0,0,0,0,0,0
 };
 ATOM atom[elementsof(cx)];

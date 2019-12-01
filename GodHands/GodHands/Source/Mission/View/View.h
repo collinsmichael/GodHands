@@ -3,6 +3,9 @@
 #include <Windows.h>
 
 
+int FlickerFree(HWND hwnd);
+
+
 typedef struct VIEW {
     int (*StartUp)(void);
     int (*CleanUp)(void);

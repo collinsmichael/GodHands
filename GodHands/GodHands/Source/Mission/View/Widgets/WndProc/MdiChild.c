@@ -3,7 +3,8 @@
 
 
 extern struct LOGGER Logger;
-
+extern struct MODEL Model;
+extern PIXELFORMATDESCRIPTOR pfd;
 
 extern ICON Icon;
 extern TABBAR TabBar;
@@ -13,6 +14,8 @@ extern HWND hwnd[64];
 LRESULT CALLBACK MdiChildProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     REC *rec;
     CREATESTRUCTA *cs;
+    WNDPROC WndProc;
+    HDC hDC;
 
     switch (uMsg) {
     case WM_CREATE:
@@ -20,9 +23,16 @@ LRESULT CALLBACK MdiChildProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
         if (cs) {
             MDICREATESTRUCTA *mc = (MDICREATESTRUCTA*)cs->lpCreateParams;
             rec = (REC*)mc->lParam;
+            WndProc = Model.GetWndProc(rec);
             SetPropA(hWnd, "REC", (HANDLE)rec);
+            SetPropA(hWnd, "VIEW", (HANDLE)WndProc);
             TabBar.Insert((char*)cs->lpszName, hWnd);
         }
+        hDC = GetDC(hWnd);
+        if (hDC) {
+            SetPixelFormat(hDC, ChoosePixelFormat(hDC, &pfd), &pfd);
+        }
+        FlickerFree(hWnd);
         break;
     case WM_CLOSE:
         TabBar.Remove((void*)hWnd);
@@ -31,6 +41,11 @@ LRESULT CALLBACK MdiChildProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
         hwnd[WinMdiChild] = (HWND)lParam;
         TabBar.SwitchTo(hwnd[WinMdiChild]);
         return 0;
+    }
+
+    WndProc = (WNDPROC)GetPropA(hWnd, "VIEW");
+    if (WndProc) {
+        WndProc(hWnd, uMsg, wParam, lParam);
     }
     return DefMDIChildProcA(hWnd, uMsg, wParam, lParam);
 }
