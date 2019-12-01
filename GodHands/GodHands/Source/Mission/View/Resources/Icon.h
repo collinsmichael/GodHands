@@ -9,6 +9,8 @@ typedef struct ICON {
     int        (*CleanUp)(void);
     HIMAGELIST (*GetSmallIcons)(void);
     HIMAGELIST (*GetLargeIcons)(void);
+    HICON      (*GetSmallIcon)(char *path, DWORD Attributes);
+    HICON      (*GetLargeIcon)(char *path, DWORD Attributes);
     int        (*GetIndexFromAttributes)(char *path, DWORD Attributes);
     int        (*GetIndex)(char *path);
     int        (*LargeX)(void);

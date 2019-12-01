@@ -60,9 +60,8 @@ static int Icon_GetIndex(char *path) {
     return Icon_GetIndexFromAttributes(path, Attributes);
 }
 
-static HICON Icon_GetSmallIcon(char *path) {
+static HICON Icon_GetSmallIcon(char *path, DWORD Attributes) {
     if (UsingShell) {
-        Attributes = GetFileAttributesA(path);
         fi = (HIMAGELIST)SHGetFileInfoA(path, Attributes, &sfi, sizeof(sfi),
             SHGFI_USEFILEATTRIBUTES | SHGFI_SYSICONINDEX | SHGFI_SMALLICON);
         if (!fi) {
@@ -70,8 +69,8 @@ static HICON Icon_GetSmallIcon(char *path) {
                 "Failed to retrieve file info '%s'", path);
             return 0;
         }
+        return ImageList_GetIcon(fi, sfi.iIcon, ILD_IMAGE | ILD_NORMAL);
         //ImageList_Destroy(fi);
-        return sfi.hIcon;
     } else {
         int iIcon = Icon_GetIndex(path);
         return ImageList_GetIcon(hIconSmall, iIcon, ILD_IMAGE | ILD_NORMAL);
@@ -79,9 +78,8 @@ static HICON Icon_GetSmallIcon(char *path) {
     return 0;
 }
 
-static HICON Icon_GetLargeIcon(char *path) {
+static HICON Icon_GetLargeIcon(char *path, DWORD Attributes) {
     if (UsingShell) {
-        Attributes = GetFileAttributesA(path);
         fi = (HIMAGELIST)SHGetFileInfoA(path, Attributes, &sfi, sizeof(sfi),
             SHGFI_USEFILEATTRIBUTES | SHGFI_SYSICONINDEX | SHGFI_LARGEICON);
         if (!fi) {
@@ -89,8 +87,8 @@ static HICON Icon_GetLargeIcon(char *path) {
                 "Failed to retrieve file info '%s'", path);
             return 0;
         }
+        return ImageList_GetIcon(fi, sfi.iIcon, ILD_IMAGE | ILD_NORMAL);
         //ImageList_Destroy(fi);
-        return sfi.hIcon;
     } else {
         int iIcon = Icon_GetIndex(path);
         return ImageList_GetIcon(hIconLarge, iIcon, ILD_IMAGE | ILD_NORMAL);
@@ -109,7 +107,7 @@ static BITMAP *Icon_GetBitmap(HICON hIcon) {
 
 static int Icon_LargeX(void) {
     if (UsingShell) {
-        HICON hIcon = Icon_GetLargeIcon("test.exe");
+        HICON hIcon = Icon_GetLargeIcon("test.exe", FILE_ATTRIBUTE_NORMAL);
         BITMAP *bmp = Icon_GetBitmap(hIcon);
         return bmp->bmWidth;
     } else {
@@ -119,7 +117,7 @@ static int Icon_LargeX(void) {
 
 static int Icon_LargeY(void) {
     if (UsingShell) {
-        HICON hIcon = Icon_GetLargeIcon("test.exe");
+        HICON hIcon = Icon_GetLargeIcon("test.exe", FILE_ATTRIBUTE_NORMAL);
         BITMAP *bmp = Icon_GetBitmap(hIcon);
         return bmp->bmHeight;
     } else {
@@ -129,7 +127,7 @@ static int Icon_LargeY(void) {
 
 static int Icon_SmallX(void) {
     if (UsingShell) {
-        HICON hIcon = Icon_GetSmallIcon("test.exe");
+        HICON hIcon = Icon_GetSmallIcon("test.exe", FILE_ATTRIBUTE_NORMAL);
         BITMAP *bmp = Icon_GetBitmap(hIcon);
         return bmp->bmWidth;
     } else {
@@ -139,7 +137,7 @@ static int Icon_SmallX(void) {
 
 static int Icon_SmallY(void) {
     if (UsingShell) {
-        HICON hIcon = Icon_GetSmallIcon("test.exe");
+        HICON hIcon = Icon_GetSmallIcon("test.exe", FILE_ATTRIBUTE_NORMAL);
         BITMAP *bmp = Icon_GetBitmap(hIcon);
         return bmp->bmHeight;
     } else {
@@ -224,6 +222,8 @@ struct ICON Icon = {
     Icon_CleanUp,
     Icon_GetSmallIcons,
     Icon_GetLargeIcons,
+    Icon_GetSmallIcon,
+    Icon_GetLargeIcon,
     Icon_GetIndexFromAttributes,
     Icon_GetIndex,
     Icon_LargeX,
