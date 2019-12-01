@@ -10,5 +10,6 @@ int stosw(void *dst, int val, int len);
 int cmpsb(void *dst, void *src, int len);
 int movsb(void *dst, void *src, int len);
 int stosb(void *dst, int val, int len);
+int hex2int(char *str);
 
 #endif // MEMORY_H

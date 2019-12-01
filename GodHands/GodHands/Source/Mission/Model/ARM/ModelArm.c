@@ -55,6 +55,8 @@ static int ModelArm_FindLbaTable(void) {
     }
     size = menu5_prg->LsbLenData;
     ptr = (uint32_t*)RamDisk.AddressOf(menu5_prg->LsbLbaData);
+    lba_tbl = 0;
+    len_tbl = 0;
 
     // scan MENU5.PRG for LBA table
     first = size;

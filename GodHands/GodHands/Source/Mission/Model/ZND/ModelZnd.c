@@ -47,7 +47,7 @@ static int ModelZnd_AddZnd(REC *rec) {
     return Logger.Done("Znd.AddZnd", "Loaded %d/%d", znd, elementsof(znd_rec));
 }
 
-// scan MENU5.PRG for the ARM LBA table
+// scan SLUS010 for the ZND LBA table
 // then fixup our internal table to match
 static int ModelZnd_FindLbaTable(void) {
     int first;
@@ -64,8 +64,10 @@ static int ModelZnd_FindLbaTable(void) {
     }
     size = slus_prg->LsbLenData;
     ptr = (uint32_t*)RamDisk.AddressOf(slus_prg->LsbLbaData);
+    lba_tbl = 0;
+    len_tbl = 0;
 
-    // scan MENU5.PRG for LBA table
+    // scan SLUS010 for LBA table
     first = size;
     last = 0;
     for (pos = 0; pos < znd; pos++) {

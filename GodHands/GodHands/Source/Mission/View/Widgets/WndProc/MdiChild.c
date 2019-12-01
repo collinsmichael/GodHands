@@ -21,7 +21,7 @@ LRESULT CALLBACK MdiChildProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
             MDICREATESTRUCTA *mc = (MDICREATESTRUCTA*)cs->lpCreateParams;
             rec = (REC*)mc->lParam;
             SetPropA(hWnd, "REC", (HANDLE)rec);
-            TabBar.Insert((char*)cs->lpszName, (void*)hWnd);
+            TabBar.Insert((char*)cs->lpszName, hWnd);
         }
         break;
     case WM_CLOSE:
@@ -29,7 +29,7 @@ LRESULT CALLBACK MdiChildProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
         break;
     case WM_MDIACTIVATE:
         hwnd[WinMdiChild] = (HWND)lParam;
-        TabBar.SwitchTo((void*)hwnd[WinMdiChild]);
+        TabBar.SwitchTo(hwnd[WinMdiChild]);
         return 0;
     }
     return DefMDIChildProcA(hWnd, uMsg, wParam, lParam);
