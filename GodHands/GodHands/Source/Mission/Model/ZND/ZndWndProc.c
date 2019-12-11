@@ -64,6 +64,7 @@ static struct WINDOW wx[] = {
     { 0x00000000,"Edit",    0,             0x56810004,112,492,128, 20,0,0,0, "Consolas", "Unknown" },
     { 0x00000000,"Static",  "Unknown:",    0x56000000, 20,520, 80, 20,0,0,0, "Consolas", 0 },
     { 0x00000000,"Edit",    0,             0x56810004,112,520,128, 20,0,0,0, "Consolas", "Unknown" },
+    { 0x00000000,"OpenGL",  0,             0x56000000,260, 20,400,520,0,0,0, "Consolas", "Video Display" },
 };
 
 

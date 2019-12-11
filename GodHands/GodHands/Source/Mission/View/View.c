@@ -24,9 +24,10 @@ extern HMENU hmenu[64];
 extern HACCEL hAccel;
 
 static struct WINCLASS cx[] = {
-    { "MdiFrame",MdiFrameProc,IDI_APPLICATION,IDC_ARROW, 0x7F7F7F },
-    { "MdiChild",MdiChildProc,IDI_APPLICATION,IDC_ARROW, -(COLOR_BTNFACE+1) },
+    { "MdiFrame",MdiFrameProc,IDI_APPLICATION,IDC_ARROW,  0x7F7F7F },
+    { "MdiChild",MdiChildProc,IDI_APPLICATION,IDC_ARROW,  -(COLOR_BTNFACE+1) },
     { "Splitter",SplitterProc,IDI_APPLICATION,IDC_SIZEWE, -(COLOR_3DFACE+1) },
+    { "OpenGL",  OpenGLProc,  IDI_APPLICATION,IDC_ARROW,  0 },
 };
 
 static struct WINDOW wx[16] = {
@@ -45,8 +46,9 @@ static struct WINDOW wx[16] = {
     { 0x00000000,"Splitter",          0,0x56000000,192, 0,   6,552,WinMdiFrame, 0,0x01, "MS Sans Serif", "Splitter" },
     { 0x00000000 },
 };
-PIXELFORMATDESCRIPTOR pfd = {
-    sizeof(pfd),0x01,0x35,0,0x20,0,0,0,0,0,0,0,0,0,0,0,0,0,0x20,0,0,0,0,0,0,0
+
+static PIXELFORMATDESCRIPTOR pfd = {
+    sizeof(pfd),0x01,0x15,0,0x20,0,0,0,0,0,0,0,0,0,0,0,0,0,0x20,0,0,0,0,0,0,0
 };
 ATOM atom[elementsof(cx)];
 HWND hwnd[64];

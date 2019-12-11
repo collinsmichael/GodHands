@@ -4,11 +4,14 @@
 
 extern struct LOGGER Logger;
 extern struct MODEL Model;
-extern PIXELFORMATDESCRIPTOR pfd;
 
 extern ICON Icon;
 extern TABBAR TabBar;
 extern HWND hwnd[64];
+
+static PIXELFORMATDESCRIPTOR pfd = {
+    sizeof(pfd),0x01,0x15,0,0x20,0,0,0,0,0,0,0,0,0,0,0,0,0,0x20,0,0,0,0,0,0,0
+};
 
 
 LRESULT CALLBACK MdiChildProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {

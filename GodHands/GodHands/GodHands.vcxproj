@@ -207,6 +207,7 @@
     <ClCompile Include="Source\Mission\View\Widgets\ListView\ListView.c" />
     <ClCompile Include="Source\Mission\View\Widgets\MdiClient\MdiClient.c" />
     <ClCompile Include="Source\Mission\View\Widgets\MenuBar\MenuBar.c" />
+    <ClCompile Include="Source\Mission\View\Widgets\OpenGL\OpenGL.c" />
     <ClCompile Include="Source\Mission\View\Widgets\Splitter\Splitter.c" />
     <ClCompile Include="Source\Mission\View\Widgets\StatusBar\StatusBar.c" />
     <ClCompile Include="Source\Mission\View\Widgets\TabBar\TabBar.c" />
@@ -254,6 +255,7 @@
     <ClInclude Include="Source\Mission\View\Widgets\ListView\ListView.h" />
     <ClInclude Include="Source\Mission\View\Widgets\MdiClient\MdiClient.h" />
     <ClInclude Include="Source\Mission\View\Widgets\MenuBar\MenuBar.h" />
+    <ClInclude Include="Source\Mission\View\Widgets\OpenGL\OpenGL.h" />
     <ClInclude Include="Source\Mission\View\Widgets\Splitter\Splitter.h" />
     <ClInclude Include="Source\Mission\View\Widgets\StatusBar\StatusBar.h" />
     <ClInclude Include="Source\Mission\View\Widgets\TabBar\TabBar.h" />
