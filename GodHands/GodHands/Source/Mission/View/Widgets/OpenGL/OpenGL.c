@@ -7,9 +7,12 @@
 
 
 extern LOGGER Logger;
+float Cam_RotX;
+float Cam_RotY;
+float Cam_RotZ;
 
 static PIXELFORMATDESCRIPTOR pfd = {
-    sizeof(pfd),0x01,0x25,0,0x10,0,0,0,0,0,0,0,0,0,0,0,0,0,0x10,0,0,0,0,0,0,0
+    sizeof(pfd),0x01,0x25,0,0x10,0,0,0,0,0,0,0,0,0,0,0,0,0,0x10
 };
 
 
@@ -47,18 +50,51 @@ LRESULT CALLBACK OpenGLProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
         BeginPaint(hWnd, &ps);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glLoadIdentity();
-        hDC = GetDC(hWnd);
-        glRotatef(0.1f,0.0,0.0,1.0);
+        hDC = ps.hdc;
+        //hDC = GetDC(hWnd);
+        //glRotatef(0.1f,0.0,0.0,1.0);
+        //glBegin(GL_QUADS);
+        //glColor3f(1.0,0.1,0.1);
+        //glVertex3f(-0.6,-0.6,1.0);
+        //glColor3f(0.1,0.1,0.1);
+        //glVertex3f(0.6,-0.6,1.0);
+        //glColor3f(0.1,0.1,1.0);
+        //glVertex3f(0.6,0.6,1.0);
+        //glColor3f(1.0,0.1,1.0);
+        //glVertex3f(-0.6,0.6,1.0);
+        //glEnd();
+
+        glRotatef(1.0f, Cam_RotX, 0.00000f, 0.00000f); Cam_RotX += 0.01f;
+        glRotatef(1.0f, 0.00000f, Cam_RotY, 0.00000f); Cam_RotY += 0.01f;
+        glRotatef(1.0f, 0.00000f, 0.00000f, Cam_RotZ); Cam_RotZ += 0.01f;
+        //glBindTexture( GL_TEXTURE_2D, Texture[ 0 ] );
         glBegin(GL_QUADS);
-        glColor3f(1.0,0.1,0.1);
-        glVertex3f(-0.6,-0.6,0.0);
-        glColor3f(0.1,0.1,0.1);
-        glVertex3f(0.6,-0.6,0.0);
-        glColor3f(0.1,0.1,1.0);
-        glVertex3f(0.6,0.6,0.0);
-        glColor3f(1.0,0.1,1.0);
-        glVertex3f(-0.6,0.6,0.0);
-        glEnd();
+        glColor3f( 1.00f, 0.00f, 0.00f); glVertex3f(-0.25f, -0.25f,  0.25f); //glTexCoord2f( 0.0f, 0.0f);
+        glColor3f( 1.00f, 1.00f, 0.00f); glVertex3f( 0.25f, -0.25f,  0.25f); //glTexCoord2f( 1.0f, 0.0f);
+        glColor3f( 0.00f, 1.00f, 0.00f); glVertex3f( 0.25f,  0.25f,  0.25f); //glTexCoord2f( 1.0f, 1.0f);
+        glColor3f( 0.00f, 0.00f, 1.00f); glVertex3f(-0.25f,  0.25f,  0.25f); //glTexCoord2f( 0.0f, 1.0f);
+        glColor3f( 1.00f, 0.00f, 0.00f); glVertex3f(-0.25f, -0.25f, -0.25f); //glTexCoord2f( 1.0f, 0.0f);
+        glColor3f( 1.00f, 1.00f, 0.00f); glVertex3f(-0.25f,  0.25f, -0.25f); //glTexCoord2f( 1.0f, 1.0f);
+        glColor3f( 0.00f, 1.00f, 0.00f); glVertex3f( 0.25f,  0.25f, -0.25f); //glTexCoord2f( 0.0f, 1.0f);
+        glColor3f( 0.00f, 0.00f, 1.00f); glVertex3f( 0.25f, -0.25f, -0.25f); //glTexCoord2f( 0.0f, 0.0f);
+        glColor3f( 1.00f, 0.00f, 0.00f); glVertex3f(-0.25f,  0.25f, -0.25f); //glTexCoord2f( 0.0f, 1.0f);
+        glColor3f( 1.00f, 1.00f, 0.00f); glVertex3f(-0.25f,  0.25f,  0.25f); //glTexCoord2f( 0.0f, 0.0f);
+        glColor3f( 0.00f, 1.00f, 0.00f); glVertex3f( 0.25f,  0.25f,  0.25f); //glTexCoord2f( 1.0f, 0.0f);
+        glColor3f( 0.00f, 0.00f, 1.00f); glVertex3f( 0.25f,  0.25f, -0.25f); //glTexCoord2f( 1.0f, 1.0f);
+        glColor3f( 1.00f, 0.00f, 0.00f); glVertex3f(-0.25f, -0.25f, -0.25f); //glTexCoord2f( 1.0f, 1.0f);
+        glColor3f( 1.00f, 1.00f, 0.00f); glVertex3f( 0.25f, -0.25f, -0.25f); //glTexCoord2f( 0.0f, 1.0f);
+        glColor3f( 0.00f, 1.00f, 0.00f); glVertex3f( 0.25f, -0.25f,  0.25f); //glTexCoord2f( 0.0f, 0.0f);
+        glColor3f( 0.00f, 0.00f, 1.00f); glVertex3f(-0.25f, -0.25f,  0.25f); //glTexCoord2f( 1.0f, 0.0f);
+        glColor3f( 1.00f, 0.00f, 0.00f); glVertex3f( 0.25f, -0.25f, -0.25f); //glTexCoord2f( 1.0f, 0.0f);
+        glColor3f( 1.00f, 1.00f, 0.00f); glVertex3f( 0.25f,  0.25f, -0.25f); //glTexCoord2f( 1.0f, 1.0f);
+        glColor3f( 0.00f, 1.00f, 0.00f); glVertex3f( 0.25f,  0.25f,  0.25f); //glTexCoord2f( 0.0f, 1.0f);
+        glColor3f( 0.00f, 0.00f, 1.00f); glVertex3f( 0.25f, -0.25f,  0.25f); //glTexCoord2f( 0.0f, 0.0f);
+        glColor3f( 1.00f, 0.00f, 0.00f); glVertex3f(-0.25f, -0.25f, -0.25f); //glTexCoord2f( 0.0f, 0.0f);
+        glColor3f( 1.00f, 1.00f, 0.00f); glVertex3f(-0.25f, -0.25f,  0.25f); //glTexCoord2f( 1.0f, 0.0f);
+        glColor3f( 0.00f, 1.00f, 0.00f); glVertex3f(-0.25f,  0.25f,  0.25f); //glTexCoord2f( 1.0f, 1.0f);
+        glColor3f( 0.00f, 0.00f, 1.00f); glVertex3f(-0.25f,  0.25f, -0.25f); //glTexCoord2f( 0.0f, 1.0f);
+        glEnd( );
+
         SwapBuffers(hDC);
         EndPaint(hWnd, &ps);
         break;
@@ -73,30 +109,30 @@ LRESULT CALLBACK OpenGLProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
         if (!wglMakeCurrent(hDC, hRC))  {
             return Logger.Error("OpenGL", "Failed to activate GL context");
         }
-        //glShadeModel(GL_SMOOTH);
-        //glClearColor(0.25f, 0.25f, 0.25f, 0.0f);
-        //glClearDepth(65536.0f);
-        //glEnable(GL_DEPTH_TEST);
-        //glEnable(GL_TEXTURE_2D);
-        //glDepthFunc(GL_LEQUAL);
-        //glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+        glShadeModel(GL_SMOOTH);
+        glClearColor(0.25f, 0.25f, 0.25f, 0.0f);
+        glClearDepth(65536.0f);
+        glEnable(GL_DEPTH_TEST);
+        glEnable(GL_TEXTURE_2D);
+        glDepthFunc(GL_LEQUAL);
+        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
         GetClientRect(hWnd, &rc);
-        //glMatrixMode(GL_PROJECTION);
-        //glLoadIdentity();
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
         glViewport(0, 0, rc.right, rc.bottom);
-        //glPerspective(45.0f, (GLfloat)rc.right/(GLfloat)rc.bottom, 1.0f/1024.0f, 32768.0f);
-        //glMatrixMode(GL_MODELVIEW);
-        //glLoadIdentity();
+        glPerspective(45.0f, (GLfloat)rc.right/(GLfloat)rc.bottom, 1.0f/1024.0f, 32768.0f);
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
         break;
     case WM_SIZE:
         GetClientRect(hWnd, &rc);
-        //glMatrixMode(GL_PROJECTION);
-        //glLoadIdentity();
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
         glViewport(0, 0, rc.right, rc.bottom);
-        //glPerspective(45.0f, (GLfloat)rc.right/(GLfloat)rc.bottom, 1.0f/1024.0f, 32768.0f);
-        //glMatrixMode(GL_MODELVIEW);
-        //glLoadIdentity();
+        glPerspective(45.0f, (GLfloat)rc.right/(GLfloat)rc.bottom, 1.0f/1024.0f, 32768.0f);
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
         break;
     case WM_CLOSE:
         hDC = GetDC(hWnd);

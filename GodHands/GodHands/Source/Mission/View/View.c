@@ -24,10 +24,11 @@ extern HMENU hmenu[64];
 extern HACCEL hAccel;
 
 static struct WINCLASS cx[] = {
-    { "MdiFrame",MdiFrameProc,IDI_APPLICATION,IDC_ARROW,  0x7F7F7F },
-    { "MdiChild",MdiChildProc,IDI_APPLICATION,IDC_ARROW,  -(COLOR_BTNFACE+1) },
-    { "Splitter",SplitterProc,IDI_APPLICATION,IDC_SIZEWE, -(COLOR_3DFACE+1) },
-    { "OpenGL",  OpenGLProc,  IDI_APPLICATION,IDC_ARROW,  0 },
+    { "MdiFrame", MdiFrameProc, IDI_APPLICATION,IDC_ARROW,  0x7F7F7F },
+    { "MdiChild", MdiChildProc, IDI_APPLICATION,IDC_ARROW,  -(COLOR_BTNFACE+1) },
+    { "Splitter", SplitterProc, IDI_APPLICATION,IDC_SIZEWE, -(COLOR_3DFACE+1) },
+    { "PropSheet",PropSheetProc,IDI_APPLICATION,IDC_ARROW,  0x7F7F7F },
+    { "OpenGL",   OpenGLProc,   IDI_APPLICATION,IDC_ARROW,  0 },
 };
 
 static struct WINDOW wx[16] = {

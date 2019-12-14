@@ -127,6 +127,9 @@
     <Filter Include="Source\Mission\View\Widgets\OpenGL">
       <UniqueIdentifier>{05f4beb6-1ef0-4c4d-b25a-eacba738b57e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Mission\View\Widgets\PropSheet">
+      <UniqueIdentifier>{26b2c5fe-d040-474a-b558-cede8f149c43}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\System\RamDisk\RamDisk.c">
@@ -300,6 +303,9 @@
     <ClCompile Include="Source\Mission\View\Widgets\OpenGL\OpenGL.c">
       <Filter>Source\Mission\View\Widgets\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mission\View\Widgets\PropSheet\PropSheet.c">
+      <Filter>Source\Mission\View\Widgets\PropSheet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\RamDisk\RamDisk.h">
@@ -421,6 +427,9 @@
     </ClInclude>
     <ClInclude Include="Source\Mission\View\Widgets\OpenGL\OpenGL.h">
       <Filter>Source\Mission\View\Widgets\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mission\View\Widgets\PropSheet\PropSheet.h">
+      <Filter>Source\Mission\View\Widgets\PropSheet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
