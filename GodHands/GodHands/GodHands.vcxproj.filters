@@ -130,6 +130,9 @@
     <Filter Include="Source\Mission\View\Widgets\PropSheet">
       <UniqueIdentifier>{26b2c5fe-d040-474a-b558-cede8f149c43}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\System\Database">
+      <UniqueIdentifier>{ab7ce76d-519c-4ae2-8a3d-6141d2dd788f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\System\RamDisk\RamDisk.c">
@@ -306,6 +309,9 @@
     <ClCompile Include="Source\Mission\View\Widgets\PropSheet\PropSheet.c">
       <Filter>Source\Mission\View\Widgets\PropSheet</Filter>
     </ClCompile>
+    <ClCompile Include="Source\System\Database\Database.c">
+      <Filter>Source\System\Database</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\RamDisk\RamDisk.h">
@@ -430,6 +436,15 @@
     </ClInclude>
     <ClInclude Include="Source\Mission\View\Widgets\PropSheet\PropSheet.h">
       <Filter>Source\Mission\View\Widgets\PropSheet</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\Database\Database.h">
+      <Filter>Source\System\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ThirdParty\sqlite3.h">
+      <Filter>Source\ThirdParty</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ThirdParty\sqlite3ext.h">
+      <Filter>Source\ThirdParty</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
