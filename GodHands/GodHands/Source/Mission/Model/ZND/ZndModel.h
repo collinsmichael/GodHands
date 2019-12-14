@@ -11,6 +11,17 @@
 #ifndef MODELZND_H
 #define MODELZND_H
 
+#pragma pack(push, 1)
+typedef struct ZNDHDR {
+    uint32_t PtrMpd;
+    uint32_t LenMpd;
+    uint32_t PtrZud;
+    uint32_t LenZud;
+    uint8_t  WaveId;
+    uint8_t  Unused[7];
+} ZNDHDR;
+#pragma pack(pop)
+
 
 typedef struct MODELZND {
     int (*StartUp)(void);

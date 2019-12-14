@@ -11,14 +11,16 @@ extern struct ICON      Icon;
 extern struct STATUSBAR StatusBar;
 extern struct TABBAR    TabBar;
 extern struct TOOLTIP   ToolTip;
+extern struct ISO9660   Iso9660;
+extern struct RAMDISK   RamDisk;
 
+static TV_INSERTSTRUCT tvi;
+static HTREEITEM hRoot;
+static HIMAGELIST hSmallIcons;
+static HIMAGELIST hLargeIcons;
+static char path[256];
 
 static struct WINDOW wx[] = {
-    //{ 0x00000000,"SysTabControl32",   0,0x56000000,134, 0, 666, 24,0, 0,0, "MS Sans Serif", "TabBar" },
-    //{ 0x00000000,"SysListView32",     0,0x56000249,  0, 0, 128,552,0, 0,0, "MS Sans Serif", "ListView" },
-    //{ 0x00000000,"SysListView32",     0,0x56000249,  0, 0, 128,552,0, 0,0, "MS Sans Serif", "ListView" },
-    //{ 0x00000000,"Splitter",          0,0x56000000,128, 0,   6,552,0, 0,0, "MS Sans Serif", "Splitter" },
-
     //{ 0x00000000,"Static",  "Available Rooms:", 0x56000000, 20, 20,128, 20,0,0,0, "MS Sans Serif", 0 },
     //{ 0x00000000,"ListBox", "Available Rooms",  0x56300000, 20, 40,128,160,0,0,0, "Consolas", "A List of available rooms" },
     //{ 0x00000000,"Static",  "Included Rooms:",  0x56000000,220, 20,128, 20,0,0,0, "MS Sans Serif", 0 },
@@ -28,9 +30,9 @@ static struct WINDOW wx[] = {
 
     { 0x00000000,"SysTreeView32", "TreeView", 0x5680000F, 12,12,128,552,0,0,0, "MS Sans Serif", "TreeView" },
     { 0x00000000,"Splitter",      "Splitter1",0x56000000,136, 0,  6,552,0,0,0, "MS Sans Serif", "Splitter" },
-    { 0x00000000,"OpenGL",        "OpenGL",   0x56800004,142,12,180,552,0,0,0, "Consolas", 0 },
+    { 0x00000000,"OpenGL",        "OpenGL",   0x56800004,142,12,180,552,0,0,0, "Consolas",      "Viewer" },
     { 0x00000000,"Splitter",      "Splitter2",0x56000000,326, 0,  6,552,0,0,0, "MS Sans Serif", "Splitter" },
-    { 0x00000000,"PropSheet",     "PropSheet",0x56300000,332,12,264,552,0,0,0, "Consolas", 0 },
+    { 0x00000000,"PropSheet",     "PropSheet",0x56300000,332,12,264,552,0,0,0, "Consolas",      "Property Sheet" },
 
     //{ 0x00000000,"Static",   "Unknown:",    0x56000000, 20, 20, 80, 20,0,0,0, "Consolas", 0 },
     //{ 0x00000000,"Edit",     0,             0x56810004,112, 20,128, 20,0,0,0, "Consolas", "Unknown" },
@@ -96,6 +98,54 @@ static struct WINDOW wx[] = {
     //{ 0x00000000,"Edit",     0,             0x56810004,340,300,128, 20,0,0,0, "Consolas", "Maximum Phantom Points" },
 };
 
+static int TreeView_AddItem(HWND hTree, void *parent, char *path, DWORD Attribute, void *param) {
+    int iIcon = Icon.GetIndexFromAttributes(path, Attribute);
+    tvi.hParent             = (parent) ? (HTREEITEM)parent : TVI_ROOT;
+    tvi.hInsertAfter        = TVI_LAST;
+    tvi.item.mask           = TVIF_TEXT|TVIF_HANDLE|TVIF_PARAM|TVIF_IMAGE|TVIF_SELECTEDIMAGE;
+    tvi.item.pszText        = path;
+    tvi.item.cchTextMax     = lstrlenA(path);
+    tvi.item.iImage         = iIcon;
+    tvi.item.iSelectedImage = (Attribute == FILE_ATTRIBUTE_DIRECTORY) ? iIcon+1 : iIcon;
+    tvi.item.lParam         = (LPARAM)param;
+    return (int)TreeView_InsertItem(hTree, &tvi);
+}
+
+static int TreeView_AddDir(HWND hTree, void *parent, REC *rec) {
+    int i;
+    for (i = 0; i < rec->LenFileName; i++) {
+        if (rec->FileName[i] == ';') {
+            break;
+        } else {
+            path[i] = rec->FileName[i];
+        }
+    }
+    path[i] = 0;
+    path[rec->LenFileName] = 0;
+    return TreeView_AddItem(hTree, parent, path, FILE_ATTRIBUTE_DIRECTORY, rec);
+}
+
+static int ZndOnLoad(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    HWND hTree;
+    ZNDHDR *hdr;
+    uint8_t *ptr;
+    int root;
+
+    REC *rec = (REC*)GetPropA(hWnd, "REC");
+    if (!rec) return 0;
+    ptr = (uint8_t*)RamDisk.AddressOf(rec->LsbLbaData);
+    if (!ptr) return 0;
+    hdr = (ZNDHDR*)ptr;
+
+    hTree = (HWND)GetPropA(hWnd, "TreeView");
+    TreeView_DeleteAllItems(hTree);
+    root = TreeView_AddDir(hTree, TVI_ROOT, rec);
+    TreeView_AddDir(hTree, (void*)root, rec);
+    TreeView_AddDir(hTree, (void*)root, rec);
+    TreeView_AddDir(hTree, (void*)root, rec);
+    TreeView_AddDir(hTree, (void*)root, rec);
+    return 0;
+}
 
 static int ZndOnCreate(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     HWND hChild[elementsof(wx)];
@@ -130,7 +180,7 @@ static int ZndOnCreate(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     SendMessageA(hChild[1], SB_SETRIGHTWINDOWS, (WPARAM)1, (LPARAM)&hChild[2]);
     SendMessageA(hChild[3], SB_SETLEFTWINDOWS,  (WPARAM)1, (LPARAM)&hChild[2]);
     SendMessageA(hChild[3], SB_SETRIGHTWINDOWS, (WPARAM)1, (LPARAM)&hChild[4]);
-    return 0;
+    return ZndOnLoad(hWnd, uMsg, wParam, lParam);
 }
 
 static int ZndOnDestroy(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {

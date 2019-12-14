@@ -64,9 +64,10 @@ LRESULT CALLBACK OpenGLProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
         //glVertex3f(-0.6,0.6,1.0);
         //glEnd();
 
-        glRotatef(1.0f, Cam_RotX, 0.00000f, 0.00000f); Cam_RotX += 0.01f;
-        glRotatef(1.0f, 0.00000f, Cam_RotY, 0.00000f); Cam_RotY += 0.01f;
-        glRotatef(1.0f, 0.00000f, 0.00000f, Cam_RotZ); Cam_RotZ += 0.01f;
+        glTranslatef(0.0f, 0.0f, -2.0f);
+        glRotatef(1.0f, Cam_RotX, 0.00000f, 0.00000f); Cam_RotX += 0.25f;
+        glRotatef(1.0f, 0.00000f, Cam_RotY, 0.00000f); Cam_RotY += 0.25f;
+        glRotatef(1.0f, 0.00000f, 0.00000f, Cam_RotZ); Cam_RotZ += 0.25f;
         //glBindTexture( GL_TEXTURE_2D, Texture[ 0 ] );
         glBegin(GL_QUADS);
         glColor3f( 1.00f, 0.00f, 0.00f); glVertex3f(-0.25f, -0.25f,  0.25f); //glTexCoord2f( 0.0f, 0.0f);
