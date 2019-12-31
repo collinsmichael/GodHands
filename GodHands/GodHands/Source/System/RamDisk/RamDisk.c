@@ -127,6 +127,7 @@ static int RamDisk_Close(void) {
     size = 0;
     is_iso = 0;
     stosd(map, 0x20202020, sizeof(map)/4);
+    stosd(disk, 0, sizeof(disk)/4);
     return Logger.Done("RamDisk.Close", "Done");
 }
 
@@ -178,6 +179,28 @@ static char *RamDisk_AddressOf(int lba) {
     return &disk[lba*2*KB];
 }
 
+static int RamDisk_SaveMap(char *path) {
+    int i;
+    void *file = CreateFileA(path, 0xC0000000, 0x03,0,0x02,0x80,0);
+    if (file == INVALID_HANDLE_VALUE) {
+        return Logger.Error("RamDisk.SaveMap", "File not created %s", path);
+    }
+
+    SetFilePointer(file, 0, 0, 0);
+    for (i = 0; i < size; i += 64) {
+        DWORD word;
+        char newline = '\n';
+        int len = (i + 64 > size) ? size-i : 64;
+        if (!WriteFile(file, &map[i], len, &word, 0)) {
+            return Logger.Fail("RamDisk.SaveMap", "File is Read Only");
+        }
+        if (!WriteFile(file, &newline, 1, &word, 0)) {
+            return Logger.Fail("RamDisk.SaveMap", "File is Read Only");
+        }
+    }
+    return Logger.Done("RamDisk.SaveMap", "Done");
+}
+
 
 struct RAMDISK RamDisk = {
     RamDisk_Reset,
@@ -187,7 +210,6 @@ struct RAMDISK RamDisk = {
     RamDisk_Write,
     RamDisk_Scan,
     RamDisk_Clear,
-    RamDisk_AddressOf
+    RamDisk_AddressOf,
+    RamDisk_SaveMap
 };
-
-// TODO: Bind GUI widgets to data

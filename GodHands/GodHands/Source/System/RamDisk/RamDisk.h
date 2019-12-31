@@ -10,6 +10,7 @@ typedef struct RAMDISK {
     int   (*Scan)(int lba);
     int   (*Clear)(int lba, int len);
     char *(*AddressOf)(int lba);
+    int   (*SaveMap)(char *path);
 } RAMDISK;
 
 #endif // RAMDISK_H

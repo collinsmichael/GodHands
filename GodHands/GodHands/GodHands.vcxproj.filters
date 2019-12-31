@@ -312,6 +312,12 @@
     <ClCompile Include="Source\System\Database\Database.c">
       <Filter>Source\System\Database</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mission\Model\ZND\ZndActor.c">
+      <Filter>Source\Mission\Model\ZND</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mission\Model\ZND\ZndRoom.c">
+      <Filter>Source\Mission\Model\ZND</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\System\RamDisk\RamDisk.h">

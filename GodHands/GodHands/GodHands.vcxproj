@@ -201,7 +201,9 @@
     <ClCompile Include="Source\Mission\Model\VSTEXT\VsText.c" />
     <ClCompile Include="Source\Mission\Model\WEP\WepModel.c" />
     <ClCompile Include="Source\Mission\Model\WEP\WepWndProc.c" />
+    <ClCompile Include="Source\Mission\Model\ZND\ZndActor.c" />
     <ClCompile Include="Source\Mission\Model\ZND\ZndModel.c" />
+    <ClCompile Include="Source\Mission\Model\ZND\ZndRoom.c" />
     <ClCompile Include="Source\Mission\Model\ZND\ZndWndProc.c" />
     <ClCompile Include="Source\Mission\Model\ZUD\ZudModel.c" />
     <ClCompile Include="Source\Mission\Model\ZUD\ZudWndProc.c" />

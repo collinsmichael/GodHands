@@ -125,5 +125,7 @@ int Model_OpenDisk(void *evt) {
     Model_FindUnused();
     StatusBar.SetStatus("Model.OpenDisk", "Done");
     StatusBar.SetProgress(0);
+
+    RamDisk.SaveMap("disk.map");
     return Logger.Done("Model.OpenDisk", "Done");
 }
