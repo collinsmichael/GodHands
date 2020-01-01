@@ -1,0 +1,9 @@
+Z:\2019\Code\GodHands\WinForms\GodHands\GodHands\bin\Debug\GodHands.exe
+Z:\2019\Code\GodHands\WinForms\GodHands\GodHands\bin\Debug\GodHands.pdb
+Z:\2019\Code\GodHands\WinForms\GodHands\GodHands\obj\x86\Debug\ResolveAssemblyReference.cache
+Z:\2019\Code\GodHands\WinForms\GodHands\GodHands\obj\x86\Debug\GodHands.Properties.Resources.resources
+Z:\2019\Code\GodHands\WinForms\GodHands\GodHands\obj\x86\Debug\GenerateResource.read.1.tlog
+Z:\2019\Code\GodHands\WinForms\GodHands\GodHands\obj\x86\Debug\GenerateResource.write.1.tlog
+Z:\2019\Code\GodHands\WinForms\GodHands\GodHands\obj\x86\Debug\GodHands.exe
+Z:\2019\Code\GodHands\WinForms\GodHands\GodHands\obj\x86\Debug\GodHands.pdb
+Z:\2019\Code\GodHands\WinForms\GodHands\GodHands\obj\x86\Debug\GodHands.Frame.resources
