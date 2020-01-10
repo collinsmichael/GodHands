@@ -29,3 +29,11 @@ Z:\2020\GodHands-2020-01-10-B\GodHands\GodHands\GodHands\obj\Debug\ResolveAssemb
 Z:\2020\GodHands-2020-01-10-B\GodHands\GodHands\GodHands\obj\Debug\GodHands.TestForm.resources
 Z:\2020\GodHands-2020-01-10-B\GodHands\GodHands\GodHands\obj\Debug\GenerateResource.read.1.tlog
 Z:\2020\GodHands-2020-01-10-B\GodHands\GodHands\GodHands\obj\Debug\GenerateResource.write.1.tlog
+Z:\2020\GodHands\WinForms\GodHands\GodHands\bin\Debug\GodHands.exe
+Z:\2020\GodHands\WinForms\GodHands\GodHands\bin\Debug\GodHands.pdb
+Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\ResolveAssemblyReference.cache
+Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.TestForm.resources
+Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GenerateResource.read.1.tlog
+Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GenerateResource.write.1.tlog
+Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.exe
+Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.pdb

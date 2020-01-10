@@ -71,6 +71,10 @@
     <Compile Include="Source\System\DataBinding\Command.cs" />
     <Compile Include="Source\Mission\Model\Model.cs" />
     <Compile Include="Source\System\DataBinding\Subscriber.cs" />
+    <Compile Include="Source\System\Iso9660\DirRec.cs" />
+    <Compile Include="Source\System\Iso9660\Iso9660.cs" />
+    <Compile Include="Source\System\Iso9660\PathTable.cs" />
+    <Compile Include="Source\System\Iso9660\VolDesc.cs" />
     <Compile Include="Source\System\RamDisk\RamDisk_Bind.cs" />
     <Compile Include="Source\System\DataBinding\Publisher.cs" />
     <Compile Include="Source\System\RamDisk\RamDisk_RamIO.cs" />
