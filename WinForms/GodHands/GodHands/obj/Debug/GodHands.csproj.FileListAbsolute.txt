@@ -1,0 +1,31 @@
+C:\Users\Michael Collins\Desktop\Code\WorkShop\GodHands-2020\GodHands-2020-01-09\GodHands\GodHands\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Michael Collins\Desktop\Code\WorkShop\GodHands-2020\GodHands-2020-01-09\GodHands\GodHands\bin\Debug\GodHands.exe
+C:\Users\Michael Collins\Desktop\Code\WorkShop\GodHands-2020\GodHands-2020-01-09\GodHands\GodHands\bin\Debug\GodHands.pdb
+C:\Users\Michael Collins\Desktop\Code\WorkShop\GodHands-2020\GodHands-2020-01-09\GodHands\GodHands\obj\Debug\GodHands.exe
+C:\Users\Michael Collins\Desktop\Code\WorkShop\GodHands-2020\GodHands-2020-01-09\GodHands\GodHands\obj\Debug\GodHands.pdb
+C:\Users\Michael Collins\Desktop\Code\WorkShop\GodHands-2020\GodHands-2020-01-09\GodHands\GodHands\obj\Debug\GodHands.TestForm.resources
+C:\Users\Michael Collins\Desktop\Code\WorkShop\GodHands-2020\GodHands-2020-01-09\GodHands\GodHands\obj\Debug\GodHands.csproj.GenerateResource.Cache
+Z:\2020\GodHands-2020-01-09\GodHands\GodHands\obj\Debug\GodHands.exe
+Z:\2020\GodHands-2020-01-09\GodHands\GodHands\obj\Debug\GodHands.pdb
+Z:\2020\GodHands-2020-01-09\GodHands\GodHands\bin\Debug\GodHands.exe
+Z:\2020\GodHands-2020-01-09\GodHands\GodHands\bin\Debug\GodHands.pdb
+Z:\2020\GodHands-2020-01-09\GodHands\GodHands\obj\Debug\ResolveAssemblyReference.cache
+Z:\2020\GodHands-2020-01-09\GodHands\GodHands\obj\Debug\GodHands.TestForm.resources
+Z:\2020\GodHands-2020-01-09\GodHands\GodHands\obj\Debug\GenerateResource.read.1.tlog
+Z:\2020\GodHands-2020-01-09\GodHands\GodHands\obj\Debug\GenerateResource.write.1.tlog
+C:\Users\Michael Collins\Desktop\Code\WorkShop\GodHands-2020\GodHands-2020-01-10\GodHands\GodHands\GodHands\obj\Debug\GodHands.exe
+C:\Users\Michael Collins\Desktop\Code\WorkShop\GodHands-2020\GodHands-2020-01-10\GodHands\GodHands\GodHands\obj\Debug\GodHands.pdb
+C:\Users\Michael Collins\Desktop\Code\WorkShop\GodHands-2020\GodHands-2020-01-10\GodHands\GodHands\GodHands\bin\Debug\GodHands.exe
+C:\Users\Michael Collins\Desktop\Code\WorkShop\GodHands-2020\GodHands-2020-01-10\GodHands\GodHands\GodHands\bin\Debug\GodHands.pdb
+C:\Users\Michael Collins\Desktop\Code\WorkShop\GodHands-2020\GodHands-2020-01-10\GodHands\GodHands\GodHands\obj\Debug\GodHands.TestForm.resources
+C:\Users\Michael Collins\Desktop\Code\WorkShop\GodHands-2020\GodHands-2020-01-10\GodHands\GodHands\GodHands\obj\Debug\GodHands.csproj.GenerateResource.Cache
+C:\Users\Michael Collins\Desktop\Code\WorkShop\GodHands-2020\GodHands-2020-01-10\GodHands\GodHands\GodHands\obj\Debug\GodHands.csprojAssemblyReference.cache
+C:\Users\Michael Collins\Desktop\Code\WorkShop\GodHands-2020\GodHands-2020-01-10\GodHands\GodHands\GodHands\obj\Debug\GodHands.csproj.CoreCompileInputs.cache
+Z:\2020\GodHands-2020-01-10-B\GodHands\GodHands\GodHands\obj\Debug\GodHands.exe
+Z:\2020\GodHands-2020-01-10-B\GodHands\GodHands\GodHands\obj\Debug\GodHands.pdb
+Z:\2020\GodHands-2020-01-10-B\GodHands\GodHands\GodHands\bin\Debug\GodHands.exe
+Z:\2020\GodHands-2020-01-10-B\GodHands\GodHands\GodHands\bin\Debug\GodHands.pdb
+Z:\2020\GodHands-2020-01-10-B\GodHands\GodHands\GodHands\obj\Debug\ResolveAssemblyReference.cache
+Z:\2020\GodHands-2020-01-10-B\GodHands\GodHands\GodHands\obj\Debug\GodHands.TestForm.resources
+Z:\2020\GodHands-2020-01-10-B\GodHands\GodHands\GodHands\obj\Debug\GenerateResource.read.1.tlog
+Z:\2020\GodHands-2020-01-10-B\GodHands\GodHands\GodHands\obj\Debug\GenerateResource.write.1.tlog
