@@ -17,7 +17,7 @@ namespace GodHands {
             InitializeComponent();
             Logger.AddStatusBar(statusbar);
             Logger.AddProgressBar(progressbar);
-            sub_listbox = new Subscriber_ListBox(listbox);
+            sub_listbox = new Subscriber_ListBox("APP:LOG", listbox);
             sub_listbox.Notify(Logger.log);
         }
 

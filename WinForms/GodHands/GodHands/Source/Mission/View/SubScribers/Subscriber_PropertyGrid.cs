@@ -16,10 +16,18 @@ namespace GodHands {
         }
 
         public bool Notify(object obj) {
-            object old = win.SelectedObject;
-            Publisher.Unsubscribe(old as IBound, this);
-            win.SelectedObject = obj;
-            Publisher.Subscribe(obj as IBound, this);
+            try {
+                object old = win.SelectedObject;
+                if (old != null) {
+                    Publisher.Unsubscribe(old as IBound, this);
+                }
+                win.SelectedObject = obj;
+                if (obj != null) {
+                    Publisher.Subscribe(obj as IBound, this);
+                }
+            } catch {
+                //NullReferenceExeception is expected
+            }
             return true;
         }
     }

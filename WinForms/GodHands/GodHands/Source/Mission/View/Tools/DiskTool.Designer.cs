@@ -31,7 +31,6 @@
             this.treeview = new System.Windows.Forms.TreeView();
             this.property = new System.Windows.Forms.PropertyGrid();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.btn_apply = new System.Windows.Forms.Button();
             this.btn_close = new System.Windows.Forms.Button();
             this.statusstrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -104,6 +103,7 @@
             this.treeview.Name = "treeview";
             this.treeview.Size = new System.Drawing.Size(337, 333);
             this.treeview.TabIndex = 0;
+            this.treeview.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.OnTree_NodeChange);
             // 
             // property
             // 
@@ -115,12 +115,9 @@
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 4;
+            this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 96F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 96F));
-            this.tableLayoutPanel2.Controls.Add(this.btn_apply, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.btn_close, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 342);
@@ -130,25 +127,16 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(600, 42);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
-            // btn_apply
-            // 
-            this.btn_apply.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btn_apply.Location = new System.Drawing.Point(507, 3);
-            this.btn_apply.Name = "btn_apply";
-            this.btn_apply.Size = new System.Drawing.Size(90, 36);
-            this.btn_apply.TabIndex = 0;
-            this.btn_apply.Text = "Apply";
-            this.btn_apply.UseVisualStyleBackColor = true;
-            // 
             // btn_close
             // 
             this.btn_close.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btn_close.Location = new System.Drawing.Point(395, 3);
+            this.btn_close.Location = new System.Drawing.Point(507, 3);
             this.btn_close.Name = "btn_close";
             this.btn_close.Size = new System.Drawing.Size(90, 36);
             this.btn_close.TabIndex = 1;
             this.btn_close.Text = "Close";
             this.btn_close.UseVisualStyleBackColor = true;
+            this.btn_close.Click += new System.EventHandler(this.OnClick_Close);
             // 
             // DiskTool
             // 
@@ -183,7 +171,6 @@
         private System.Windows.Forms.TreeView treeview;
         private System.Windows.Forms.PropertyGrid property;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Button btn_apply;
         private System.Windows.Forms.Button btn_close;
     }
 }

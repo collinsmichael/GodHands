@@ -33,11 +33,17 @@ namespace GodHands {
         // remove an object from the Publisher
         // ********************************************************************
         public static bool Unregister(string path) {
+            if (subs.ContainsKey(path)) {
+                List<ISubscriber> list = subs[path] as List<ISubscriber>;
+                if (list != null) {
+                    foreach (ISubscriber sub in list.ToArray()) {
+                        sub.Notify(null);
+                    }
+                }
+                subs.Remove(path);
+            }
             if (dict.ContainsKey(path)) {
                 dict.Remove(path);
-            }
-            if (subs.ContainsKey(path)) {
-                subs.Remove(path);
             }
             return true;
         }
@@ -53,7 +59,7 @@ namespace GodHands {
         // ********************************************************************
         public static bool Subscribe(string path, ISubscriber sub) {
             if (!dict.ContainsKey(path) || !subs.ContainsKey(path)) {
-                return Logger.Fail(path+" does not exist");
+                return false; //Logger.Fail(path+" does not exist");
             }
 
             List<ISubscriber> list = subs[path] as List<ISubscriber>;
@@ -75,7 +81,7 @@ namespace GodHands {
         // ********************************************************************
         public static bool Unsubscribe(string path, ISubscriber sub) {
             if (!dict.ContainsKey(path) || !subs.ContainsKey(path)) {
-                return Logger.Fail(path+" does not exist");
+                return false; //Logger.Fail(path+" does not exist");
             }
 
             List<ISubscriber> list = subs[path] as List<ISubscriber>;
@@ -96,7 +102,7 @@ namespace GodHands {
         // ********************************************************************
         public static bool Publish(string path, object obj) {
             if (!dict.ContainsKey(path) || !subs.ContainsKey(path)) {
-                return Logger.Fail(path+" does not exist");
+                return false; //Logger.Fail(path+" does not exist");
             }
 
             // copy list to array (in case someone subscribes/unsubscribes)

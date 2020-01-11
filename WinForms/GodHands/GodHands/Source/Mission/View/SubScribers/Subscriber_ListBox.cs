@@ -6,17 +6,19 @@ using System.Windows.Forms;
 
 namespace GodHands {
     public class Subscriber_ListBox : ISubscriber {
-        private string filter = null;
+        private string url = null;
         private object obj = null;
+        private string filter = null;
         private ListBox win;
 
-        public Subscriber_ListBox(ListBox win) {
+        public Subscriber_ListBox(string url, ListBox win) {
+            this.url = url;
             this.win = win;
-            Publisher.Subscribe("LOG", this);
+            Publisher.Subscribe(url, this);
         }
 
         ~Subscriber_ListBox() {
-            Publisher.Unsubscribe("LOG", this);
+            Publisher.Unsubscribe(url, this);
         }
 
         public bool Notify(object obj) {

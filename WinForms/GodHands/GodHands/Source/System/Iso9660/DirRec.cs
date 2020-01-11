@@ -42,6 +42,7 @@ namespace GodHands {
         }
 
         //uint8_t  LenXA;             // Extended Attribute Record length.
+        [ReadOnly(true)]
         [Category("Record")]
         public byte LenXA {
             get { return RamDisk.GetU8(pos+1); }

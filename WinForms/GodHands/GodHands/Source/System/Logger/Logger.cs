@@ -34,7 +34,7 @@ namespace GodHands {
         public static List<string> log = new List<string>();
         public static List<ToolStripStatusLabel> status = new List<ToolStripStatusLabel>();
         public static List<ToolStripProgressBar> progress = new List<ToolStripProgressBar>();
-        private static BoundList<string> bound = new BoundList<string>("LOG", 0, log);
+        private static BoundList<string> bound = new BoundList<string>("APP:LOG", 0, log);
 
         public static void SetUp() {
             Publisher.Register(bound);
@@ -45,18 +45,18 @@ namespace GodHands {
         // ********************************************************************
         public static void Clear() {
             log.Clear();
-            Publisher.Publish("LOG", log);
+            Publisher.Publish("APP:LOG", log);
         }
 
         public static bool AddStatusBar(ToolStripStatusLabel statusbar) {
-            if ((status != null) && (statusbar != null)) {
+            if (!status.Contains(statusbar)) {
                 status.Add(statusbar);
             }
             return true;
         }
 
         public static bool RemoveStatusBar(ToolStripStatusLabel statusbar) {
-            if ((status != null) && (statusbar != null)) {
+            if (status.Contains(statusbar)) {
                 status.Remove(statusbar);
             }
             return true;
@@ -70,14 +70,14 @@ namespace GodHands {
         }
 
         public static bool AddProgressBar(ToolStripProgressBar progressbar) {
-            if ((progress != null) && (progressbar != null)) {
+            if (!progress.Contains(progressbar)) {
                 progress.Add(progressbar);
             }
             return true;
         }
 
         public static bool RemoveProgressBar(ToolStripProgressBar progressbar) {
-            if ((progress != null) && (progressbar != null)) {
+            if (progress.Contains(progressbar)) {
                 progress.Remove(progressbar);
             }
             return true;
@@ -97,7 +97,7 @@ namespace GodHands {
             string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             string msg = level + " (" + now + ") " + text;
             log.Add(msg);
-            Publisher.Publish("LOG", log);
+            Publisher.Publish("APP:LOG", log);
             Console.WriteLine(msg);
         }
 

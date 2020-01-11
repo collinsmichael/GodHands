@@ -10,11 +10,12 @@ using System.Windows.Forms;
 namespace GodHands {
     public partial class DiskTool : Form {
         private Subscriber_PropertyGrid sub_property = null;
-        private TreeNode tv_root = null;
+        private Subscriber_TreeView sub_treeview = null;
 
         public DiskTool() {
             InitializeComponent();
             sub_property = new Subscriber_PropertyGrid(property);
+            sub_treeview = new Subscriber_TreeView("CD:ROOT", treeview);
             Logger.AddStatusBar(statusbar);
             Logger.AddProgressBar(progressbar);
             OpenDisk();
@@ -28,18 +29,33 @@ namespace GodHands {
 
         public bool CloseDisk() {
             sub_property.Notify(null);
-            treeview.Nodes.Clear();
+            sub_treeview.Notify(null);
             return true;
         }
 
         public bool OpenDisk() {
-            treeview.Nodes.Clear();
-            if (Iso9660.pvd != null) {
-                string volume = Iso9660.pvd.VolumeIdentifier.Trim();
-                tv_root = treeview.Nodes.Add("ROOT", volume);
-                sub_property.Notify(Iso9660.pvd);
-            }
+            sub_property.Notify(Iso9660.pvd);
+            sub_treeview.Notify(Iso9660.root);
             return true;
+        }
+
+        private void OnTree_NodeChange(object sender, TreeViewEventArgs e) {
+            TreeNode node = treeview.SelectedNode;
+            if (node != null) {
+                string url = node.Name;
+                DirRec rec = Iso9660.GetByPath(url);
+                sub_property.Notify(rec);
+            } else {
+                sub_property.Notify(null);
+            }
+        }
+
+        private void btn_apply_Click(object sender, EventArgs e) {
+
+        }
+
+        private void OnClick_Close(object sender, EventArgs e) {
+            Close();
         }
     }
 }

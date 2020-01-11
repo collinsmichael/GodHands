@@ -199,7 +199,7 @@ namespace GodHands {
         private DirRec root = null;
         public DirRec GetRootDir() {
             if (root == null) {
-                root = new DirRec("ROOT", pos+156);
+                root = new DirRec("CD:ROOT", pos+156);
             }
             return root;
         }
