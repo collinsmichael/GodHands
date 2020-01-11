@@ -20,7 +20,13 @@ namespace GodHands {
                 dict.Add(path, obj);
                 subs.Add(path, new List<ISubscriber>());
             }
-            return Logger.Pass("Registered "+path);
+            return true;
+        }
+        public static bool Register(IBound obj) {
+            if (obj != null) {
+                Register(obj.GetUrl(), obj);
+            }
+            return true;
         }
 
         // ********************************************************************
@@ -29,9 +35,17 @@ namespace GodHands {
         public static bool Unregister(string path) {
             if (dict.ContainsKey(path)) {
                 dict.Remove(path);
+            }
+            if (subs.ContainsKey(path)) {
                 subs.Remove(path);
             }
-            return Logger.Pass("Unregistered "+path);
+            return true;
+        }
+        public static bool Unregister(IBound obj) {
+            if (obj != null) {
+                Unregister(obj.GetUrl());
+            }
+            return true;
         }
 
         // ********************************************************************
@@ -43,8 +57,16 @@ namespace GodHands {
             }
 
             List<ISubscriber> list = subs[path] as List<ISubscriber>;
-            list.Add(sub);
-            sub.Notify(dict[path]);
+            if (!list.Contains(sub)) {
+                list.Add(sub);
+                //sub.Notify(dict[path]);
+            }
+            return true;
+        }
+        public static bool Subscribe(IBound obj, ISubscriber sub) {
+            if ((obj != null) && (sub != null)) {
+                Subscribe(obj.GetUrl(), sub);
+            }
             return true;
         }
 
@@ -57,7 +79,15 @@ namespace GodHands {
             }
 
             List<ISubscriber> list = subs[path] as List<ISubscriber>;
-            list.Remove(sub);
+            if (list.Contains(sub)) {
+                list.Remove(sub);
+            }
+            return true;
+        }
+        public static bool Unsubscribe(IBound obj, ISubscriber sub) {
+            if ((obj != null) && (sub != null)) {
+                Unsubscribe(obj.GetUrl(), sub);
+            }
             return true;
         }
 
@@ -69,11 +99,18 @@ namespace GodHands {
                 return Logger.Fail(path+" does not exist");
             }
 
+            // copy list to array (in case someone subscribes/unsubscribes)
             List<ISubscriber> list = subs[path] as List<ISubscriber>;
+            ISubscriber[] array = list.ToArray();
             dict[path] = obj;
-
-            foreach (ISubscriber sub in list) {
+            foreach (ISubscriber sub in array) {
                 sub.Notify(obj);
+            }
+            return true;
+        }
+        public static bool Publish(IBound obj) {
+            if (obj != null) {
+                Publish(obj.GetUrl(), obj);
             }
             return true;
         }

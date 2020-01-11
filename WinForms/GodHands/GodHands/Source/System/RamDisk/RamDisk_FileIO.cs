@@ -30,7 +30,9 @@ namespace GodHands {
             try {
                 path = filepath;
                 size = new FileInfo(path).Length;
-                file = File.Open(path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
+                FileAccess access = FileAccess.ReadWrite;
+                FileShare share = FileShare.ReadWrite;
+                file = File.Open(path, FileMode.Open, access, share);
             } catch (Exception e) {
                 return Logger.Fail("File not found! "+e.Message);
             }

@@ -66,6 +66,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Source\Mission\View\SubScribers\Subscriber_ListBox.cs" />
+    <Compile Include="Source\Mission\View\Tools\LogTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Mission\View\Tools\LogTool.Designer.cs">
+      <DependentUpon>LogTool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Mission\View\Tools\DiskTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Mission\View\Tools\DiskTool.Designer.cs">
+      <DependentUpon>DiskTool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Mission\View\Frame.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Mission\View\Frame.Designer.cs">
+      <DependentUpon>Frame.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Mission\View\SubScribers\Subscriber_PropertyGrid.cs" />
+    <Compile Include="Source\Mission\View\View.cs" />
     <Compile Include="Source\System\DataBinding\BindData.cs" />
     <Compile Include="Source\System\DataBinding\Bound.cs" />
     <Compile Include="Source\System\DataBinding\Command.cs" />
@@ -92,9 +113,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Source\Mission\View\Tools\DiskTool.resx">
+      <DependentUpon>DiskTool.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Mission\View\Frame.resx">
+      <DependentUpon>Frame.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Mission\View\TestForm.resx">
       <DependentUpon>TestForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Mission\View\Tools\LogTool.resx">
+      <DependentUpon>LogTool.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

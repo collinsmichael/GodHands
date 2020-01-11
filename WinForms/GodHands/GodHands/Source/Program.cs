@@ -6,14 +6,12 @@ using System.Windows.Forms;
 
 namespace GodHands {
     class Program {
+        [STAThread]
         static void Main(string[] args) {
-            if (RamDisk.Open("test.img")) {
-                Model.Open();
-
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new TestForm());
-            }
+            Logger.SetUp();
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Frame());
         }
     }
 }

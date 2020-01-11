@@ -5,15 +5,89 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace GodHands {
+    public class BoundList<T> : IBound {
+        private string url;
+        private int pos;
+        private List<T> list;
+
+        public BoundList(string url, int pos, List<T> list) {
+            this.url = url;
+            this.pos = pos;
+            this.list = list;
+        }
+
+        public string GetUrl() {
+            return url;
+        }
+
+        public int GetPos() {
+            return pos;
+        }
+
+        public void SetPos(int pos) {
+            this.pos = pos;
+        }
+    }
+
     public static class Logger {
-        public static List<string> log = new List<string>();
         public static bool enabled = true;
+        public static List<string> log = new List<string>();
+        public static List<ToolStripStatusLabel> status = new List<ToolStripStatusLabel>();
+        public static List<ToolStripProgressBar> progress = new List<ToolStripProgressBar>();
+        private static BoundList<string> bound = new BoundList<string>("LOG", 0, log);
+
+        public static void SetUp() {
+            Publisher.Register(bound);
+        }
 
         // ********************************************************************
         // clear the log
         // ********************************************************************
         public static void Clear() {
             log.Clear();
+            Publisher.Publish("LOG", log);
+        }
+
+        public static bool AddStatusBar(ToolStripStatusLabel statusbar) {
+            if ((status != null) && (statusbar != null)) {
+                status.Add(statusbar);
+            }
+            return true;
+        }
+
+        public static bool RemoveStatusBar(ToolStripStatusLabel statusbar) {
+            if ((status != null) && (statusbar != null)) {
+                status.Remove(statusbar);
+            }
+            return true;
+        }
+
+        public static bool SetStatus(string text) {
+            foreach (ToolStripStatusLabel bar in status) {
+                bar.Text = text;
+            }
+            return true;
+        }
+
+        public static bool AddProgressBar(ToolStripProgressBar progressbar) {
+            if ((progress != null) && (progressbar != null)) {
+                progress.Add(progressbar);
+            }
+            return true;
+        }
+
+        public static bool RemoveProgressBar(ToolStripProgressBar progressbar) {
+            if ((progress != null) && (progressbar != null)) {
+                progress.Remove(progressbar);
+            }
+            return true;
+        }
+
+        public static bool SetProgress(int percent) {
+            foreach (ToolStripProgressBar bar in progress) {
+                bar.Value = percent;
+            }
+            return true;
         }
 
         // ********************************************************************
@@ -23,6 +97,7 @@ namespace GodHands {
             string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             string msg = level + " (" + now + ") " + text;
             log.Add(msg);
+            Publisher.Publish("LOG", log);
             Console.WriteLine(msg);
         }
 
@@ -39,6 +114,7 @@ namespace GodHands {
         // ********************************************************************
         public static bool Pass(string text) {
             Format("[PASS]", text);
+            SetStatus(text);
             return true;
         }
 
@@ -47,6 +123,7 @@ namespace GodHands {
         // ********************************************************************
         public static bool Warn(string text) {
             Format("[WARN]", text);
+            SetStatus(text);
             Show(text, "Warning", MessageBoxIcon.Warning);
             return true;
         }
@@ -56,6 +133,7 @@ namespace GodHands {
         // ********************************************************************
         public static bool Fail(string text) {
             Format("[FAIL]", text);
+            SetStatus(text);
             Show(text, "Error", MessageBoxIcon.Error);
             return false;
         }
