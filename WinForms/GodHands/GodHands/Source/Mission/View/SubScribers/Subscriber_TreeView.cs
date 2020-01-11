@@ -25,8 +25,9 @@ namespace GodHands {
             this.obj = obj;
             if (obj != null) {
                 string volume = Iso9660.pvd.VolumeIdentifier.Trim();
-                TreeNode root = win.Nodes.Add("CD:ROOT", volume);
-                return Iso9660.EnumFileSystem(root, "CD:ROOT");
+                TreeNode root = win.Nodes.Add("CD:PVD", "CDROM");
+                TreeNode node = root.Nodes.Add("CD:ROOT", volume);
+                return Iso9660.EnumFileSystem(node, "CD:ROOT");
             }
             return true;
         }

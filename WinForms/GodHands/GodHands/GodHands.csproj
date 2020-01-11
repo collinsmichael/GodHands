@@ -66,7 +66,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Source\Mission\View\ShellIcons.cs" />
+    <Compile Include="Source\Mission\Model\Formats\ARM.cs" />
+    <Compile Include="Source\Mission\Model\Formats\DAT.cs" />
+    <Compile Include="Source\Mission\Model\Formats\MPD.cs" />
+    <Compile Include="Source\Mission\Model\Formats\PRG.cs" />
+    <Compile Include="Source\Mission\Model\Formats\SEQ.cs" />
+    <Compile Include="Source\Mission\Model\Formats\SHP.cs" />
+    <Compile Include="Source\Mission\Model\Formats\SYD.cs" />
+    <Compile Include="Source\Mission\Model\Formats\WEP.cs" />
+    <Compile Include="Source\Mission\Model\Formats\ZND.cs" />
+    <Compile Include="Source\Mission\Model\Formats\ZUD.cs" />
+    <Compile Include="Source\Mission\Model\Internal\Actor.cs" />
+    <Compile Include="Source\Mission\Model\Internal\MiniMap.cs" />
+    <Compile Include="Source\Mission\Model\Internal\Room.cs" />
+    <Compile Include="Source\Mission\Model\Internal\Zone.cs" />
+    <Compile Include="Source\Mission\View\Helpers\ShellIcons.cs" />
     <Compile Include="Source\Mission\View\SubScribers\Subscriber_ListBox.cs" />
     <Compile Include="Source\Mission\View\SubScribers\Subscriber_TreeView.cs" />
     <Compile Include="Source\Mission\View\Tools\LogTool.cs">
@@ -88,7 +102,7 @@
       <DependentUpon>Frame.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\Mission\View\SubScribers\Subscriber_PropertyGrid.cs" />
-    <Compile Include="Source\Mission\View\View.cs" />
+    <Compile Include="Source\Mission\View\Helpers\View.cs" />
     <Compile Include="Source\System\DataBinding\BindData.cs" />
     <Compile Include="Source\System\DataBinding\Bound.cs" />
     <Compile Include="Source\System\DataBinding\Command.cs" />

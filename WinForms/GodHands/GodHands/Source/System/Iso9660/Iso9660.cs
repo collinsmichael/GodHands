@@ -48,6 +48,7 @@ namespace GodHands {
             Publisher.Register("CD:ROOT", root);
 
             EnumDir("CD:ROOT", root);
+            Model.Open();
             if (View.disktool != null) {
                 View.disktool.OpenDisk();
             }
@@ -59,6 +60,7 @@ namespace GodHands {
             if (View.disktool != null) {
                 View.disktool.CloseDisk();
             }
+            Model.Close();
             Publisher.Unregister("CD:ROOT");
             Publisher.Unregister("CD:PVD");
             RamDisk.Close();

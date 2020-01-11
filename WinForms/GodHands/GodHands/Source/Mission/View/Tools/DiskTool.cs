@@ -22,6 +22,7 @@ namespace GodHands {
         }
 
         private void OnClosing(object sender, FormClosingEventArgs e) {
+            Publisher.Unsubscribe("CD:ROOT", sub_treeview);
             Logger.RemoveStatusBar(statusbar);
             Logger.RemoveProgressBar(progressbar);
             View.disktool = null;
@@ -43,15 +44,15 @@ namespace GodHands {
             TreeNode node = treeview.SelectedNode;
             if (node != null) {
                 string url = node.Name;
-                DirRec rec = Iso9660.GetByPath(url);
-                sub_property.Notify(rec);
+                if (url == "CD:PVD") {
+                    sub_property.Notify(Iso9660.pvd);
+                } else {
+                    DirRec rec = Iso9660.GetByPath(url);
+                    sub_property.Notify(rec);
+                }
             } else {
                 sub_property.Notify(null);
             }
-        }
-
-        private void btn_apply_Click(object sender, EventArgs e) {
-
         }
 
         private void OnClick_Close(object sender, EventArgs e) {
