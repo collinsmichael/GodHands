@@ -5,6 +5,10 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace GodHands {
+    public interface IEnumDir {
+        bool Visit(string url, DirRec dir);
+    }
+
     public static class Iso9660 {
         private static Dictionary<string,DirRec> Records = new Dictionary<string,DirRec>();
         private static Dictionary<string,int> Path2Pos = new Dictionary<string,int>();
@@ -47,7 +51,7 @@ namespace GodHands {
             Publisher.Register("CD:PVD", pvd);
             Publisher.Register("CD:ROOT", root);
 
-            EnumDir("CD:ROOT", root);
+            EnumDir("CD:ROOT", root, null);
             Model.Open();
             if (View.disktool != null) {
                 View.disktool.OpenDisk();
@@ -76,127 +80,83 @@ namespace GodHands {
             return Logger.Pass("File closed");
         }
 
-        public static bool EnumDir(string url, DirRec dir) {
-            if (dir == null) {
-                return false;
+        public static bool ReadFile(DirRec dir) {
+            int lba = dir.LbaData;
+            int len = dir.LenData;
+            for (int i = 0; i < len; i += 2048) {
+                if (!RamDisk.Read(lba++)) {
+                    return false;
+                }
             }
-            int lba = (int)dir.LbaData;
-            int len = (int)dir.LenData;
+            return Logger.Pass("Read file "+dir.FileName);
+        }
 
-            int sector = lba;
-            for (int ptr = 0; ptr < len; ptr += 2048) {
-                RamDisk.Read(sector++);
+        public static string GetRecordFileName(int pos) {
+            int len = RamDisk.GetU8(pos+32);
+            for (int i = 0; i < len; i++) {
+                byte c = RamDisk.GetU8(pos+33+i);
+                if (c == ';') {
+                    len = i;
+                }
             }
+            return RamDisk.GetString(pos+33, len);
+        }
 
-            int pos = lba*2048;
-            int end = pos + len;
+        public static bool EnumDir(string url, DirRec dir, IEnumDir iterator) {
+            int pos = dir.LbaData*2048;
+            int end = pos + dir.LenData;
+
             pos += RamDisk.GetU8(pos); // skip current directory
             pos += RamDisk.GetU8(pos); // skip parent directory
-
             while (pos < end) {
-                byte len_rec = RamDisk.GetU8(pos);
-                if (len_rec == 0) {
+                byte len = RamDisk.GetU8(pos);
+                if (len == 0) {
                     pos = ((pos/2048)+1)*2048;
-                    continue;
-                }
-
-                int len_str = RamDisk.GetU8(pos+32);
-                for (int i = 0; i < len_str; i++) {
-                    byte c = RamDisk.GetU8(pos+32+i);
-                    if (c == ';') {
-                        len_str = i-1;
+                } else {
+                    string key = url+"/"+GetRecordFileName(pos);
+                    DirRec rec = null;
+                    if (Records.ContainsKey(key)) {
+                        rec = Records[key];
+                    } else {
+                        rec = new DirRec(key, pos);
+                        Records.Add(key, rec);
+                        Path2Pos.Add(key, rec.GetPos());
+                        Lba2Path.Add(rec.LbaData, key);
+                        Publisher.Register(key, rec);
                     }
+                    if (rec.FileFlags_Directory) {
+                        if (iterator != null) {
+                            iterator.Visit(key, rec);
+                        }
+                    }
+                    pos += len;
                 }
+            }
 
-                string name = RamDisk.GetString(pos+33, len_str);
-                string key = url+"/"+name;
-
-                DirRec rec = new DirRec(key, pos);
-                int rec_lba = (int)rec.LbaData;
-                Records.Add(key, rec);
-                Path2Pos.Add(key, pos);
-                Lba2Path.Add(rec_lba, key);
-                Publisher.Register(key, rec);
-                if (rec.FileFlags_Directory) {
-                    EnumDir(key, rec);
+            pos = dir.LbaData*2048;
+            pos += RamDisk.GetU8(pos); // skip current directory
+            pos += RamDisk.GetU8(pos); // skip parent directory
+            while (pos < end) {
+                byte len = RamDisk.GetU8(pos);
+                if (len == 0) {
+                    pos = ((pos/2048)+1)*2048;
+                } else {
+                    string key = url+"/"+GetRecordFileName(pos);
+                    DirRec rec = Records[key];
+                    if (!rec.FileFlags_Directory) {
+                        if (iterator != null) {
+                            iterator.Visit(key, rec);
+                        }
+                    }
+                    pos += len;
                 }
-                pos += len_rec;
             }
             return true;
         }
 
-        public static bool EnumFileSystem(TreeNode tree, string url) {
-            DirRec dir = Records[url];
-            if (dir == null) {
-                return false;
-            }
-
-            int dir_normal = ShellIcons.GetDirIconIndex(false);
-            int dir_select = ShellIcons.GetDirIconIndex(true);
-            int lba = (int)dir.LbaData;
-            int len = (int)dir.LenData;
-            int end = lba*2048 + len;
-
-            int pos = lba*2048;
-            pos += RamDisk.GetU8(pos); // skip current directory
-            pos += RamDisk.GetU8(pos); // skip parent directory
-            while (pos < end) {
-                byte len_rec = RamDisk.GetU8(pos);
-                if (len_rec == 0) {
-                    pos = ((pos/2048)+1)*2048;
-                    continue;
-                }
-
-                int len_str = RamDisk.GetU8(pos+32);
-                for (int i = 0; i < len_str; i++) {
-                    byte c = RamDisk.GetU8(pos+32+i);
-                    if (c == ';') {
-                        len_str = i-1;
-                    }
-                }
-
-                string name = RamDisk.GetString(pos+33, len_str);
-                string key = url+"/"+name;
-                DirRec rec = Records[key];
-                if ((rec != null) && (rec.FileFlags_Directory)) {
-                    TreeNode node = tree.Nodes.Add(key, name);
-                    node.ImageIndex = dir_normal;
-                    node.SelectedImageIndex = dir_select;
-                    EnumFileSystem(node, key);
-                }
-                pos += len_rec;
-            }
-
-            pos = lba*2048;
-            pos += RamDisk.GetU8(pos); // skip current directory
-            pos += RamDisk.GetU8(pos); // skip parent directory
-            while (pos < end) {
-                byte len_rec = RamDisk.GetU8(pos);
-                if (len_rec == 0) {
-                    pos = ((pos/2048)+1)*2048;
-                    continue;
-                }
-
-                int len_str = RamDisk.GetU8(pos+32);
-                for (int i = 0; i < len_str; i++) {
-                    byte c = RamDisk.GetU8(pos+32+i);
-                    if (c == ';') {
-                        len_str = i-1;
-                    }
-                }
-
-                string name = RamDisk.GetString(pos+33, len_str);
-                string key = url+"/"+name;
-
-                DirRec rec = Records[key];
-                if ((rec != null) && (!rec.FileFlags_Directory)) {
-                    TreeNode node = tree.Nodes.Add(key, name);
-                    node.ImageIndex = ShellIcons.GetFileIconIndex(name);
-                    node.SelectedImageIndex = node.ImageIndex;
-                }
-                pos += len_rec;
-            }
-            return true;
+        public static bool EnumFileSys(IEnumDir iterator) {
+            DirRec dir = Iso9660.GetByPath("CD:ROOT");
+            return Iso9660.EnumDir("CD:ROOT", dir, iterator);
         }
     }
 }

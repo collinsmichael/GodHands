@@ -4,6 +4,37 @@ using System.Linq;
 using System.Text;
 
 namespace GodHands {
+    public class EnumModelFiles : IEnumDir {
+        private string[] extensions = new string[] {
+            ".DAT", ".PRG", ".SYD", ".ARM", ".ZND",
+            ".MPD", ".ZUD", ".SHP", ".WEP", ".SEQ"
+        };
+
+        public bool Visit(string url, DirRec dir) {
+            string name = dir.GetFileName();
+            string ext = dir.GetFileExt();
+            if ((extensions.Contains(ext)) || (name.Contains("SLUS"))) {
+                //Iso9660.ReadFile(dir);
+                int pos = dir.LbaData*2048;
+                switch (ext) {
+                case ".DAT": Model.dats.Add(url, new DAT(url, pos)); break;
+                case ".PRG": Model.prgs.Add(url, new PRG(url, pos)); break;
+                case ".SYD": Model.syds.Add(url, new SYD(url, pos)); break;
+                case ".ARM": Model.arms.Add(url, new ARM(url, pos)); break;
+                case ".ZND": Model.znds.Add(url, new ZND(url, pos)); break;
+                case ".MPD": Model.mpds.Add(url, new MPD(url, pos)); break;
+                case ".ZUD": Model.zuds.Add(url, new ZUD(url, pos)); break;
+                case ".SHP": Model.shps.Add(url, new SHP(url, pos)); break;
+                case ".WEP": Model.weps.Add(url, new WEP(url, pos)); break;
+                case ".SEQ": Model.seqs.Add(url, new SEQ(url, pos)); break;
+                }
+            } else if (dir.FileFlags_Directory) {
+                return Iso9660.EnumDir(url, dir, this);
+            }
+            return true;
+        }
+    }
+
     public static class Model {
         public static Dictionary<string, PRG> prgs = new Dictionary<string, PRG>();
         public static Dictionary<string, DAT> dats = new Dictionary<string, DAT>();
@@ -24,6 +55,7 @@ namespace GodHands {
         // initialize model from file
         // ********************************************************************
         public static bool Open() {
+            Iso9660.EnumFileSys(new EnumModelFiles());
             return true;
         }
 

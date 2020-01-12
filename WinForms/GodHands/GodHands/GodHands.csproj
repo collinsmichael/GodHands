@@ -66,6 +66,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Source\Mission\View\GodHands.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Mission\View\GodHands.Designer.cs">
+      <DependentUpon>GodHands.cs</DependentUpon>
+    </Compile>
     <Compile Include="Source\Mission\Model\Formats\ARM.cs" />
     <Compile Include="Source\Mission\Model\Formats\DAT.cs" />
     <Compile Include="Source\Mission\Model\Formats\MPD.cs" />
@@ -129,6 +135,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Source\Mission\View\GodHands.resx">
+      <DependentUpon>GodHands.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Mission\View\Tools\DiskTool.resx">
       <DependentUpon>DiskTool.cs</DependentUpon>
     </EmbeddedResource>

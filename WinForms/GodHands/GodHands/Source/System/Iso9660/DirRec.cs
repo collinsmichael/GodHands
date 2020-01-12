@@ -26,6 +26,35 @@ namespace GodHands {
             this.pos = pos;
         }
 
+        public string GetFileName() {
+            int len = RamDisk.GetU8(pos+32);
+            for (int i = 0; i < len; i++) {
+                byte c = RamDisk.GetU8(pos+33+i);
+                if (c == ';') {
+                    len = i;
+                }
+            }
+            return RamDisk.GetString(pos+33, len);
+        }
+
+        public string GetFileExt() {
+            int ptr = 0;
+            int len = RamDisk.GetU8(pos+32);
+            for (int i = 0; i < len; i++) {
+                byte c = RamDisk.GetU8(pos+33+i);
+                if (c == '.') {
+                    ptr = i;
+                }
+                if (c == ';') {
+                    len = i - ptr;
+                }
+            }
+            if (ptr == 0) {
+                return "";
+            }
+            return RamDisk.GetString(pos+33+ptr, len);
+        }
+
         // ********************************************************************
         // Fields
         // ********************************************************************
@@ -57,8 +86,8 @@ namespace GodHands {
         //uint32_t MsbLbaData;        // Location of extent (LBA) in big-endian
         [ReadOnly(true)]
         [Category("Record")]
-        public uint LbaData {
-            get { return RamDisk.GetU32(pos+2); }
+        public int LbaData {
+            get { return RamDisk.GetS32(pos+2); }
             set {
                 //byte[] buf = new byte[8] {
                 //    (byte)((value) % 256),
@@ -80,8 +109,8 @@ namespace GodHands {
         //uint32_t MsbLenData;        // Data length in big-endian
         [ReadOnly(true)]
         [Category("Record")]
-        public uint LenData {
-            get { return RamDisk.GetU32(pos+10); }
+        public int LenData {
+            get { return RamDisk.GetS32(pos+10); }
             set {
                 //byte[] buf = new byte[8] {
                 //    (byte)((value) % 256),

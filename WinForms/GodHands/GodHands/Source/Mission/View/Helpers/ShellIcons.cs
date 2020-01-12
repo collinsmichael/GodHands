@@ -9,10 +9,6 @@ using System.Windows.Forms;
 
 namespace GodHands {
     public static class ShellIcons {
-        private static int dir_select = -1;
-        private static int dir_normal = -1;
-        private static int bin_normal = -1;
-
         [StructLayout(LayoutKind.Sequential)]
         public struct SHFILEINFO {
             public IntPtr hIcon;
