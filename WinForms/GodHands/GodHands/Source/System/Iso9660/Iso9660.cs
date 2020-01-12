@@ -130,6 +130,9 @@ namespace GodHands {
             if (dir == null) {
                 return false;
             }
+
+            int dir_normal = ShellIcons.GetDirIconIndex(false);
+            int dir_select = ShellIcons.GetDirIconIndex(true);
             int lba = (int)dir.LbaData;
             int len = (int)dir.LenData;
             int end = lba*2048 + len;
@@ -154,10 +157,11 @@ namespace GodHands {
 
                 string name = RamDisk.GetString(pos+33, len_str);
                 string key = url+"/"+name;
-
                 DirRec rec = Records[key];
                 if ((rec != null) && (rec.FileFlags_Directory)) {
                     TreeNode node = tree.Nodes.Add(key, name);
+                    node.ImageIndex = dir_normal;
+                    node.SelectedImageIndex = dir_select;
                     EnumFileSystem(node, key);
                 }
                 pos += len_rec;
@@ -187,6 +191,8 @@ namespace GodHands {
                 DirRec rec = Records[key];
                 if ((rec != null) && (!rec.FileFlags_Directory)) {
                     TreeNode node = tree.Nodes.Add(key, name);
+                    node.ImageIndex = ShellIcons.GetFileIconIndex(name);
+                    node.SelectedImageIndex = node.ImageIndex;
                 }
                 pos += len_rec;
             }

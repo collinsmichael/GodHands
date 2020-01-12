@@ -26,7 +26,12 @@ namespace GodHands {
             if (obj != null) {
                 string volume = Iso9660.pvd.VolumeIdentifier.Trim();
                 TreeNode root = win.Nodes.Add("CD:PVD", "CDROM");
+                root.ImageIndex = ShellIcons.GetFileIconIndex("test.iso");
+                root.SelectedImageIndex = root.ImageIndex;
+
                 TreeNode node = root.Nodes.Add("CD:ROOT", volume);
+                node.ImageIndex = ShellIcons.GetFileIconIndex("test.iso");
+                node.SelectedImageIndex = node.ImageIndex;
                 return Iso9660.EnumFileSystem(node, "CD:ROOT");
             }
             return true;

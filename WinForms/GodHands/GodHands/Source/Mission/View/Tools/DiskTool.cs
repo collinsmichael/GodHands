@@ -18,6 +18,7 @@ namespace GodHands {
             sub_treeview = new Subscriber_TreeView("CD:ROOT", treeview);
             Logger.AddStatusBar(statusbar);
             Logger.AddProgressBar(progressbar);
+            ShellIcons.GetShellIcons(treeview);
             OpenDisk();
         }
 
