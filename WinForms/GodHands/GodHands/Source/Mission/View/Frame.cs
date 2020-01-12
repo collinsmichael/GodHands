@@ -16,7 +16,8 @@ namespace GodHands {
 
         public Frame() {
             InitializeComponent();
-            Icon = View.IconFromFile("/img/tools-disk-16.png");
+            //Icon = View.IconFromFile("/img/tools-disk-16.png");
+            Icon = View.IconFromFile("/img/icon.ico");
             menu_open.Image = View.ImageFromFile("/img/file-open-16.png");
             menu_save.Image = View.ImageFromFile("/img/file-save-16.png");
             menu_close.Image = View.ImageFromFile("/img/file-close-16.png");

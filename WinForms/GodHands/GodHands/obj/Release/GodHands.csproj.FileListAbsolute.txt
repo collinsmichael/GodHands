@@ -19,3 +19,6 @@ Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Release\GenerateResource.read.1.
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Release\GenerateResource.write.1.tlog
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Release\GodHands.exe
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Release\GodHands.pdb
+Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Release\GodHands.ConfigTool.resources
+Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Release\GodHands.DatabaseTool.resources
+Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Release\GodHands.MonitorTool.resources
