@@ -12,6 +12,8 @@ using System.Windows.Forms;
 namespace GodHands {
     public static class View {
         public static DiskTool disktool = null;
+        public static DatabaseTool databasetool = null;
+        public static MonitorTool monitortool = null;
         public static LogTool logtool = null;
         public static ConfigTool configtool = null;
 

@@ -56,6 +56,11 @@
             this.statusstrip = new System.Windows.Forms.StatusStrip();
             this.progressbar = new System.Windows.Forms.ToolStripProgressBar();
             this.statusbar = new System.Windows.Forms.ToolStripStatusLabel();
+            this.menu_database = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.menu_monitor = new System.Windows.Forms.ToolStripMenuItem();
+            this.tool_database = new System.Windows.Forms.ToolStripButton();
+            this.tool_monitor = new System.Windows.Forms.ToolStripButton();
             this.zndtool = new GodHands.ZndTool();
             this.menubar.SuspendLayout();
             this.toolbar.SuspendLayout();
@@ -162,6 +167,9 @@
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menu_disktool,
+            this.menu_database,
+            this.menu_monitor,
+            this.toolStripSeparator6,
             this.menu_logtool,
             this.menu_configtool,
             this.toolStripSeparator3,
@@ -218,6 +226,8 @@
             this.tool_redo,
             this.toolStripSeparator5,
             this.tool_disktool,
+            this.tool_database,
+            this.tool_monitor,
             this.tool_logtool,
             this.tool_configtool,
             this.tool_customtool});
@@ -358,6 +368,49 @@
             this.statusbar.Size = new System.Drawing.Size(26, 17);
             this.statusbar.Text = "Idle";
             // 
+            // menu_database
+            // 
+            this.menu_database.Name = "menu_database";
+            this.menu_database.Size = new System.Drawing.Size(152, 22);
+            this.menu_database.Text = "Database ...";
+            this.menu_database.ToolTipText = "Open the Database Tool";
+            this.menu_database.Click += new System.EventHandler(this.OnMenu_ToolsDatabase);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(149, 6);
+            // 
+            // menu_monitor
+            // 
+            this.menu_monitor.Name = "menu_monitor";
+            this.menu_monitor.Size = new System.Drawing.Size(152, 22);
+            this.menu_monitor.Text = "Monitor ...";
+            this.menu_monitor.ToolTipText = "Open the Data Monitor Tool";
+            this.menu_monitor.Click += new System.EventHandler(this.OnMenu_ToolsMonitor);
+            // 
+            // tool_database
+            // 
+            this.tool_database.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tool_database.Image = ((System.Drawing.Image)(resources.GetObject("tool_database.Image")));
+            this.tool_database.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tool_database.Name = "tool_database";
+            this.tool_database.Size = new System.Drawing.Size(23, 22);
+            this.tool_database.Text = "Database";
+            this.tool_database.ToolTipText = "Open the Database Tools";
+            this.tool_database.Click += new System.EventHandler(this.OnMenu_ToolsDatabase);
+            // 
+            // tool_monitor
+            // 
+            this.tool_monitor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tool_monitor.Image = ((System.Drawing.Image)(resources.GetObject("tool_monitor.Image")));
+            this.tool_monitor.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tool_monitor.Name = "tool_monitor";
+            this.tool_monitor.Size = new System.Drawing.Size(23, 22);
+            this.tool_monitor.Text = "Monitor";
+            this.tool_monitor.ToolTipText = "Open the Data Monitor Tool";
+            this.tool_monitor.Click += new System.EventHandler(this.OnMenu_ToolsMonitor);
+            // 
             // zndtool
             // 
             this.zndtool.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -425,5 +478,10 @@
         private System.Windows.Forms.ToolStripButton tool_logtool;
         private System.Windows.Forms.ToolStripButton tool_configtool;
         private System.Windows.Forms.ToolStripButton tool_customtool;
+        private System.Windows.Forms.ToolStripMenuItem menu_database;
+        private System.Windows.Forms.ToolStripMenuItem menu_monitor;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripButton tool_database;
+        private System.Windows.Forms.ToolStripButton tool_monitor;
     }
 }

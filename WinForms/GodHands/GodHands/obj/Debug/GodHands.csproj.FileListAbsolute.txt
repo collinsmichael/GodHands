@@ -42,3 +42,6 @@ Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.Frame.resources
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.LogTool.resources
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.ZndEditor.resources
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.ZndTool.resources
+Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.ConfigTool.resources
+Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.MonitorTool.resources
+Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.DatabaseTool.resources

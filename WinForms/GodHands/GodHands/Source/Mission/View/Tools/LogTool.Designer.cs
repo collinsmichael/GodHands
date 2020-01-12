@@ -24,20 +24,20 @@
         /// </summary>
         private void InitializeComponent() {
             this.menubar = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusstrip = new System.Windows.Forms.StatusStrip();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.progressbar = new System.Windows.Forms.ToolStripProgressBar();
             this.statusbar = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.textbox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.btn_clear = new System.Windows.Forms.Button();
             this.btn_close = new System.Windows.Forms.Button();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listbox = new System.Windows.Forms.ListBox();
             this.menubar.SuspendLayout();
             this.statusstrip.SuspendLayout();
@@ -56,6 +56,35 @@
             this.menubar.TabIndex = 0;
             this.menubar.Text = "menuStrip1";
             // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveAsToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.closeToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // saveAsToolStripMenuItem
+            // 
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.saveAsToolStripMenuItem.Text = "Save As ...";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.OnMenu_FileSaveAs);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(123, 6);
+            // 
+            // closeToolStripMenuItem
+            // 
+            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.closeToolStripMenuItem.Text = "Close";
+            this.closeToolStripMenuItem.Click += new System.EventHandler(this.OnMenu_FileClose);
+            // 
             // statusstrip
             // 
             this.statusstrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -66,6 +95,17 @@
             this.statusstrip.Size = new System.Drawing.Size(616, 22);
             this.statusstrip.TabIndex = 1;
             this.statusstrip.Text = "statusStrip1";
+            // 
+            // progressbar
+            // 
+            this.progressbar.Name = "progressbar";
+            this.progressbar.Size = new System.Drawing.Size(100, 16);
+            // 
+            // statusbar
+            // 
+            this.statusbar.Name = "statusbar";
+            this.statusbar.Size = new System.Drawing.Size(26, 17);
+            this.statusbar.Text = "Idle";
             // 
             // tableLayoutPanel1
             // 
@@ -83,17 +123,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(616, 414);
             this.tableLayoutPanel1.TabIndex = 2;
-            // 
-            // progressbar
-            // 
-            this.progressbar.Name = "progressbar";
-            this.progressbar.Size = new System.Drawing.Size(100, 16);
-            // 
-            // statusbar
-            // 
-            this.statusbar.Name = "statusbar";
-            this.statusbar.Size = new System.Drawing.Size(26, 17);
-            this.statusbar.Text = "Idle";
             // 
             // tableLayoutPanel2
             // 
@@ -169,35 +198,6 @@
             this.btn_close.UseVisualStyleBackColor = true;
             this.btn_close.Click += new System.EventHandler(this.OnButton_Close);
             // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveAsToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.closeToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
-            // 
-            // saveAsToolStripMenuItem
-            // 
-            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.saveAsToolStripMenuItem.Text = "Save As ...";
-            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.OnMenu_FileSaveAs);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
-            // 
-            // closeToolStripMenuItem
-            // 
-            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.closeToolStripMenuItem.Text = "Close";
-            this.closeToolStripMenuItem.Click += new System.EventHandler(this.OnMenu_FileClose);
-            // 
             // listbox
             // 
             this.listbox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -217,7 +217,7 @@
             this.Controls.Add(this.menubar);
             this.MainMenuStrip = this.menubar;
             this.Name = "LogTool";
-            this.Text = "LogTool";
+            this.Text = "Log File";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnClosing);
             this.menubar.ResumeLayout(false);
             this.menubar.PerformLayout();

@@ -146,7 +146,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.statusstrip);
             this.Name = "DiskTool";
-            this.Text = "DiskTool";
+            this.Text = "Disk Tool";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnClosing);
             this.statusstrip.ResumeLayout(false);
             this.statusstrip.PerformLayout();

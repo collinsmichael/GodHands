@@ -66,10 +66,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Source\Mission\View\Formats\ConfigTool.cs">
+    <Compile Include="Source\Mission\View\Tools\MonitorTool.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Mission\View\Formats\ConfigTool.Designer.cs">
+    <Compile Include="Source\Mission\View\Tools\MonitorTool.Designer.cs">
+      <DependentUpon>MonitorTool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Mission\View\Tools\DatabaseTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Mission\View\Tools\DatabaseTool.Designer.cs">
+      <DependentUpon>DatabaseTool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Mission\View\Tools\ConfigTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Mission\View\Tools\ConfigTool.Designer.cs">
       <DependentUpon>ConfigTool.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\Mission\Model\Formats\ARM.cs" />
@@ -150,6 +162,12 @@
     <EmbeddedResource Include="Source\Mission\View\Formats\ZndTool.resx">
       <DependentUpon>ZndTool.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Source\Mission\View\Tools\ConfigTool.resx">
+      <DependentUpon>ConfigTool.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Mission\View\Tools\DatabaseTool.resx">
+      <DependentUpon>DatabaseTool.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Mission\View\Tools\DiskTool.resx">
       <DependentUpon>DiskTool.cs</DependentUpon>
     </EmbeddedResource>
@@ -166,6 +184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Mission\View\Formats\ZndEditor.resx">
       <DependentUpon>ZndEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Mission\View\Tools\MonitorTool.resx">
+      <DependentUpon>MonitorTool.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

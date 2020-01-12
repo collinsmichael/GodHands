@@ -1,5 +1,5 @@
 ﻿namespace GodHands {
-    partial class ConfigTool {
+    partial class DatabaseTool {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -23,9 +23,18 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // DatabaseTool
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "ConfigTool";
+            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.Name = "DatabaseTool";
+            this.Text = "DatabaseTool";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnClosing);
+            this.ResumeLayout(false);
+
         }
 
         #endregion

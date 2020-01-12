@@ -24,6 +24,8 @@ namespace GodHands {
             menu_undo.Image = View.ImageFromFile("/img/edit-undo-16.png");
             menu_redo.Image = View.ImageFromFile("/img/edit-redo-16.png");
             menu_disktool.Image = View.ImageFromFile("/img/tools-disk-16.png");
+            menu_database.Image = View.ImageFromFile("/img/tools-database-16.png");
+            menu_monitor.Image = View.ImageFromFile("/img/tools-monitor-16.png");
             menu_logtool.Image = View.ImageFromFile("/img/tools-logfile-16.png");
             menu_configtool.Image = View.ImageFromFile("/img/tools-options-16.png");
             menu_customtool.Image = View.ImageFromFile("/img/tools-custom-16.png");
@@ -34,6 +36,8 @@ namespace GodHands {
             tool_undo.Image = View.ImageFromFile("/img/edit-undo-16.png");
             tool_redo.Image = View.ImageFromFile("/img/edit-redo-16.png");
             tool_disktool.Image = View.ImageFromFile("/img/tools-disk-16.png");
+            tool_database.Image = View.ImageFromFile("/img/tools-database-16.png");
+            tool_monitor.Image = View.ImageFromFile("/img/tools-monitor-16.png");
             tool_logtool.Image = View.ImageFromFile("/img/tools-logfile-16.png");
             tool_configtool.Image = View.ImageFromFile("/img/tools-options-16.png");
             tool_customtool.Image = View.ImageFromFile("/img/tools-custom-16.png");
@@ -89,6 +93,24 @@ namespace GodHands {
                 View.disktool.Show();
             } else {
                 View.disktool.BringToFront();
+            }
+        }
+
+        private void OnMenu_ToolsDatabase(object sender, EventArgs e) {
+            if (View.databasetool == null) {
+                View.databasetool = new DatabaseTool();
+                View.databasetool.Show();
+            } else {
+                View.databasetool.BringToFront();
+            }
+        }
+
+        private void OnMenu_ToolsMonitor(object sender, EventArgs e) {
+            if (View.monitortool == null) {
+                View.monitortool = new MonitorTool();
+                View.monitortool.Show();
+            } else {
+                View.monitortool.BringToFront();
             }
         }
 
