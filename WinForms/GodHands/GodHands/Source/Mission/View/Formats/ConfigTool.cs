@@ -8,9 +8,10 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace GodHands {
-    public partial class GodHands : Form {
-        public GodHands() {
+    public partial class ConfigTool : Form {
+        public ConfigTool() {
             InitializeComponent();
+            Icon = View.IconFromFile("/img/tools-options-16.png");
         }
     }
 }

@@ -66,11 +66,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Source\Mission\View\GodHands.cs">
+    <Compile Include="Source\Mission\View\Formats\ConfigTool.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Mission\View\GodHands.Designer.cs">
-      <DependentUpon>GodHands.cs</DependentUpon>
+    <Compile Include="Source\Mission\View\Formats\ConfigTool.Designer.cs">
+      <DependentUpon>ConfigTool.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\Mission\Model\Formats\ARM.cs" />
     <Compile Include="Source\Mission\Model\Formats\DAT.cs" />
@@ -133,10 +133,22 @@
     <Compile Include="Source\Mission\View\TestForm.Designer.cs">
       <DependentUpon>TestForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Source\Mission\View\Formats\ZndEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Source\Mission\View\Formats\ZndEditor.Designer.cs">
+      <DependentUpon>ZndEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Mission\View\Formats\ZndTool.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Source\Mission\View\Formats\ZndTool.Designer.cs">
+      <DependentUpon>ZndTool.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Source\Mission\View\GodHands.resx">
-      <DependentUpon>GodHands.cs</DependentUpon>
+    <EmbeddedResource Include="Source\Mission\View\Formats\ZndTool.resx">
+      <DependentUpon>ZndTool.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Mission\View\Tools\DiskTool.resx">
       <DependentUpon>DiskTool.cs</DependentUpon>
@@ -151,6 +163,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Mission\View\Tools\LogTool.resx">
       <DependentUpon>LogTool.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Mission\View\Formats\ZndEditor.resx">
+      <DependentUpon>ZndEditor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -175,7 +190,9 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Source\Mission\View\ReadMe.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

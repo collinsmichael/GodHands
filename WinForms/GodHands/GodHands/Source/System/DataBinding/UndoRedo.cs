@@ -9,6 +9,15 @@ namespace GodHands {
         private static Stack<ICommand> redo = new Stack<ICommand>();
 
         // ****************************************************************
+        // Clear the Undo/Redo buffers
+        // ****************************************************************
+        public static bool Reset() {
+            undo.Clear();
+            redo.Clear();
+            return true;
+        }
+
+        // ****************************************************************
         // Performs an action and add to undo stack
         // ****************************************************************
         public static bool Exec(ICommand cmd) {

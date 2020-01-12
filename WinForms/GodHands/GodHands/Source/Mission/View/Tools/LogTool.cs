@@ -15,6 +15,7 @@ namespace GodHands {
 
         public LogTool() {
             InitializeComponent();
+            Icon = View.IconFromFile("/img/tools-logfile-16.png");
             Logger.AddStatusBar(statusbar);
             Logger.AddProgressBar(progressbar);
             sub_listbox = new Subscriber_ListBox("APP:LOG", listbox);

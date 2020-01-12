@@ -68,6 +68,7 @@ namespace GodHands {
             Publisher.Unregister("CD:ROOT");
             Publisher.Unregister("CD:PVD");
             RamDisk.Close();
+            UndoRedo.Reset();
             pvd = null;
             root = null;
 

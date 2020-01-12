@@ -40,4 +40,5 @@ Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.pdb
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.DiskTool.resources
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.Frame.resources
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.LogTool.resources
-Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.GodHands.resources
+Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.ZndEditor.resources
+Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.ZndTool.resources
