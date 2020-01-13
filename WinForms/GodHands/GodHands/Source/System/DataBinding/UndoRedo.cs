@@ -5,8 +5,8 @@ using System.Text;
 
 namespace GodHands {
     public static class UndoRedo {
-        private static Stack<ICommand> undo = new Stack<ICommand>();
-        private static Stack<ICommand> redo = new Stack<ICommand>();
+        public static Stack<ICommand> undo = new Stack<ICommand>();
+        public static Stack<ICommand> redo = new Stack<ICommand>();
 
         // ****************************************************************
         // Clear the Undo/Redo buffers

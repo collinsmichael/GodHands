@@ -4,54 +4,37 @@ using System.Linq;
 using System.Text;
 
 namespace GodHands {
-    public class Actor : IBound {
-        private string url;
-        private int pos;
-
-        public Actor(string url, int pos) {
-            this.url = url;
-            this.pos = pos;
-        }
-
-        public string GetUrl() {
-            return url;
-        }
-
-        public int GetPos() {
-            return pos;
-        }
-
-        public void SetPos(int pos) {
-            this.pos = pos;
+    public class Actor : BaseClass {
+        public Actor(string url, int pos) : base(url, pos) {
         }
 
         public string Name {
-            get { return RamDisk.GetString(pos+0x00, 0x18); }
+            get { return RamDisk.GetString(GetPos()+0x00, 0x18); }
             set { UndoRedo.Exec(new BindString(this, 0x00, 0x18, value)); }
         }
 
         public ushort HP {
-            get { return RamDisk.GetU16(pos+0x18); }
+            get { return RamDisk.GetU16(GetPos()+0x18); }
             set { UndoRedo.Exec(new BindU16(this, 0x18, value)); }
         }
 
         public ushort MP {
-            get { return RamDisk.GetU16(pos+0x1A); }
+            get { return RamDisk.GetU16(GetPos()+0x1A); }
             set { UndoRedo.Exec(new BindU16(this, 0x1A, value)); }
         }
 
         public byte INT {
-            get { return RamDisk.GetU8(pos+0x1C); }
+            get { return RamDisk.GetU8(GetPos()+0x1C); }
             set { UndoRedo.Exec(new BindU8(this, 0x1C, value)); }
         }
 
         public byte AGL {
-            get { return RamDisk.GetU8(pos+0x1D); }
+            get { return RamDisk.GetU8(GetPos()+0x1D); }
             set { UndoRedo.Exec(new BindU8(this, 0x1D, value)); }
         }
 
         public byte STR {
-            get { return RamDisk.GetU8(pos+0x1E); }
+            get { return RamDisk.GetU8(GetPos()+0x1E); }
             set { UndoRedo.Exec(new BindU8(this, 0x1E, value)); }
         }
     }

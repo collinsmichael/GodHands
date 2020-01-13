@@ -9,8 +9,8 @@ namespace GodHands {
     // Publisher for Publish/Subscribe
     // ********************************************************************
     public static class Publisher {
-        private static Dictionary<string, object> dict = new Dictionary<string, object>();
-        private static Dictionary<string, object> subs = new Dictionary<string, object>();
+        public static Dictionary<string, object> dict = new Dictionary<string, object>();
+        public static Dictionary<string, object> subs = new Dictionary<string, object>();
 
         // ********************************************************************
         // register an object with the Publisher

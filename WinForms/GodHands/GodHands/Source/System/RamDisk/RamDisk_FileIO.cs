@@ -19,8 +19,8 @@ namespace GodHands {
         private static long sector = 0;
         private static long offset = 0;
         private static string path = "";
-        private static byte[] disk = new byte[0x26F57800];
-        private static byte[] map = new byte[0x4DEAF];
+        public static byte[] disk = new byte[0x26F57800];
+        public static byte[] map = new byte[0x4DEAF];
 
         // ********************************************************************
         // Opens a file from disk and reads critical parts into memory

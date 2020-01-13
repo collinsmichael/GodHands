@@ -6,25 +6,8 @@ using System.Linq;
 using System.Text;
 
 namespace GodHands {
-    public class VolDesc : IBound {
-        private string url;
-        private int pos;
-
-        public VolDesc(string url, int pos) {
-            this.url = url;
-            this.pos = pos;
-        }
-
-        public string GetUrl() {
-            return url;
-        }
-
-        public int GetPos() {
-            return pos;
-        }
-
-        public void SetPos(int pos) {
-            this.pos = pos;
+    public class VolDesc : BaseClass {
+        public VolDesc(string url, int pos) : base(url, pos) {
         }
 
         // ********************************************************************
@@ -33,21 +16,21 @@ namespace GodHands {
         //uint8_t  TypeCode;             // Always 0x01 for a Primary Volume Descriptor
         [Category("Volume")]
         public byte TypeCode {
-            get { return RamDisk.GetU8(pos+0); }
+            get { return RamDisk.GetU8(GetPos()+0); }
             set { UndoRedo.Exec(new BindU8(this, 0, value)); }
         }
 
         //char     Identifier[5];        // Always 'CD001'
         [Category("Volume")]
         public string Identifier {
-            get { return RamDisk.GetString(pos+1, 5); }
+            get { return RamDisk.GetString(GetPos()+1, 5); }
             set { UndoRedo.Exec(new BindString(this, 1, 5, value)); }
         }
 
         //uint8_t  Version;              // Always 0x01
         [Category("Volume")]
         public byte Version {
-            get { return RamDisk.GetU8(pos+6); }
+            get { return RamDisk.GetU8(GetPos()+6); }
             set { UndoRedo.Exec(new BindU8(this, 6, value)); }
         }
 
@@ -55,14 +38,14 @@ namespace GodHands {
         //char     SystemIdentifier[32]; // Name of the intended target system
         [Category("Volume")]
         public string SystemIdentifier {
-            get { return RamDisk.GetString(pos+8, 32); }
+            get { return RamDisk.GetString(GetPos()+8, 32); }
             set { UndoRedo.Exec(new BindString(this, 8, 32, value)); }
         }
 
         //char     VolumeIdentifier[32]; // Identification of this volume.
         [Category("Volume")]
         public string VolumeIdentifier {
-            get { return RamDisk.GetString(pos+40, 32); }
+            get { return RamDisk.GetString(GetPos()+40, 32); }
             set { UndoRedo.Exec(new BindString(this, 40, 32, value)); }
         }
 
@@ -71,7 +54,7 @@ namespace GodHands {
         //uint32_t MsbVolumeSpaceSize;   // Number of Logical Blocks in the volume
         [Category("Volume")]
         public uint VolumeSpaceSize {
-            get { return RamDisk.GetU32(pos+80); }
+            get { return RamDisk.GetU32(GetPos()+80); }
             set {
                 byte[] buf = new byte[8] {
                     (byte)((value) % 256),
@@ -92,7 +75,7 @@ namespace GodHands {
         //uint16_t MsbVolumeSetSize;     // The number of disks in the volume
         [Category("Volume")]
         public ushort VolumeSetSize {
-            get { return RamDisk.GetU16(pos+120); }
+            get { return RamDisk.GetU16(GetPos()+120); }
             set {
                 byte[] buf = new byte[4] {
                     (byte)((value) % 256),
@@ -108,7 +91,7 @@ namespace GodHands {
         //uint16_t MsbVolumeSequenceNo;  // The number of this disk in the Volume Set
         [Category("Volume")]
         public ushort VolumeSequenceNo {
-            get { return RamDisk.GetU16(pos+124); }
+            get { return RamDisk.GetU16(GetPos()+124); }
             set {
                 byte[] buf = new byte[4] {
                     (byte)((value) % 256),
@@ -124,7 +107,7 @@ namespace GodHands {
         //uint16_t MsbLogicalBlockSize;  // The size in bytes of a logical block
         [Category("Volume")]
         public ushort LogicalBlockSize {
-            get { return RamDisk.GetU16(pos+128); }
+            get { return RamDisk.GetU16(GetPos()+128); }
             set {
                 byte[] buf = new byte[4] {
                     (byte)((value) % 256),
@@ -140,7 +123,7 @@ namespace GodHands {
         //uint32_t MsbPathTableSize;     // The size in bytes of the path table
         [Category("Volume")]
         public uint PathTableSize {
-            get { return RamDisk.GetU32(pos+132); }
+            get { return RamDisk.GetU32(GetPos()+132); }
             set {
                 byte[] buf = new byte[8] {
                     (byte)((value) % 256),
@@ -162,10 +145,10 @@ namespace GodHands {
         //uint32_t MsbLbaPathTable2;     // LBA location of the big endian path table
         [Category("Volume")]
         public uint LbaPathTable1 {
-            get { return RamDisk.GetU32(pos+140); }
+            get { return RamDisk.GetU32(GetPos()+140); }
             set {
                 byte[] buf = new byte[16];
-                RamDisk.Get(pos+140,16,buf);
+                RamDisk.Get(GetPos()+140,16,buf);
                 buf[0] = (byte)((value) % 256);
                 buf[1] = (byte)((value/256) % 256);
                 buf[2] = (byte)((value/65536) % 256);
@@ -179,10 +162,10 @@ namespace GodHands {
         }
         [Category("Volume")]
         public uint LbaPathTable2 {
-            get { return RamDisk.GetU32(pos+144); }
+            get { return RamDisk.GetU32(GetPos()+144); }
             set {
                 byte[] buf = new byte[16];
-                RamDisk.Get(pos+140,16,buf);
+                RamDisk.Get(GetPos()+140,16,buf);
                 buf[4] = (byte)((value) % 256);
                 buf[5] = (byte)((value/256) % 256);
                 buf[6] = (byte)((value/65536) % 256);
@@ -199,7 +182,7 @@ namespace GodHands {
         private DirRec root = null;
         public DirRec GetRootDir() {
             if (root == null) {
-                root = new DirRec("CD:ROOT", pos+156);
+                root = new DirRec("CD:ROOT", GetPos()+156);
             }
             return root;
         }
@@ -207,49 +190,49 @@ namespace GodHands {
         //char     VolumeID[128];        // Identifier of the volume set
         [Category("Volume")]
         public string VolumeID {
-            get { return RamDisk.GetString(pos+190, 128); }
+            get { return RamDisk.GetString(GetPos()+190, 128); }
             set { UndoRedo.Exec(new BindString(this, 190, 128, value)); }
         }
 
         //char     PublisherID[128];     // Identifier of the publisher
         [Category("Volume")]
         public string PublisherID {
-            get { return RamDisk.GetString(pos+318, 128); }
+            get { return RamDisk.GetString(GetPos()+318, 128); }
             set { UndoRedo.Exec(new BindString(this, 318, 128, value)); }
         }
 
         //char     DataPreparerID[128];  // The identifier of the data preparer
         [Category("Volume")]
         public string DataPreparerID {
-            get { return RamDisk.GetString(pos+446, 128); }
+            get { return RamDisk.GetString(GetPos()+446, 128); }
             set { UndoRedo.Exec(new BindString(this, 446, 128, value)); }
         }
 
         //char     ApplicationID[128];   // Identifies how the data are recorded
         [Category("Volume")]
         public string ApplicationID {
-            get { return RamDisk.GetString(pos+574, 128); }
+            get { return RamDisk.GetString(GetPos()+574, 128); }
             set { UndoRedo.Exec(new BindString(this, 574, 128, value)); }
         }
 
         //char     CopyrightFileID[38];  // Filename of a file in the root directory
         [Category("Volume")]
         public string CopyrightFileID {
-            get { return RamDisk.GetString(pos+702, 38); }
+            get { return RamDisk.GetString(GetPos()+702, 38); }
             set { UndoRedo.Exec(new BindString(this, 702, 38, value)); }
         }
 
         //char     AbstractFileID[36];   // Filename of a file in the root directory
         [Category("Volume")]
         public string AbstractFileID {
-            get { return RamDisk.GetString(pos+739, 36); }
+            get { return RamDisk.GetString(GetPos()+739, 36); }
             set { UndoRedo.Exec(new BindString(this, 739, 36, value)); }
         }
 
         //char     BibliographicID[37];  // Filename of a file in the root directory
         [Category("Volume")]
         public string BibliographicID {
-            get { return RamDisk.GetString(pos+776, 37); }
+            get { return RamDisk.GetString(GetPos()+776, 37); }
             set { UndoRedo.Exec(new BindString(this, 776, 37, value)); }
         }
 

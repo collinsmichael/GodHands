@@ -68,6 +68,8 @@ namespace GodHands {
             actors.Clear();
 
             prgs.Clear();
+            dats.Clear();
+            syds.Clear();
             arms.Clear();
             znds.Clear();
             mpds.Clear();

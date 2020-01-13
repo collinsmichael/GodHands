@@ -15,11 +15,11 @@ namespace GodHands {
         public DiskTool() {
             InitializeComponent();
             Icon = View.IconFromFile("/img/tools-disk-16.png");
+            ShellIcons.GetShellIcons(treeview);
             sub_property = new Subscriber_PropertyGrid(property);
             sub_treeview = new Subscriber_TreeView("CD:ROOT", treeview);
             Logger.AddStatusBar(statusbar);
             Logger.AddProgressBar(progressbar);
-            ShellIcons.GetShellIcons(treeview);
             OpenDisk();
         }
 

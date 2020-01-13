@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Source\System\DataBinding\BaseClass.cs" />
     <Compile Include="Source\Mission\View\Tools\MonitorTool.cs">
       <SubType>Form</SubType>
     </Compile>
