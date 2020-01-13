@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512">
+ <g>
+  <title>Logo</title>
+  <polygon points="24,240 240,240 118,420" style="fill:#BFBEBD"/>
+  <polygon points="190,240 240,240 118,420" style="fill:#9F9E9E"/>
+  <polygon points="288,64 480,64 320,420 118,420" style="fill:#DFDEDE"/>
+ </g>
+</svg>
