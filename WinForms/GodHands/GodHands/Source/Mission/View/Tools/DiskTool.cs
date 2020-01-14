@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -16,6 +17,11 @@ namespace GodHands {
             InitializeComponent();
             Icon = View.IconFromFile("/img/tools-disk-16.png");
             ShellIcons.GetShellIcons(treeview);
+            treeview.AllowDrop = true;
+            treeview.ItemDrag += new ItemDragEventHandler(OnTreeDrag);
+            treeview.DragEnter += new DragEventHandler(OnDrag);
+            treeview.DragDrop += new DragEventHandler(OnDrop);
+
             sub_property = new Subscriber_PropertyGrid(property);
             sub_treeview = new Subscriber_TreeView("CD:ROOT", treeview);
             Logger.AddStatusBar(statusbar);
@@ -40,6 +46,42 @@ namespace GodHands {
             sub_property.Notify(Iso9660.pvd);
             sub_treeview.Notify(Iso9660.root);
             return true;
+        }
+        
+        private void OnTreeDrag(object sender, ItemDragEventArgs e) {
+            TreeNode node = e.Item as TreeNode;
+            if (node == null) {
+                return;
+            }
+
+            DirRec rec = Iso9660.GetByPath(node.Name);
+            if (rec != null) {
+                string path = (rec.FileFlags_Directory)
+                    ? Iso9660.ExtractDir(rec)
+                    : Iso9660.ExtractFile(rec);
+                if (path != null) {
+                    string[] files = new string[] { path };
+                    DataObject obj = new DataObject(DataFormats.FileDrop, files);
+                    DoDragDrop(obj, DragDropEffects.Copy|DragDropEffects.Move);
+                }
+            }
+        }
+
+        private void OnDrag(object sender, DragEventArgs e) {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                e.Effect = DragDropEffects.Copy;
+            }
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach (string file in files) {
+                Console.WriteLine(file);
+            }
+        }
+
+        private void OnDrop(object sender, DragEventArgs e) {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach (string file in files) {
+                Console.WriteLine(file);
+            }
         }
 
         private void OnTree_NodeChange(object sender, TreeViewEventArgs e) {

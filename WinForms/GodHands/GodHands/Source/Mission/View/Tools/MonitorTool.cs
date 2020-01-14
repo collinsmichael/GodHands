@@ -9,6 +9,8 @@ using System.Windows.Forms;
 
 namespace GodHands {
     public partial class MonitorTool : Form {
+        private object selected = null;
+
         public MonitorTool() {
             InitializeComponent();
             Icon = View.IconFromFile("/img/tools-monitor-16.png");
@@ -61,27 +63,28 @@ namespace GodHands {
         private void OnTreeViewSelect(object sender, TreeViewEventArgs e) {
             TreeNode node = treeview.SelectedNode;
             switch (node.Text) {
-            case "DiskTool":  property.SelectedObject = View.disktool;     break;
-            case "Database":  property.SelectedObject = View.databasetool; break;
-            case "Monitor":   property.SelectedObject = View.monitortool;  break;
-            case "Options":   property.SelectedObject = View.configtool;   break;
-            case "LogFile":   property.SelectedObject = View.logtool;      break;
-            case "PRG":       property.SelectedObject = Model.prgs;        break;
-            case "DAT":       property.SelectedObject = Model.dats;        break;
-            case "SYD":       property.SelectedObject = Model.syds;        break;
-            case "ARM":       property.SelectedObject = Model.arms;        break;
-            case "ZND":       property.SelectedObject = Model.znds;        break;
-            case "MPD":       property.SelectedObject = Model.mpds;        break;
-            case "ZUD":       property.SelectedObject = Model.zuds;        break;
-            case "SHP":       property.SelectedObject = Model.shps;        break;
-            case "WEP":       property.SelectedObject = Model.weps;        break;
-            case "SEQ":       property.SelectedObject = Model.seqs;        break;
-            case "Publisher": property.SelectedObject = Publisher.dict;    break;
-            case "Undo":      property.SelectedObject = UndoRedo.undo;     break;
-            case "Redo":      property.SelectedObject = UndoRedo.redo;     break;
-            case "Logger":    property.SelectedObject = Logger.log;        break;
-            default:          property.SelectedObject = null;              break;
+            case "DiskTool":  selected = View.disktool;     break;
+            case "Database":  selected = View.databasetool; break;
+            case "Monitor":   selected = View.monitortool;  break;
+            case "Options":   selected = View.configtool;   break;
+            case "LogFile":   selected = View.logtool;      break;
+            case "PRG":       selected = Model.prgs;        break;
+            case "DAT":       selected = Model.dats;        break;
+            case "SYD":       selected = Model.syds;        break;
+            case "ARM":       selected = Model.arms;        break;
+            case "ZND":       selected = Model.znds;        break;
+            case "MPD":       selected = Model.mpds;        break;
+            case "ZUD":       selected = Model.zuds;        break;
+            case "SHP":       selected = Model.shps;        break;
+            case "WEP":       selected = Model.weps;        break;
+            case "SEQ":       selected = Model.seqs;        break;
+            case "Publisher": selected = Publisher.dict;    break;
+            case "Undo":      selected = UndoRedo.undo;     break;
+            case "Redo":      selected = UndoRedo.redo;     break;
+            case "Logger":    selected = Logger.log;        break;
+            default:          selected = null;              break;
             }
+            property.SelectedObject = selected;
         }
     }
 }

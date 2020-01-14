@@ -13,9 +13,11 @@ namespace GodHands {
         public bool Visit(string url, DirRec dir) {
             string name = dir.GetFileName();
             string ext = dir.GetFileExt();
-            if ((extensions.Contains(ext)) || (name.Contains("SLUS"))) {
+            if (extensions.Contains(ext)) {
                 //Iso9660.ReadFile(dir);
-                int pos = dir.LbaData*2048;
+                int lba = dir.LbaData;
+                int len = dir.LenData;
+                int pos = lba*2048;
                 switch (ext) {
                 case ".DAT": Model.dats.Add(url, new DAT(url, pos)); break;
                 case ".PRG": Model.prgs.Add(url, new PRG(url, pos)); break;
@@ -28,6 +30,29 @@ namespace GodHands {
                 case ".WEP": Model.weps.Add(url, new WEP(url, pos)); break;
                 case ".SEQ": Model.seqs.Add(url, new SEQ(url, pos)); break;
                 }
+                switch (ext) {
+                case ".DAT": case ".PRG": case ".SYD": case ".ARM": case ".ZND":
+                case ".MPD": case ".ZUD": case ".SEQ": case ".SHP": case ".WEP":
+                    Model.file_url.Add(name, url);
+                    Model.file_pos.Add(name, pos);
+                    Model.file_len.Add(name, len);
+                    Model.file_rec.Add(name, dir);
+                    if (name == "00.SHP") {
+                        Model.lba_00_shp = lba;
+                    }
+                    if (name == "01.WEP") {
+                        Model.lba_01_wep = lba;
+                    }
+                    break;
+                }
+            } else if (name.Contains("SLUS")) {
+                int pos = dir.LbaData*2048;
+                int len = dir.LenData;
+                Model.file_url.Add("SLUS", url);
+                Model.file_pos.Add("SLUS", pos);
+                Model.file_len.Add("SLUS", len);
+                Model.file_rec.Add("SLUS", dir);
+                Model.prgs.Add(url, new PRG(url, pos));
             } else if (dir.FileFlags_Directory) {
                 return Iso9660.EnumDir(url, dir, this);
             }
@@ -46,10 +71,17 @@ namespace GodHands {
         public static Dictionary<string, SHP> shps = new Dictionary<string, SHP>();
         public static Dictionary<string, WEP> weps = new Dictionary<string, WEP>();
         public static Dictionary<string, SEQ> seqs = new Dictionary<string, SEQ>();
-
         public static Dictionary<string, Zone> zones = new Dictionary<string, Zone>();
         public static Dictionary<string, Room> rooms = new Dictionary<string, Room>();
         public static Dictionary<string, Actor> actors = new Dictionary<string, Actor>();
+
+        public static Dictionary<string, string> file_url = new Dictionary<string, string>();
+        public static Dictionary<string, int> file_pos = new Dictionary<string, int>();
+        public static Dictionary<string, int> file_len = new Dictionary<string, int>();
+        public static Dictionary<string, DirRec> file_rec = new Dictionary<string, DirRec>();
+
+        public static int lba_00_shp = 0;
+        public static int lba_01_wep = 0;
 
         // ********************************************************************
         // initialize model from file
@@ -66,7 +98,6 @@ namespace GodHands {
             zones.Clear();
             rooms.Clear();
             actors.Clear();
-
             prgs.Clear();
             dats.Clear();
             syds.Clear();
@@ -77,19 +108,32 @@ namespace GodHands {
             shps.Clear();
             weps.Clear();
             seqs.Clear();
+
+            file_url.Clear();
+            file_pos.Clear();
+            file_len.Clear();
+            file_rec.Clear();
+            lba_00_shp = 0;
+            lba_01_wep = 0;
             return true;
         }
 
-        //public static bool Open() {
-        //    actors.Add("/actor/0", new Actor("/actor/0", 0x0000));
-        //    actors.Add("/actor/1", new Actor("/actor/1", 0x0800));
-        //    actors.Add("/actor/2", new Actor("/actor/2", 0x1000));
-        //    actors.Add("/actor/3", new Actor("/actor/3", 0x1800));
-        //    Publisher.Register("/actor/0", actors["/actor/0"]);
-        //    Publisher.Register("/actor/1", actors["/actor/1"]);
-        //    Publisher.Register("/actor/2", actors["/actor/2"]);
-        //    Publisher.Register("/actor/3", actors["/actor/3"]);
-        //    return true;
-        //}
+        public static bool UpdateLbaTable(string ext, int index, int lba, int len) {
+            int pos = 0;
+            int ptr = 0;
+            try {
+                switch (ext) {
+                case ".ARM": pos = file_pos["MENU5.PRG"];  ptr = 0x00000300; break;
+                case ".ZND": pos = file_pos["SLUS"];       ptr = 0x0003FCCC; break;
+                case ".SHP": pos = file_pos["BATTLE.PRG"]; ptr = 0x0007FE60; break;
+                case ".WEP": pos = file_pos["BATTLE.PRG"]; ptr = 0x00080500; break;
+                default: return true;
+                }
+            } catch {
+                return Logger.Fail("File not found!");
+            }
+            // TODO
+            return true;
+        }
     }
 }

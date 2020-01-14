@@ -20,14 +20,14 @@ namespace GodHands {
 
         [STAThread]
         static void Main(string[] args) {
-            var console = GetConsoleWindow();
-            ShowWindow(console, 0);
+            //var console = GetConsoleWindow();
+            //ShowWindow(console, 0);
             Logger.SetUp();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Frame());
-            ShowWindow(console, 5);
-            SetForegroundWindow(console);
+            //ShowWindow(console, 5);
+            //SetForegroundWindow(console);
         }
     }
 }

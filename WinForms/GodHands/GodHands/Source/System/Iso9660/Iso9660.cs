@@ -9,7 +9,7 @@ namespace GodHands {
         bool Visit(string url, DirRec dir);
     }
 
-    public static class Iso9660 {
+    public static partial class Iso9660 {
         private static Dictionary<string,DirRec> Records = new Dictionary<string,DirRec>();
         private static Dictionary<string,int> Path2Pos = new Dictionary<string,int>();
         private static Dictionary<int,string> Lba2Path = new Dictionary<int,string>();
