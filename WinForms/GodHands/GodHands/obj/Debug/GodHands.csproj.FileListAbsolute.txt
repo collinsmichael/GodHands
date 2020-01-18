@@ -45,3 +45,4 @@ Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.ZndTool.resources
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.ConfigTool.resources
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.MonitorTool.resources
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.DatabaseTool.resources
+Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.Test.resources

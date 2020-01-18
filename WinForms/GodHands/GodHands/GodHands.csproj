@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Source\Mission\Model\Internal\Texture.cs" />
     <Compile Include="Source\System\DataBinding\BaseClass.cs" />
     <Compile Include="Source\Mission\View\Tools\MonitorTool.cs">
       <SubType>Form</SubType>
@@ -162,8 +163,17 @@
     <Compile Include="Source\Mission\View\Formats\ZndTool.Designer.cs">
       <DependentUpon>ZndTool.cs</DependentUpon>
     </Compile>
+    <Compile Include="Source\Mission\View\Formats\Test.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Mission\View\Formats\Test.Designer.cs">
+      <DependentUpon>Test.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Source\Mission\View\Formats\Test.resx">
+      <DependentUpon>Test.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Mission\View\Formats\ZndTool.resx">
       <DependentUpon>ZndTool.cs</DependentUpon>
     </EmbeddedResource>

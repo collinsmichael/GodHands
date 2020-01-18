@@ -42,6 +42,21 @@ namespace GodHands {
             }
         }
 
+        public static ImageList ImageListFromDir(string path) {
+            try {
+                ImageList list = new ImageList();
+                string dir = AppDomain.CurrentDomain.BaseDirectory;
+                List<string> files = Directory.GetFiles(dir+path).ToList();
+                files.Sort();
+                foreach(string file in files) {
+                    list.Images.Add(Image.FromFile(file));
+                }
+                return list;
+            } catch {
+                return null;
+            }
+        }
+
         public static Form CompileForm(string path) {
             string name = Path.GetFileNameWithoutExtension(path);
             string code = null;

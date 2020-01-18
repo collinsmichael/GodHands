@@ -60,7 +60,7 @@ namespace GodHands {
                 if (Iso9660.Open(ofd.FileName)) {
                     //sub_property.Notify(Iso9660.pvd);
                     //sub_property.Notify(Iso9660.root);
-                    zndtool.OpenDisk();
+                    zndeditor.OpenDisk();
                 }
             }
         }
@@ -75,7 +75,7 @@ namespace GodHands {
 
         private void OnMenu_FileClose(object sender, EventArgs e) {
             Iso9660.Close();
-            zndtool.CloseDisk();
+            zndeditor.CloseDisk();
         }
 
         private void OnMenu_FileExit(object sender, EventArgs e) {

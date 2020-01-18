@@ -9,6 +9,8 @@ namespace GodHands {
         private ZND znd;
         public List<Room> rooms = new List<Room>();
         public List<Actor> actors = new List<Actor>();
+        public List<Texture> images = new List<Texture>();
+        public List<Clut> cluts = new List<Clut>();
 
         public Zone(string url, int pos, DirRec rec) : base(url, pos) {
             this.rec = rec;
@@ -48,6 +50,27 @@ namespace GodHands {
                     actors.Add(obj);
                     Model.Add(GetUrl()+"/Actor/"+i, obj);
                 } catch {}
+            }
+
+            int ptr_tim = RamDisk.GetS32(pos+0x10);
+            int len_tim = RamDisk.GetS32(pos+0x14);
+            int num_tim = RamDisk.GetS32(pos + ptr_tim + 0x10);
+            int ptr = ptr_tim + 0x14;
+            for (int i = 0; i < num_tim; i++) {
+                int len = RamDisk.GetS32(pos + ptr);
+                string key = GetUrl()+"/Images/";
+                object obj = null;
+                if (i < num_tim-4) {
+                    key = key+"Image_"+i;
+                    obj = new Texture(key, pos+ptr+4, len);
+                    images.Add(obj as Texture);
+                } else {
+                    key = key+"Clut_"+i;
+                    obj = new Clut(key, pos+ptr+4, len);
+                    cluts.Add(obj as Clut);
+                }
+                Model.Add(key, obj);
+                ptr += len + 4;
             }
             return true;
         }

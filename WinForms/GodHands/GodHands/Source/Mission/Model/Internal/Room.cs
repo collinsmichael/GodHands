@@ -7,7 +7,8 @@ namespace GodHands {
     public class Room : BaseClass {
         private DirRec rec;
         private MPD mpd;
-        public string Name;
+        public string Name { get; set; }
+        public int NumSections { get; set; }
 
         public Room(string url, int pos, DirRec rec) : base(url, pos) {
             this.rec = rec;
@@ -18,7 +19,5 @@ namespace GodHands {
         public DirRec GetRec() {
             return rec;
         }
-
-        public int NumSections = 0;
     }
 }

@@ -25,6 +25,7 @@ namespace GodHands {
             Logger.SetUp();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new Test());
             Application.Run(new Frame());
             //ShowWindow(console, 5);
             //SetForegroundWindow(console);
