@@ -24,19 +24,20 @@
         /// </summary>
         private void InitializeComponent() {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.property = new System.Windows.Forms.PropertyGrid();
-            this.treeview = new System.Windows.Forms.TreeView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.treeview = new System.Windows.Forms.TreeView();
             this.combobox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.output = new System.Windows.Forms.TextBox();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.textbox = new System.Windows.Forms.TextBox();
+            this.output = new System.Windows.Forms.TextBox();
+            this.property = new System.Windows.Forms.PropertyGrid();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -45,7 +46,6 @@
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -65,6 +65,54 @@
             this.splitContainer1.Size = new System.Drawing.Size(566, 367);
             this.splitContainer1.SplitterDistance = 158;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 48F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.treeview, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.combobox, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(158, 367);
+            this.tableLayoutPanel1.TabIndex = 1;
+            // 
+            // treeview
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.treeview, 2);
+            this.treeview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeview.Location = new System.Drawing.Point(3, 31);
+            this.treeview.Name = "treeview";
+            this.treeview.Size = new System.Drawing.Size(152, 333);
+            this.treeview.TabIndex = 0;
+            this.treeview.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.OnTreeViewSelect);
+            // 
+            // combobox
+            // 
+            this.combobox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.combobox.FormattingEnabled = true;
+            this.combobox.Location = new System.Drawing.Point(51, 3);
+            this.combobox.Name = "combobox";
+            this.combobox.Size = new System.Drawing.Size(104, 21);
+            this.combobox.TabIndex = 1;
+            this.combobox.SelectedIndexChanged += new System.EventHandler(this.OnComboSelect);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Location = new System.Drawing.Point(3, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(42, 28);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Zone";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // splitContainer2
             // 
@@ -103,61 +151,15 @@
             this.splitContainer3.SplitterDistance = 265;
             this.splitContainer3.TabIndex = 0;
             // 
-            // property
+            // textbox
             // 
-            this.property.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.property.Location = new System.Drawing.Point(0, 0);
-            this.property.Name = "property";
-            this.property.Size = new System.Drawing.Size(159, 367);
-            this.property.TabIndex = 0;
-            // 
-            // treeview
-            // 
-            this.tableLayoutPanel1.SetColumnSpan(this.treeview, 2);
-            this.treeview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeview.Location = new System.Drawing.Point(3, 31);
-            this.treeview.Name = "treeview";
-            this.treeview.Size = new System.Drawing.Size(152, 333);
-            this.treeview.TabIndex = 0;
-            this.treeview.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.OnTreeViewSelect);
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 48F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.treeview, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.combobox, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(158, 367);
-            this.tableLayoutPanel1.TabIndex = 1;
-            // 
-            // combobox
-            // 
-            this.combobox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.combobox.FormattingEnabled = true;
-            this.combobox.Location = new System.Drawing.Point(51, 3);
-            this.combobox.Name = "combobox";
-            this.combobox.Size = new System.Drawing.Size(104, 21);
-            this.combobox.TabIndex = 1;
-            this.combobox.SelectedIndexChanged += new System.EventHandler(this.OnComboSelect);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(3, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(42, 28);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Zone";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.textbox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textbox.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textbox.Location = new System.Drawing.Point(0, 0);
+            this.textbox.Multiline = true;
+            this.textbox.Name = "textbox";
+            this.textbox.Size = new System.Drawing.Size(241, 265);
+            this.textbox.TabIndex = 0;
             // 
             // output
             // 
@@ -169,15 +171,13 @@
             this.output.Size = new System.Drawing.Size(241, 98);
             this.output.TabIndex = 0;
             // 
-            // textbox
+            // property
             // 
-            this.textbox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textbox.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textbox.Location = new System.Drawing.Point(0, 0);
-            this.textbox.Multiline = true;
-            this.textbox.Name = "textbox";
-            this.textbox.Size = new System.Drawing.Size(241, 265);
-            this.textbox.TabIndex = 0;
+            this.property.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.property.Location = new System.Drawing.Point(0, 0);
+            this.property.Name = "property";
+            this.property.Size = new System.Drawing.Size(159, 367);
+            this.property.TabIndex = 0;
             // 
             // ZndTool
             // 
@@ -190,6 +190,8 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -200,8 +202,6 @@
             this.splitContainer3.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }

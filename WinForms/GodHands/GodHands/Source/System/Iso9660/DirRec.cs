@@ -7,6 +7,9 @@ using System.Text;
 namespace GodHands {
     public class DirRec : BaseClass {
         public DirRec(string url, int pos) : base(url, pos) {
+            if (RamDisk.map[pos/2048] == 0) {
+                RamDisk.map[pos/2048] = 0x6F;
+            }
         }
 
         public string GetFileName() {

@@ -15,10 +15,11 @@ namespace GodHands {
     // ************************************************************************
     public static partial class RamDisk {
         private static FileStream file = null;
-        private static long size = 0;
-        private static long sector = 0;
-        private static long offset = 0;
+        private static int size = 0;
+        private static int sector = 0;
+        private static int offset = 0;
         private static string path = "";
+        public static int count = 0;
         public static byte[] disk = new byte[0x26F57800];
         public static byte[] map = new byte[0x4DEAF];
 
@@ -29,12 +30,15 @@ namespace GodHands {
             Close();
             try {
                 path = filepath;
-                size = new FileInfo(path).Length;
+                size = (int)(new FileInfo(path).Length);
                 FileAccess access = FileAccess.ReadWrite;
                 FileShare share = FileShare.ReadWrite;
                 file = File.Open(path, FileMode.Open, access, share);
             } catch (Exception e) {
                 return Logger.Fail("File not found! "+e.Message);
+            }
+            for (int i = 0; i < 16; i++) {
+                map[i] = 0x6F;
             }
 
             byte[] head = new byte[12];
@@ -55,6 +59,7 @@ namespace GodHands {
                 }
             }
 
+            count = size / sector;
             if ((size % sector) != 0) {
                 Logger.Warn("File not aligned to sector boundary");
             }
@@ -87,6 +92,10 @@ namespace GodHands {
                 return false;
             }
 
+            byte x = map[src];
+            map[src] = map[des];
+            map[des] = x;
+
             for (int i = 0; i < 2048; i++) {
                 byte temp = disk[src*2048 + i];
                 disk[src*2048 + i] = disk[des*2048 + i];
@@ -110,7 +119,7 @@ namespace GodHands {
                 return Logger.Fail("Sector "+lba+" read is out of bounds!");
             }
             try {
-                if (map[lba] == 0) {
+                if (map[lba] != 0x78) {
                     file.Position = lba*sector + offset;
                     file.Read(disk, lba*2048, 2048);
                     map[lba] = 0x78;
@@ -135,12 +144,13 @@ namespace GodHands {
                 return Logger.Fail("Sector "+lba+" write is out of bounds!");
             }
             try {
-                if (map[lba] != 0) {
-                    file.Position = lba*sector + offset;
-                    file.Write(disk, lba*2048, 2048);
-                    file.Flush();
-                    FlushFileBuffers(file.SafeFileHandle.DangerousGetHandle());
+                if (map[lba] != 0x78) {
+                    Read(lba);
                 }
+                file.Position = lba*sector + offset;
+                file.Write(disk, lba*2048, 2048);
+                file.Flush();
+                FlushFileBuffers(file.SafeFileHandle.DangerousGetHandle());
             } catch (Exception e) {
                 return Logger.Fail("Write failed! "+e.Message);
             }

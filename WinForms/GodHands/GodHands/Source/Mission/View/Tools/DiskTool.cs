@@ -45,6 +45,13 @@ namespace GodHands {
         public bool OpenDisk() {
             sub_property.Notify(Iso9660.pvd);
             sub_treeview.Notify(Iso9660.root);
+
+            if (treeview.Nodes.Count > 0) {
+                treeview.Nodes[0].Expand();
+                if (treeview.Nodes[0].Nodes.Count > 0) {
+                    treeview.Nodes[0].Nodes[0].Expand();
+                }
+            }
             return true;
         }
         
@@ -57,8 +64,8 @@ namespace GodHands {
             DirRec rec = Iso9660.GetByPath(node.Name);
             if (rec != null) {
                 string path = (rec.FileFlags_Directory)
-                    ? Iso9660.ExtractDir(rec)
-                    : Iso9660.ExtractFile(rec);
+                    ? Iso9660.ExportDir(rec)
+                    : Iso9660.ExportFile(rec);
                 if (path != null) {
                     string[] files = new string[] { path };
                     DataObject obj = new DataObject(DataFormats.FileDrop, files);
@@ -79,9 +86,23 @@ namespace GodHands {
 
         private void OnDrop(object sender, DragEventArgs e) {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            foreach (string file in files) {
-                Console.WriteLine(file);
+            Point pt = treeview.PointToClient(new Point(e.X, e.Y));
+
+            DirRec rec = null;
+            TreeNode node = treeview.GetNodeAt(pt);
+            if (node == null) {
+                rec = Iso9660.GetByPath("CD:ROOT");
+            } else {
+                rec = Iso9660.GetByPath(node.Name);
+                if (!rec.FileFlags_Directory) {
+                    node = node.Parent;
+                    rec = Iso9660.GetByPath(node.Name);
+                }
             }
+            if (node != null) {
+                node.Expand();
+            }
+            Iso9660.ImportFiles(rec, files);
         }
 
         private void OnTree_NodeChange(object sender, TreeViewEventArgs e) {

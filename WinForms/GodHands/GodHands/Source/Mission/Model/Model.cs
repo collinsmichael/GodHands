@@ -30,6 +30,7 @@ namespace GodHands {
                 case ".WEP": Model.weps.Add(url, new WEP(url, pos)); break;
                 case ".SEQ": Model.seqs.Add(url, new SEQ(url, pos)); break;
                 }
+
                 switch (ext) {
                 case ".DAT": case ".PRG": case ".SYD": case ".ARM": case ".ZND":
                 case ".MPD": case ".ZUD": case ".SEQ": case ".SHP": case ".WEP":
@@ -45,6 +46,18 @@ namespace GodHands {
                     }
                     break;
                 }
+
+
+                if (ext == ".ZND") {
+                    string[] parts = url.Split(new char[] {':'});
+                    if (parts.Length > 1) {
+                        string key = "APP:" + parts[1];
+                        Zone zone = new Zone(key, pos, dir);
+                        Model.zones.Add(key, zone);
+                        Model.Add(key, zone);
+                    }
+                }
+
             } else if (name.Contains("SLUS")) {
                 int pos = dir.LbaData*2048;
                 int len = dir.LenData;
@@ -61,6 +74,7 @@ namespace GodHands {
     }
 
     public static class Model {
+        public static Dictionary<string, object> map = new Dictionary<string, object>();
         public static Dictionary<string, PRG> prgs = new Dictionary<string, PRG>();
         public static Dictionary<string, DAT> dats = new Dictionary<string, DAT>();
         public static Dictionary<string, SYD> syds = new Dictionary<string, SYD>();
@@ -108,6 +122,7 @@ namespace GodHands {
             shps.Clear();
             weps.Clear();
             seqs.Clear();
+            map.Clear();
 
             file_url.Clear();
             file_pos.Clear();
@@ -116,6 +131,20 @@ namespace GodHands {
             lba_00_shp = 0;
             lba_01_wep = 0;
             return true;
+        }
+
+        public static bool Add(string key, object obj) {
+            if (!map.ContainsKey(key)) {
+                map.Add(key, obj);
+            }
+            return true;
+        }
+
+        public static object Get(string key) {
+            if (map.ContainsKey(key)) {
+                return map[key];
+            }
+            return null;
         }
 
         public static bool UpdateLbaTable(string ext, int index, int lba, int len) {

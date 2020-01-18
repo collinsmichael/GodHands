@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -42,12 +43,28 @@ namespace GodHands {
                 return false;
             }
 
+            RamDisk.map[0x11] = 0x6F;
+            for (int i = 0; i < 0x10; i++) {
+                RamDisk.map[i] = 0x6F;
+            }
             pvd = new VolDesc("CD:PVD", 0x10*2048);
             root = pvd.GetRootDir();
+            int lba = root.LbaData;
+            int len = root.LenData;
+            for (int i = 0; i < len; i++) {
+                RamDisk.Read(lba+i);
+            }
+            int lenp = pvd.PathTableSize;
+            int lba1 = pvd.LbaPathTable1;
+            int lba2 = pvd.LbaPathTable2;
+            for (int i = 0; i < lenp; i++) {
+                RamDisk.Read(lba1+i);
+                RamDisk.Read(lba2+i);
+            }
+
             Records.Add("CD:ROOT", root);
             Path2Pos.Add("CD:ROOT", root.GetPos());
-            Lba2Path.Add((int)root.LbaData, "CD:ROOT");
-
+            Lba2Path.Add(lba, "CD:ROOT");
             Publisher.Register("CD:PVD", pvd);
             Publisher.Register("CD:ROOT", root);
 
@@ -56,6 +73,10 @@ namespace GodHands {
             if (View.disktool != null) {
                 View.disktool.OpenDisk();
             }
+
+            string dir = AppDomain.CurrentDomain.BaseDirectory;
+            File.WriteAllBytes(dir+"disk.map", RamDisk.map);
+
             Logger.SetProgress(100);
             return Logger.Pass("File opened successfully "+path);
         }
@@ -120,12 +141,32 @@ namespace GodHands {
                         rec = Records[key];
                     } else {
                         rec = new DirRec(key, pos);
+                        int lba = rec.LbaData;
+                        int num = (rec.LenData+2047)/2048;
+                        if (rec.FileFlags_Directory) {
+                            for (int i = 0; i < num; i++) {
+                                RamDisk.Read(lba+i);
+                            }
+                        } else {
+                            for (int i = 0; i < num; i++) {
+                                if (RamDisk.map[lba+i] == 0) {
+                                    RamDisk.map[lba+i] = 0x6F;
+                                }
+                            }
+                        }
+
                         Records.Add(key, rec);
                         Path2Pos.Add(key, rec.GetPos());
-                        Lba2Path.Add(rec.LbaData, key);
+                        Lba2Path.Add(lba, key);
                         Publisher.Register(key, rec);
                     }
                     if (rec.FileFlags_Directory) {
+                        int lba = rec.LbaData;
+                        int num = (rec.LenData+2047)/2048;
+                        for (int i = 0; i < num; i++) {
+                            RamDisk.Read(lba+i);
+                        }
+
                         if (iterator != null) {
                             iterator.Visit(key, rec);
                         }
@@ -158,6 +199,24 @@ namespace GodHands {
         public static bool EnumFileSys(IEnumDir iterator) {
             DirRec dir = Iso9660.GetByPath("CD:ROOT");
             return Iso9660.EnumDir("CD:ROOT", dir, iterator);
+        }
+
+        private static int next = 0;
+        public static int NextFit(int num_sectors) {
+            int total = RamDisk.count;
+            for (int lba = next; (lba+1) % total != next; lba = (lba+1) % total) {
+                for (int i = 0; i < num_sectors+1; i++) {
+                    int pos = (lba + i) % total;
+                    if (RamDisk.map[pos] != 0) {
+                        lba = lba + i;
+                        break;
+                    } else if (i == num_sectors) {
+                        next = pos;
+                        return lba;
+                    }
+                }
+            }
+            return 0;
         }
     }
 }

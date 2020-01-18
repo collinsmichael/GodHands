@@ -8,6 +8,7 @@ using System.Text;
 namespace GodHands {
     public class VolDesc : BaseClass {
         public VolDesc(string url, int pos) : base(url, pos) {
+            RamDisk.map[pos/2048] = 0x6F;
         }
 
         // ********************************************************************
@@ -53,8 +54,8 @@ namespace GodHands {
         //uint32_t LsbVolumeSpaceSize;   // Number of Logical Blocks in the volume
         //uint32_t MsbVolumeSpaceSize;   // Number of Logical Blocks in the volume
         [Category("Volume")]
-        public uint VolumeSpaceSize {
-            get { return RamDisk.GetU32(GetPos()+80); }
+        public int VolumeSpaceSize {
+            get { return RamDisk.GetS32(GetPos()+80); }
             set {
                 byte[] buf = new byte[8] {
                     (byte)((value) % 256),
@@ -74,8 +75,8 @@ namespace GodHands {
         //uint16_t LsbVolumeSetSize;     // The number of disks in the volume
         //uint16_t MsbVolumeSetSize;     // The number of disks in the volume
         [Category("Volume")]
-        public ushort VolumeSetSize {
-            get { return RamDisk.GetU16(GetPos()+120); }
+        public short VolumeSetSize {
+            get { return RamDisk.GetS16(GetPos()+120); }
             set {
                 byte[] buf = new byte[4] {
                     (byte)((value) % 256),
@@ -90,8 +91,8 @@ namespace GodHands {
         //uint16_t LsbVolumeSequenceNo;  // The number of this disk in the Volume Set
         //uint16_t MsbVolumeSequenceNo;  // The number of this disk in the Volume Set
         [Category("Volume")]
-        public ushort VolumeSequenceNo {
-            get { return RamDisk.GetU16(GetPos()+124); }
+        public short VolumeSequenceNo {
+            get { return RamDisk.GetS16(GetPos()+124); }
             set {
                 byte[] buf = new byte[4] {
                     (byte)((value) % 256),
@@ -106,8 +107,8 @@ namespace GodHands {
         //uint16_t LsbLogicalBlockSize;  // The size in bytes of a logical block
         //uint16_t MsbLogicalBlockSize;  // The size in bytes of a logical block
         [Category("Volume")]
-        public ushort LogicalBlockSize {
-            get { return RamDisk.GetU16(GetPos()+128); }
+        public short LogicalBlockSize {
+            get { return RamDisk.GetS16(GetPos()+128); }
             set {
                 byte[] buf = new byte[4] {
                     (byte)((value) % 256),
@@ -122,8 +123,8 @@ namespace GodHands {
         //uint32_t LsbPathTableSize;     // The size in bytes of the path table
         //uint32_t MsbPathTableSize;     // The size in bytes of the path table
         [Category("Volume")]
-        public uint PathTableSize {
-            get { return RamDisk.GetU32(GetPos()+132); }
+        public int PathTableSize {
+            get { return RamDisk.GetS32(GetPos()+132); }
             set {
                 byte[] buf = new byte[8] {
                     (byte)((value) % 256),
@@ -144,8 +145,8 @@ namespace GodHands {
         //uint32_t MsbLbaPathTable1;     // LBA location of the big endian path table
         //uint32_t MsbLbaPathTable2;     // LBA location of the big endian path table
         [Category("Volume")]
-        public uint LbaPathTable1 {
-            get { return RamDisk.GetU32(GetPos()+140); }
+        public int LbaPathTable1 {
+            get { return RamDisk.GetS32(GetPos()+140); }
             set {
                 byte[] buf = new byte[16];
                 RamDisk.Get(GetPos()+140,16,buf);
@@ -161,8 +162,8 @@ namespace GodHands {
             }
         }
         [Category("Volume")]
-        public uint LbaPathTable2 {
-            get { return RamDisk.GetU32(GetPos()+144); }
+        public int LbaPathTable2 {
+            get { return RamDisk.GetS32(GetPos()+144); }
             set {
                 byte[] buf = new byte[16];
                 RamDisk.Get(GetPos()+140,16,buf);

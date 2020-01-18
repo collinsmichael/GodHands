@@ -37,9 +37,9 @@
             this.button4 = new System.Windows.Forms.Button();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.listBox3 = new System.Windows.Forms.ListBox();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
+            this.listBox3 = new System.Windows.Forms.ListBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -218,16 +218,6 @@
             this.label4.Text = "Textures";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // listBox3
-            // 
-            this.listBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox3.FormattingEnabled = true;
-            this.listBox3.Location = new System.Drawing.Point(67, 264);
-            this.listBox3.Name = "listBox3";
-            this.tableLayoutPanel1.SetRowSpan(this.listBox3, 3);
-            this.listBox3.Size = new System.Drawing.Size(174, 196);
-            this.listBox3.TabIndex = 13;
-            // 
             // button5
             // 
             this.button5.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -247,6 +237,16 @@
             this.button6.TabIndex = 15;
             this.button6.Text = "button6";
             this.button6.UseVisualStyleBackColor = true;
+            // 
+            // listBox3
+            // 
+            this.listBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBox3.FormattingEnabled = true;
+            this.listBox3.Location = new System.Drawing.Point(67, 264);
+            this.listBox3.Name = "listBox3";
+            this.tableLayoutPanel1.SetRowSpan(this.listBox3, 3);
+            this.listBox3.Size = new System.Drawing.Size(174, 196);
+            this.listBox3.TabIndex = 13;
             // 
             // ZndEditor
             // 

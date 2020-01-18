@@ -5,13 +5,20 @@ using System.Text;
 
 namespace GodHands {
     public class Actor : BaseClass {
-        public Actor(string url, int pos) : base(url, pos) {
+        private DirRec rec;
+        private ZUD zud;
+        public string Name;
+
+        public Actor(string url, int pos, DirRec rec) : base(url, pos) {
+            this.rec = rec;
+            zud = Model.zuds[rec.GetUrl()];
+            Name = rec.GetFileName();
         }
 
-        public string Name {
-            get { return RamDisk.GetString(GetPos()+0x00, 0x18); }
-            set { UndoRedo.Exec(new BindString(this, 0x00, 0x18, value)); }
-        }
+        //public string Name {
+        //    get { return RamDisk.GetString(GetPos()+0x00, 0x18); }
+        //    set { UndoRedo.Exec(new BindString(this, 0x00, 0x18, value)); }
+        //}
 
         public ushort HP {
             get { return RamDisk.GetU16(GetPos()+0x18); }
