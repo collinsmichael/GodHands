@@ -11,6 +11,7 @@ using System.Windows.Forms;
 
 namespace GodHands {
     public partial class ZndEditor : UserControl {
+        private Subscriber_PropertyGrid sub_property = null;
         private Dictionary<string,string> zones = new Dictionary<string,string>();
         private Zone zone = null;
 
@@ -31,6 +32,7 @@ namespace GodHands {
             treeview.ImageList = View.ImageListFromDir("/img/zone");
             treeview.ShowNodeToolTips = true;
             property.PropertySort = PropertySort.NoSort;
+            sub_property = new Subscriber_PropertyGrid(property);
 
             menu = new ContextMenuStrip();
             menu_insert = new ToolStripMenuItem("Insert", View.ImageFromFile("/img/zone/insert.png"));
@@ -54,11 +56,12 @@ namespace GodHands {
             combobox.Text = "";
             foreach (Zone zone in Model.zones.Values) {
                 string key = zone.GetUrl();
-                string txt = zone.GetRec().GetFileName();
+                DirRec rec = zone.GetRec();
+                string txt = rec.GetFileName();
                 zones.Add(txt, key);
                 combobox.Items.Add(txt);
             }
-            combobox.SelectedIndex = 0;
+            sub_property.Notify(null);
         }
 
         public void CloseDisk() {
@@ -71,6 +74,7 @@ namespace GodHands {
             texture = null;
             texture2d = null;
             picturebox.Invalidate();
+            sub_property.Notify(null);
         }
 
         public void OpenZone() {
@@ -147,7 +151,7 @@ namespace GodHands {
             if (node != null) {
                 string url = node.Name;
                 property.PropertySort = PropertySort.NoSort;
-                property.SelectedObject = Model.Get(url);
+                sub_property.Notify(Model.Get(url));
                 foreach (Texture image in zone.images) {
                     if (image.GetUrl() == url) {
                         texture = image;
@@ -155,7 +159,10 @@ namespace GodHands {
                         picturebox.Invalidate();
                     }
                 }
+            } else {
+                sub_property.Notify(null);
             }
+            treeview.Focus();
         }
 
         private void OnTreeClick(object sender, TreeNodeMouseClickEventArgs e) {
@@ -185,6 +192,7 @@ namespace GodHands {
                 }
                 menu.Show(Cursor.Position);
             }
+            treeview.Focus();
         }
 
         private void OnMenuImport(object sender, EventArgs e) {
@@ -247,19 +255,22 @@ namespace GodHands {
         }
 
         private void OnComboBoxSelect(object sender, EventArgs e) {
-            string key = combobox.GetItemText(combobox.SelectedItem);
-            if (key.Length > 0) {
-                if (!zones.ContainsKey(key)) {
-                    return;
-                }
+            object obj = combobox.SelectedItem;
+            if (obj != null) {
+                string key = combobox.GetItemText(obj);
+                if (key.Length > 0) {
+                    if (!zones.ContainsKey(key)) {
+                        return;
+                    }
 
-                string url = zones[key];
-                if (!Model.zones.ContainsKey(url)) {
-                    return;
+                    string url = zones[key];
+                    if (!Model.zones.ContainsKey(url)) {
+                        return;
+                    }
+                    zone = Model.zones[url];
+                    zone.OpenZone();
+                    OpenZone();
                 }
-                zone = Model.zones[url];
-                zone.OpenZone();
-                OpenZone();
             }
         }
 

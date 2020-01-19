@@ -55,6 +55,7 @@ namespace GodHands {
                         Zone zone = new Zone(key, pos, dir);
                         Model.zones.Add(key, zone);
                         Model.Add(key, zone);
+                        Publisher.Register(zone);
                     }
                 }
 
@@ -65,7 +66,9 @@ namespace GodHands {
                 Model.file_pos.Add("SLUS", pos);
                 Model.file_len.Add("SLUS", len);
                 Model.file_rec.Add("SLUS", dir);
-                Model.prgs.Add(url, new PRG(url, pos));
+                PRG prg = new PRG(url, pos);
+                Model.prgs.Add(url, prg);
+                Publisher.Register(prg);
             } else if (dir.FileFlags_Directory) {
                 return Iso9660.EnumDir(url, dir, this);
             }

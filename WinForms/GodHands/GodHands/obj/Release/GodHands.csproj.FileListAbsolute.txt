@@ -22,3 +22,4 @@ Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Release\GodHands.pdb
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Release\GodHands.ConfigTool.resources
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Release\GodHands.DatabaseTool.resources
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Release\GodHands.MonitorTool.resources
+Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Release\GodHands.Test.resources

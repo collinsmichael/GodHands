@@ -63,7 +63,7 @@ namespace GodHands {
             set {
                 //UndoRedo.Exec(new BindString(this, 0x00, 0x18, value));
                 string clip = value.Substring(0, Math.Min(0x18, value.Length));
-                byte[] kildean = Kildean.ToKildean(clip);
+                byte[] kildean = Kildean.ToKildean(clip, 0x18);
                 UndoRedo.Exec(new BindArray(this, 0x04, 0x18, kildean));
             }
         }

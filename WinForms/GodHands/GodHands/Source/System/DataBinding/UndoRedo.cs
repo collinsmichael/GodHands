@@ -37,6 +37,7 @@ namespace GodHands {
                 ICommand cmd = undo.Pop();
                 redo.Push(cmd);
                 cmd.Undo();
+                Logger.SetProgress(100);
                 return Logger.Pass("Undo");
             }
             return true;
@@ -50,6 +51,7 @@ namespace GodHands {
                 ICommand cmd = redo.Pop();
                 undo.Push(cmd);
                 cmd.Redo();
+                Logger.SetProgress(100);
                 return Logger.Pass("Redo");
             }
             return true;

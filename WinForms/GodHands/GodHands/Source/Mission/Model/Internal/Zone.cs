@@ -31,9 +31,10 @@ namespace GodHands {
                 int lba = RamDisk.GetS32(pos + ptr_mpd + 8*i);
                 try {
                     DirRec mpd = Iso9660.GetByLba(lba);
-                    Room room = new Room(mpd.GetUrl(), mpd.LbaData*2048, mpd);
-                    rooms.Add(room);
-                    Model.Add(GetUrl()+"/Room/"+i, room);
+                    Room obj = new Room(mpd.GetUrl(), mpd.LbaData*2048, mpd);
+                    rooms.Add(obj);
+                    Model.Add(GetUrl()+"/Room/"+i, obj);
+                    Publisher.Register(obj);
                 } catch {}
             }
 
@@ -49,6 +50,7 @@ namespace GodHands {
                     Actor obj = new Actor(key, npc, zud);
                     actors.Add(obj);
                     Model.Add(key, obj);
+                    Publisher.Register(obj);
                 } catch {}
             }
 
@@ -59,9 +61,10 @@ namespace GodHands {
             for (int i = 0; i < num_tim; i++) {
                 int len = RamDisk.GetS32(pos + ptr);
                 string key = GetUrl()+"/Images/Image_"+i;
-                object obj = new Texture(key, pos+ptr+4, len);
+                Texture obj = new Texture(key, pos+ptr+4, len);
                 images.Add(obj as Texture);
                 Model.Add(key, obj);
+                Publisher.Register(obj);
                 ptr += len + 4;
             }
             return true;

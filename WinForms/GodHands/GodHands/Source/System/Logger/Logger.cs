@@ -87,10 +87,12 @@ namespace GodHands {
             case "[WARN]": icon = Image.FromFile(dir+"/img/status-warn.png"); break;
             case "[FAIL]": icon = Image.FromFile(dir+"/img/status-fail.png"); break;
             }
+            timer.Stop();
             foreach (ToolStripStatusLabel bar in status) {
                 bar.Text = text;
                 bar.Image = icon;
             }
+            timer.Start();
             return true;
         }
 
