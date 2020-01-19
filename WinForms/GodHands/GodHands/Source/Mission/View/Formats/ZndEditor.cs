@@ -98,8 +98,9 @@ namespace GodHands {
             }
             foreach (Actor actor in zone.actors) {
                 string url = actor.GetUrl();
+                string znd_file = actor.GetZndFileName();
                 TreeNode node = actors.Nodes.Add(url, actor.Name, 2, 2);
-                TreeNode model = node.Nodes.Add(url+"/Model", actor.Name, 27, 27);
+                TreeNode model = node.Nodes.Add(url+"/Model", znd_file, 27, 27);
                 TreeNode weapon = node.Nodes.Add(url+"/Weapon", "Weapon", 11, 11);
                 TreeNode shield = node.Nodes.Add(url+"/Shield", "Shield", 10, 10);
                 node.Nodes.Add(url+"/Helmot",    "Helmot",     5,  5);
@@ -133,11 +134,11 @@ namespace GodHands {
             node = e.Node;
             if (node != null) {
                 string url = node.Name;
+                property.SelectedObject = Model.Get(url);
                 foreach (Texture image in zone.images) {
                     if (image.GetUrl() == url) {
                         texture = image;
                         texture2d = image.ToImage();
-                        property.SelectedObject = image;
                         picturebox.Invalidate();
                     }
                 }

@@ -7,18 +7,30 @@ namespace GodHands {
     public class Actor : BaseClass {
         private DirRec rec;
         private ZUD zud;
-        public string Name;
 
         public Actor(string url, int pos, DirRec rec) : base(url, pos) {
             this.rec = rec;
             zud = Model.zuds[rec.GetUrl()];
-            Name = rec.GetFileName();
         }
 
-        //public string Name {
-        //    get { return RamDisk.GetString(GetPos()+0x00, 0x18); }
-        //    set { UndoRedo.Exec(new BindString(this, 0x00, 0x18, value)); }
-        //}
+        public string GetZndFileName() {
+            return rec.GetFileName();
+        }
+
+        public string Name {
+            get {
+                //return RamDisk.GetString(GetPos()+0x00, 0x18);
+                byte[] kildean = new byte[0x18];
+                RamDisk.Get(GetPos()+0x04, 0x18, kildean);
+                return Kildean.ToAscii(kildean);
+            }
+            set {
+                //UndoRedo.Exec(new BindString(this, 0x00, 0x18, value));
+                string clip = value.Substring(0, Math.Min(0x18, value.Length));
+                byte[] kildean = Kildean.ToKildean(clip);
+                UndoRedo.Exec(new BindArray(this, 0x04, 0x18, kildean));
+            }
+        }
 
         public ushort HP {
             get { return RamDisk.GetU16(GetPos()+0x18); }

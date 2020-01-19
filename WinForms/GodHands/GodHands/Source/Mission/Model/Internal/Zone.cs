@@ -23,7 +23,6 @@ namespace GodHands {
         public bool OpenZone() {
             Iso9660.ReadFile(rec);
             int pos = znd.GetPos();
-            int pos2 = rec.LbaData*2048;
 
             int ptr_mpd = RamDisk.GetS32(pos+0x00);
             int len_mpd = RamDisk.GetS32(pos+0x04);
@@ -42,12 +41,14 @@ namespace GodHands {
             int len_zud = RamDisk.GetS32(pos+0x0C);
             int num_zud = RamDisk.GetS32(pos + ptr_zud);
             for (int i = 0; i < num_zud; i++) {
-                int lba = RamDisk.GetS32(pos + ptr_zud + 4 + 8*i);
                 try {
+                    int lba = RamDisk.GetS32(pos + ptr_zud + 4 + 8*i);
+                    int npc = pos + ptr_zud + 4 + 8*num_zud + 0x464*i;
+                    string key = GetUrl()+"/Actors/Actor_"+i;
                     DirRec zud = Iso9660.GetByLba(lba);
-                    Actor obj = new Actor(zud.GetUrl(), zud.LbaData*2048, zud);
+                    Actor obj = new Actor(key, npc, zud);
                     actors.Add(obj);
-                    Model.Add(GetUrl()+"/Actor/"+i, obj);
+                    Model.Add(key, obj);
                 } catch {}
             }
 
