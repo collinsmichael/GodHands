@@ -30,6 +30,7 @@ namespace GodHands {
             InitializeComponent();
             treeview.ImageList = View.ImageListFromDir("/img/zone");
             treeview.ShowNodeToolTips = true;
+            property.PropertySort = PropertySort.NoSort;
 
             menu = new ContextMenuStrip();
             menu_insert = new ToolStripMenuItem("Insert", View.ImageFromFile("/img/zone/insert.png"));
@@ -57,16 +58,19 @@ namespace GodHands {
                 zones.Add(txt, key);
                 combobox.Items.Add(txt);
             }
+            combobox.SelectedIndex = 0;
         }
 
         public void CloseDisk() {
             combobox.Text = "";
             treeview.Nodes.Clear();
             combobox.Items.Clear();
+            property.SelectedObject = null;
             zones.Clear();
             node = null;
             texture = null;
             texture2d = null;
+            picturebox.Invalidate();
         }
 
         public void OpenZone() {
@@ -88,39 +92,47 @@ namespace GodHands {
             foreach (Room room in zone.rooms) {
                 string url = room.GetUrl();
                 TreeNode node = rooms.Nodes.Add(url, room.Name, 1, 1);
-                node.Nodes.Add(url+"/Geometry", "Geometry", 27, 27);
-                node.Nodes.Add(url+"/Collisions", "Collisions", 30, 30);
-                node.Nodes.Add(url+"/Lighting", "Lighting", 31, 31);
-                node.Nodes.Add(url+"/Doors", "Doors", 32, 33);
-                node.Nodes.Add(url+"/Enemies", "Enemies", 34, 34);
-                node.Nodes.Add(url+"/Script", "Script", 35, 35);
-                node.Nodes.Add(url+"/Treasure", "Treasure", 36, 36);
+                node.Nodes.Add(url+"/Geometry", "Geometry", 28, 28);
+                node.Nodes.Add(url+"/Collisions", "Collisions", 31, 31);
+                node.Nodes.Add(url+"/Lighting", "Lighting", 32, 32);
+                node.Nodes.Add(url+"/Doors", "Doors", 33, 34);
+                node.Nodes.Add(url+"/Enemies", "Enemies", 35, 35);
+                node.Nodes.Add(url+"/Script", "Script", 36, 36);
+                node.Nodes.Add(url+"/Treasure", "Treasure", 37, 37);
             }
             foreach (Actor actor in zone.actors) {
                 string url = actor.GetUrl();
                 string znd_file = actor.GetZndFileName();
                 TreeNode node = actors.Nodes.Add(url, actor.Name, 2, 2);
-                TreeNode model = node.Nodes.Add(url+"/Model", znd_file, 27, 27);
-                TreeNode weapon = node.Nodes.Add(url+"/Weapon", "Weapon", 11, 11);
-                TreeNode shield = node.Nodes.Add(url+"/Shield", "Shield", 10, 10);
-                node.Nodes.Add(url+"/Helmot",    "Helmot",     5,  5);
-                node.Nodes.Add(url+"/Armour",    "Armour",     6,  6);
-                node.Nodes.Add(url+"/Gloves",    "Gloves",     7,  7);
-                node.Nodes.Add(url+"/Boots",     "Boots",      8,  8);
-                node.Nodes.Add(url+"/Accessory", "Accessory",  9,  9);
-                model.Nodes.Add(url+"/Model/SHP", "SHP", 27, 27);
-                model.Nodes.Add(url+"/Model/WEP", "WEP", 27, 27);
-                model.Nodes.Add(url+"/Model/SEQ", "SEQ Common", 28, 28);
-                model.Nodes.Add(url+"/Model/SEQ", "SEQ Battle", 28, 28);
+                TreeNode body = node.Nodes.Add(url+"/BodyParts", "BodyParts", 5, 5);
+                TreeNode model = node.Nodes.Add(url+"/Model", znd_file, 28, 28);
+                TreeNode weapon = node.Nodes.Add(url+"/Weapon", "Weapon", 12, 12);
+                TreeNode shield = node.Nodes.Add(url+"/Shield", "Shield", 11, 11);
+                body.Nodes.Add(url+"/BodyParts/BodyPart_1", "BodyPart_1", 5, 5);
+                body.Nodes.Add(url+"/BodyParts/BodyPart_2", "BodyPart_2", 5, 5);
+                body.Nodes.Add(url+"/BodyParts/BodyPart_3", "BodyPart_3", 5, 5);
+                body.Nodes.Add(url+"/BodyParts/BodyPart_4", "BodyPart_4", 5, 5);
+                body.Nodes.Add(url+"/BodyParts/BodyPart_5", "BodyPart_5", 5, 5);
+                body.Nodes.Add(url+"/BodyParts/BodyPart_6", "BodyPart_6", 5, 5);
 
-                weapon.Nodes.Add(url+"/Weapon/Blade", "Blade", 12, 12);
-                weapon.Nodes.Add(url+"/Weapon/Grip",  "Grip",  13, 13);
-                weapon.Nodes.Add(url+"/Weapon/Gem1",  "Gem1",  23, 23);
-                weapon.Nodes.Add(url+"/Weapon/Gem2",  "Gem2",  24, 24);
-                weapon.Nodes.Add(url+"/Weapon/Gem3",  "Gem3",  25, 25);
-                shield.Nodes.Add(url+"/Shield/Gem1",  "Gem1",  23, 23);
-                shield.Nodes.Add(url+"/Shield/Gem2",  "Gem2",  24, 24);
-                shield.Nodes.Add(url+"/Shield/Gem3",  "Gem3",  25, 25);
+                node.Nodes.Add(url+"/Helmot",    "Helmot",     6,  6);
+                node.Nodes.Add(url+"/Armour",    "Armour",     7,  7);
+                node.Nodes.Add(url+"/Gloves",    "Gloves",     8,  8);
+                node.Nodes.Add(url+"/Boots",     "Boots",      9,  9);
+                node.Nodes.Add(url+"/Accessory", "Accessory", 10, 10);
+                model.Nodes.Add(url+"/Model/SHP", "SHP", 28, 28);
+                model.Nodes.Add(url+"/Model/WEP", "WEP", 28, 28);
+                model.Nodes.Add(url+"/Model/SEQ", "SEQ Common", 29, 29);
+                model.Nodes.Add(url+"/Model/SEQ", "SEQ Battle", 29, 29);
+
+                weapon.Nodes.Add(url+"/Weapon/Blade", "Blade", 13, 13);
+                weapon.Nodes.Add(url+"/Weapon/Grip",  "Grip",  14, 14);
+                weapon.Nodes.Add(url+"/Weapon/Gem1",  "Gem1",  24, 24);
+                weapon.Nodes.Add(url+"/Weapon/Gem2",  "Gem2",  25, 25);
+                weapon.Nodes.Add(url+"/Weapon/Gem3",  "Gem3",  26, 26);
+                shield.Nodes.Add(url+"/Shield/Gem1",  "Gem1",  24, 24);
+                shield.Nodes.Add(url+"/Shield/Gem2",  "Gem2",  25, 25);
+                shield.Nodes.Add(url+"/Shield/Gem3",  "Gem3",  26, 26);
             }
             foreach (Texture image in zone.images) {
                 int index = zone.images.IndexOf(image);
@@ -134,6 +146,7 @@ namespace GodHands {
             node = e.Node;
             if (node != null) {
                 string url = node.Name;
+                property.PropertySort = PropertySort.NoSort;
                 property.SelectedObject = Model.Get(url);
                 foreach (Texture image in zone.images) {
                     if (image.GetUrl() == url) {

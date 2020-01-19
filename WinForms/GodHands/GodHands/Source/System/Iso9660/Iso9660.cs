@@ -99,6 +99,7 @@ namespace GodHands {
             Records.Clear();
             Path2Pos.Clear();
             Lba2Path.Clear();
+            Logger.SetProgress(100);
             return Logger.Pass("File closed");
         }
 

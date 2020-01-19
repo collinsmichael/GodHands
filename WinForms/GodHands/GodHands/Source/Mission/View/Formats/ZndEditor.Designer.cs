@@ -64,7 +64,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Size = new System.Drawing.Size(629, 438);
-            this.splitContainer1.SplitterDistance = 185;
+            this.splitContainer1.SplitterDistance = 199;
             this.splitContainer1.TabIndex = 1;
             // 
             // tableLayoutPanel1
@@ -81,7 +81,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(185, 438);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(199, 438);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // treeview
@@ -90,7 +90,7 @@
             this.treeview.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeview.Location = new System.Drawing.Point(3, 31);
             this.treeview.Name = "treeview";
-            this.treeview.Size = new System.Drawing.Size(179, 404);
+            this.treeview.Size = new System.Drawing.Size(193, 404);
             this.treeview.TabIndex = 0;
             this.treeview.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.OnTreeSelect);
             this.treeview.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.OnTreeClick);
@@ -101,7 +101,7 @@
             this.combobox.FormattingEnabled = true;
             this.combobox.Location = new System.Drawing.Point(51, 3);
             this.combobox.Name = "combobox";
-            this.combobox.Size = new System.Drawing.Size(131, 21);
+            this.combobox.Size = new System.Drawing.Size(145, 21);
             this.combobox.TabIndex = 1;
             this.combobox.SelectedIndexChanged += new System.EventHandler(this.OnComboBoxSelect);
             // 
@@ -130,8 +130,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.property);
-            this.splitContainer2.Size = new System.Drawing.Size(440, 438);
-            this.splitContainer2.SplitterDistance = 277;
+            this.splitContainer2.Size = new System.Drawing.Size(426, 438);
+            this.splitContainer2.SplitterDistance = 224;
             this.splitContainer2.TabIndex = 0;
             // 
             // splitContainer3
@@ -149,7 +149,7 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.picturebox);
-            this.splitContainer3.Size = new System.Drawing.Size(277, 438);
+            this.splitContainer3.Size = new System.Drawing.Size(224, 438);
             this.splitContainer3.SplitterDistance = 333;
             this.splitContainer3.TabIndex = 0;
             // 
@@ -160,7 +160,7 @@
             this.textbox.Location = new System.Drawing.Point(0, 0);
             this.textbox.Multiline = true;
             this.textbox.Name = "textbox";
-            this.textbox.Size = new System.Drawing.Size(277, 333);
+            this.textbox.Size = new System.Drawing.Size(224, 333);
             this.textbox.TabIndex = 0;
             // 
             // picturebox
@@ -169,7 +169,7 @@
             this.picturebox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picturebox.Location = new System.Drawing.Point(0, 0);
             this.picturebox.Name = "picturebox";
-            this.picturebox.Size = new System.Drawing.Size(277, 101);
+            this.picturebox.Size = new System.Drawing.Size(224, 101);
             this.picturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picturebox.TabIndex = 1;
             this.picturebox.TabStop = false;
@@ -180,7 +180,8 @@
             this.property.Dock = System.Windows.Forms.DockStyle.Fill;
             this.property.Location = new System.Drawing.Point(0, 0);
             this.property.Name = "property";
-            this.property.Size = new System.Drawing.Size(159, 438);
+            this.property.PropertySort = System.Windows.Forms.PropertySort.NoSort;
+            this.property.Size = new System.Drawing.Size(198, 438);
             this.property.TabIndex = 0;
             // 
             // ZndEditor
