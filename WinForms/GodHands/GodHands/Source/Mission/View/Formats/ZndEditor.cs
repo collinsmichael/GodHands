@@ -23,7 +23,6 @@ namespace GodHands {
         private OpenFileDialog ofd = new OpenFileDialog();
         private SaveFileDialog sfd = new SaveFileDialog();
         private TreeNode node = null;
-        private Color[] colors = null;
         private Texture texture = null;
         private Image texture2d = null;
 
@@ -66,7 +65,6 @@ namespace GodHands {
             combobox.Items.Clear();
             zones.Clear();
             node = null;
-            colors = null;
             texture = null;
             texture2d = null;
         }
@@ -88,52 +86,59 @@ namespace GodHands {
             images.ToolTipText = "Texture pack";
 
             foreach (Room room in zone.rooms) {
-                rooms.Nodes.Add(room.GetUrl(), room.Name, 1, 1);
+                string url = room.GetUrl();
+                TreeNode node = rooms.Nodes.Add(url, room.Name, 1, 1);
+                node.Nodes.Add(url+"/Geometry", "Geometry", 27, 27);
+                node.Nodes.Add(url+"/Collisions", "Collisions", 30, 30);
+                node.Nodes.Add(url+"/Lighting", "Lighting", 31, 31);
+                node.Nodes.Add(url+"/Doors", "Doors", 32, 33);
+                node.Nodes.Add(url+"/Enemies", "Enemies", 34, 34);
+                node.Nodes.Add(url+"/Script", "Script", 35, 35);
+                node.Nodes.Add(url+"/Treasure", "Treasure", 36, 36);
             }
             foreach (Actor actor in zone.actors) {
-                actors.Nodes.Add(actor.GetUrl(), actor.Name, 2, 2);
+                string url = actor.GetUrl();
+                TreeNode node = actors.Nodes.Add(url, actor.Name, 2, 2);
+                TreeNode model = node.Nodes.Add(url+"/Model", actor.Name, 27, 27);
+                TreeNode weapon = node.Nodes.Add(url+"/Weapon", "Weapon", 11, 11);
+                TreeNode shield = node.Nodes.Add(url+"/Shield", "Shield", 10, 10);
+                node.Nodes.Add(url+"/Helmot",    "Helmot",     5,  5);
+                node.Nodes.Add(url+"/Armour",    "Armour",     6,  6);
+                node.Nodes.Add(url+"/Gloves",    "Gloves",     7,  7);
+                node.Nodes.Add(url+"/Boots",     "Boots",      8,  8);
+                node.Nodes.Add(url+"/Accessory", "Accessory",  9,  9);
+                model.Nodes.Add(url+"/Model/SHP", "SHP", 27, 27);
+                model.Nodes.Add(url+"/Model/WEP", "WEP", 27, 27);
+                model.Nodes.Add(url+"/Model/SEQ", "SEQ Common", 28, 28);
+                model.Nodes.Add(url+"/Model/SEQ", "SEQ Battle", 28, 28);
+
+                weapon.Nodes.Add(url+"/Weapon/Blade", "Blade", 12, 12);
+                weapon.Nodes.Add(url+"/Weapon/Grip",  "Grip",  13, 13);
+                weapon.Nodes.Add(url+"/Weapon/Gem1",  "Gem1",  23, 23);
+                weapon.Nodes.Add(url+"/Weapon/Gem2",  "Gem2",  24, 24);
+                weapon.Nodes.Add(url+"/Weapon/Gem3",  "Gem3",  25, 25);
+                shield.Nodes.Add(url+"/Shield/Gem1",  "Gem1",  23, 23);
+                shield.Nodes.Add(url+"/Shield/Gem2",  "Gem2",  24, 24);
+                shield.Nodes.Add(url+"/Shield/Gem3",  "Gem3",  25, 25);
             }
             foreach (Texture image in zone.images) {
                 int index = zone.images.IndexOf(image);
                 string text = "Image_"+index.ToString("D2");
-                images.Nodes.Add(image.GetUrl(), text, 3, 3);
-            }
-
-            int c = 0;
-            colors = new Color[256*zone.cluts.Count()];
-            foreach (Clut clut in zone.cluts) {
-                int index = zone.cluts.IndexOf(clut);
-                string text = "Clut_"+index.ToString("D2");
-                images.Nodes.Add(clut.GetUrl(), text, 4, 4);
-                Color[] cols = clut.ToRgb();
-                foreach (Color rgb in cols) {
-                    colors[c++] = rgb;
-                }
+                int icon = (image.IsLookUpTable) ? 4 : 3;
+                images.Nodes.Add(image.GetUrl(), text, icon, icon);
             }
         }
 
         private void OnTreeSelect(object sender, TreeViewEventArgs e) {
             node = e.Node;
             if (node != null) {
-                if (node.Text.Contains("Image_")) {
-                    string url = node.Name;
-                    foreach (Texture image in zone.images) {
-                        if (image.GetUrl() == url) {
-                            texture = image;
-                            texture2d = image.ToImage(null);
-                            property.SelectedObject = image;
-                            picturebox.Invalidate();
-                        }
-                    }
-                } else if (node.Text.Contains("Clut_")) {
-                    string url = node.Name;
-                    foreach (Clut image in zone.cluts) {
-                        if (image.GetUrl() == url) {
-                            texture = image;
-                            texture2d = texture.ToImage(null);
-                            property.SelectedObject = image;
-                            picturebox.Invalidate();
-                        }
+                string url = node.Name;
+                foreach (Texture image in zone.images) {
+                    if (image.GetUrl() == url) {
+                        texture = image;
+                        texture2d = image.ToImage();
+                        property.SelectedObject = image;
+                        picturebox.Invalidate();
                     }
                 }
             }
@@ -182,9 +187,13 @@ namespace GodHands {
 
         private void OnMenuExport(object sender, EventArgs e) {
             if (node != null) {
-                ofd.Title = "Export File";
-                ofd.Filter = "CD Images|*.bin;*.img;*.iso|All Files|*.*";
-                if (ofd.ShowDialog() == DialogResult.OK) {
+                sfd.Title = "Export File";
+                sfd.Filter = "CD Images|*.bin;*.img;*.iso|All Files|*.*";
+                if (node.Text.Contains("Image_")) {
+                    sfd.Filter = "BMP Images|*.bmp|All Files|*.*";
+                }
+
+                if (sfd.ShowDialog() == DialogResult.OK) {
                     //if (Iso9660.Open(ofd.FileName)) {
                     //    zndtool.OpenDisk();
                     //}
@@ -244,7 +253,7 @@ namespace GodHands {
             if (texture2d != null) {
                 double aspect = (double)texture2d.Width / (double)texture2d.Height;
 
-                int ax = texture2d.Width;
+                int ax = texture2d.Width*2;
                 int ay = texture2d.Height;
                 int bx = picturebox.Size.Width;
                 int by = picturebox.Size.Height;

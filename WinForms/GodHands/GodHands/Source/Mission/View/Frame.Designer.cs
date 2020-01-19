@@ -61,6 +61,7 @@
             this.statusstrip = new System.Windows.Forms.StatusStrip();
             this.progressbar = new System.Windows.Forms.ToolStripProgressBar();
             this.statusbar = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusicon = new System.Windows.Forms.ToolStripStatusLabel();
             this.zndeditor = new GodHands.ZndEditor();
             this.menubar.SuspendLayout();
             this.toolbar.SuspendLayout();
@@ -393,6 +394,7 @@
             // 
             this.statusstrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.progressbar,
+            this.statusicon,
             this.statusbar});
             this.statusstrip.Location = new System.Drawing.Point(0, 424);
             this.statusstrip.Name = "statusstrip";
@@ -402,14 +404,21 @@
             // 
             // progressbar
             // 
+            this.progressbar.Margin = new System.Windows.Forms.Padding(3);
             this.progressbar.Name = "progressbar";
             this.progressbar.Size = new System.Drawing.Size(100, 16);
             // 
             // statusbar
             // 
+            this.statusbar.Margin = new System.Windows.Forms.Padding(3);
             this.statusbar.Name = "statusbar";
-            this.statusbar.Size = new System.Drawing.Size(26, 17);
+            this.statusbar.Size = new System.Drawing.Size(26, 16);
             this.statusbar.Text = "Idle";
+            // 
+            // statusicon
+            // 
+            this.statusicon.Name = "statusicon";
+            this.statusicon.Size = new System.Drawing.Size(0, 17);
             // 
             // zndeditor
             // 
@@ -483,5 +492,6 @@
         private System.Windows.Forms.ToolStripButton tool_database;
         private System.Windows.Forms.ToolStripButton tool_monitor;
         private ZndEditor zndeditor;
+        private System.Windows.Forms.ToolStripStatusLabel statusicon;
     }
 }

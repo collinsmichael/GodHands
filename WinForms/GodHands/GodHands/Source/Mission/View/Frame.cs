@@ -46,6 +46,7 @@ namespace GodHands {
             //sub_property = new Subscriber_PropertyGrid(propertyGrid1);
             Logger.AddStatusBar(statusbar);
             Logger.AddProgressBar(progressbar);
+            statusbar.Image = View.ImageFromFile("/img/status-info.png");
         }
 
         private void OnClosing(object sender, FormClosingEventArgs e) {

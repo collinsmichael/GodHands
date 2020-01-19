@@ -31,8 +31,8 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.textbox = new System.Windows.Forms.TextBox();
-            this.property = new System.Windows.Forms.PropertyGrid();
             this.picturebox = new System.Windows.Forms.PictureBox();
+            this.property = new System.Windows.Forms.PropertyGrid();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -64,7 +64,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Size = new System.Drawing.Size(629, 438);
-            this.splitContainer1.SplitterDistance = 158;
+            this.splitContainer1.SplitterDistance = 185;
             this.splitContainer1.TabIndex = 1;
             // 
             // tableLayoutPanel1
@@ -81,7 +81,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(158, 438);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(185, 438);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // treeview
@@ -90,7 +90,7 @@
             this.treeview.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeview.Location = new System.Drawing.Point(3, 31);
             this.treeview.Name = "treeview";
-            this.treeview.Size = new System.Drawing.Size(152, 404);
+            this.treeview.Size = new System.Drawing.Size(179, 404);
             this.treeview.TabIndex = 0;
             this.treeview.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.OnTreeSelect);
             this.treeview.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.OnTreeClick);
@@ -101,7 +101,7 @@
             this.combobox.FormattingEnabled = true;
             this.combobox.Location = new System.Drawing.Point(51, 3);
             this.combobox.Name = "combobox";
-            this.combobox.Size = new System.Drawing.Size(104, 21);
+            this.combobox.Size = new System.Drawing.Size(131, 21);
             this.combobox.TabIndex = 1;
             this.combobox.SelectedIndexChanged += new System.EventHandler(this.OnComboBoxSelect);
             // 
@@ -130,8 +130,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.property);
-            this.splitContainer2.Size = new System.Drawing.Size(467, 438);
-            this.splitContainer2.SplitterDistance = 304;
+            this.splitContainer2.Size = new System.Drawing.Size(440, 438);
+            this.splitContainer2.SplitterDistance = 277;
             this.splitContainer2.TabIndex = 0;
             // 
             // splitContainer3
@@ -149,7 +149,7 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.picturebox);
-            this.splitContainer3.Size = new System.Drawing.Size(304, 438);
+            this.splitContainer3.Size = new System.Drawing.Size(277, 438);
             this.splitContainer3.SplitterDistance = 333;
             this.splitContainer3.TabIndex = 0;
             // 
@@ -160,8 +160,20 @@
             this.textbox.Location = new System.Drawing.Point(0, 0);
             this.textbox.Multiline = true;
             this.textbox.Name = "textbox";
-            this.textbox.Size = new System.Drawing.Size(304, 333);
+            this.textbox.Size = new System.Drawing.Size(277, 333);
             this.textbox.TabIndex = 0;
+            // 
+            // picturebox
+            // 
+            this.picturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picturebox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picturebox.Location = new System.Drawing.Point(0, 0);
+            this.picturebox.Name = "picturebox";
+            this.picturebox.Size = new System.Drawing.Size(277, 101);
+            this.picturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picturebox.TabIndex = 1;
+            this.picturebox.TabStop = false;
+            this.picturebox.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaintPictureBox);
             // 
             // property
             // 
@@ -170,18 +182,6 @@
             this.property.Name = "property";
             this.property.Size = new System.Drawing.Size(159, 438);
             this.property.TabIndex = 0;
-            // 
-            // picturebox
-            // 
-            this.picturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picturebox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picturebox.Location = new System.Drawing.Point(0, 0);
-            this.picturebox.Name = "picturebox";
-            this.picturebox.Size = new System.Drawing.Size(304, 101);
-            this.picturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picturebox.TabIndex = 1;
-            this.picturebox.TabStop = false;
-            this.picturebox.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaintPictureBox);
             // 
             // ZndEditor
             // 

@@ -54,13 +54,15 @@
             // 
             // progressbar
             // 
+            this.progressbar.Margin = new System.Windows.Forms.Padding(3);
             this.progressbar.Name = "progressbar";
             this.progressbar.Size = new System.Drawing.Size(100, 16);
             // 
             // statusbar
             // 
+            this.statusbar.Margin = new System.Windows.Forms.Padding(3);
             this.statusbar.Name = "statusbar";
-            this.statusbar.Size = new System.Drawing.Size(26, 17);
+            this.statusbar.Size = new System.Drawing.Size(26, 16);
             this.statusbar.Text = "Idle";
             // 
             // tableLayoutPanel1

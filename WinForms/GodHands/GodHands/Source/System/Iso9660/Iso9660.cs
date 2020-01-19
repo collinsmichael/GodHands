@@ -110,6 +110,7 @@ namespace GodHands {
                     return false;
                 }
             }
+            Logger.SetProgress(100);
             return Logger.Pass("Read file "+dir.FileName);
         }
 
