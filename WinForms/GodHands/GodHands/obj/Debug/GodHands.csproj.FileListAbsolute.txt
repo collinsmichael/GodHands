@@ -48,7 +48,6 @@ Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.DatabaseTool.reso
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.Test.resources
 C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\bin\Debug\GodHands.exe
 C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\bin\Debug\GodHands.pdb
-C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.csprojResolveAssemblyReference.cache
 C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.Test.resources
 C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.ZndTool.resources
 C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.ConfigTool.resources
@@ -62,3 +61,5 @@ C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\G
 C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.csproj.GenerateResource.Cache
 C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.exe
 C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.pdb
+C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.csprojAssemblyReference.cache
+C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.csproj.CoreCompileInputs.cache
