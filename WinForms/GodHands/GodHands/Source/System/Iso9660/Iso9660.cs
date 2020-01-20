@@ -143,6 +143,7 @@ namespace GodHands {
                         rec = Records[key];
                     } else {
                         rec = new DirRec(key, pos);
+                        string name = rec.GetFileName();
                         int lba = rec.LbaData;
                         int num = (rec.LenData+2047)/2048;
                         if (rec.FileFlags_Directory) {
@@ -156,11 +157,14 @@ namespace GodHands {
                                 }
                             }
                         }
-
-                        Records.Add(key, rec);
-                        Path2Pos.Add(key, rec.GetPos());
-                        Lba2Path.Add(lba, key);
-                        Publisher.Register(key, rec);
+                        try {
+                            Records.Add(key, rec);
+                            Path2Pos.Add(key, rec.GetPos());
+                            Lba2Path.Add(lba, key);
+                            Publisher.Register(key, rec);
+                        } catch (Exception e) {
+                            Logger.Warn("Cannot register "+name+" "+e.Message);
+                        }
                     }
                     if (rec.FileFlags_Directory) {
                         int lba = rec.LbaData;
