@@ -46,3 +46,19 @@ Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.ConfigTool.resour
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.MonitorTool.resources
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.DatabaseTool.resources
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.Test.resources
+C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\bin\Debug\GodHands.exe
+C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\bin\Debug\GodHands.pdb
+C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.csprojResolveAssemblyReference.cache
+C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.Test.resources
+C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.ZndTool.resources
+C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.ConfigTool.resources
+C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.DatabaseTool.resources
+C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.DiskTool.resources
+C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.Frame.resources
+C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.TestForm.resources
+C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.LogTool.resources
+C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.ZndEditor.resources
+C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.MonitorTool.resources
+C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.csproj.GenerateResource.Cache
+C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.exe
+C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.pdb
