@@ -33,9 +33,10 @@ namespace GodHands {
     public class ProgressTimeout {
         public void OnTick(object sender, EventArgs e) {
             Logger.timer.Stop();
-            Logger.timer.Enabled = false;
             Logger.SetProgress(0);
             Logger.SetStatus("[INFO]", "Idle");
+            Logger.timer.Stop();
+            Logger.timer.Enabled = false;
         }
     }
 
@@ -44,12 +45,23 @@ namespace GodHands {
         public static List<string> log = new List<string>();
         public static List<ToolStripProgressBar> progress = new List<ToolStripProgressBar>();
         public static List<ToolStripStatusLabel> status = new List<ToolStripStatusLabel>();
-        public static List<ToolStripStatusLabel> icons = new List<ToolStripStatusLabel>();
         private static BoundList<string> bound = new BoundList<string>("APP:LOG", 0, log);
         private static ProgressTimeout timeout = new ProgressTimeout();
         public static Timer timer = new Timer();
+        public static Image[] icons = new Image[4];
+        public static Image icon = null;
+
+        public static string message = "Idle";
+        public static int percent = 0;
 
         public static void SetUp() {
+            string dir = AppDomain.CurrentDomain.BaseDirectory;
+            icons[0] = Image.FromFile(dir+"/img/status-info.png");
+            icons[1] = Image.FromFile(dir+"/img/status-pass.png");
+            icons[2] = Image.FromFile(dir+"/img/status-warn.png");
+            icons[3] = Image.FromFile(dir+"/img/status-fail.png");
+            icon = icons[0];
+
             Publisher.Register(bound);
             timer.Interval = 5000;
             timer.Tick += new EventHandler(timeout.OnTick);
@@ -67,6 +79,8 @@ namespace GodHands {
         public static bool AddStatusBar(ToolStripStatusLabel statusbar) {
             if (!status.Contains(statusbar)) {
                 status.Add(statusbar);
+                statusbar.Text = message;
+                statusbar.Image = icon;
             }
             return true;
         }
@@ -79,14 +93,13 @@ namespace GodHands {
         }
 
         public static bool SetStatus(string level, string text) {
-            Image icon = null;
-            string dir = AppDomain.CurrentDomain.BaseDirectory;
             switch (level) {
-            case "[INFO]": icon = Image.FromFile(dir+"/img/status-info.png"); break;
-            case "[PASS]": icon = Image.FromFile(dir+"/img/status-pass.png"); break;
-            case "[WARN]": icon = Image.FromFile(dir+"/img/status-warn.png"); break;
-            case "[FAIL]": icon = Image.FromFile(dir+"/img/status-fail.png"); break;
+            case "[INFO]": icon = icons[0]; break;
+            case "[PASS]": icon = icons[1]; break;
+            case "[WARN]": icon = icons[2]; break;
+            case "[FAIL]": icon = icons[3]; break;
             }
+            message = text;
             timer.Stop();
             foreach (ToolStripStatusLabel bar in status) {
                 bar.Text = text;
@@ -99,6 +112,7 @@ namespace GodHands {
         public static bool AddProgressBar(ToolStripProgressBar progressbar) {
             if (!progress.Contains(progressbar)) {
                 progress.Add(progressbar);
+                progressbar.Value = percent;
             }
             return true;
         }

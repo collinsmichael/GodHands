@@ -199,8 +199,8 @@ namespace GodHands {
         }
 
         public static bool EnumFileSys(IEnumDir iterator) {
-            DirRec dir = Iso9660.GetByPath("CD:ROOT");
-            return Iso9660.EnumDir("CD:ROOT", dir, iterator);
+            DirRec dir = GetByPath("CD:ROOT");
+            return EnumDir("CD:ROOT", dir, iterator);
         }
 
         private static int next = 0;
@@ -219,6 +219,55 @@ namespace GodHands {
                 }
             }
             return 0;
+        }
+
+        public static bool ResizeRecord(DirRec rec, int len) {
+            // first check if there is enough space
+            int lba = rec.LbaData;
+            int num = (rec.LenData+2047)/2048;
+            for (int i = num; i < len; i++) {
+                if (RamDisk.map[lba + i] != 0) {
+                    return Logger.Fail("Cannot resize "+rec.GetFileName()+" not enough space");
+                }
+            }
+            // claim these sectors
+            for (int i = num; i < len; i++) {
+                RamDisk.map[lba + i] = 0x6F;
+            }
+            rec.LenData = len;
+            return true;
+        }
+
+        public static bool MoveRecord(DirRec rec, int lba) {
+            // first check if there is enough space
+            int old = rec.LbaData;
+            int len = (rec.LenData+2047)/2048;
+            for (int i = 0; i < len; i++) {
+                if (RamDisk.map[lba + i] != 0) {
+                    return Logger.Fail("Cannot move "+rec.GetFileName()+" not enough space");
+                }
+            }
+            // swap the sectors
+            for (int i = 0; i < len; i++) {
+                int src = old + i;
+                int des = lba + i;
+                if (!RamDisk.Swap(src, des)) {
+                    return false;
+                }
+            }
+            rec.LbaData = lba;
+            return true;
+        }
+
+        public static bool RenameRecord(DirRec rec, string name) {
+            // compute new size of the record
+            // make space for new record
+            // update the parent records LenData
+            // update affected records
+            // rename the record
+
+            // ALSO update the path tables if this record is a directory
+            return true;
         }
     }
 }

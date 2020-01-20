@@ -126,13 +126,15 @@ namespace GodHands {
             }
 
             byte x = map[src];
-            map[src] = map[des];
+            byte y = map[des];
+            map[src] = y;
             map[des] = x;
 
             for (int i = 0; i < 2048; i++) {
-                byte temp = disk[src*2048 + i];
-                disk[src*2048 + i] = disk[des*2048 + i];
-                disk[des*2048 + i] = temp;
+                byte s = disk[src*2048 + i];
+                byte d = disk[des*2048 + i];
+                disk[src*2048 + i] = d;
+                disk[des*2048 + i] = s;
             }
 
             if (!Write(src) || !Write(des)) {
