@@ -150,6 +150,21 @@ namespace GodHands {
             return null;
         }
 
+        public static int GetPos(string url) {
+            if (file_pos.ContainsKey(url)) {
+                return file_pos[url];
+            }
+            return 0;
+        }
+
+        public static void SetPos(string url, int pos) {
+            if (file_pos.ContainsKey(url)) {
+                file_pos[url] = pos;
+            } else {
+                file_pos.Add(url, pos);
+            }
+        }
+
         public static bool UpdateLbaTable(string ext, int index, int lba, int len) {
             int pos = 0;
             int ptr = 0;

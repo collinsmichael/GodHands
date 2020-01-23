@@ -117,7 +117,30 @@ namespace GodHands {
         //uint8_t  DateTime[7];       // Recording date and time
         [Category("Record")]
         public DateTime CreatedTime {
-            get; set;
+            get {
+                byte[] buf = new byte[6];
+                RamDisk.Get(GetPos()+18, 6, buf);
+                int YYYY = 1900+buf[0];
+                int MM = buf[1];
+                int DD = buf[2];
+                int hh = buf[3];
+                int mm = buf[4];
+                int ss = buf[5];
+                DateTime t = new DateTime(YYYY,MM,DD,hh,mm,ss);
+                return t;
+            }
+            set {
+                DateTime t = value;
+                byte[] buf = new byte[6] {
+                    (byte)(t.Year-1900),
+                    (byte)(t.Month),
+                    (byte)(t.Day),
+                    (byte)(t.Hour),
+                    (byte)(t.Minute),
+                    (byte)(t.Second)
+                };
+                UndoRedo.Exec(new BindArray(this, 18, 6, buf));
+            }
         }
 
         //uint8_t  FileFlags;         // See Below

@@ -237,21 +237,74 @@ namespace GodHands {
             set { UndoRedo.Exec(new BindString(this, 776, 37, value)); }
         }
 
+        private DateTime GetTime(int delta) {
+            byte[] buf = new byte[17];
+            RamDisk.Get(GetPos()+delta, 17, buf);
+            int YYYY = (buf[0x00]-0x30)*1000 + (buf[0x01]-0x30)*100
+                     + (buf[0x02]-0x30)*10 + (buf[0x03]-0x30);
+            int MM   = (buf[0x04]-0x30)*10 + (buf[0x05]-0x30);
+            int DD   = (buf[0x06]-0x30)*10 + (buf[0x07]-0x30);
+            int hh   = (buf[0x08]-0x30)*10 + (buf[0x09]-0x30);
+            int mm   = (buf[0x0A]-0x30)*10 + (buf[0x0B]-0x30);
+            int ss   = (buf[0x0C]-0x30)*10 + (buf[0x0D]-0x30);
+            int ms   = (buf[0x0E]-0x30)*100 + (buf[0x0F]-0x30)*10;
+            try {
+                DateTime t = new DateTime(YYYY, MM, DD, hh, mm, ss, ms);
+                return t;
+            } catch (Exception e) {
+                return DateTime.Now;
+            }
+        }
+
+        private void SetTime(int delta, DateTime t) {
+            int YYYY = t.Year;
+            int MM   = t.Month;
+            int DD   = t.Day;
+            int hh   = t.Hour;
+            int mm   = t.Minute;
+            int ss   = t.Second;
+            int ms   = t.Millisecond;
+            byte[] buf = new byte[17] {
+                (byte)((YYYY/1000)%10+0x30), (byte)((YYYY/100)%10+0x30),
+                (byte)((YYYY/10)%10+0x30), (byte)((YYYY/1)%10+0x30),
+                (byte)((MM/10)%10+0x30), (byte)((MM/1)%10+0x30),
+                (byte)((DD/10)%10+0x30), (byte)((DD/1)%10+0x30),
+                (byte)((hh/10)%10+0x30), (byte)((hh/1)%10+0x30),
+                (byte)((mm/10)%10+0x30), (byte)((mm/1)%10+0x30),
+                (byte)((ss/10)%10+0x30), (byte)((ss/1)%10+0x30),
+                (byte)((ms/100)%10+0x30), (byte)((ms/10)%10+0x30),
+                0
+            };
+            UndoRedo.Exec(new BindArray(this, delta, 17, buf));
+        }
+
         //char     CreationDate[17];     // The date and time of creation
         [Category("Date and Time")]
-        public DateTime CreationDate { get; set; }
+        public DateTime CreationDate {
+            get { return GetTime(813); }
+            set { SetTime(813, value); }
+        }
 
         //char     ModificationDate[17]; // The date and time of modification
         [Category("Date and Time")]
-        public DateTime ModificationDate { get; set; }
+        public DateTime ModificationDate {
+            get { return GetTime(830); }
+            set { SetTime(830, value); }
+        }
 
         //char     ExpirationDate[17];   // Obsolete date
         [Category("Date and Time")]
-        public DateTime ExpirationDate { get; set; }
+        public DateTime ExpirationDate {
+            get { return GetTime(847); }
+            set { SetTime(847, value); }
+        }
 
         //char     EffectiveDate[17];    // Date the volume can be used
         [Category("Date and Time")]
-        public DateTime EffectiveDate { get; set; }
+        public DateTime EffectiveDate {
+            get { return GetTime(864); }
+            set { SetTime(864, value); }
+        }
 
         //uint8_t  FileSystemVersion;    // Always 0x01
         //uint8_t  Unused;               // Always 0x00

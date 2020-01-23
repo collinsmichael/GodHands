@@ -56,7 +56,7 @@ namespace GodHands {
             this.len = len;
             this.val = val;
             this.old = new byte[len];
-            RamDisk.Get(obj.GetPos()+delta, len, old);
+            RamDisk.Get(obj.GetPos() + delta, len, old);
         }
 
         public bool Exec() {
