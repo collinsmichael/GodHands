@@ -251,7 +251,7 @@ namespace GodHands {
             try {
                 DateTime t = new DateTime(YYYY, MM, DD, hh, mm, ss, ms);
                 return t;
-            } catch (Exception e) {
+            } catch {
                 return DateTime.Now;
             }
         }

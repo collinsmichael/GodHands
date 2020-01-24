@@ -6,23 +6,22 @@ using System.Text;
 namespace GodHands {
     public class BaseClass : IBound {
         private string url;
-        private int pos;
 
         public BaseClass(string url, int pos) {
             this.url = url;
-            this.pos = pos;
+            Model.SetPos(url, pos);
         }
 
         public string GetUrl() {
             return url;
         }
 
-        public int GetPos() {
-            return pos;
+        public virtual int GetPos() {
+            return Model.GetPos(url);
         }
 
-        public void SetPos(int pos) {
-            this.pos = pos;
+        public virtual void SetPos(int pos) {
+            Model.SetPos(url, pos);
         }
     }
 }

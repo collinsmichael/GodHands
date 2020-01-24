@@ -6,28 +6,42 @@ using System.Text;
 
 namespace GodHands {
     public class DirRec : BaseClass {
+        private int pos;
+
         public DirRec(string url, int pos) : base(url, pos) {
+            this.pos = pos;
             if (RamDisk.map[pos/2048] == 0) {
                 RamDisk.map[pos/2048] = 0x6F;
             }
         }
 
+        public override int GetPos() {
+            return pos;
+        }
+
+        public override void SetPos(int pos) {
+            this.pos = pos;
+            Model.SetPos(GetUrl(), pos);
+        }
+
         public string GetFileName() {
-            int len = RamDisk.GetU8(GetPos()+32);
+            int pos = GetPos();
+            int len = RamDisk.GetU8(pos+32);
             for (int i = 0; i < len; i++) {
-                byte c = RamDisk.GetU8(GetPos()+33+i);
+                byte c = RamDisk.GetU8(pos+33+i);
                 if (c == ';') {
                     len = i;
                 }
             }
-            return RamDisk.GetString(GetPos()+33, len);
+            return RamDisk.GetString(pos+33, len);
         }
 
         public string GetFileExt() {
+            int pos = GetPos();
+            int len = RamDisk.GetU8(pos+32);
             int ptr = 0;
-            int len = RamDisk.GetU8(GetPos()+32);
             for (int i = 0; i < len; i++) {
-                byte c = RamDisk.GetU8(GetPos()+33+i);
+                byte c = RamDisk.GetU8(pos+33+i);
                 if (c == '.') {
                     ptr = i;
                 }
@@ -38,7 +52,7 @@ namespace GodHands {
             if (ptr == 0) {
                 return "";
             }
-            return RamDisk.GetString(GetPos()+33+ptr, len);
+            return RamDisk.GetString(pos+33+ptr, len);
         }
 
         // ********************************************************************

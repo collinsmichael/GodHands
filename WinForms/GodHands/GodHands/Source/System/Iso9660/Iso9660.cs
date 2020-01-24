@@ -47,8 +47,14 @@ namespace GodHands {
             for (int i = 0; i < 0x10; i++) {
                 RamDisk.map[i] = 0x6F;
             }
+
+            Model.SetPos("CD:PVD", 0x10*2048);
+            Model.SetLen("CD:PVD", 2048);
             pvd = new VolDesc("CD:PVD", 0x10*2048);
             root = pvd.GetRootDir();
+            Model.SetPos("CD:ROOT", root.LbaData*2048);
+            Model.SetLen("CD:ROOT", root.LenData);
+            Model.SetRec("CD:ROOT", root);
             int lba = root.LbaData;
             int len = root.LenData;
             for (int i = 0; i < len; i++) {
@@ -143,6 +149,9 @@ namespace GodHands {
                         rec = Records[key];
                     } else {
                         rec = new DirRec(key, pos);
+                        Model.SetPos(key, pos);
+                        Model.SetLen(key, rec.LenData);
+                        Model.SetRec(key, rec);
                         string name = rec.GetFileName();
                         int lba = rec.LbaData;
                         int num = (rec.LenData+2047)/2048;

@@ -34,10 +34,9 @@ namespace GodHands {
                 switch (ext) {
                 case ".DAT": case ".PRG": case ".SYD": case ".ARM": case ".ZND":
                 case ".MPD": case ".ZUD": case ".SEQ": case ".SHP": case ".WEP":
-                    Model.file_url.Add(name, url);
-                    Model.file_pos.Add(name, pos);
-                    Model.file_len.Add(name, len);
-                    Model.file_rec.Add(name, dir);
+                    Model.SetPos(name, pos);
+                    Model.SetLen(name, len);
+                    Model.SetRec(name, dir);
                     if (name == "00.SHP") {
                         Model.lba_00_shp = lba;
                     }
@@ -46,7 +45,6 @@ namespace GodHands {
                     }
                     break;
                 }
-
 
                 if (ext == ".ZND") {
                     string[] parts = url.Split(new char[] {':'});
@@ -62,10 +60,9 @@ namespace GodHands {
             } else if (name.Contains("SLUS")) {
                 int pos = dir.LbaData*2048;
                 int len = dir.LenData;
-                Model.file_url.Add("SLUS", url);
-                Model.file_pos.Add("SLUS", pos);
-                Model.file_len.Add("SLUS", len);
-                Model.file_rec.Add("SLUS", dir);
+                Model.SetPos("SLUS", pos);
+                Model.SetLen("SLUS", len);
+                Model.SetRec("SLUS", dir);
                 PRG prg = new PRG(url, pos);
                 Model.prgs.Add(url, prg);
                 Publisher.Register(prg);
@@ -77,6 +74,10 @@ namespace GodHands {
     }
 
     public static class Model {
+        public static Dictionary<string, int> file_pos = new Dictionary<string, int>();
+        public static Dictionary<string, int> file_len = new Dictionary<string, int>();
+        public static Dictionary<string, DirRec> file_rec = new Dictionary<string, DirRec>();
+
         public static Dictionary<string, object> map = new Dictionary<string, object>();
         public static Dictionary<string, PRG> prgs = new Dictionary<string, PRG>();
         public static Dictionary<string, DAT> dats = new Dictionary<string, DAT>();
@@ -91,11 +92,6 @@ namespace GodHands {
         public static Dictionary<string, Zone> zones = new Dictionary<string, Zone>();
         public static Dictionary<string, Room> rooms = new Dictionary<string, Room>();
         public static Dictionary<string, Actor> actors = new Dictionary<string, Actor>();
-
-        public static Dictionary<string, string> file_url = new Dictionary<string, string>();
-        public static Dictionary<string, int> file_pos = new Dictionary<string, int>();
-        public static Dictionary<string, int> file_len = new Dictionary<string, int>();
-        public static Dictionary<string, DirRec> file_rec = new Dictionary<string, DirRec>();
 
         public static int lba_00_shp = 0;
         public static int lba_01_wep = 0;
@@ -127,7 +123,6 @@ namespace GodHands {
             seqs.Clear();
             map.Clear();
 
-            file_url.Clear();
             file_pos.Clear();
             file_len.Clear();
             file_rec.Clear();
@@ -162,6 +157,36 @@ namespace GodHands {
                 file_pos[url] = pos;
             } else {
                 file_pos.Add(url, pos);
+            }
+        }
+
+        public static int GetLen(string url) {
+            if (file_len.ContainsKey(url)) {
+                return file_len[url];
+            }
+            return 0;
+        }
+
+        public static void SetLen(string url, int len) {
+            if (file_len.ContainsKey(url)) {
+                file_len[url] = len;
+            } else {
+                file_len.Add(url, len);
+            }
+        }
+
+        public static DirRec GetRec(string url) {
+            if (file_rec.ContainsKey(url)) {
+                return file_rec[url];
+            }
+            return null;
+        }
+
+        public static void SetRec(string url, DirRec rec) {
+            if (file_rec.ContainsKey(url)) {
+                file_rec[url] = rec;
+            } else {
+                file_rec.Add(url, rec);
             }
         }
 

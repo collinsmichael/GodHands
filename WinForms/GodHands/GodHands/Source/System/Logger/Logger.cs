@@ -81,6 +81,7 @@ namespace GodHands {
                 status.Add(statusbar);
                 statusbar.Text = message;
                 statusbar.Image = icon;
+                statusbar.Invalidate();
             }
             return true;
         }
@@ -104,6 +105,7 @@ namespace GodHands {
             foreach (ToolStripStatusLabel bar in status) {
                 bar.Text = text;
                 bar.Image = icon;
+                bar.Invalidate();
             }
             timer.Start();
             return true;
@@ -113,6 +115,7 @@ namespace GodHands {
             if (!progress.Contains(progressbar)) {
                 progress.Add(progressbar);
                 progressbar.Value = percent;
+                progressbar.Invalidate();
             }
             return true;
         }
@@ -128,6 +131,7 @@ namespace GodHands {
             timer.Stop();
             foreach (ToolStripProgressBar bar in progress) {
                 bar.Value = percent;
+                bar.Invalidate();
             }
             timer.Start();
             return true;
