@@ -220,13 +220,13 @@ namespace GodHands {
         public static int NextFit(int num_sectors) {
             int total = RamDisk.count;
             for (int lba = next; (lba+1) % total != next; lba = (lba+1) % total) {
-                for (int i = 0; i < num_sectors+1; i++) {
+                for (int i = 0; i < num_sectors; i++) {
                     int pos = (lba + i) % total;
                     if (RamDisk.map[pos] != 0) {
                         lba = lba + i;
                         break;
-                    } else if (i == num_sectors) {
-                        next = pos;
+                    } else if (i == num_sectors-1) {
+                        next = (pos+1) % total;
                         return lba;
                     }
                 }
@@ -243,9 +243,13 @@ namespace GodHands {
                     return Logger.Fail("Cannot resize "+rec.GetFileName()+" not enough space");
                 }
             }
-            // claim these sectors
+            // claim new sectors
             for (int i = num; i < len; i++) {
                 RamDisk.map[lba + i] = 0x6F;
+            }
+            // free old sectors
+            for (int i = len; i < num; i++) {
+                RamDisk.map[lba + i] = 0x00;
             }
             rec.LenData = len;
             return true;
@@ -269,6 +273,10 @@ namespace GodHands {
                 }
             }
             rec.LbaData = lba;
+            for (int i = 0; i < len; i++) {
+                RamDisk.map[lba + i] = 0x78;
+                RamDisk.map[old + i] = 0x00;
+            }
             return true;
         }
 

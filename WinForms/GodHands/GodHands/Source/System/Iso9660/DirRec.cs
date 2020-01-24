@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace GodHands {
     public class DirRec : BaseClass {
         private int pos;
+        private bool moving = false;
+        private bool sizing = false;
 
         public DirRec(string url, int pos) : base(url, pos) {
             this.pos = pos;
@@ -84,47 +87,99 @@ namespace GodHands {
 
         //uint32_t LsbLbaData;        // Location of extent (LBA) in little-endian
         //uint32_t MsbLbaData;        // Location of extent (LBA) in big-endian
-        [ReadOnly(true)]
         [Category("Record")]
         public int LbaData {
             get { return RamDisk.GetS32(GetPos()+2); }
             set {
-                //byte[] buf = new byte[8] {
-                //    (byte)((value) % 256),
-                //    (byte)((value/256) % 256),
-                //    (byte)((value/65536) % 256),
-                //    (byte)((value/16777216) % 256),
-                //    (byte)((value/16777216) % 256),
-                //    (byte)((value/65536) % 256),
-                //    (byte)((value/256) % 256),
-                //    (byte)((value) % 256)
-                //};
-                //UndoRedo.Exec(new BindArray(this, 2, 8, buf));
+                if (!moving) {
+                    moving = true;
+                    bool done = Iso9660.MoveRecord(this, value);
+                    moving = false;
+                    if (!done) {
+                        return;
+                    }
+                }
+
+                byte[] buf = new byte[8] {
+                    (byte)((value) % 256),
+                    (byte)((value/256) % 256),
+                    (byte)((value/65536) % 256),
+                    (byte)((value/16777216) % 256),
+                    (byte)((value/16777216) % 256),
+                    (byte)((value/65536) % 256),
+                    (byte)((value/256) % 256),
+                    (byte)((value) % 256)
+                };
+                UndoRedo.Exec(new BindArray(this, 2, 8, buf));
+                Model.SetPos(GetUrl(), value);
                 Publisher.Publish(GetUrl(), this);
-                Logger.Warn("Not Implemented");
+                Logger.Pass("Moved "+GetFileName()+" to LBA="+value);
             }
         }
 
         //uint32_t LsbLenData;        // Data length in little-endian
         //uint32_t MsbLenData;        // Data length in big-endian
-        [ReadOnly(true)]
         [Category("Record")]
         public int LenData {
             get { return RamDisk.GetS32(GetPos()+10); }
             set {
-                //byte[] buf = new byte[8] {
-                //    (byte)((value) % 256),
-                //    (byte)((value/256) % 256),
-                //    (byte)((value/65536) % 256),
-                //    (byte)((value/16777216) % 256),
-                //    (byte)((value/16777216) % 256),
-                //    (byte)((value/65536) % 256),
-                //    (byte)((value/256) % 256),
-                //    (byte)((value) % 256)
-                //};
-                //UndoRedo.Exec(new BindArray(this, 10, 8, buf));
+                int len = RamDisk.GetS32(GetPos()+10);
+                int num = (len+2047)/2048;
+                if (!sizing) {
+                    sizing = true;
+                    if (value < len) {
+                        string msg = "This will truncate the file!\r\nAre you sure?";
+                        MessageBoxButtons buttons = MessageBoxButtons.YesNoCancel;
+                        MessageBoxIcon icon = MessageBoxIcon.Exclamation;
+                        DialogResult yesno = MessageBox.Show(msg, "Warning", buttons, icon);
+                        if (yesno != DialogResult.Yes) {
+                            Publisher.Publish(GetUrl(), this);
+                            sizing = false;
+                            return;
+                        }
+                        // TODO: Free RamDisk.map;
+                        int lba = LbaData;
+                        for (int i = (value+2047)/2048; i < num; i++) {
+                            RamDisk.map[lba+i] = 0;
+                        }
+                    } else if (value > len) {
+                        // TODO Find space on disk
+                        int count = (value+2047)/2048;
+                        int ptr = Iso9660.NextFit(count);
+                        string msg = "Out of space at this location!\r\n"+
+                                     "There is space at LBA="+ptr+"!\r\n"+
+                                     "Do you want to move this file there?";
+                        MessageBoxButtons buttons = MessageBoxButtons.YesNoCancel;
+                        MessageBoxIcon icon = MessageBoxIcon.Exclamation;
+                        DialogResult yesno = MessageBox.Show(msg, "Warning", buttons, icon);
+                        if (yesno != DialogResult.Yes) {
+                            Publisher.Publish(GetUrl(), this);
+                            sizing = false;
+                            return;
+                        }
+                        LbaData = ptr;
+                        if (!Iso9660.ResizeRecord(this, count)) {
+                            sizing = false;
+                            return;
+                        }
+                    }
+                    sizing = false;
+                }
+
+                byte[] buf = new byte[8] {
+                    (byte)((value) % 256),
+                    (byte)((value/256) % 256),
+                    (byte)((value/65536) % 256),
+                    (byte)((value/16777216) % 256),
+                    (byte)((value/16777216) % 256),
+                    (byte)((value/65536) % 256),
+                    (byte)((value/256) % 256),
+                    (byte)((value) % 256)
+                };
+                UndoRedo.Exec(new BindArray(this, 10, 8, buf));
+                Model.SetLen(GetUrl(), value);
                 Publisher.Publish(GetUrl(), this);
-                Logger.Warn("Not Implemented");
+                Logger.Pass("Resized "+GetFileName()+" to LEN="+value);
             }
         }
 
