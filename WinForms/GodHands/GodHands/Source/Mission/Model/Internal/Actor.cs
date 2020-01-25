@@ -5,17 +5,16 @@ using System.Linq;
 using System.Text;
 
 namespace GodHands {
-    public class Actor : BaseClass {
-        private DirRec rec;
+    public class Actor : InMemory {
         private ZUD zud;
 
-        public Actor(string url, int pos, DirRec rec) : base(url, pos) {
-            this.rec = rec;
-            zud = Model.zuds[rec.GetUrl()];
+        public Actor(string url, int pos, DirRec rec, DirRec zud_rec) :
+            base(url, pos, rec) {
+            zud = Model.zuds[zud_rec.GetUrl()];
         }
 
         public string GetZndFileName() {
-            return rec.GetFileName();
+            return GetRec().GetFileName();
         }
 
         [Category("Stats")]

@@ -50,7 +50,7 @@ namespace GodHands {
                     string[] parts = url.Split(new char[] {':'});
                     if (parts.Length > 1) {
                         string key = "APP:" + parts[1];
-                        Zone zone = new Zone(key, pos, dir);
+                        Zone zone = new Zone(key, 0, dir);
                         Model.zones.Add(key, zone);
                         Model.Add(key, zone);
                         Publisher.Register(zone);

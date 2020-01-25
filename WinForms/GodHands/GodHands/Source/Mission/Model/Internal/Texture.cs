@@ -6,9 +6,18 @@ using System.Linq;
 using System.Text;
 
 namespace GodHands {
-    public class Texture : BaseClass {
+    public class Texture : InMemory {
         private int len;
         private byte[] buf;
+
+        public Texture(string url, int pos, int len, DirRec rec):
+        base(url, pos, rec) {
+            FileLength = this.len = len;
+            this.buf = new byte[len];
+            RamDisk.Get(pos, len, buf);
+            QueryFile();
+        }
+
         public bool IsLookUpTable() {
             int Height = RamDisk.GetU16(GetPos() + 18);
             return (Height <= 4);
@@ -24,13 +33,6 @@ namespace GodHands {
         public int PosY { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-
-        public Texture(string url, int pos, int len) : base(url, pos) {
-            FileLength = this.len = len;
-            this.buf = new byte[len];
-            RamDisk.Get(pos, len, buf);
-            QueryFile();
-        }
 
         public void QueryFile() {
             int pos = GetPos();

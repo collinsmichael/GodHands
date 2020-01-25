@@ -4,24 +4,18 @@ using System.Linq;
 using System.Text;
 
 namespace GodHands {
-    public class Zone : BaseClass {
-        private DirRec rec;
+    public class Zone : InMemory {
         private ZND znd;
         public List<Room> rooms = new List<Room>();
         public List<Actor> actors = new List<Actor>();
         public List<Texture> images = new List<Texture>();
 
-        public Zone(string url, int pos, DirRec rec) : base(url, pos) {
-            this.rec = rec;
+        public Zone(string url, int pos, DirRec rec) : base(url, pos, rec) {
             znd = Model.znds[rec.GetUrl()];
         }
 
-        public DirRec GetRec() {
-            return rec;
-        }
-
         public bool OpenZone() {
-            Iso9660.ReadFile(rec);
+            Iso9660.ReadFile(GetRec());
             int pos = znd.GetPos();
 
             int ptr_mpd = RamDisk.GetS32(pos+0x00);
@@ -44,10 +38,10 @@ namespace GodHands {
             for (int i = 0; i < num_zud; i++) {
                 try {
                     int lba = RamDisk.GetS32(pos + ptr_zud + 4 + 8*i);
-                    int npc = pos + ptr_zud + 4 + 8*num_zud + 0x464*i;
+                    int npc = ptr_zud + 4 + 8*num_zud + 0x464*i;
                     string key = GetUrl()+"/Actors/Actor_"+i;
                     DirRec zud = Iso9660.GetByLba(lba);
-                    Actor obj = new Actor(key, npc, zud);
+                    Actor obj = new Actor(key, npc, GetRec(), zud);
                     actors.Add(obj);
                     Model.Add(key, obj);
                     Publisher.Register(obj);
@@ -62,7 +56,7 @@ namespace GodHands {
                 int len = RamDisk.GetS32(pos + ptr);
                 try {
                     string key = GetUrl()+"/Images/Image_"+i;
-                    Texture obj = new Texture(key, pos+ptr+4, len);
+                    Texture obj = new Texture(key, ptr+4, len, GetRec());
                     images.Add(obj as Texture);
                     Model.Add(key, obj);
                     Publisher.Register(obj);

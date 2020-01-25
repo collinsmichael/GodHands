@@ -4,20 +4,16 @@ using System.Linq;
 using System.Text;
 
 namespace GodHands {
-    public class Room : BaseClass {
-        private DirRec rec;
+    public class Room : InMemory {
         private MPD mpd;
-        public string Name { get; set; }
-        public int NumSections { get; set; }
 
-        public Room(string url, int pos, DirRec rec) : base(url, pos) {
-            this.rec = rec;
+        public Room(string url, int pos, DirRec rec):
+        base(url, pos, rec) {
             mpd = Model.mpds[rec.GetUrl()];
             Name = rec.GetFileName();
         }
 
-        public DirRec GetRec() {
-            return rec;
-        }
+        public string Name { get; set; }
+        public int NumSections { get; set; }
     }
 }
