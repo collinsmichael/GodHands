@@ -6,8 +6,9 @@ using System.Text;
 namespace GodHands {
     public class EnumModelFiles : IEnumDir {
         private string[] extensions = new string[] {
-            ".DAT", ".PRG", ".SYD", ".ARM", ".ZND",
-            ".MPD", ".ZUD", ".SHP", ".WEP", ".SEQ"
+            ".BIN", ".DAT", ".PRG", ".SYD",
+            ".ARM", ".ZND", ".MPD",
+            ".ZUD", ".SHP", ".WEP", ".SEQ"
         };
 
         public bool Visit(string url, DirRec dir) {
@@ -19,6 +20,7 @@ namespace GodHands {
                 int len = dir.LenData;
                 int pos = lba*2048;
                 switch (ext) {
+                case ".BIN": Model.bins.Add(url, new BIN(url, pos)); break;
                 case ".DAT": Model.dats.Add(url, new DAT(url, pos)); break;
                 case ".PRG": Model.prgs.Add(url, new PRG(url, pos)); break;
                 case ".SYD": Model.syds.Add(url, new SYD(url, pos)); break;
@@ -32,11 +34,22 @@ namespace GodHands {
                 }
 
                 switch (ext) {
-                case ".DAT": case ".PRG": case ".SYD": case ".ARM": case ".ZND":
-                case ".MPD": case ".ZUD": case ".SEQ": case ".SHP": case ".WEP":
+                case ".BIN": case ".DAT": case ".PRG": case ".SYD":
+                case ".ARM": case ".ZND": case ".MPD":
+                case ".ZUD": case ".SEQ": case ".SHP": case ".WEP":
                     Model.SetPos(name, pos);
                     Model.SetLen(name, len);
                     Model.SetRec(name, dir);
+                    if (name == "ITEMNAME.BIN") {
+                        Model.SetPos("ITEMNAME.BIN", dir.LbaData*2048);
+                        Model.SetLen("ITEMNAME.BIN", dir.LenData);
+                        Model.SetRec("ITEMNAME.BIN", dir);
+                    }
+                    if (name == "ITEMHELP.BIN") {
+                        Model.SetPos("ITEMHELP.BIN", dir.LbaData*2048);
+                        Model.SetLen("ITEMHELP.BIN", dir.LenData);
+                        Model.SetRec("ITEMHELP.BIN", dir);
+                    }
                     if (name == "00.SHP") {
                         Model.lba_00_shp = lba;
                     }
@@ -79,8 +92,9 @@ namespace GodHands {
         public static Dictionary<string, DirRec> file_rec = new Dictionary<string, DirRec>();
 
         public static Dictionary<string, object> map = new Dictionary<string, object>();
-        public static Dictionary<string, PRG> prgs = new Dictionary<string, PRG>();
+        public static Dictionary<string, BIN> bins = new Dictionary<string, BIN>();
         public static Dictionary<string, DAT> dats = new Dictionary<string, DAT>();
+        public static Dictionary<string, PRG> prgs = new Dictionary<string, PRG>();
         public static Dictionary<string, SYD> syds = new Dictionary<string, SYD>();
         public static Dictionary<string, ARM> arms = new Dictionary<string, ARM>();
         public static Dictionary<string, ZND> znds = new Dictionary<string, ZND>();
@@ -93,6 +107,16 @@ namespace GodHands {
         public static Dictionary<string, Room> rooms = new Dictionary<string, Room>();
         public static Dictionary<string, Actor> actors = new Dictionary<string, Actor>();
 
+        public static ItemNamesList itemnames = new ItemNamesList();
+        public static ItemNameAccessoryList accessory_names = new ItemNameAccessoryList();
+        public static ItemNameArmourList armour_names = new ItemNameArmourList();
+        public static CategoryArmours category_armours = new CategoryArmours();
+        public static TargetSphere targets = new TargetSphere();
+        public static MaterialsList materials = new MaterialsList();
+        public static DamageStats damage_stats = new DamageStats();
+        public static DamageTypes damage_types = new DamageTypes();
+        public static SkillsList skills = new SkillsList();
+
         public static int lba_00_shp = 0;
         public static int lba_01_wep = 0;
 
@@ -101,6 +125,8 @@ namespace GodHands {
         // ********************************************************************
         public static bool Open() {
             Iso9660.EnumFileSys(new EnumModelFiles());
+            itemnames.Load();
+            skills.Load();
             return true;
         }
 
@@ -108,6 +134,9 @@ namespace GodHands {
         // release all resources
         // ********************************************************************
         public static bool Close() {
+            itemnames.Clear();
+            skills.Clear();
+
             zones.Clear();
             rooms.Clear();
             actors.Clear();
@@ -126,6 +155,7 @@ namespace GodHands {
             file_pos.Clear();
             file_len.Clear();
             file_rec.Clear();
+
             lba_00_shp = 0;
             lba_01_wep = 0;
             return true;
@@ -192,13 +222,12 @@ namespace GodHands {
 
         public static bool UpdateLbaTable(string ext, int index, int lba, int len) {
             int pos = 0;
-            int ptr = 0;
             try {
                 switch (ext) {
-                case ".ARM": pos = file_pos["MENU5.PRG"];  ptr = 0x00000300; break;
-                case ".ZND": pos = file_pos["SLUS"];       ptr = 0x0003FCCC; break;
-                case ".SHP": pos = file_pos["BATTLE.PRG"]; ptr = 0x0007FE60; break;
-                case ".WEP": pos = file_pos["BATTLE.PRG"]; ptr = 0x00080500; break;
+                case ".ARM": pos = file_pos["MENU5.PRG"];  break; // ptr = 0x00000300; break;
+                case ".ZND": pos = file_pos["SLUS"];       break; // ptr = 0x0003FCCC; break;
+                case ".SHP": pos = file_pos["BATTLE.PRG"]; break; // ptr = 0x0007FE60; break;
+                case ".WEP": pos = file_pos["BATTLE.PRG"]; break; // ptr = 0x00080500; break;
                 default: return true;
                 }
             } catch {

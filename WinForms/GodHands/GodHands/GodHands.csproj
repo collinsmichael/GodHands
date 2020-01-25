@@ -73,10 +73,31 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Source\Mission\Experimental\Base.cs" />
-    <Compile Include="Source\Mission\Model\Internal\ActorBodyPart.cs" />
-    <Compile Include="Source\Mission\Model\Internal\InMemory.cs" />
-    <Compile Include="Source\Mission\Model\Internal\Kildean.cs" />
-    <Compile Include="Source\Mission\Model\Internal\Texture.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Actors\ActorArmour.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Lists\CategoryArmoursDropDown.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Lists\DamageStats.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Lists\DamageStatsDropDown.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Lists\DamageTypes.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Lists\DamageTypesDropDown.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Lists\CategoryArmours.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Lists\ItemNameAccessoryDropDown.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Lists\ItemNameAccessoryList.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Lists\ItemNameArmourList.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Lists\ItemNameArmourDropDown.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Lists\ItemNamesList.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Lists\ItemNamesListDropDown.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Lists\MaterialsDropDown.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Lists\MaterialsList.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Lists\TargetSphere.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Lists\TargetSphereDropDown.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Skills\SkillsDropDown.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Actors\ActorBodyPart.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\InMemory.cs" />
+    <Compile Include="Source\Mission\Model\Helpers\Kildean.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Skills\Skill.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Skills\SkillsList.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Textures\Texture.cs" />
+    <Compile Include="Source\Mission\Model\OnDisk\BIN.cs" />
     <Compile Include="Source\Mission\View\Helpers\ListViewFlickerFree.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -100,20 +121,20 @@
     <Compile Include="Source\Mission\View\Tools\ConfigTool.Designer.cs">
       <DependentUpon>ConfigTool.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\Mission\Model\Formats\ARM.cs" />
-    <Compile Include="Source\Mission\Model\Formats\DAT.cs" />
-    <Compile Include="Source\Mission\Model\Formats\MPD.cs" />
-    <Compile Include="Source\Mission\Model\Formats\PRG.cs" />
-    <Compile Include="Source\Mission\Model\Formats\SEQ.cs" />
-    <Compile Include="Source\Mission\Model\Formats\SHP.cs" />
-    <Compile Include="Source\Mission\Model\Formats\SYD.cs" />
-    <Compile Include="Source\Mission\Model\Formats\WEP.cs" />
-    <Compile Include="Source\Mission\Model\Formats\ZND.cs" />
-    <Compile Include="Source\Mission\Model\Formats\ZUD.cs" />
-    <Compile Include="Source\Mission\Model\Internal\Actor.cs" />
-    <Compile Include="Source\Mission\Model\Internal\MiniMap.cs" />
-    <Compile Include="Source\Mission\Model\Internal\Room.cs" />
-    <Compile Include="Source\Mission\Model\Internal\Zone.cs" />
+    <Compile Include="Source\Mission\Model\OnDisk\ARM.cs" />
+    <Compile Include="Source\Mission\Model\OnDisk\DAT.cs" />
+    <Compile Include="Source\Mission\Model\OnDisk\MPD.cs" />
+    <Compile Include="Source\Mission\Model\OnDisk\PRG.cs" />
+    <Compile Include="Source\Mission\Model\OnDisk\SEQ.cs" />
+    <Compile Include="Source\Mission\Model\OnDisk\SHP.cs" />
+    <Compile Include="Source\Mission\Model\OnDisk\SYD.cs" />
+    <Compile Include="Source\Mission\Model\OnDisk\WEP.cs" />
+    <Compile Include="Source\Mission\Model\OnDisk\ZND.cs" />
+    <Compile Include="Source\Mission\Model\OnDisk\ZUD.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Actors\Actor.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\MiniMaps\MiniMap.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Rooms\Room.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Zones\Zone.cs" />
     <Compile Include="Source\Mission\View\Helpers\ShellIcons.cs" />
     <Compile Include="Source\Mission\View\SubScribers\Subscriber_ListBox.cs" />
     <Compile Include="Source\Mission\View\SubScribers\Subscriber_TreeView.cs" />
@@ -241,6 +262,7 @@
     <Content Include="icon.ico" />
     <Content Include="Source\Mission\View\ReadMe.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

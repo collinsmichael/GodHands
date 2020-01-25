@@ -9,6 +9,7 @@ namespace GodHands {
         public List<Room> rooms = new List<Room>();
         public List<Actor> actors = new List<Actor>();
         public List<ActorBodyPart> bodyparts = new List<ActorBodyPart>();
+        public List<ActorArmour> armours = new List<ActorArmour>();
         public List<Texture> images = new List<Texture>();
 
         public Zone(string url, int pos, DirRec rec):
@@ -49,12 +50,23 @@ namespace GodHands {
                     Publisher.Register(obj);
 
                     for (int j = 0; j < 6; j++) {
+                        string[] part_name = new string[] {
+                            "L.ARM", "R.ARM",
+                            "HEAD", "BODY",
+                            "LEGS", "OTHER",
+                        };
                         int ptr_part = npc + 0x238 + j*0x5C;
-                        string k = key+"/BodyParts/BodyPart_"+j;
-                        ActorBodyPart part = new ActorBodyPart(k, ptr_part, GetRec());
+                        string k1 = key+"/BodyParts/"+part_name[j];
+                        ActorBodyPart part = new ActorBodyPart(k1, ptr_part, GetRec());
                         bodyparts.Add(part);
-                        Model.Add(k, part);
+                        Model.Add(k1, part);
                         Publisher.Register(part);
+
+                        string k2 = key+"/Equip/"+part_name[j];
+                        ActorArmour armour = new ActorArmour(k2, ptr_part+0x20, GetRec());
+                        armours.Add(armour);
+                        Model.Add(k2, armour);
+                        Publisher.Register(armour);
                     }
 
                 } catch {}

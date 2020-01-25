@@ -31,7 +31,6 @@ namespace GodHands {
             InitializeComponent();
             treeview.ImageList = View.ImageListFromDir("/img/zone");
             treeview.ShowNodeToolTips = true;
-            property.PropertySort = PropertySort.NoSort;
             sub_property = new Subscriber_PropertyGrid(property);
 
             menu = new ContextMenuStrip();
@@ -108,22 +107,26 @@ namespace GodHands {
                 string url = actor.GetUrl();
                 string znd_file = actor.GetZndFileName();
                 TreeNode node = actors.Nodes.Add(url, actor.Name, 2, 2);
-                TreeNode body = node.Nodes.Add(url+"/BodyParts", "BodyParts", 5, 5);
+                TreeNode bodyparts = node.Nodes.Add(url+"/BodyParts", "BodyParts", 5, 5);
+                TreeNode equipment = node.Nodes.Add(url+"/Equip", "Equipment", 39, 39);
                 TreeNode model = node.Nodes.Add(url+"/Model", znd_file, 28, 28);
                 TreeNode weapon = node.Nodes.Add(url+"/Weapon", "Weapon", 12, 12);
                 TreeNode shield = node.Nodes.Add(url+"/Shield", "Shield", 11, 11);
-                body.Nodes.Add(url+"/BodyParts/BodyPart_0", "BodyPart_0", 5, 5);
-                body.Nodes.Add(url+"/BodyParts/BodyPart_1", "BodyPart_1", 5, 5);
-                body.Nodes.Add(url+"/BodyParts/BodyPart_2", "BodyPart_2", 5, 5);
-                body.Nodes.Add(url+"/BodyParts/BodyPart_3", "BodyPart_3", 5, 5);
-                body.Nodes.Add(url+"/BodyParts/BodyPart_4", "BodyPart_4", 5, 5);
-                body.Nodes.Add(url+"/BodyParts/BodyPart_5", "BodyPart_5", 5, 5);
+                TreeNode accessory = node.Nodes.Add(url+"/Accessory", "Accessory", 10, 10);
+                bodyparts.Nodes.Add(url+"/BodyParts/L.ARM", "L.ARM", 8, 8);
+                bodyparts.Nodes.Add(url+"/BodyParts/R.ARM", "R.ARM", 8, 8);
+                bodyparts.Nodes.Add(url+"/BodyParts/HEAD", "HEAD", 6, 6);
+                bodyparts.Nodes.Add(url+"/BodyParts/BODY", "BODY", 7, 7);
+                bodyparts.Nodes.Add(url+"/BodyParts/LEGS", "LEGS", 9, 9);
+                bodyparts.Nodes.Add(url+"/BodyParts/OTHER", "OTHER", 5, 5);
 
-                node.Nodes.Add(url+"/Helmet",    "Helmet",     6,  6);
-                node.Nodes.Add(url+"/Armour",    "Armour",     7,  7);
-                node.Nodes.Add(url+"/Gloves",    "Gloves",     8,  8);
-                node.Nodes.Add(url+"/Boots",     "Boots",      9,  9);
-                node.Nodes.Add(url+"/Accessory", "Accessory", 10, 10);
+                equipment.Nodes.Add(url+"/Equip/L.ARM", "L.ARM", 8, 8);
+                equipment.Nodes.Add(url+"/Equip/R.ARM", "R.ARM", 8, 8);
+                equipment.Nodes.Add(url+"/Equip/HEAD", "HEAD", 6, 6);
+                equipment.Nodes.Add(url+"/Equip/BODY", "BODY", 7, 7);
+                equipment.Nodes.Add(url+"/Equip/LEGS", "LEGS",  9, 9);
+                equipment.Nodes.Add(url+"/Equip/OTHER", "OTHER",  9, 9);
+
                 model.Nodes.Add(url+"/Model/SHP", "SHP", 28, 28);
                 model.Nodes.Add(url+"/Model/WEP", "WEP", 28, 28);
                 model.Nodes.Add(url+"/Model/SEQ", "SEQ Common", 29, 29);
@@ -150,7 +153,6 @@ namespace GodHands {
             node = e.Node;
             if (node != null) {
                 string url = node.Name;
-                property.PropertySort = PropertySort.NoSort;
                 sub_property.Notify(Model.Get(url));
                 foreach (Texture image in zone.images) {
                     if (image.GetUrl() == url) {

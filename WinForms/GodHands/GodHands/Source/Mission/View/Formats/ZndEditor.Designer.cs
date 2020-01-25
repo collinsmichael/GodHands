@@ -119,17 +119,17 @@
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
             this.splitContainer2.Name = "splitContainer2";
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.splitContainer3);
+            this.splitContainer2.Panel1.Controls.Add(this.property);
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.property);
+            this.splitContainer2.Panel2.Controls.Add(this.splitContainer3);
             this.splitContainer2.Size = new System.Drawing.Size(426, 438);
             this.splitContainer2.SplitterDistance = 224;
             this.splitContainer2.TabIndex = 0;
@@ -149,7 +149,7 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.picturebox);
-            this.splitContainer3.Size = new System.Drawing.Size(224, 438);
+            this.splitContainer3.Size = new System.Drawing.Size(198, 438);
             this.splitContainer3.SplitterDistance = 333;
             this.splitContainer3.TabIndex = 0;
             // 
@@ -160,7 +160,7 @@
             this.textbox.Location = new System.Drawing.Point(0, 0);
             this.textbox.Multiline = true;
             this.textbox.Name = "textbox";
-            this.textbox.Size = new System.Drawing.Size(224, 333);
+            this.textbox.Size = new System.Drawing.Size(198, 333);
             this.textbox.TabIndex = 0;
             // 
             // picturebox
@@ -169,7 +169,7 @@
             this.picturebox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picturebox.Location = new System.Drawing.Point(0, 0);
             this.picturebox.Name = "picturebox";
-            this.picturebox.Size = new System.Drawing.Size(224, 101);
+            this.picturebox.Size = new System.Drawing.Size(198, 101);
             this.picturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picturebox.TabIndex = 1;
             this.picturebox.TabStop = false;
@@ -180,8 +180,8 @@
             this.property.Dock = System.Windows.Forms.DockStyle.Fill;
             this.property.Location = new System.Drawing.Point(0, 0);
             this.property.Name = "property";
-            this.property.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.property.Size = new System.Drawing.Size(198, 438);
+            this.property.PropertySort = System.Windows.Forms.PropertySort.Categorized;
+            this.property.Size = new System.Drawing.Size(224, 438);
             this.property.TabIndex = 0;
             // 
             // ZndEditor
