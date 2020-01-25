@@ -8,9 +8,11 @@ namespace GodHands {
         private ZND znd;
         public List<Room> rooms = new List<Room>();
         public List<Actor> actors = new List<Actor>();
+        public List<ActorBodyPart> bodyparts = new List<ActorBodyPart>();
         public List<Texture> images = new List<Texture>();
 
-        public Zone(string url, int pos, DirRec rec) : base(url, pos, rec) {
+        public Zone(string url, int pos, DirRec rec):
+        base(url, pos, rec) {
             znd = Model.znds[rec.GetUrl()];
         }
 
@@ -45,6 +47,16 @@ namespace GodHands {
                     actors.Add(obj);
                     Model.Add(key, obj);
                     Publisher.Register(obj);
+
+                    for (int j = 0; j < 6; j++) {
+                        int ptr_part = npc + 0x238 + j*0x5C;
+                        string k = key+"/BodyParts/BodyPart_"+j;
+                        ActorBodyPart part = new ActorBodyPart(k, ptr_part, GetRec());
+                        bodyparts.Add(part);
+                        Model.Add(k, part);
+                        Publisher.Register(part);
+                    }
+
                 } catch {}
             }
 

@@ -119,7 +119,7 @@ namespace GodHands {
                 body.Nodes.Add(url+"/BodyParts/BodyPart_4", "BodyPart_4", 5, 5);
                 body.Nodes.Add(url+"/BodyParts/BodyPart_5", "BodyPart_5", 5, 5);
 
-                node.Nodes.Add(url+"/Helmot",    "Helmot",     6,  6);
+                node.Nodes.Add(url+"/Helmet",    "Helmet",     6,  6);
                 node.Nodes.Add(url+"/Armour",    "Armour",     7,  7);
                 node.Nodes.Add(url+"/Gloves",    "Gloves",     8,  8);
                 node.Nodes.Add(url+"/Boots",     "Boots",      9,  9);
