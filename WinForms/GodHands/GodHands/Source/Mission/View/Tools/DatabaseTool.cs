@@ -11,7 +11,7 @@ namespace GodHands {
     public partial class DatabaseTool : Form {
         public DatabaseTool() {
             InitializeComponent();
-            Icon = View.IconFromFile("/img/tools-database-16.png");
+            Icon = View.IconFromFile("/img/menu/tools-database-16.png");
         }
 
         private void OnClosing(object sender, FormClosingEventArgs e) {

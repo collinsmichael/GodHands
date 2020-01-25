@@ -38,7 +38,7 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.btn_clear = new System.Windows.Forms.Button();
             this.btn_close = new System.Windows.Forms.Button();
-            this.listbox = new System.Windows.Forms.ListBox();
+            this.listview = new GodHands.ListViewFlickerFree();
             this.menubar.SuspendLayout();
             this.statusstrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -87,6 +87,7 @@
             // 
             // statusstrip
             // 
+            this.statusstrip.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.statusstrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.progressbar,
             this.statusbar});
@@ -104,9 +105,10 @@
             // 
             // statusbar
             // 
+            this.statusbar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.statusbar.Margin = new System.Windows.Forms.Padding(3);
             this.statusbar.Name = "statusbar";
-            this.statusbar.Size = new System.Drawing.Size(26, 16);
+            this.statusbar.Size = new System.Drawing.Size(24, 16);
             this.statusbar.Text = "Idle";
             // 
             // tableLayoutPanel1
@@ -115,7 +117,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.listbox, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.listview, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -200,14 +202,14 @@
             this.btn_close.UseVisualStyleBackColor = true;
             this.btn_close.Click += new System.EventHandler(this.OnButton_Close);
             // 
-            // listbox
+            // listview
             // 
-            this.listbox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listbox.FormattingEnabled = true;
-            this.listbox.Location = new System.Drawing.Point(3, 35);
-            this.listbox.Name = "listbox";
-            this.listbox.Size = new System.Drawing.Size(610, 328);
-            this.listbox.TabIndex = 2;
+            this.listview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listview.Location = new System.Drawing.Point(3, 35);
+            this.listview.Name = "listview";
+            this.listview.Size = new System.Drawing.Size(610, 328);
+            this.listview.TabIndex = 2;
+            this.listview.UseCompatibleStateImageBehavior = false;
             // 
             // LogTool
             // 
@@ -251,6 +253,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Button btn_clear;
         private System.Windows.Forms.Button btn_close;
-        private System.Windows.Forms.ListBox listbox;
+        private ListViewFlickerFree listview;
     }
 }

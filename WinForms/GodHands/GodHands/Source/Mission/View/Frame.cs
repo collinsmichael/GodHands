@@ -16,37 +16,37 @@ namespace GodHands {
 
         public Frame() {
             InitializeComponent();
-            //Icon = View.IconFromFile("/img/tools-disk-16.png");
+            //Icon = View.IconFromFile("/img/menu/tools-disk-16.png");
             Icon = View.IconFromFile("/img/icon.ico");
-            menu_open.Image = View.ImageFromFile("/img/file-open-16.png");
-            menu_save.Image = View.ImageFromFile("/img/file-save-16.png");
-            menu_close.Image = View.ImageFromFile("/img/file-close-16.png");
-            menu_exit.Image = View.ImageFromFile("/img/file-exit-16.png");
-            menu_undo.Image = View.ImageFromFile("/img/edit-undo-16.png");
-            menu_redo.Image = View.ImageFromFile("/img/edit-redo-16.png");
-            menu_disktool.Image = View.ImageFromFile("/img/tools-disk-16.png");
-            menu_database.Image = View.ImageFromFile("/img/tools-database-16.png");
-            menu_monitor.Image = View.ImageFromFile("/img/tools-monitor-16.png");
-            menu_logtool.Image = View.ImageFromFile("/img/tools-logfile-16.png");
-            menu_configtool.Image = View.ImageFromFile("/img/tools-options-16.png");
-            menu_customtool.Image = View.ImageFromFile("/img/tools-custom-16.png");
+            menu_open.Image = View.ImageFromFile("/img/menu/file-open-16.png");
+            menu_save.Image = View.ImageFromFile("/img/menu/file-save-16.png");
+            menu_close.Image = View.ImageFromFile("/img/menu/file-close-16.png");
+            menu_exit.Image = View.ImageFromFile("/img/menu/file-exit-16.png");
+            menu_undo.Image = View.ImageFromFile("/img/menu/edit-undo-16.png");
+            menu_redo.Image = View.ImageFromFile("/img/menu/edit-redo-16.png");
+            menu_disktool.Image = View.ImageFromFile("/img/menu/tools-disk-16.png");
+            menu_database.Image = View.ImageFromFile("/img/menu/tools-database-16.png");
+            menu_monitor.Image = View.ImageFromFile("/img/menu/tools-monitor-16.png");
+            menu_logtool.Image = View.ImageFromFile("/img/menu/tools-logfile-16.png");
+            menu_configtool.Image = View.ImageFromFile("/img/menu/tools-options-16.png");
+            menu_customtool.Image = View.ImageFromFile("/img/menu/tools-custom-16.png");
 
-            tool_open.Image = View.ImageFromFile("/img/file-open-16.png");
-            tool_save.Image = View.ImageFromFile("/img/file-save-16.png");
-            tool_close.Image = View.ImageFromFile("/img/file-close-16.png");
-            tool_undo.Image = View.ImageFromFile("/img/edit-undo-16.png");
-            tool_redo.Image = View.ImageFromFile("/img/edit-redo-16.png");
-            tool_disktool.Image = View.ImageFromFile("/img/tools-disk-16.png");
-            tool_database.Image = View.ImageFromFile("/img/tools-database-16.png");
-            tool_monitor.Image = View.ImageFromFile("/img/tools-monitor-16.png");
-            tool_logtool.Image = View.ImageFromFile("/img/tools-logfile-16.png");
-            tool_configtool.Image = View.ImageFromFile("/img/tools-options-16.png");
-            tool_customtool.Image = View.ImageFromFile("/img/tools-custom-16.png");
+            tool_open.Image = View.ImageFromFile("/img/menu/file-open-16.png");
+            tool_save.Image = View.ImageFromFile("/img/menu/file-save-16.png");
+            tool_close.Image = View.ImageFromFile("/img/menu/file-close-16.png");
+            tool_undo.Image = View.ImageFromFile("/img/menu/edit-undo-16.png");
+            tool_redo.Image = View.ImageFromFile("/img/menu/edit-redo-16.png");
+            tool_disktool.Image = View.ImageFromFile("/img/menu/tools-disk-16.png");
+            tool_database.Image = View.ImageFromFile("/img/menu/tools-database-16.png");
+            tool_monitor.Image = View.ImageFromFile("/img/menu/tools-monitor-16.png");
+            tool_logtool.Image = View.ImageFromFile("/img/menu/tools-logfile-16.png");
+            tool_configtool.Image = View.ImageFromFile("/img/menu/tools-options-16.png");
+            tool_customtool.Image = View.ImageFromFile("/img/menu/tools-custom-16.png");
 
             //sub_property = new Subscriber_PropertyGrid(propertyGrid1);
             Logger.AddStatusBar(statusbar);
             Logger.AddProgressBar(progressbar);
-            statusbar.Image = View.ImageFromFile("/img/status-info.png");
+            statusbar.Image = View.ImageFromFile("/img/status/status-info.png");
         }
 
         private void OnClosing(object sender, FormClosingEventArgs e) {
@@ -142,6 +142,7 @@ namespace GodHands {
             fd.Filter = "C# Files|*.cs|All Files|*.*";
             if (fd.ShowDialog() == DialogResult.OK) {
                 Form form = View.CompileForm(fd.FileName);
+                form.Icon = View.IconFromFile("/img/menu/tools-custom-16.png");
                 if (form != null) {
                     form.Show();
                 }

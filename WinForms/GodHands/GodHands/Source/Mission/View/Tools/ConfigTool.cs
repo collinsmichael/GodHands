@@ -11,7 +11,7 @@ namespace GodHands {
     public partial class ConfigTool : Form {
         public ConfigTool() {
             InitializeComponent();
-            Icon = View.IconFromFile("/img/tools-options-16.png");
+            Icon = View.IconFromFile("/img/menu/tools-options-16.png");
         }
     }
 }

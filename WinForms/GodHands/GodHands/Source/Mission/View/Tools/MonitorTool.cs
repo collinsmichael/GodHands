@@ -13,7 +13,7 @@ namespace GodHands {
 
         public MonitorTool() {
             InitializeComponent();
-            Icon = View.IconFromFile("/img/tools-monitor-16.png");
+            Icon = View.IconFromFile("/img/menu/tools-monitor-16.png");
             ShellIcons.GetShellIcons(treeview);
 
             int iso_normal = ShellIcons.GetFileIconIndex("test.iso");

@@ -15,7 +15,7 @@ namespace GodHands {
 
         public DiskTool() {
             InitializeComponent();
-            Icon = View.IconFromFile("/img/tools-disk-16.png");
+            Icon = View.IconFromFile("/img/menu/tools-disk-16.png");
             ShellIcons.GetShellIcons(treeview);
             treeview.AllowDrop = true;
             treeview.ItemDrag += new ItemDragEventHandler(OnTreeDrag);

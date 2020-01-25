@@ -56,10 +56,10 @@ namespace GodHands {
 
         public static void SetUp() {
             string dir = AppDomain.CurrentDomain.BaseDirectory;
-            icons[0] = Image.FromFile(dir+"/img/status-info.png");
-            icons[1] = Image.FromFile(dir+"/img/status-pass.png");
-            icons[2] = Image.FromFile(dir+"/img/status-warn.png");
-            icons[3] = Image.FromFile(dir+"/img/status-fail.png");
+            icons[0] = Image.FromFile(dir+"/img/status/status-info.png");
+            icons[1] = Image.FromFile(dir+"/img/status/status-pass.png");
+            icons[2] = Image.FromFile(dir+"/img/status/status-warn.png");
+            icons[3] = Image.FromFile(dir+"/img/status/status-fail.png");
             icon = icons[0];
 
             Publisher.Register(bound);

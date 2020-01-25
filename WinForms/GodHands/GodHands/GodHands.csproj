@@ -75,6 +75,10 @@
     <Compile Include="Source\Mission\Experimental\Base.cs" />
     <Compile Include="Source\Mission\Model\Internal\Kildean.cs" />
     <Compile Include="Source\Mission\Model\Internal\Texture.cs" />
+    <Compile Include="Source\Mission\View\Helpers\ListViewFlickerFree.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Source\Mission\View\SubScribers\Subscriber_ListView.cs" />
     <Compile Include="Source\System\DataBinding\BaseClass.cs" />
     <Compile Include="Source\Mission\View\Tools\MonitorTool.cs">
       <SubType>Form</SubType>
