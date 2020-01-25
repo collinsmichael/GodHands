@@ -23,17 +23,11 @@ namespace GodHands {
             header.TextAlign = HorizontalAlignment.Left;
             header.Width = -1;
             listview.Columns.Add(header);
-            listview.View = System.Windows.Forms.View.Details;
 
             Logger.AddStatusBar(statusbar);
             Logger.AddProgressBar(progressbar);
             sub_listview = new Subscriber_ListView("APP:LOG", listview);
             sub_listview.Notify(Logger.log);
-
-            Logger.Info("Test");
-            Logger.Pass("Test");
-            Logger.Warn("Test");
-            Logger.Fail("Test");
         }
 
         private void OnClosing(object sender, FormClosingEventArgs e) {

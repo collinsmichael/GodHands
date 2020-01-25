@@ -9,7 +9,10 @@ namespace GodHands {
     public class Texture : BaseClass {
         private int len;
         private byte[] buf;
-        public bool IsLookUpTable { get; set; }
+        public bool IsLookUpTable() {
+            int Height = RamDisk.GetU16(GetPos() + 18);
+            return (Height <= 4);
+        }
 
         public int FileLength { get; set; }
         public int FileTag { get; set; }
@@ -44,7 +47,6 @@ namespace GodHands {
             PosY = RamDisk.GetU16(lut+6);
             Height = RamDisk.GetU16(lut+10);
             Width = RamDisk.GetU16(lut+8);
-            IsLookUpTable = (Height <= 4);
         }
 
         public virtual Image ToImage() {
@@ -52,7 +54,7 @@ namespace GodHands {
             int pos = GetPos();
             int len = RamDisk.GetS16(pos+8);
             int lut = pos + 8;
-            int w = (IsLookUpTable) ? Width : Width*2;
+            int w = (IsLookUpTable()) ? Width : Width*2;
             int h = Height;
             Bitmap bmp = new Bitmap(w*2, h, PixelFormat.Format32bppArgb);
             if (Height <= 4) {

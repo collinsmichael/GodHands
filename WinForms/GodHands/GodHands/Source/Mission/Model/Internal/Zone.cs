@@ -60,11 +60,13 @@ namespace GodHands {
             int ptr = ptr_tim + 0x14;
             for (int i = 0; i < num_tim; i++) {
                 int len = RamDisk.GetS32(pos + ptr);
-                string key = GetUrl()+"/Images/Image_"+i;
-                Texture obj = new Texture(key, pos+ptr+4, len);
-                images.Add(obj as Texture);
-                Model.Add(key, obj);
-                Publisher.Register(obj);
+                try {
+                    string key = GetUrl()+"/Images/Image_"+i;
+                    Texture obj = new Texture(key, pos+ptr+4, len);
+                    images.Add(obj as Texture);
+                    Model.Add(key, obj);
+                    Publisher.Register(obj);
+                } catch {}
                 ptr += len + 4;
             }
             return true;

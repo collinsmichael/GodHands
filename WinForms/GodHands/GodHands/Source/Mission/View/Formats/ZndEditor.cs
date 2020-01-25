@@ -112,12 +112,12 @@ namespace GodHands {
                 TreeNode model = node.Nodes.Add(url+"/Model", znd_file, 28, 28);
                 TreeNode weapon = node.Nodes.Add(url+"/Weapon", "Weapon", 12, 12);
                 TreeNode shield = node.Nodes.Add(url+"/Shield", "Shield", 11, 11);
+                body.Nodes.Add(url+"/BodyParts/BodyPart_0", "BodyPart_0", 5, 5);
                 body.Nodes.Add(url+"/BodyParts/BodyPart_1", "BodyPart_1", 5, 5);
                 body.Nodes.Add(url+"/BodyParts/BodyPart_2", "BodyPart_2", 5, 5);
                 body.Nodes.Add(url+"/BodyParts/BodyPart_3", "BodyPart_3", 5, 5);
                 body.Nodes.Add(url+"/BodyParts/BodyPart_4", "BodyPart_4", 5, 5);
                 body.Nodes.Add(url+"/BodyParts/BodyPart_5", "BodyPart_5", 5, 5);
-                body.Nodes.Add(url+"/BodyParts/BodyPart_6", "BodyPart_6", 5, 5);
 
                 node.Nodes.Add(url+"/Helmot",    "Helmot",     6,  6);
                 node.Nodes.Add(url+"/Armour",    "Armour",     7,  7);
@@ -141,7 +141,7 @@ namespace GodHands {
             foreach (Texture image in zone.images) {
                 int index = zone.images.IndexOf(image);
                 string text = "Image_"+index.ToString("D2");
-                int icon = (image.IsLookUpTable) ? 4 : 3;
+                int icon = (image.IsLookUpTable()) ? 4 : 3;
                 images.Nodes.Add(image.GetUrl(), text, icon, icon);
             }
         }

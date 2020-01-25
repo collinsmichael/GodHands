@@ -205,11 +205,13 @@
             // listview
             // 
             this.listview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listview.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listview.Location = new System.Drawing.Point(3, 35);
             this.listview.Name = "listview";
             this.listview.Size = new System.Drawing.Size(610, 328);
             this.listview.TabIndex = 2;
             this.listview.UseCompatibleStateImageBehavior = false;
+            this.listview.View = System.Windows.Forms.View.Details;
             // 
             // LogTool
             // 
