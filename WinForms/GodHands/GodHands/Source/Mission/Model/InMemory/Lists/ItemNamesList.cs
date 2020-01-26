@@ -19,7 +19,7 @@ namespace GodHands {
             DirRec bin = Model.GetRec("ITEMNAME.BIN");
             if (bin != null) {
                 int pos = bin.LbaData*2048;
-                for (int i = 0; i < 256; i++) {
+                for (int i = 0; i < 512; i++) {
                     byte[] kildean = new byte[0x18];
                     RamDisk.Get(pos + i*0x18, 0x18, kildean);
                     string str = Kildean.ToAscii(kildean);
@@ -44,7 +44,7 @@ namespace GodHands {
             DirRec bin = Model.GetRec("ITEMNAME.BIN");
             if (bin != null) {
                 int pos = bin.LbaData*2048;
-                for (int i = 0; i < 256; i++) {
+                for (int i = 0; i < 512; i++) {
                     byte[] kildean = new byte[0x18];
                     RamDisk.Get(pos + i*0x18, 0x18, kildean);
                     string str = Kildean.ToAscii(kildean);

@@ -110,10 +110,16 @@ namespace GodHands {
         public static ItemNamesList itemnames = new ItemNamesList();
         public static ItemNameAccessoryList accessory_names = new ItemNameAccessoryList();
         public static ItemNameArmourList armour_names = new ItemNameArmourList();
+        public static ItemNameBladeList blade_names = new ItemNameBladeList();
+        public static ItemNameGripList grip_names = new ItemNameGripList();
+        public static ItemNameGemList gem_names = new ItemNameGemList();
         
         public static CategoryArmours category_armours = new CategoryArmours();
+        public static CategoryBlades category_blades = new CategoryBlades();
+        public static CategoryGrips category_grips = new CategoryGrips();
+
         public static TargetSphere targets = new TargetSphere();
-        public static MaterialsList materials = new MaterialsList();
+        public static ItemNameMaterialsList materials = new ItemNameMaterialsList();
         public static DamageStats damage_stats = new DamageStats();
         public static DamageTypes damage_types = new DamageTypes();
         public static SkillsList skills = new SkillsList();

@@ -54,13 +54,11 @@ namespace GodHands {
         [Description("Name of the character (max 24 letters)")]
         public string Name {
             get {
-                //return RamDisk.GetString(GetPos()+0x00, 0x18);
                 byte[] kildean = new byte[0x18];
                 RamDisk.Get(GetPos()+0x04, 0x18, kildean);
                 return Kildean.ToAscii(kildean);
             }
             set {
-                //UndoRedo.Exec(new BindString(this, 0x00, 0x18, value));
                 string clip = value.Substring(0, Math.Min(0x18, value.Length));
                 byte[] kildean = Kildean.ToKildean(clip, 0x18);
                 UndoRedo.Exec(new BindArray(this, 0x04, 0x18, kildean));

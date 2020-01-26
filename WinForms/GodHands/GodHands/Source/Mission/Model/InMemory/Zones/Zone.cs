@@ -11,7 +11,12 @@ namespace GodHands {
         public List<Actor> actors = new List<Actor>();
         public List<ActorBodyPart> bodyparts = new List<ActorBodyPart>();
         public List<ActorArmour> armours = new List<ActorArmour>();
+        public List<ActorWeapon> weapons = new List<ActorWeapon>();
+        public List<ActorBlade> blades = new List<ActorBlade>();
+        public List<ActorGrip> grips = new List<ActorGrip>();
         public List<ActorShield> shields = new List<ActorShield>();
+        public List<ActorGem> weapon_gems = new List<ActorGem>();
+        public List<ActorGem> shield_gems = new List<ActorGem>();
         public List<ActorAccessory> accessories = new List<ActorAccessory>();
         public List<Texture> images = new List<Texture>();
 
@@ -67,7 +72,6 @@ namespace GodHands {
 
                 // ************************************************************
                 // Add bodyparts
-                TreeNode tv_body = node.Nodes.Add(url+"/BodyParts", "BodyParts", 5, 5);
                 for (int j = 0; j < 6; j++) {
                     string[] part_name = new string[] {
                         "L.ARM", "R.ARM", "HEAD", "BODY", "LEGS", "OTHER",
@@ -80,6 +84,7 @@ namespace GodHands {
                     Model.Add(k1, part);
                     Publisher.Register(part);
                 }
+                TreeNode tv_body = node.Nodes.Add(url+"/BodyParts", "BodyParts", 5, 5);
                 tv_body.Nodes.Add(url+"/BodyParts/L.ARM", "L.ARM", 8, 8);
                 tv_body.Nodes.Add(url+"/BodyParts/R.ARM", "R.ARM", 8, 8);
                 tv_body.Nodes.Add(url+"/BodyParts/HEAD", "HEAD", 6, 6);
@@ -89,7 +94,6 @@ namespace GodHands {
 
                 // ************************************************************
                 // Add armours
-                TreeNode tv_equip = node.Nodes.Add(url+"/Equip", "Equipment", 39, 39);
                 for (int j = 0; j < 6; j++) {
                     string[] part_name = new string[] {
                         "L.ARM", "R.ARM", "HEAD", "BODY", "LEGS", "OTHER",
@@ -102,6 +106,7 @@ namespace GodHands {
                     Model.Add(k2, armour);
                     Publisher.Register(armour);
                 }
+                TreeNode tv_equip = node.Nodes.Add(url+"/Equip", "Equipment", 39, 39);
                 tv_equip.Nodes.Add(url+"/Equip/L.ARM", "L.ARM", 8, 8);
                 tv_equip.Nodes.Add(url+"/Equip/R.ARM", "R.ARM", 8, 8);
                 tv_equip.Nodes.Add(url+"/Equip/HEAD", "HEAD", 6, 6);
@@ -111,8 +116,31 @@ namespace GodHands {
 
                 // ************************************************************
                 // Add weapon
+                ActorWeapon weapon = new ActorWeapon(url+"/Weapon", pos + 0x34, GetRec());
+                weapons.Add(weapon);
+                Model.Add(url+"/Weapon", weapon);
+                Publisher.Register(weapon);
+
+                ActorBlade blade = new ActorBlade(url+"/Weapon/Blade", pos + 0x34, GetRec());
+                blades.Add(blade);
+                Model.Add(url+"/Weapon/Blade", blade);
+                Publisher.Register(blade);
+
+                ActorGrip grip = new ActorGrip(url+"/Weapon/Grip", pos + 0x64, GetRec());
+                grips.Add(grip);
+                Model.Add(url+"/Weapon/Grip", grip);
+                Publisher.Register(grip);
+                for (int j = 0; j < 3; j++) {
+                    int ptr_gem = pos + 0x94 + j*0x30;
+                    string key = url+"/Weapon/Gem"+(j+1);
+                    ActorGem gem = new ActorGem(key, ptr_gem, GetRec());
+                    weapon_gems.Add(gem);
+                    Model.Add(key, gem);
+                    Publisher.Register(gem);
+                }
+
                 TreeNode tv_weapon = node.Nodes.Add(url+"/Weapon", "Weapon", 12, 12);
-                tv_weapon.Nodes.Add(url+"/Weapon/Blade", "Blade", 13, 13);
+                tv_weapon.Nodes.Add(url+"/Weapon/Blade", "Blade", 12, 12);
                 tv_weapon.Nodes.Add(url+"/Weapon/Grip",  "Grip",  14, 14);
                 tv_weapon.Nodes.Add(url+"/Weapon/Gem1",  "Gem1",  24, 24);
                 tv_weapon.Nodes.Add(url+"/Weapon/Gem2",  "Gem2",  25, 25);
@@ -120,12 +148,20 @@ namespace GodHands {
 
                 // ************************************************************
                 // Add shield
-                TreeNode tv_shield = node.Nodes.Add(url+"/Shield", "Shield", 11, 11);
                 ActorShield shield = new ActorShield(url+"/Shield", pos + 0x140, GetRec());
                 shields.Add(shield);
                 Model.Add(url+"/Shield", shield);
                 Publisher.Register(shield);
+                for (int j = 0; j < 3; j++) {
+                    int ptr_gem = pos + 0x170 + j*0x30;
+                    string key = url+"/Shield/Gem"+(j+1);
+                    ActorGem gem = new ActorGem(key, ptr_gem, GetRec());
+                    shield_gems.Add(gem);
+                    Model.Add(key, gem);
+                    Publisher.Register(gem);
+                }
 
+                TreeNode tv_shield = node.Nodes.Add(url+"/Shield", "Shield", 11, 11);
                 tv_shield.Nodes.Add(url+"/Shield/Gem1",  "Gem1",  24, 24);
                 tv_shield.Nodes.Add(url+"/Shield/Gem2",  "Gem2",  25, 25);
                 tv_shield.Nodes.Add(url+"/Shield/Gem3",  "Gem3",  26, 26);

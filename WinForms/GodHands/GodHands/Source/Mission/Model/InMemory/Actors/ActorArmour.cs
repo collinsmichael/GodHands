@@ -26,12 +26,12 @@ namespace GodHands {
         [TypeConverter(typeof(ItemNamesListDropDown))]
         public string ItemNamesList {
             get {
-                byte index = RamDisk.GetU8(GetPos()+0x00);
+                short index = RamDisk.GetS16(GetPos()+0x00);
                 return Model.itemnames.GetName(index);
             }
             set {
-                byte index = (byte)Model.itemnames.GetIndexByName(value);
-                UndoRedo.Exec(new BindU8(this, 0x00, index));
+                short index = (short)Model.itemnames.GetIndexByName(value);
+                UndoRedo.Exec(new BindS16(this, 0x00, index));
             }
         }
 
