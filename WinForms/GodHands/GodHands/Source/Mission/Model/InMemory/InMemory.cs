@@ -15,6 +15,10 @@ namespace GodHands {
             return rec;
         }
 
+        public void SetRec(DirRec rec) {
+            this.rec = rec;
+        }
+
         public override int GetPos() {
             int address = rec.LbaData*2048;
             int offset = base.GetPos();

@@ -95,7 +95,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.property);
             this.splitContainer1.Size = new System.Drawing.Size(600, 333);
-            this.splitContainer1.SplitterDistance = 337;
+            this.splitContainer1.SplitterDistance = 255;
             this.splitContainer1.TabIndex = 0;
             // 
             // treeview
@@ -103,7 +103,7 @@
             this.treeview.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeview.Location = new System.Drawing.Point(0, 0);
             this.treeview.Name = "treeview";
-            this.treeview.Size = new System.Drawing.Size(337, 333);
+            this.treeview.Size = new System.Drawing.Size(255, 333);
             this.treeview.TabIndex = 0;
             this.treeview.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.OnTree_NodeChange);
             // 
@@ -112,7 +112,7 @@
             this.property.Dock = System.Windows.Forms.DockStyle.Fill;
             this.property.Location = new System.Drawing.Point(0, 0);
             this.property.Name = "property";
-            this.property.Size = new System.Drawing.Size(259, 333);
+            this.property.Size = new System.Drawing.Size(341, 333);
             this.property.TabIndex = 0;
             // 
             // tableLayoutPanel2

@@ -140,7 +140,7 @@ namespace GodHands {
                 }
 
                 TreeNode tv_weapon = node.Nodes.Add(url+"/Weapon", "Weapon", 12, 12);
-                tv_weapon.Nodes.Add(url+"/Weapon/Blade", "Blade", 12, 12);
+                tv_weapon.Nodes.Add(url+"/Weapon/Blade", "Blade", 13, 13);
                 tv_weapon.Nodes.Add(url+"/Weapon/Grip",  "Grip",  14, 14);
                 tv_weapon.Nodes.Add(url+"/Weapon/Gem1",  "Gem1",  24, 24);
                 tv_weapon.Nodes.Add(url+"/Weapon/Gem2",  "Gem2",  25, 25);

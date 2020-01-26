@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 
 namespace GodHands {
-    public class MaterialsDropDown : StringConverter {
+    public class ItemNameMaterialDropDown : StringConverter {
         public override bool
         GetStandardValuesSupported(ITypeDescriptorContext context) {
             return true;

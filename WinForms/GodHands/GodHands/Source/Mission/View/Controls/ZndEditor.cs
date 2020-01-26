@@ -12,6 +12,8 @@ using System.Windows.Forms;
 namespace GodHands {
     public partial class ZndEditor : UserControl {
         private Subscriber_PropertyGrid sub_property = null;
+        private OpenFileDialog ofd = new OpenFileDialog();
+        private SaveFileDialog sfd = new SaveFileDialog();
         private Dictionary<string,string> zones = new Dictionary<string,string>();
         private Zone zone = null;
 
@@ -21,8 +23,6 @@ namespace GodHands {
         private ToolStripMenuItem menu_import = null;
         private ToolStripMenuItem menu_export = null;
 
-        private OpenFileDialog ofd = new OpenFileDialog();
-        private SaveFileDialog sfd = new SaveFileDialog();
         private TreeNode node = null;
         private Texture texture = null;
         private Image texture2d = null;

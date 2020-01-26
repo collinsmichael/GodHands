@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace GodHands {
     public class SkillsList {
@@ -19,9 +20,11 @@ namespace GodHands {
                 int pos = 0x0003C1DC;
                 byte[] buf = new byte[0x34];
                 for (int i = 0; i < 256; i++) {
-                    string key = "SLUS/Skills/Skill_"+i;
-                    Skill skill = new Skill(key, pos + i*0x34, slus); 
-                    skills.Add(skill);
+                    string key = "DB:Skills/Skill_"+i;
+                    Skill obj = new Skill(key, pos + i*0x34, slus); 
+                    skills.Add(obj);
+                    Model.Add(key, obj);
+                    Publisher.Register(obj);
                 }
             }
             return true;
@@ -56,6 +59,16 @@ namespace GodHands {
                 i++;
             }
             return 0;
+        }
+
+        public bool Open(TreeNode root) {
+            foreach (Skill skill in skills) {
+                string index = skills.IndexOf(skill).ToString("X3");
+                string key = skill.GetUrl();
+                string name = "(" + index + ") " + skill.Name;
+                root.Nodes.Add(key, name, 4, 4);
+            }
+            return true;
         }
     }
 }

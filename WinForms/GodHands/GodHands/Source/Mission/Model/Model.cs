@@ -117,9 +117,10 @@ namespace GodHands {
         public static CategoryArmours category_armours = new CategoryArmours();
         public static CategoryBlades category_blades = new CategoryBlades();
         public static CategoryGrips category_grips = new CategoryGrips();
+        public static CategorySkills category_skills = new CategorySkills();
 
         public static TargetSphere targets = new TargetSphere();
-        public static ItemNameMaterialsList materials = new ItemNameMaterialsList();
+        public static ItemNameMaterialList materials = new ItemNameMaterialList();
         public static DamageStats damage_stats = new DamageStats();
         public static DamageTypes damage_types = new DamageTypes();
         public static SkillsList skills = new SkillsList();
@@ -147,8 +148,9 @@ namespace GodHands {
             zones.Clear();
             rooms.Clear();
             actors.Clear();
-            prgs.Clear();
+            bins.Clear();
             dats.Clear();
+            prgs.Clear();
             syds.Clear();
             arms.Clear();
             znds.Clear();

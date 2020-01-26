@@ -2,15 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace GodHands {
     public class ItemNamesList {
+        private List<MiscItem> items = new List<MiscItem>();
 
         public bool Load() {
+            items.Clear();
+            Iso9660.ReadFile(Model.GetRec("ITEMNAME.BIN"));
+            Iso9660.ReadFile(Model.GetRec("ITEMHELP.BIN"));
+            DirRec rec = Model.GetRec("ITEMNAME.BIN");
+            for (int i = 0; i < 512; i++) {
+                string key = "DB:Items/Item_"+i;
+                MiscItem obj = new MiscItem(key, 0, i, rec);
+                items.Add(obj);
+                Model.Add(key, obj);
+                Publisher.Register(obj);
+            }
             return true;
         }
 
         public bool Clear() {
+            items.Clear();
             return true;
         }
 
@@ -54,6 +68,16 @@ namespace GodHands {
                 }
             }
             return 0;
+        }
+
+        public bool Open(TreeNode root) {
+            foreach (MiscItem item in items) {
+                string index = items.IndexOf(item).ToString("X3");
+                string key = item.GetUrl();
+                string name = "(" + index + ") " + item.Name;
+                root.Nodes.Add(key, name, 2, 2);
+            }
+            return true;
         }
     }
 }

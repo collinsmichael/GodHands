@@ -29,10 +29,10 @@
             this.combobox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.property = new System.Windows.Forms.PropertyGrid();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.textbox = new System.Windows.Forms.TextBox();
             this.picturebox = new System.Windows.Forms.PictureBox();
-            this.property = new System.Windows.Forms.PropertyGrid();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -134,6 +134,15 @@
             this.splitContainer2.SplitterDistance = 224;
             this.splitContainer2.TabIndex = 0;
             // 
+            // property
+            // 
+            this.property.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.property.Location = new System.Drawing.Point(0, 0);
+            this.property.Name = "property";
+            this.property.PropertySort = System.Windows.Forms.PropertySort.Categorized;
+            this.property.Size = new System.Drawing.Size(224, 438);
+            this.property.TabIndex = 0;
+            // 
             // splitContainer3
             // 
             this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -174,15 +183,6 @@
             this.picturebox.TabIndex = 1;
             this.picturebox.TabStop = false;
             this.picturebox.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaintPictureBox);
-            // 
-            // property
-            // 
-            this.property.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.property.Location = new System.Drawing.Point(0, 0);
-            this.property.Name = "property";
-            this.property.PropertySort = System.Windows.Forms.PropertySort.Categorized;
-            this.property.Size = new System.Drawing.Size(224, 438);
-            this.property.TabIndex = 0;
             // 
             // ZndEditor
             // 

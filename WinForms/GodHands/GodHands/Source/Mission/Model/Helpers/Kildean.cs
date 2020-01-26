@@ -70,7 +70,9 @@ namespace GodHands {
                     str[len] = 0x0A;
                 } else {
                     str[len] = to_ascii[buf[s]];
-                    if (buf[s] >= 0xF0) s++;
+                    if (buf[s] >= 0xF0) {
+                        s++;
+                    }
                 }
             }
 

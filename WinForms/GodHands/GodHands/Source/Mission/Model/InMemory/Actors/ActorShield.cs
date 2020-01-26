@@ -220,7 +220,7 @@ namespace GodHands {
         [DisplayName("EquipMaterial")]
         [Description("Material equipment is made of")]
         [DefaultValue("")]
-        [TypeConverter(typeof(MaterialsDropDown))]
+        [TypeConverter(typeof(ItemNameMaterialDropDown))]
         public string ItemMaterial {
             get {
                 byte index = RamDisk.GetU8(GetPos()+0x13);
@@ -502,7 +502,7 @@ namespace GodHands {
         [DisplayName("Material")]
         [Description("Material equipment is made of")]
         [DefaultValue("")]
-        [TypeConverter(typeof(MaterialsDropDown))]
+        [TypeConverter(typeof(ItemNameMaterialDropDown))]
         public string Material {
             get {
                 byte index = RamDisk.GetU8(GetPos()+0xC0);

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace GodHands {
-    public class ItemNameMaterialsList {
+    public class ItemNameMaterialList {
         public List<string> GetList() {
             List<string> list = new List<string>();
             list.Add("");

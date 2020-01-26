@@ -150,7 +150,7 @@ namespace GodHands {
         [DisplayName("Material")]
         [Description("Material equipment is made of")]
         [DefaultValue("")]
-        [TypeConverter(typeof(MaterialsDropDown))]
+        [TypeConverter(typeof(ItemNameMaterialDropDown))]
         public string Material {
             get {
                 byte index = RamDisk.GetU8(GetPos()+0xF0);
