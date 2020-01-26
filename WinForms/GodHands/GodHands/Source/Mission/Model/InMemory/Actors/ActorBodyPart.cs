@@ -10,6 +10,10 @@ namespace GodHands {
         base(url, pos, rec) {
         }
 
+        public override int GetLen() {
+            return 0x5C;
+        }
+
         [Category("01 Stats")]
         [DisplayName("HP")]
         [Description("Health points (depleted when taking damage)")]

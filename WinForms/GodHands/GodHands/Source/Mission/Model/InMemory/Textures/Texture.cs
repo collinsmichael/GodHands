@@ -18,6 +18,12 @@ namespace GodHands {
             QueryFile();
         }
 
+        // sizeof BMP file
+        public override int GetLen() {
+            QueryFile();
+            return 0x436 + Width*Height;
+        }
+
         public bool IsLookUpTable() {
             int Height = RamDisk.GetU16(GetPos() + 18);
             return (Height <= 4);

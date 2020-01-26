@@ -13,6 +13,14 @@ namespace GodHands {
             zud = Model.zuds[zud_rec.GetUrl()];
         }
 
+        public override string GetText() {
+            return Name;
+        }
+
+        public override int GetLen() {
+            return 0x464;
+        }
+
         public string GetZndFileName() {
             return GetRec().GetFileName();
         }
@@ -61,7 +69,7 @@ namespace GodHands {
             set {
                 string clip = value.Substring(0, Math.Min(0x18, value.Length));
                 byte[] kildean = Kildean.ToKildean(clip, 0x18);
-                UndoRedo.Exec(new BindArray(this, 0x04, 0x18, kildean));
+                UndoRedo.Exec(new BindArray(this, GetPos()+0x04, 0x18, kildean));
             }
         }
 

@@ -7,5 +7,9 @@ namespace GodHands {
     public class ARM : BaseClass {
         public ARM(string url, int pos) : base(url, pos) {
         }
+
+        public override int GetLen() {
+            return 0;
+        }
     }
 }

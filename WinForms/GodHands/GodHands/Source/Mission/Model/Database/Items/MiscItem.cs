@@ -24,6 +24,10 @@ namespace GodHands {
             return address;
         }
 
+        public override int GetLen() {
+            return 0x02 + 0x18 + Help.Length;
+        }
+
         [Category("Misc Item")]
         [DisplayName("Name")]
         [Description("Name of the item (max 24 letters)")]
@@ -40,7 +44,7 @@ namespace GodHands {
                 byte[] kildean = Kildean.ToKildean(clip, 0x18);
                 base.SetRec(name);
                 SetPos(name.LbaData*2048);
-                UndoRedo.Exec(new BindArray(this, index*0x18, 0x18, kildean));
+                UndoRedo.Exec(new BindArray(this, GetPos()+index*0x18, 0x18, kildean));
             }
         }
 
@@ -62,7 +66,7 @@ namespace GodHands {
                 int len = help.LenData - ptr;
                 string clip = value.Substring(0, Math.Min(len, value.Length));
                 byte[] kildean = Kildean.ToKildean(clip, len);
-                UndoRedo.Exec(new BindArray(this, ptr, len, kildean));
+                UndoRedo.Exec(new BindArray(this, GetPos()+ptr, len, kildean));
             }
         }
     }

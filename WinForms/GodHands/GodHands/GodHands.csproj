@@ -121,6 +121,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Source\Mission\View\SubScribers\Subscriber_ListView.cs" />
+    <Compile Include="Source\Mission\View\SubScribers\Subscriber_TreeView.cs" />
     <Compile Include="Source\System\DataBinding\BaseClass.cs" />
     <Compile Include="Source\Mission\View\Tools\MonitorTool.cs">
       <SubType>Form</SubType>
@@ -156,7 +157,7 @@
     <Compile Include="Source\Mission\Model\InMemory\Zones\Zone.cs" />
     <Compile Include="Source\Mission\View\Helpers\ShellIcons.cs" />
     <Compile Include="Source\Mission\View\SubScribers\Subscriber_ListBox.cs" />
-    <Compile Include="Source\Mission\View\SubScribers\Subscriber_TreeView.cs" />
+    <Compile Include="Source\Mission\View\SubScribers\Subscriber_DiskView.cs" />
     <Compile Include="Source\Mission\View\Tools\LogTool.cs">
       <SubType>Form</SubType>
     </Compile>

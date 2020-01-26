@@ -8,5 +8,9 @@ namespace GodHands {
         public MiniMap(string url, int pos, DirRec rec):
         base(url, pos, rec) {
         }
+
+        public override int GetLen() {
+            return 0;
+        }
     }
 }

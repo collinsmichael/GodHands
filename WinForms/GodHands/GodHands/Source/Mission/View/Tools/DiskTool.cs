@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace GodHands {
     public partial class DiskTool : Form {
         private Subscriber_PropertyGrid sub_property = null;
-        private Subscriber_TreeView sub_treeview = null;
+        private Subscriber_DiskView sub_treeview = null;
 
         public DiskTool() {
             InitializeComponent();
@@ -23,7 +23,7 @@ namespace GodHands {
             treeview.DragDrop += new DragEventHandler(OnDrop);
 
             sub_property = new Subscriber_PropertyGrid(property);
-            sub_treeview = new Subscriber_TreeView("CD:ROOT", treeview);
+            sub_treeview = new Subscriber_DiskView("CD:ROOT", treeview);
             Logger.AddStatusBar(statusbar);
             Logger.AddProgressBar(progressbar);
             OpenDisk();

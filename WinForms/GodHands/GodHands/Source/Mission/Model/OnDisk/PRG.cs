@@ -7,5 +7,9 @@ namespace GodHands {
     public class PRG : BaseClass {
         public PRG(string url, int pos) : base(url, pos) {
         }
+
+        public override int GetLen() {
+            return 0;
+        }
     }
 }

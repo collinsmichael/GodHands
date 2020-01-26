@@ -7,5 +7,9 @@ namespace GodHands {
     public class DAT : BaseClass {
         public DAT(string url, int pos) : base(url, pos) {
         }
+
+        public override int GetLen() {
+            return 0;
+        }
     }
 }

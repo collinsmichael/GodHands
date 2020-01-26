@@ -12,6 +12,7 @@ using System.Windows.Forms;
 namespace GodHands {
     public partial class ZndEditor : UserControl {
         private Subscriber_PropertyGrid sub_property = null;
+        private Subscriber_TreeView sub_treeview = null;
         private OpenFileDialog ofd = new OpenFileDialog();
         private SaveFileDialog sfd = new SaveFileDialog();
         private Dictionary<string,string> zones = new Dictionary<string,string>();
@@ -32,6 +33,7 @@ namespace GodHands {
             treeview.ImageList = View.ImageListFromDir("/img/zone");
             treeview.ShowNodeToolTips = true;
             sub_property = new Subscriber_PropertyGrid(property);
+            sub_treeview = new Subscriber_TreeView(treeview);
 
             menu = new ContextMenuStrip();
             menu_insert = new ToolStripMenuItem("Insert", View.ImageFromFile("/img/zone/insert.png"));
@@ -126,28 +128,47 @@ namespace GodHands {
 
         private void OnMenuImport(object sender, EventArgs e) {
             if (node != null) {
-                ofd.Title = "Import File";
-                ofd.Filter = "CD Images|*.bin;*.img;*.iso|All Files|*.*";
-                if (ofd.ShowDialog() == DialogResult.OK) {
-                    //if (Iso9660.Open(ofd.FileName)) {
-                    //    zndtool.OpenDisk();
-                    //}
+                InMemory obj = Model.Get(node.Name) as InMemory;
+                if (obj != null) {
+                    ofd.Title = "Import File";
+                    ofd.Filter = "VS Files|*.VS|"
+                               + "ARM Files|*.ARM|BIN Files|*.BIN|"
+                               + "DAT Files|*.DAT|MPD Files|*.MPD|"
+                               + "PRG Files|*.PRG|WEP Files|*.WEP|"
+                               + "SEQ Files|*.SEQ|SHP Files|*.SHP|"
+                               + "ZND Files|*.ZND|ZUD Files|*.ZUD|"
+                               + "All Files|*.*";
+                    if (ofd.ShowDialog() == DialogResult.OK) {
+                        byte[] raw = File.ReadAllBytes(ofd.FileName);
+                        if (raw != null) {
+                            obj.ImportRaw(raw);
+                        }
+                    }
                 }
             }
         }
 
         private void OnMenuExport(object sender, EventArgs e) {
             if (node != null) {
-                sfd.Title = "Export File";
-                sfd.Filter = "CD Images|*.bin;*.img;*.iso|All Files|*.*";
-                if (node.Text.Contains("Image_")) {
-                    sfd.Filter = "BMP Images|*.bmp|All Files|*.*";
-                }
-
-                if (sfd.ShowDialog() == DialogResult.OK) {
-                    //if (Iso9660.Open(ofd.FileName)) {
-                    //    zndtool.OpenDisk();
-                    //}
+                InMemory obj = Model.Get(node.Name) as InMemory;
+                if (obj != null) {
+                    sfd.Title = "Export File";
+                    sfd.Filter = "VS Files|*.VS|"
+                               + "ARM Files|*.ARM|BIN Files|*.BIN|"
+                               + "DAT Files|*.DAT|MPD Files|*.MPD|"
+                               + "PRG Files|*.PRG|WEP Files|*.WEP|"
+                               + "SEQ Files|*.SEQ|SHP Files|*.SHP|"
+                               + "ZND Files|*.ZND|ZUD Files|*.ZUD|"
+                               + "All Files|*.*";
+                    if (node.Text.Contains("Image_")) {
+                        sfd.Filter = "BMP Images|*.bmp|All Files|*.*";
+                    }
+                    if (sfd.ShowDialog() == DialogResult.OK) {
+                        byte[] raw = obj.ExportRaw();
+                        if (raw != null) {
+                            File.WriteAllBytes(sfd.FileName, raw);
+                        }
+                    }
                 }
             }
         }

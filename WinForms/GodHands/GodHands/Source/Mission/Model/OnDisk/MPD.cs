@@ -7,5 +7,9 @@ namespace GodHands {
     public class MPD : BaseClass {
         public MPD(string url, int pos) : base(url, pos) {
         }
+
+        public override int GetLen() {
+            return 0;
+        }
     }
 }

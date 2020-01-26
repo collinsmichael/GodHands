@@ -18,6 +18,13 @@ namespace GodHands {
             }
         }
 
+        public override string GetText() {
+            if (LenFileName == 0) {
+                return Iso9660.pvd.VolumeIdentifier;
+            }
+            return GetFileName();
+        }
+
         public override int GetPos() {
             return pos;
         }
@@ -25,6 +32,10 @@ namespace GodHands {
         public override void SetPos(int pos) {
             this.pos = pos;
             Model.SetPos(GetUrl(), pos);
+        }
+
+        public override int GetLen() {
+            return LenRecord;
         }
 
         public string GetFileName() {
@@ -110,7 +121,7 @@ namespace GodHands {
                     (byte)((value/256) % 256),
                     (byte)((value) % 256)
                 };
-                UndoRedo.Exec(new BindArray(this, 2, 8, buf));
+                UndoRedo.Exec(new BindArray(this, GetPos()+2, 8, buf));
                 Model.SetPos(GetUrl(), value);
                 Publisher.Publish(GetUrl(), this);
                 Logger.Pass("Moved "+GetFileName()+" to LBA="+value);
@@ -129,10 +140,7 @@ namespace GodHands {
                     sizing = true;
                     if (value < len) {
                         string msg = "This will truncate the file!\r\nAre you sure?";
-                        MessageBoxButtons buttons = MessageBoxButtons.YesNoCancel;
-                        MessageBoxIcon icon = MessageBoxIcon.Exclamation;
-                        DialogResult yesno = MessageBox.Show(msg, "Warning", buttons, icon);
-                        if (yesno != DialogResult.Yes) {
+                        if (!Logger.YesNoCancel(msg)) {
                             Publisher.Publish(GetUrl(), this);
                             sizing = false;
                             return;
@@ -149,10 +157,7 @@ namespace GodHands {
                         string msg = "Out of space at this location!\r\n"+
                                      "There is space at LBA="+ptr+"!\r\n"+
                                      "Do you want to move this file there?";
-                        MessageBoxButtons buttons = MessageBoxButtons.YesNoCancel;
-                        MessageBoxIcon icon = MessageBoxIcon.Exclamation;
-                        DialogResult yesno = MessageBox.Show(msg, "Warning", buttons, icon);
-                        if (yesno != DialogResult.Yes) {
+                        if (!Logger.YesNoCancel(msg)) {
                             Publisher.Publish(GetUrl(), this);
                             sizing = false;
                             return;
@@ -176,7 +181,7 @@ namespace GodHands {
                     (byte)((value/256) % 256),
                     (byte)((value) % 256)
                 };
-                UndoRedo.Exec(new BindArray(this, 10, 8, buf));
+                UndoRedo.Exec(new BindArray(this, GetPos()+10, 8, buf));
                 Model.SetLen(GetUrl(), value);
                 Publisher.Publish(GetUrl(), this);
                 Logger.Pass("Resized "+GetFileName()+" to LEN="+value);
@@ -208,7 +213,7 @@ namespace GodHands {
                     (byte)(t.Minute),
                     (byte)(t.Second)
                 };
-                UndoRedo.Exec(new BindArray(this, 18, 6, buf));
+                UndoRedo.Exec(new BindArray(this, GetPos()+18, 6, buf));
             }
         }
 

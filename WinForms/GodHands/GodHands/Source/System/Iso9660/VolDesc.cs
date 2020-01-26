@@ -11,6 +11,14 @@ namespace GodHands {
             RamDisk.map[pos/2048] = 0x6F;
         }
 
+        public override int GetLen() {
+            return 0;
+        }
+
+        public override string GetText() {
+            return VolumeIdentifier;
+        }
+
         // ********************************************************************
         // Fields
         // ********************************************************************
@@ -67,7 +75,7 @@ namespace GodHands {
                     (byte)((value/256) % 256),
                     (byte)((value) % 256)
                 };
-                UndoRedo.Exec(new BindArray(this, 80, 8, buf));
+                UndoRedo.Exec(new BindArray(this, GetPos()+80, 8, buf));
             }
         }
 
@@ -84,7 +92,7 @@ namespace GodHands {
                     (byte)((value/256) % 256),
                     (byte)((value) % 256)
                 };
-                UndoRedo.Exec(new BindArray(this, 120, 4, buf));
+                UndoRedo.Exec(new BindArray(this, GetPos()+120, 4, buf));
             }
         }
 
@@ -100,7 +108,7 @@ namespace GodHands {
                     (byte)((value/256) % 256),
                     (byte)((value) % 256)
                 };
-                UndoRedo.Exec(new BindArray(this, 124, 4, buf));
+                UndoRedo.Exec(new BindArray(this, GetPos()+124, 4, buf));
             }
         }
 
@@ -116,7 +124,7 @@ namespace GodHands {
                     (byte)((value/256) % 256),
                     (byte)((value) % 256)
                 };
-                UndoRedo.Exec(new BindArray(this, 128, 4, buf));
+                UndoRedo.Exec(new BindArray(this, GetPos()+128, 4, buf));
             }
         }
 
@@ -136,7 +144,7 @@ namespace GodHands {
                     (byte)((value/256) % 256),
                     (byte)((value) % 256)
                 };
-                UndoRedo.Exec(new BindArray(this, 132, 8, buf));
+                UndoRedo.Exec(new BindArray(this, GetPos()+132, 8, buf));
             }
         }
 
@@ -158,7 +166,7 @@ namespace GodHands {
                 buf[9] = (byte)((value/65536) % 256);
                 buf[10] = (byte)((value/256) % 256);
                 buf[11] = (byte)((value) % 256);
-                UndoRedo.Exec(new BindArray(this, 140, 16, buf));
+                UndoRedo.Exec(new BindArray(this, GetPos()+140, 16, buf));
             }
         }
         [Category("Volume")]
@@ -175,7 +183,7 @@ namespace GodHands {
                 buf[13] = (byte)((value/65536) % 256);
                 buf[14] = (byte)((value/256) % 256);
                 buf[15] = (byte)((value) % 256);
-                UndoRedo.Exec(new BindArray(this, 140, 16, buf));
+                UndoRedo.Exec(new BindArray(this, GetPos()+140, 16, buf));
             }
         }
 
@@ -275,7 +283,7 @@ namespace GodHands {
                 (byte)((ms/100)%10+0x30), (byte)((ms/10)%10+0x30),
                 0
             };
-            UndoRedo.Exec(new BindArray(this, delta, 17, buf));
+            UndoRedo.Exec(new BindArray(this, GetPos()+delta, 17, buf));
         }
 
         //char     CreationDate[17];     // The date and time of creation

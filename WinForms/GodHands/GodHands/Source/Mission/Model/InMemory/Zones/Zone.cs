@@ -25,6 +25,10 @@ namespace GodHands {
             znd = Model.znds[rec.GetUrl()];
         }
 
+        public override int GetLen() {
+            return 0;
+        }
+
         public bool AddRoom(TreeNode root, int id, int pos) {
             int lba = RamDisk.GetS32(pos + 8*id);
             try {

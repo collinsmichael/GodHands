@@ -44,7 +44,8 @@ namespace GodHands {
         };
 
         public static byte[] ToKildean(string ascii, int len) {
-            byte[] str = Encoding.ASCII.GetBytes(ascii);
+            Encoding enc = Encoding.GetEncoding("iso-8859-1");
+            byte[] str = enc.GetBytes(ascii);
             byte[] buf = new byte[len];
             int d = 0;
             for (int s = 0; (s < str.Length) && (d < len-1); s++, d++) {
@@ -81,7 +82,8 @@ namespace GodHands {
                 buf[i] = str[i];
             }
 
-            string ascii = Encoding.ASCII.GetString(buf);
+            Encoding enc = Encoding.GetEncoding("iso-8859-1");
+            string ascii = enc.GetString(buf);
             return ascii;
         }
     }

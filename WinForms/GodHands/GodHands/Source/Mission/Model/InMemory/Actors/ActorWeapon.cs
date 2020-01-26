@@ -10,6 +10,10 @@ namespace GodHands {
         base(url, pos, rec) {
         }
 
+        public override int GetLen() {
+            return 0x10C;
+        }
+
         [Category("01 Equipment")]
         [DisplayName("Name")]
         [Description("Weapon name (max 24 characters)")]
@@ -22,7 +26,7 @@ namespace GodHands {
             set {
                 string clip = value.Substring(0, Math.Min(0x18, value.Length));
                 byte[] kildean = Kildean.ToKildean(clip, 0x18);
-                UndoRedo.Exec(new BindArray(this, 0xF4, 0x18, kildean));
+                UndoRedo.Exec(new BindArray(this, GetPos()+0xF4, 0x18, kildean));
             }
         }
 

@@ -47,32 +47,32 @@ namespace GodHands {
         private IBound obj;
         private byte[] old;
         private byte[] val;
-        private int delta;
+        private int pos;
         private int len;
 
-        public BindArray(IBound bound, int delta, int len, byte[] val) {
+        public BindArray(IBound bound, int pos, int len, byte[] val) {
             this.obj = bound;
-            this.delta = delta;
+            this.pos = pos;
             this.len = len;
             this.val = val;
             this.old = new byte[len];
-            RamDisk.Get(obj.GetPos() + delta, len, old);
+            RamDisk.Get(pos, len, old);
         }
 
         public bool Exec() {
-            RamDisk.Set(obj.GetPos() + delta, len, val);
+            RamDisk.Set(pos, len, val);
             Publisher.Publish(obj.GetUrl(), obj);
             return Logger.Info("BindArray.Exec("+len+")");
         }
 
         public bool Undo() {
-            RamDisk.Set(obj.GetPos() + delta, len, old);
+            RamDisk.Set(pos, len, old);
             Publisher.Publish(obj.GetUrl(), obj);
             return Logger.Info("BindArray.Undo("+len+")");
         }
 
         public bool Redo() {
-            RamDisk.Set(obj.GetPos() + delta, len, val);
+            RamDisk.Set(pos, len, val);
             Publisher.Publish(obj.GetUrl(), obj);
             return Logger.Info("BindArray.Redo("+len+")");
         }

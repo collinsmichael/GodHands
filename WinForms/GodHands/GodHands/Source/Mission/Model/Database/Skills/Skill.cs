@@ -10,6 +10,10 @@ namespace GodHands {
         base(url, pos, rec) {
         }
 
+        public override int GetLen() {
+            return 0x34;
+        }
+
         [ReadOnly(true)]
         [Category("01 Skill")]
         [DisplayName("Skills List ID")]
@@ -549,7 +553,7 @@ namespace GodHands {
             set {
                 string clip = value.Substring(0, Math.Min(0x18, value.Length));
                 byte[] kildean = Kildean.ToKildean(clip, 0x18);
-                UndoRedo.Exec(new BindArray(this, 0x1C, 0x18, kildean));
+                UndoRedo.Exec(new BindArray(this, GetPos()+0x1C, 0x18, kildean));
             }
         }
     }

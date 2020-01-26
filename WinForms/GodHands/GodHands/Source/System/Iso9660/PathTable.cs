@@ -11,6 +11,10 @@ namespace GodHands {
             }
         }
 
+        public override int GetLen() {
+            return 0;
+        }
+
         public byte LenDirName { get; set; }
         public byte LenXA { get; set; }
         public int LbaData { get; set; }

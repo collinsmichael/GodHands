@@ -21,12 +21,20 @@ namespace GodHands {
             return url;
         }
 
+        public string GetText() {
+            return "";
+        }
+
         public int GetPos() {
             return pos;
         }
 
         public void SetPos(int pos) {
             this.pos = pos;
+        }
+
+        public int GetLen() {
+            return list.Count;
         }
     }
 
@@ -193,6 +201,13 @@ namespace GodHands {
                 MessageBoxButtons buttons = MessageBoxButtons.OK;
                 MessageBox.Show(msg, title, buttons, ico);
             }
+        }
+
+        public static bool YesNoCancel(string msg) {
+            MessageBoxButtons buttons = MessageBoxButtons.YesNoCancel;
+            MessageBoxIcon icon = MessageBoxIcon.Exclamation;
+            DialogResult yesno = MessageBox.Show(msg, "Warning", buttons, icon);
+            return (yesno == DialogResult.Yes);
         }
     }
 }

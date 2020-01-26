@@ -10,6 +10,10 @@ namespace GodHands {
         base(url, pos, rec) {
         }
 
+        public override int GetLen() {
+            return 0xC4;
+        }
+
         [ReadOnly(true)]
         [Category("01 Equipment")]
         [DisplayName("Item Names List Raw")]

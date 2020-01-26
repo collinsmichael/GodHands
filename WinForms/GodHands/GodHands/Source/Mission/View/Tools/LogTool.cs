@@ -57,10 +57,8 @@ namespace GodHands {
         }
 
         private void OnButton_Clear(object sender, EventArgs e) {
-            MessageBoxButtons buttons = MessageBoxButtons.YesNoCancel;
-            string title = "Delete Log?";
             string msg = "Are you sure you want to delete the log?";
-            if (MessageBox.Show(msg, title, buttons) == DialogResult.Yes) {
+            if (Logger.YesNoCancel(msg)) {
                 Logger.Clear();
             }
         }

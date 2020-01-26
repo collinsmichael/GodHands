@@ -58,14 +58,17 @@ namespace GodHands {
         // assign a subscriber to an object
         // ********************************************************************
         public static bool Subscribe(string path, ISubscriber sub) {
-            if (!dict.ContainsKey(path) || !subs.ContainsKey(path)) {
-                return false; //Logger.Fail(path+" does not exist");
+            if (!subs.ContainsKey("*")) {
+                subs.Add("*", new List<ISubscriber>());
+            }
+
+            if (!subs.ContainsKey(path)) {
+                return false;
             }
 
             List<ISubscriber> list = subs[path] as List<ISubscriber>;
             if (!list.Contains(sub)) {
                 list.Add(sub);
-                //sub.Notify(dict[path]);
             }
             return true;
         }
@@ -101,16 +104,25 @@ namespace GodHands {
         // notify all subscribers of an object state change
         // ********************************************************************
         public static bool Publish(string path, object obj) {
-            if (!dict.ContainsKey(path) || !subs.ContainsKey(path)) {
-                return false; //Logger.Fail(path+" does not exist");
+            if (dict.ContainsKey(path) && subs.ContainsKey(path)) {
+                // copy list to array (in case someone subscribes/unsubscribes)
+                List<ISubscriber> list = subs[path] as List<ISubscriber>;
+                if (list != null) {
+                    ISubscriber[] array = list.ToArray();
+                    dict[path] = obj;
+                    foreach (ISubscriber sub in array) {
+                        sub.Notify(obj);
+                    }
+                }
             }
-
-            // copy list to array (in case someone subscribes/unsubscribes)
-            List<ISubscriber> list = subs[path] as List<ISubscriber>;
-            ISubscriber[] array = list.ToArray();
-            dict[path] = obj;
-            foreach (ISubscriber sub in array) {
-                sub.Notify(obj);
+            if (subs.ContainsKey("*")) {
+                List<ISubscriber> list = subs["*"] as List<ISubscriber>;
+                if (list != null) {
+                    ISubscriber[] array = list.ToArray();
+                    foreach (ISubscriber sub in array) {
+                        sub.Notify(obj);
+                    }
+                }
             }
             return true;
         }

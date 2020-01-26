@@ -16,12 +16,20 @@ namespace GodHands {
             return url;
         }
 
+        public virtual string GetText() {
+            return "";
+        }
+
         public virtual int GetPos() {
             return Model.GetPos(url);
         }
 
         public virtual void SetPos(int pos) {
             Model.SetPos(url, pos);
+        }
+
+        public virtual int GetLen() {
+            return 0;
         }
     }
 }
