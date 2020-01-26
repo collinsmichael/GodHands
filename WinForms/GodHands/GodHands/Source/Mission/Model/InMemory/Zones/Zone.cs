@@ -11,6 +11,7 @@ namespace GodHands {
         public List<Actor> actors = new List<Actor>();
         public List<ActorBodyPart> bodyparts = new List<ActorBodyPart>();
         public List<ActorArmour> armours = new List<ActorArmour>();
+        public List<ActorShield> shields = new List<ActorShield>();
         public List<ActorAccessory> accessories = new List<ActorAccessory>();
         public List<Texture> images = new List<Texture>();
 
@@ -120,6 +121,11 @@ namespace GodHands {
                 // ************************************************************
                 // Add shield
                 TreeNode tv_shield = node.Nodes.Add(url+"/Shield", "Shield", 11, 11);
+                ActorShield shield = new ActorShield(url+"/Shield", pos + 0x140, GetRec());
+                shields.Add(shield);
+                Model.Add(url+"/Shield", shield);
+                Publisher.Register(shield);
+
                 tv_shield.Nodes.Add(url+"/Shield/Gem1",  "Gem1",  24, 24);
                 tv_shield.Nodes.Add(url+"/Shield/Gem2",  "Gem2",  25, 25);
                 tv_shield.Nodes.Add(url+"/Shield/Gem3",  "Gem3",  26, 26);
@@ -127,10 +133,9 @@ namespace GodHands {
                 // ************************************************************
                 // Add accessory
                 TreeNode tv_accessory = node.Nodes.Add(url+"/Accessory", "Accessory", 10, 10);
-                string key = url+"/Accessory";
-                ActorAccessory accessory = new ActorAccessory(key, pos + 0x204, GetRec());
+                ActorAccessory accessory = new ActorAccessory(url+"/Accessory", pos + 0x204, GetRec());
                 accessories.Add(accessory);
-                Model.Add(key, accessory);
+                Model.Add(url+"/Accessory", accessory);
                 Publisher.Register(accessory);
                 return true;
             } catch {

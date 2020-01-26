@@ -110,6 +110,7 @@ namespace GodHands {
         public static ItemNamesList itemnames = new ItemNamesList();
         public static ItemNameAccessoryList accessory_names = new ItemNameAccessoryList();
         public static ItemNameArmourList armour_names = new ItemNameArmourList();
+        
         public static CategoryArmours category_armours = new CategoryArmours();
         public static TargetSphere targets = new TargetSphere();
         public static MaterialsList materials = new MaterialsList();
