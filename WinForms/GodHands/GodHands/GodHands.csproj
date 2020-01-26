@@ -73,6 +73,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Source\Mission\Experimental\Base.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Actors\ActorAccessory.cs" />
     <Compile Include="Source\Mission\Model\InMemory\Actors\ActorArmour.cs" />
     <Compile Include="Source\Mission\Model\InMemory\Lists\CategoryArmoursDropDown.cs" />
     <Compile Include="Source\Mission\Model\InMemory\Lists\DamageStats.cs" />
@@ -98,7 +99,7 @@
     <Compile Include="Source\Mission\Model\InMemory\Skills\SkillsList.cs" />
     <Compile Include="Source\Mission\Model\InMemory\Textures\Texture.cs" />
     <Compile Include="Source\Mission\Model\OnDisk\BIN.cs" />
-    <Compile Include="Source\Mission\View\Helpers\ListViewFlickerFree.cs">
+    <Compile Include="Source\Mission\View\Controls\ListViewFlickerFree.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Source\Mission\View\SubScribers\Subscriber_ListView.cs" />
@@ -177,38 +178,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\System\RamDisk\RamDisk_FileIO.cs" />
     <Compile Include="Source\System\DataBinding\UndoRedo.cs" />
-    <Compile Include="Source\Mission\View\TestForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Mission\View\TestForm.Designer.cs">
-      <DependentUpon>TestForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Mission\View\Formats\ZndEditor.cs">
+    <Compile Include="Source\Mission\View\Controls\ZndEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Source\Mission\View\Formats\ZndEditor.Designer.cs">
+    <Compile Include="Source\Mission\View\Controls\ZndEditor.Designer.cs">
       <DependentUpon>ZndEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Mission\View\Formats\ZndTool.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Source\Mission\View\Formats\ZndTool.Designer.cs">
-      <DependentUpon>ZndTool.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\Mission\View\Formats\Test.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Mission\View\Formats\Test.Designer.cs">
-      <DependentUpon>Test.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Source\Mission\View\Formats\Test.resx">
-      <DependentUpon>Test.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\Mission\View\Formats\ZndTool.resx">
-      <DependentUpon>ZndTool.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Source\Mission\View\Tools\ConfigTool.resx">
       <DependentUpon>ConfigTool.cs</DependentUpon>
     </EmbeddedResource>
@@ -222,14 +199,10 @@
       <DependentUpon>Frame.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Mission\View\TestForm.resx">
-      <DependentUpon>TestForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Source\Mission\View\Tools\LogTool.resx">
       <DependentUpon>LogTool.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Mission\View\Formats\ZndEditor.resx">
+    <EmbeddedResource Include="Source\Mission\View\Controls\ZndEditor.resx">
       <DependentUpon>ZndEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Mission\View\Tools\MonitorTool.resx">

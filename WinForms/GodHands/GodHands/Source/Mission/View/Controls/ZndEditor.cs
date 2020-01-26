@@ -76,79 +76,6 @@ namespace GodHands {
             sub_property.Notify(null);
         }
 
-        public void OpenZone() {
-            treeview.Nodes.Clear();
-            treeview.Nodes.Add(new TreeNode("Zone", 0, 0));
-            treeview.Nodes[0].Nodes.Add("Zone/Rooms", "Rooms", 1, 1);
-            treeview.Nodes[0].Nodes.Add("Zone/Actors", "Actors", 2, 2);
-            treeview.Nodes[0].Nodes.Add("Zone/Images", "Images", 3, 3);
-            treeview.Nodes[0].Expand();
-            TreeNode rooms  = treeview.Nodes[0].Nodes[0];
-            TreeNode actors = treeview.Nodes[0].Nodes[1];
-            TreeNode images = treeview.Nodes[0].Nodes[2];
-
-            treeview.Nodes[0].ToolTipText = "Zone";
-            rooms.ToolTipText = "List of rooms";
-            actors.ToolTipText = "List of actors";
-            images.ToolTipText = "Texture pack";
-
-            foreach (Room room in zone.rooms) {
-                string url = room.GetUrl();
-                TreeNode node = rooms.Nodes.Add(url, room.Name, 1, 1);
-                node.Nodes.Add(url+"/Geometry", "Geometry", 28, 28);
-                node.Nodes.Add(url+"/Collisions", "Collisions", 31, 31);
-                node.Nodes.Add(url+"/Lighting", "Lighting", 32, 32);
-                node.Nodes.Add(url+"/Doors", "Doors", 33, 34);
-                node.Nodes.Add(url+"/Enemies", "Enemies", 35, 35);
-                node.Nodes.Add(url+"/Script", "Script", 36, 36);
-                node.Nodes.Add(url+"/Treasure", "Treasure", 37, 37);
-            }
-            foreach (Actor actor in zone.actors) {
-                string url = actor.GetUrl();
-                string znd_file = actor.GetZndFileName();
-                TreeNode node = actors.Nodes.Add(url, actor.Name, 2, 2);
-                TreeNode bodyparts = node.Nodes.Add(url+"/BodyParts", "BodyParts", 5, 5);
-                TreeNode equipment = node.Nodes.Add(url+"/Equip", "Equipment", 39, 39);
-                TreeNode model = node.Nodes.Add(url+"/Model", znd_file, 28, 28);
-                TreeNode weapon = node.Nodes.Add(url+"/Weapon", "Weapon", 12, 12);
-                TreeNode shield = node.Nodes.Add(url+"/Shield", "Shield", 11, 11);
-                TreeNode accessory = node.Nodes.Add(url+"/Accessory", "Accessory", 10, 10);
-                bodyparts.Nodes.Add(url+"/BodyParts/L.ARM", "L.ARM", 8, 8);
-                bodyparts.Nodes.Add(url+"/BodyParts/R.ARM", "R.ARM", 8, 8);
-                bodyparts.Nodes.Add(url+"/BodyParts/HEAD", "HEAD", 6, 6);
-                bodyparts.Nodes.Add(url+"/BodyParts/BODY", "BODY", 7, 7);
-                bodyparts.Nodes.Add(url+"/BodyParts/LEGS", "LEGS", 9, 9);
-                bodyparts.Nodes.Add(url+"/BodyParts/OTHER", "OTHER", 5, 5);
-
-                equipment.Nodes.Add(url+"/Equip/L.ARM", "L.ARM", 8, 8);
-                equipment.Nodes.Add(url+"/Equip/R.ARM", "R.ARM", 8, 8);
-                equipment.Nodes.Add(url+"/Equip/HEAD", "HEAD", 6, 6);
-                equipment.Nodes.Add(url+"/Equip/BODY", "BODY", 7, 7);
-                equipment.Nodes.Add(url+"/Equip/LEGS", "LEGS",  9, 9);
-                equipment.Nodes.Add(url+"/Equip/OTHER", "OTHER",  9, 9);
-
-                model.Nodes.Add(url+"/Model/SHP", "SHP", 28, 28);
-                model.Nodes.Add(url+"/Model/WEP", "WEP", 28, 28);
-                model.Nodes.Add(url+"/Model/SEQ", "SEQ Common", 29, 29);
-                model.Nodes.Add(url+"/Model/SEQ", "SEQ Battle", 29, 29);
-
-                weapon.Nodes.Add(url+"/Weapon/Blade", "Blade", 13, 13);
-                weapon.Nodes.Add(url+"/Weapon/Grip",  "Grip",  14, 14);
-                weapon.Nodes.Add(url+"/Weapon/Gem1",  "Gem1",  24, 24);
-                weapon.Nodes.Add(url+"/Weapon/Gem2",  "Gem2",  25, 25);
-                weapon.Nodes.Add(url+"/Weapon/Gem3",  "Gem3",  26, 26);
-                shield.Nodes.Add(url+"/Shield/Gem1",  "Gem1",  24, 24);
-                shield.Nodes.Add(url+"/Shield/Gem2",  "Gem2",  25, 25);
-                shield.Nodes.Add(url+"/Shield/Gem3",  "Gem3",  26, 26);
-            }
-            foreach (Texture image in zone.images) {
-                int index = zone.images.IndexOf(image);
-                string text = "Image_"+index.ToString("D2");
-                int icon = (image.IsLookUpTable()) ? 4 : 3;
-                images.Nodes.Add(image.GetUrl(), text, icon, icon);
-            }
-        }
-
         private void OnTreeSelect(object sender, TreeViewEventArgs e) {
             node = e.Node;
             if (node != null) {
@@ -270,8 +197,7 @@ namespace GodHands {
                         return;
                     }
                     zone = Model.zones[url];
-                    zone.OpenZone();
-                    OpenZone();
+                    zone.OpenZone(treeview);
                 }
             }
         }

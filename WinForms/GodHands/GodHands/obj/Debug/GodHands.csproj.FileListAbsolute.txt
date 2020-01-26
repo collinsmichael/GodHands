@@ -32,7 +32,6 @@ Z:\2020\GodHands-2020-01-10-B\GodHands\GodHands\GodHands\obj\Debug\GenerateResou
 Z:\2020\GodHands\WinForms\GodHands\GodHands\bin\Debug\GodHands.exe
 Z:\2020\GodHands\WinForms\GodHands\GodHands\bin\Debug\GodHands.pdb
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\ResolveAssemblyReference.cache
-Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.TestForm.resources
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GenerateResource.read.1.tlog
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GenerateResource.write.1.tlog
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.exe
@@ -41,11 +40,9 @@ Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.DiskTool.resource
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.Frame.resources
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.LogTool.resources
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.ZndEditor.resources
-Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.ZndTool.resources
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.ConfigTool.resources
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.MonitorTool.resources
 Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.DatabaseTool.resources
-Z:\2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.Test.resources
 C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\bin\Debug\GodHands.exe
 C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\bin\Debug\GodHands.pdb
 C:\Users\Michael Collins\Desktop\Code\GodHands-2020\GodHands\WinForms\GodHands\GodHands\obj\Debug\GodHands.Test.resources
