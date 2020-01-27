@@ -89,29 +89,29 @@ namespace GodHands {
         [Category("01 Equipment")]
         [DisplayName("STR")]
         [Description("Strength bonus")]
-        public byte STR {
-            get { return RamDisk.GetU8(GetPos()+0x05); }
-            set { UndoRedo.Exec(new BindU8(this, 0x05, value)); }
+        public sbyte STR {
+            get { return RamDisk.GetS8(GetPos()+0x05); }
+            set { UndoRedo.Exec(new BindS8(this, 0x05, value)); }
         }
 
         [Category("01 Equipment")]
         [DisplayName("INT")]
         [Description("Intelligence bonus")]
-        public byte INT {
-            get { return RamDisk.GetU8(GetPos()+0x06); }
-            set { UndoRedo.Exec(new BindU8(this, 0x06, value)); }
+        public sbyte INT {
+            get { return RamDisk.GetS8(GetPos()+0x06); }
+            set { UndoRedo.Exec(new BindS8(this, 0x06, value)); }
         }
 
         [Category("01 Equipment")]
         [DisplayName("AGL")]
         [Description("Agility bonus")]
-        public byte AGL {
-            get { return RamDisk.GetU8(GetPos()+0x07); }
-            set { UndoRedo.Exec(new BindU8(this, 0x07, value)); }
+        public sbyte AGL {
+            get { return RamDisk.GetS8(GetPos()+0x07); }
+            set { UndoRedo.Exec(new BindS8(this, 0x07, value)); }
         }
 
         [Category("01 Equipment")]
-        [DisplayName("CurDP")]
+        [DisplayName("Cur DP")]
         [Description("Damange points")]
         public double CurDP {
             get { return RamDisk.GetS16(GetPos()+0x08)/100.0; }
@@ -119,15 +119,15 @@ namespace GodHands {
         }
 
         [Category("01 Equipment")]
-        [DisplayName("MaxDP")]
-        [Description("Maximum amange points")]
+        [DisplayName("Max DP")]
+        [Description("Maximum damange points")]
         public double MaxDP {
             get { return RamDisk.GetS16(GetPos()+0x0A)/100.0; }
             set { UndoRedo.Exec(new BindS16(this, 0x0A, (short)(value*100))); }
         }
 
         [Category("01 Equipment")]
-        [DisplayName("CurPP")]
+        [DisplayName("Cur PP")]
         [Description("Phantom points")]
         public double CurPP {
             get { return RamDisk.GetS16(GetPos()+0x0C)/100.0; }
@@ -135,7 +135,7 @@ namespace GodHands {
         }
 
         [Category("01 Equipment")]
-        [DisplayName("MaxDP")]
+        [DisplayName("Max PP")]
         [Description("Maximum phantom points")]
         public double MaxPP {
             get { return RamDisk.GetS16(GetPos()+0x0E)/100.0; }

@@ -41,97 +41,97 @@ namespace GodHands {
         [Category("02 Types")]
         [DisplayName("Blunt")]
         [Description("Resistence to blunt attacks")]
-        public byte Blunt {
-            get { return RamDisk.GetU8(GetPos()+0x05); }
-            set { UndoRedo.Exec(new BindU8(this, 0x05, value)); }
+        public sbyte Blunt {
+            get { return RamDisk.GetS8(GetPos()+0x05); }
+            set { UndoRedo.Exec(new BindS8(this, 0x05, value)); }
         }
 
         [Category("02 Types")]
         [DisplayName("Edged")]
         [Description("Resistence to edged attacks")]
-        public byte Edged {
-            get { return RamDisk.GetU8(GetPos()+0x06); }
-            set { UndoRedo.Exec(new BindU8(this, 0x06, value)); }
+        public sbyte Edged {
+            get { return RamDisk.GetS8(GetPos()+0x06); }
+            set { UndoRedo.Exec(new BindS8(this, 0x06, value)); }
         }
 
         [Category("02 Types")]
         [DisplayName("Piercing")]
         [Description("Resistence to piercing attacks")]
-        public byte Piercing {
-            get { return RamDisk.GetU8(GetPos()+0x07); }
-            set { UndoRedo.Exec(new BindU8(this, 0x07, value)); }
+        public sbyte Piercing {
+            get { return RamDisk.GetS8(GetPos()+0x07); }
+            set { UndoRedo.Exec(new BindS8(this, 0x07, value)); }
         }
 
         [Category("02 Types")]
         [DisplayName("Padding")]
         [Description("Unused")]
-        public byte TypePadding {
-            get { return RamDisk.GetU8(GetPos()+0x04); }
-            set { UndoRedo.Exec(new BindU8(this, 0x04, value)); }
+        public sbyte TypePadding {
+            get { return RamDisk.GetS8(GetPos()+0x04); }
+            set { UndoRedo.Exec(new BindS8(this, 0x04, value)); }
         }
 
         [Category("03 Affinities")]
         [DisplayName("Earth")]
         [Description("Earth elemental affinity")]
-        public byte Earth {
-            get { return RamDisk.GetU8(GetPos()+0x08); }
-            set { UndoRedo.Exec(new BindU8(this, 0x08, value)); }
+        public sbyte Earth {
+            get { return RamDisk.GetS8(GetPos()+0x08); }
+            set { UndoRedo.Exec(new BindS8(this, 0x08, value)); }
         }
 
         [Category("03 Affinities")]
         [DisplayName("Air")]
         [Description("Air elemental affinity")]
-        public byte Air {
-            get { return RamDisk.GetU8(GetPos()+0x09); }
-            set { UndoRedo.Exec(new BindU8(this, 0x09, value)); }
+        public sbyte Air {
+            get { return RamDisk.GetS8(GetPos()+0x09); }
+            set { UndoRedo.Exec(new BindS8(this, 0x09, value)); }
         }
 
         [Category("03 Affinities")]
         [DisplayName("Fire")]
         [Description("fire elemental affinity")]
-        public byte Fire {
-            get { return RamDisk.GetU8(GetPos()+0x0A); }
-            set { UndoRedo.Exec(new BindU8(this, 0x0A, value)); }
+        public sbyte Fire {
+            get { return RamDisk.GetS8(GetPos()+0x0A); }
+            set { UndoRedo.Exec(new BindS8(this, 0x0A, value)); }
         }
 
         [Category("03 Affinities")]
         [DisplayName("Water")]
         [Description("Water elemental affinity")]
-        public byte Water {
-            get { return RamDisk.GetU8(GetPos()+0x0B); }
-            set { UndoRedo.Exec(new BindU8(this, 0x0B, value)); }
+        public sbyte Water {
+            get { return RamDisk.GetS8(GetPos()+0x0B); }
+            set { UndoRedo.Exec(new BindS8(this, 0x0B, value)); }
         }
 
         [Category("03 Affinities")]
         [DisplayName("Physical")]
         [Description("Physical affinity")]
-        public byte Physical {
-            get { return RamDisk.GetU8(GetPos()+0x0C); }
-            set { UndoRedo.Exec(new BindU8(this, 0x0C, value)); }
+        public sbyte Physical {
+            get { return RamDisk.GetS8(GetPos()+0x0C); }
+            set { UndoRedo.Exec(new BindS8(this, 0x0C, value)); }
         }
 
         [Category("03 Affinities")]
         [DisplayName("Light")]
         [Description("Light affinity")]
-        public byte Light {
-            get { return RamDisk.GetU8(GetPos()+0x0D); }
-            set { UndoRedo.Exec(new BindU8(this, 0x0D, value)); }
+        public sbyte Light {
+            get { return RamDisk.GetS8(GetPos()+0x0D); }
+            set { UndoRedo.Exec(new BindS8(this, 0x0D, value)); }
         }
 
         [Category("03 Affinities")]
         [DisplayName("Dark")]
         [Description("Dark affinity")]
-        public byte Dark {
-            get { return RamDisk.GetU8(GetPos()+0x0E); }
-            set { UndoRedo.Exec(new BindU8(this, 0x0E, value)); }
+        public sbyte Dark {
+            get { return RamDisk.GetS8(GetPos()+0x0E); }
+            set { UndoRedo.Exec(new BindS8(this, 0x0E, value)); }
         }
 
         [Category("03 Affinities")]
         [DisplayName("Padding")]
         [Description("Unused")]
-        public byte AffinityPadding {
-            get { return RamDisk.GetU8(GetPos()+0x0F); }
-            set { UndoRedo.Exec(new BindU8(this, 0x0F, value)); }
+        public sbyte AffinityPadding {
+            get { return RamDisk.GetS8(GetPos()+0x0F); }
+            set { UndoRedo.Exec(new BindS8(this, 0x0F, value)); }
         }
 
         [Category("04 Skills")]

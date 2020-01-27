@@ -86,7 +86,7 @@ namespace GodHands {
                 foreach (Texture image in zone.images) {
                     if (image.GetUrl() == url) {
                         texture = image;
-                        texture2d = image.ToImage();
+                        texture2d = image.ToImage(true);
                         picturebox.Invalidate();
                     }
                 }
@@ -131,18 +131,10 @@ namespace GodHands {
                 InMemory obj = Model.Get(node.Name) as InMemory;
                 if (obj != null) {
                     ofd.Title = "Import File";
-                    ofd.Filter = "VS Files|*.VS|"
-                               + "ARM Files|*.ARM|BIN Files|*.BIN|"
-                               + "DAT Files|*.DAT|MPD Files|*.MPD|"
-                               + "PRG Files|*.PRG|WEP Files|*.WEP|"
-                               + "SEQ Files|*.SEQ|SHP Files|*.SHP|"
-                               + "ZND Files|*.ZND|ZUD Files|*.ZUD|"
-                               + "All Files|*.*";
+                    ofd.Filter = obj.GetExportFilter();
+                    ofd.FileName = obj.GetExportName();
                     if (ofd.ShowDialog() == DialogResult.OK) {
-                        byte[] raw = File.ReadAllBytes(ofd.FileName);
-                        if (raw != null) {
-                            obj.ImportRaw(raw);
-                        }
+                        obj.ImportRaw(ofd.FileName);
                     }
                 }
             }
@@ -153,21 +145,10 @@ namespace GodHands {
                 InMemory obj = Model.Get(node.Name) as InMemory;
                 if (obj != null) {
                     sfd.Title = "Export File";
-                    sfd.Filter = "VS Files|*.VS|"
-                               + "ARM Files|*.ARM|BIN Files|*.BIN|"
-                               + "DAT Files|*.DAT|MPD Files|*.MPD|"
-                               + "PRG Files|*.PRG|WEP Files|*.WEP|"
-                               + "SEQ Files|*.SEQ|SHP Files|*.SHP|"
-                               + "ZND Files|*.ZND|ZUD Files|*.ZUD|"
-                               + "All Files|*.*";
-                    if (node.Text.Contains("Image_")) {
-                        sfd.Filter = "BMP Images|*.bmp|All Files|*.*";
-                    }
+                    sfd.Filter = obj.GetExportFilter();
+                    sfd.FileName = obj.GetExportName();
                     if (sfd.ShowDialog() == DialogResult.OK) {
-                        byte[] raw = obj.ExportRaw();
-                        if (raw != null) {
-                            File.WriteAllBytes(sfd.FileName, raw);
-                        }
+                        obj.ExportRaw(sfd.FileName);
                     }
                 }
             }

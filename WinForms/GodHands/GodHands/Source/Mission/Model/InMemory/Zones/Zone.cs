@@ -68,7 +68,7 @@ namespace GodHands {
 
                 // ************************************************************
                 // Add the ZUD file
-                TreeNode tv_model = node.Nodes.Add(url+"/Model", znd_file, 28, 28);
+                TreeNode tv_model = node.Nodes.Add(url+"/Model", zud.GetFileName(), 28, 28);
                 tv_model.Nodes.Add(url+"/Model/SHP", "SHP", 28, 28);
                 tv_model.Nodes.Add(url+"/Model/WEP", "WEP", 28, 28);
                 tv_model.Nodes.Add(url+"/Model/SEQ", "SEQ Common", 29, 29);
@@ -184,11 +184,12 @@ namespace GodHands {
         }
 
         public bool OpenZone(TreeView treeview) {
-            Iso9660.ReadFile(GetRec());
+            DirRec rec = GetRec();
+            Iso9660.ReadFile(rec);
             int pos = znd.GetPos();
 
             treeview.Nodes.Clear();
-            TreeNode root = new TreeNode("Zone", 0, 0);
+            TreeNode root = new TreeNode(rec.GetFileName(), 0, 0);
             TreeNode tv_rooms = root.Nodes.Add("Zone/Rooms", "Rooms", 1, 1);
             TreeNode tv_actor = root.Nodes.Add("Zone/Actors", "Actors", 2, 2);
             TreeNode tv_image = root.Nodes.Add("Zone/Images", "Images", 3, 3);
@@ -197,7 +198,6 @@ namespace GodHands {
             tv_image.ToolTipText = "Texture pack";
             treeview.Nodes.Add(root);
             root.ToolTipText = "Zone";
-            root.Expand();
 
             int ptr_mpd = RamDisk.GetS32(pos+0x00);
             int len_mpd = RamDisk.GetS32(pos+0x04);
@@ -223,7 +223,7 @@ namespace GodHands {
                 int len = RamDisk.GetS32(pos + ptrx);
                 try {
                     string key = GetUrl()+"/Images/Image_"+i;
-                    Texture obj = new Texture(key, ptrx+4, len, GetRec());
+                    Texture obj = new Texture(key, ptrx+4, len, i, GetRec());
                     images.Add(obj as Texture);
                     Model.Add(key, obj);
                     Publisher.Register(obj);
@@ -237,6 +237,12 @@ namespace GodHands {
                 int icon = (img.IsLookUpTable()) ? 4 : 3;
                 tv_image.Nodes.Add(img.GetUrl(), text, icon, icon);
             }
+
+            root.Expand();
+            tv_rooms.Expand();
+            tv_actor.Expand();
+            tv_image.Expand();
+            root.EnsureVisible();
             return true;
         }
     }
