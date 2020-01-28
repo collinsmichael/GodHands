@@ -3,15 +3,33 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace GodHands {
     public class Actor : InMemory {
+        private Zone zone;
         private ZUD zud;
 
-        public Actor(string url, int pos, DirRec rec, DirRec zud_rec):
+        public Actor(string url, int pos, DirRec rec,
+        Zone zone, int zoneid, int actorid, DirRec zud_rec):
         base(url, pos, rec) {
+            this.zone = zone;
+            this.ZoneId = zoneid;
+            this.ActorId = actorid;
             zud = Model.zuds[zud_rec.GetUrl()];
         }
+
+        [ReadOnly(true)]
+        [Category(" INTERNAL")]
+        [DisplayName("Zone ID")]
+        [Description("Zone number")]
+        public int ZoneId { get; set; }
+
+        [ReadOnly(true)]
+        [Category(" INTERNAL")]
+        [DisplayName("Actor ID")]
+        [Description("Actor number inside this zone")]
+        public int ActorId { get; set; }
 
         public override string GetText() {
             return Name;

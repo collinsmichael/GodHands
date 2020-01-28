@@ -179,21 +179,5 @@ namespace GodHands {
                 UndoRedo.Exec(new BindU8(this, 0xF1, val));
             }
         }
-
-        [Category("01 Equipment")]
-        [DisplayName("Unknown 1")]
-        [Description("Unknown")]
-        public byte Unknown_1 {
-            get { return RamDisk.GetU8(GetPos()+0xF2); }
-            set { UndoRedo.Exec(new BindU8(this, 0xF2, value)); }
-        }
-
-        [Category("01 Equipment")]
-        [DisplayName("Unknown 2")]
-        [Description("Unknown")]
-        public byte Unknown_2 {
-            get { return RamDisk.GetU8(GetPos()+0xF3); }
-            set { UndoRedo.Exec(new BindU8(this, 0xF3, value)); }
-        }
     }
 }

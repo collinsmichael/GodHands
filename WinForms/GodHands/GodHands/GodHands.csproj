@@ -115,6 +115,13 @@
     <Compile Include="Source\Mission\Model\Helpers\Kildean.cs" />
     <Compile Include="Source\Mission\Model\Database\Skills\Skill.cs" />
     <Compile Include="Source\Mission\Model\Database\Skills\SkillsList.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Rooms\RoomClearedSection.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Rooms\RoomDoorSection.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Rooms\RoomEnemy.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Rooms\RoomEnemySection.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Rooms\RoomMainSection.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Rooms\RoomScriptSection.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Rooms\RoomTreasureSection.cs" />
     <Compile Include="Source\Mission\Model\InMemory\Textures\Texture.cs" />
     <Compile Include="Source\Mission\Model\OnDisk\BIN.cs" />
     <Compile Include="Source\Mission\View\Controls\ListViewFlickerFree.cs">

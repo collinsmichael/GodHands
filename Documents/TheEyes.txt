@@ -1,0 +1,75 @@
+No problem. 
+
+Yeah, I was going to tell you about the ITEMHELP editor, but I see you're aware.
+
+I'll start with the enemy string then.
+
+There are several bytes that remain unknown to me, but what I do know is enough to get by. I'll comment on each one, from left to right, with different examples. Keep in mind this info applies only to enemies (or allies, like Sydney), because the strings for puzzle cubes are very different, even though they are listed in the enemy section along regular critters.
+
+Let's look at The Crumbling Market (MAP241.MPD): https://imgur.com/2vXiLpz
+
+The 1st byte is always 00, from what I've observed.
+
+The 2nd byte indexes the enemy for that particular MPD. Not to be confused with enemy ID; that's determined by the zone file. The first string is 00, second string 01, third 02 and so on. I suppose this is to sort out the strings from one another.
+
+The 3rd and 4th bytes are always 00.
+
+The 5th byte is the enemy ID, as per the Zone index. In this case, 0x19 means the first enemy string is for CHR0019 in ZONE048.ZND, aka the Dullahan.
+
+The 6th byte is always 00 for regular enemies. For bosses you will find a different value here, but I don't really know its purpose yet.
+
+The 7th byte. You can see the Dullahan string has a 02 there. The 7th byte is used in conjunction with the 9th byte, to set a condition for the enemy to appear. These conditions are related to your progress in the game, and are often linked to specific cutscenes and events. I call it the story counter. JTilton called it "'Story Event Condition".
+
+I think you already familiar with this counter. In this case, "02" means the Dullahan will be appear before the event happens. As for which event, that is determined by the 9th byte. So let's skip to the 9th byte, then we'll go back to the 8th.
+
+In the 9th byte we have "4C", which stands for the cutscene in the Great Cathedral, where Sydney confronts Guildenstern, teleports Hardin and co., then gets stabbed by Guildy. (Btw, the Enemy FAQ is incorrect: it says "before Ashley enters Temple of Kiltia"). So this combination of the 7th and 9th byte, 02-4C, means the Dullahan will only appear in the Crumbling Market before you watch that cutscene.
+
+Looking at the second and third enemy strings, you can see that enemies 1A and 1D (Lich and Lich Lord), have a different condition set on their 7th and 9th bytes. 03-4D means they will only appear after you watch that same cutscene.
+
+Now for the 8th byte. It can be used in conjunction with the 11th byte, or with both the 11th and 12th bytes at the same time. 
+
+The 8th byte + 11th byte combo is used for setting conditions related to Ashley's HP. The Iron Maiden B2 rooms are good examples of this. 
+
+Here's Tormentum Insomniae (MAP403.MPD): https://imgur.com/axHoaWC
+
+The first couple of strings have the same condition: 02-96. "02" on the 8th byte means "if Ashley has x amount of HP or more", where x is determined by the 11th byte. Here, 96(h) = 150(d). So, enemies with IDs 12 and 13 (Ogre and Ogre Lord) will only be present if Ashley has 150 HP or more when he enters the room.
+
+OTOH, the third string sets a condition of 01-95 for enemy 1D (Last Crusader). Which means he will only appear if Ashley has 149 HP or less.
+
+Now, the 8th byte + 11th byte + 12th byte combination is used for "Local Event Conditions" as JTilton called them. This is related to whether you have visited a specific room or not. In some rare cases, it is related to whether you have collected a particular Sigil.
+
+This time we'll look at Hewn From Nature (MAP203.MPD): https://imgur.com/wLGdth8
+
+This one is interesting because it employs both Story Event and Local Event Conditions. Enemy IDs 01, 02 and 03 (Grissom, Dark Crusader and Sydney) have both the condition 02-2E set on their 7th and 9th bytes (Story Event), and 04-BB-54 (Local Event) set on their 8th-11th-12th bytes. In practice, they amount to the same thing: before Ashley visits Hewn From Nature. 
+
+More in the next PM (character limit reached).
+
+Sent by: the_E_y_Es on 1/28/2020 5:44:59 PM
+This message was first read on 1/28/2020 6:27:42 PM
+
+
+
+
+
+
+
+Notice how the other enemies (IDs 07, 07 and 06; two Basilisks and a Fire Elemental) are set on the Story Event Condition alone: 03-2F. That's enough to avoid conflict between the boss fight and this encounter. 
+
+If, instead, we wanted to employ a Local Event Condition for the Basilisks and Fire Elemental, it would look like this: 05-BB-58. Where am I getting this from? Look at the "before" Local Event Condition up there: 04-BB-54. Now add one to the 8th byte, and four to the 12th. The 11th stays the same. That's the corresponding "after" Local Event Condition.
+
+As for the 10th byte, I don't really know what it does. I think it's always 00, too.
+
+The 13th and 15th bytes determine the position of the enemy in the room. I suppose you could call it the x and z coordinates, since height is determined by the corresponding tile it happens to be on.
+
+14th byte -- never seen it used, so yeah. Always 00.
+
+The 16th byte determines which direction the enemy will be facing when you enter the room.
+
+00: south
+01: west
+02: north
+03: east
+
+Later on I will cover misc drops, drop rates, model texture and model state.
+Sent by: the_E_y_Es on 1/28/2020 5:49:19 PM
+This message was first read on 1/28/2020 7:49:12 PM

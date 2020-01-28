@@ -7,6 +7,8 @@ using System.Windows.Forms;
 namespace GodHands {
     public class Zone : InMemory {
         private ZND znd;
+        private int zoneid;
+
         public List<Room> rooms = new List<Room>();
         public List<Actor> actors = new List<Actor>();
         public List<ActorBodyPart> bodyparts = new List<ActorBodyPart>();
@@ -23,6 +25,10 @@ namespace GodHands {
         public Zone(string url, int pos, DirRec rec):
         base(url, pos, rec) {
             znd = Model.znds[rec.GetUrl()];
+
+            string file = rec.GetFileName();
+            string text = file.Substring(4, file.IndexOf('.')-4);
+            zoneid = int.Parse(text);
         }
 
         public override int GetLen() {
@@ -34,19 +40,13 @@ namespace GodHands {
             try {
                 string url = GetUrl()+"/Room/"+id;
                 DirRec mpd = Iso9660.GetByLba(lba);
-                Room obj = new Room(mpd.GetUrl(), mpd.LbaData*2048, mpd);
+                Room obj = new Room(mpd.GetUrl(), 0, mpd, this, zoneid, id);
                 rooms.Add(obj);
                 Model.Add(url, obj);
                 Publisher.Register(obj);
 
                 TreeNode node = root.Nodes.Add(url, mpd.GetFileName(), 1, 1);
-                node.Nodes.Add(url+"/Geometry", "Geometry", 28, 28);
-                node.Nodes.Add(url+"/Collisions", "Collisions", 31, 31);
-                node.Nodes.Add(url+"/Lighting", "Lighting", 32, 32);
-                node.Nodes.Add(url+"/Doors", "Doors", 33, 34);
-                node.Nodes.Add(url+"/Enemies", "Enemies", 35, 35);
-                node.Nodes.Add(url+"/Script", "Script", 36, 36);
-                node.Nodes.Add(url+"/Treasure", "Treasure", 37, 37);
+                obj.AddRoom(node, url, id, pos);
                 return true;
             } catch {
                 return false;
@@ -60,7 +60,7 @@ namespace GodHands {
                 string url = GetUrl()+"/Actors/Actor_"+id;
                 string znd_file = GetRec().GetFileName();
                 DirRec zud = Iso9660.GetByLba(lba);
-                Actor obj = new Actor(url, pos, GetRec(), zud);
+                Actor obj = new Actor(url, pos, GetRec(), this, zoneid, id, zud);
                 actors.Add(obj);
                 Model.Add(url, obj);
                 Publisher.Register(obj);

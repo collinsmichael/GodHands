@@ -12,6 +12,8 @@ namespace GodHands {
         public InMemory(string url, int pos, DirRec rec) : base(url, pos) {
             this.rec = rec;
             display_text = url.Substring(url.LastIndexOf('/')+1);
+            Model.Add(url, this);
+            Publisher.Register(this);
         }
 
         public override string GetText() {
