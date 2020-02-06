@@ -6,8 +6,28 @@ using System.Text;
 
 namespace GodHands {
     public class RoomEnemy : InMemory {
-        public RoomEnemy(string url, int pos, DirRec rec):
+        private Zone zone;
+        private Room room;
+
+        public RoomEnemy(string url, int pos, DirRec rec, Zone zone, Room room):
         base(url, pos, rec) {
+            this.zone = zone;
+            this.room = room;
+        }
+
+        public override string GetText() {
+            int enemy_zid = ZndEnemyID_04;
+            string name = "(" + enemy_zid.ToString("X2") + ") ";
+            if ((enemy_zid >= 0) && (enemy_zid < zone.actors.Count)) {
+                name = name + zone.actors[enemy_zid].Name;
+            } else {
+                name = name + "Out of bounds";
+            }
+            return name;
+        }
+
+        public override int GetLen() {
+            return 0x28;
         }
 
 //EnemySection:
@@ -19,23 +39,23 @@ namespace GodHands {
 //0x01,0x01,0xFF,0x02,0x01,0x00,0x00,0x02
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_00")]
-        [Description("Unknown")]
+        [DisplayName("00 Deleted")]
+        [Description("Always 00 if enemy exists and non-zero if enemy was deleted")]
         public byte Unknown_00 {
             get { return RamDisk.GetU8(GetPos()+0x00); }
             set { UndoRedo.Exec(new BindU8(this, 0x00, value)); }
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_01")]
-        [Description("Unknown")]
-        public byte Unknown_01 {
+        [DisplayName("01 Mpd Enemy ID")]
+        [Description("ID used within this room")]
+        public byte MpdEnemyID_01 {
             get { return RamDisk.GetU8(GetPos()+0x01); }
             set { UndoRedo.Exec(new BindU8(this, 0x01, value)); }
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_02")]
+        [DisplayName("02 Unknown (Always 00)")]
         [Description("Unknown")]
         public byte Unknown_02 {
             get { return RamDisk.GetU8(GetPos()+0x02); }
@@ -43,7 +63,7 @@ namespace GodHands {
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_03")]
+        [DisplayName("03 Unknown (Always 00)")]
         [Description("Unknown")]
         public byte Unknown_03 {
             get { return RamDisk.GetU8(GetPos()+0x03); }
@@ -51,47 +71,48 @@ namespace GodHands {
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_04")]
-        [Description("Unknown")]
-        public byte Unknown_04 {
+        [DisplayName("04 Znd Enemy ID")]
+        [Description("ID used by ZND files")]
+        public byte ZndEnemyID_04 {
+            // TODO Use Zone.GetEnemyName(id)
             get { return RamDisk.GetU8(GetPos()+0x04); }
             set { UndoRedo.Exec(new BindU8(this, 0x04, value)); }
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_05")]
-        [Description("Unknown")]
-        public byte Unknown_05 {
+        [DisplayName("05 Unknown (Bosses)")]
+        [Description("Always zero for normal enemies but bosses are non zero")]
+        public byte UnknownBosses_05 {
             get { return RamDisk.GetU8(GetPos()+0x05); }
             set { UndoRedo.Exec(new BindU8(this, 0x05, value)); }
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_06")]
+        [DisplayName("06 Story Trigger Param")]
         [Description("Unknown")]
-        public byte Unknown_06 {
+        public byte StoryEventOutcome_06 {
             get { return RamDisk.GetU8(GetPos()+0x06); }
             set { UndoRedo.Exec(new BindU8(this, 0x06, value)); }
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_07")]
+        [DisplayName("07 Locale Trigger")]
         [Description("Unknown")]
-        public byte Unknown_07 {
+        public byte AshleyLocaleTrigger_07 {
             get { return RamDisk.GetU8(GetPos()+0x07); }
             set { UndoRedo.Exec(new BindU8(this, 0x07, value)); }
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_08")]
+        [DisplayName("08 Story Trigger")]
         [Description("Unknown")]
-        public byte Unknown_08 {
+        public byte StoryEventTrigger_08 {
             get { return RamDisk.GetU8(GetPos()+0x08); }
             set { UndoRedo.Exec(new BindU8(this, 0x08, value)); }
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_09")]
+        [DisplayName("09 Unknown (Always 00)")]
         [Description("Unknown")]
         public byte Unknown_09 {
             get { return RamDisk.GetU8(GetPos()+0x09); }
@@ -99,31 +120,31 @@ namespace GodHands {
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_0A")]
+        [DisplayName("0A Locale Trigger Param 1")]
         [Description("Unknown")]
-        public byte Unknown_0A {
+        public byte LocaleTriggerParam1_0A {
             get { return RamDisk.GetU8(GetPos()+0x0A); }
             set { UndoRedo.Exec(new BindU8(this, 0x0A, value)); }
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_0B")]
+        [DisplayName("0B Locale Trigger Param 2")]
         [Description("Unknown")]
-        public byte Unknown_0B {
+        public byte LocaleTriggerParam2_0B {
             get { return RamDisk.GetU8(GetPos()+0x0B); }
             set { UndoRedo.Exec(new BindU8(this, 0x0B, value)); }
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_0C")]
-        [Description("Unknown")]
-        public byte Unknown_0C {
+        [DisplayName("0C PosX")]
+        [Description("Starting position within the room")]
+        public byte PosX_0C {
             get { return RamDisk.GetU8(GetPos()+0x0C); }
             set { UndoRedo.Exec(new BindU8(this, 0x0C, value)); }
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_0D")]
+        [DisplayName("0D Unknown")]
         [Description("Unknown")]
         public byte Unknown_0D {
             get { return RamDisk.GetU8(GetPos()+0x0D); }
@@ -131,31 +152,31 @@ namespace GodHands {
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_0E")]
-        [Description("Unknown")]
-        public byte Unknown_0E {
+        [DisplayName("0E PosY")]
+        [Description("Starting position within the room")]
+        public byte PosY_0E {
             get { return RamDisk.GetU8(GetPos()+0x0E); }
             set { UndoRedo.Exec(new BindU8(this, 0x0E, value)); }
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_0F")]
-        [Description("Unknown")]
-        public byte Unknown_0F {
+        [DisplayName("0F Direction")]
+        [Description("Can be north/south/east/west")]
+        public byte FacingDirection_0F {
             get { return RamDisk.GetU8(GetPos()+0x0F); }
             set { UndoRedo.Exec(new BindU8(this, 0x0F, value)); }
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_10")]
-        [Description("Unknown")]
-        public byte Unknown_10 {
+        [DisplayName("10 Aggression")]
+        [Description("Determines how aggressive and enemy is")]
+        public byte Behavior_10 {
             get { return RamDisk.GetU8(GetPos()+0x10); }
             set { UndoRedo.Exec(new BindU8(this, 0x10, value)); }
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_11")]
+        [DisplayName("11 Unknown (Always 32)")]
         [Description("Unknown")]
         public byte Unknown_11 {
             get { return RamDisk.GetU8(GetPos()+0x11); }
@@ -163,7 +184,7 @@ namespace GodHands {
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_12")]
+        [DisplayName("12 Unknown (Always 63)")]
         [Description("Unknown")]
         public byte Unknown_12 {
             get { return RamDisk.GetU8(GetPos()+0x12); }
@@ -171,7 +192,7 @@ namespace GodHands {
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_13")]
+        [DisplayName("13 Unknown (Always 00)")]
         [Description("Unknown")]
         public byte Unknown_13 {
             get { return RamDisk.GetU8(GetPos()+0x13); }
@@ -179,7 +200,7 @@ namespace GodHands {
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_14")]
+        [DisplayName("14 Unknown (Always 00)")]
         [Description("Unknown")]
         public byte Unknown_14 {
             get { return RamDisk.GetU8(GetPos()+0x14); }
@@ -187,7 +208,7 @@ namespace GodHands {
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_15")]
+        [DisplayName("15 Unknown (Always 29 or 61)")]
         [Description("Unknown")]
         public byte Unknown_15 {
             get { return RamDisk.GetU8(GetPos()+0x15); }
@@ -195,7 +216,7 @@ namespace GodHands {
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_16")]
+        [DisplayName("16 Unknown (Always 00)")]
         [Description("Unknown")]
         public byte Unknown_16 {
             get { return RamDisk.GetU8(GetPos()+0x16); }
@@ -203,7 +224,7 @@ namespace GodHands {
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_17")]
+        [DisplayName("17 Unknown (Always 00)")]
         [Description("Unknown")]
         public byte Unknown_17 {
             get { return RamDisk.GetU8(GetPos()+0x17); }
@@ -211,7 +232,7 @@ namespace GodHands {
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_18")]
+        [DisplayName("18 Unknown (Always 00)")]
         [Description("Unknown")]
         public byte Unknown_18 {
             get { return RamDisk.GetU8(GetPos()+0x18); }
@@ -219,87 +240,111 @@ namespace GodHands {
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_19")]
+        [DisplayName("19 Unknown (Always 00)")]
         [Description("Unknown")]
         public byte Unknown_19 {
             get { return RamDisk.GetU8(GetPos()+0x19); }
             set { UndoRedo.Exec(new BindU8(this, 0x19, value)); }
         }
 
+        [ReadOnly(true)]
         [Category("01 Enemy")]
-        [DisplayName("Unknown_1A")]
-        [Description("Unknown")]
-        public byte Unknown_1A {
-            get { return RamDisk.GetU8(GetPos()+0x1A); }
-            set { UndoRedo.Exec(new BindU8(this, 0x1A, value)); }
+        [DisplayName("1A Always Drop 1 Raw")]
+        [Description("Item name of drop 1")]
+        public ushort AlwaysDrop1Raw_1A {
+            get { return RamDisk.GetU16(GetPos()+0x1A); }
+            set { UndoRedo.Exec(new BindU16(this, 0x1A, value)); }
+        }
+        [Category("01 Enemy")]
+        [DisplayName("1A Always Drop 1")]
+        [Description("Item name of drop 1")]
+        [DefaultValue("")]
+        [TypeConverter(typeof(ItemNamesListDropDown))]
+        public string AlwaysDrop1_1A {
+            get {
+                short index = RamDisk.GetS16(GetPos()+0x1A);
+                return Model.itemnames.GetName(index);
+            }
+            set {
+                short index = (short)Model.itemnames.GetIndexByName(value);
+                UndoRedo.Exec(new BindS16(this, 0x1A, index));
+            }
+        }
+
+        [ReadOnly(true)]
+        [Category("01 Enemy")]
+        [DisplayName("1C Always Drop 2 Raw")]
+        [Description("Item name of drop 2")]
+        public ushort AlwaysDrop2Raw_1C {
+            get { return RamDisk.GetU16(GetPos()+0x1C); }
+            set { UndoRedo.Exec(new BindU16(this, 0x1C, value)); }
+        }
+        [Category("01 Enemy")]
+        [DisplayName("1C Always Drop 2")]
+        [Description("Item name of drop 2")]
+        [DefaultValue("")]
+        [TypeConverter(typeof(ItemNamesListDropDown))]
+        public string AlwaysDrop2_1C {
+            get {
+                short index = RamDisk.GetS16(GetPos()+0x1C);
+                return Model.itemnames.GetName(index);
+            }
+            set {
+                short index = (short)Model.itemnames.GetIndexByName(value);
+                UndoRedo.Exec(new BindS16(this, 0x1C, index));
+            }
+        }
+
+        [ReadOnly(true)]
+        [Category("01 Enemy")]
+        [DisplayName("1E Random Drop Raw")]
+        [Description("Item name of random drop")]
+        public ushort RandomDropRaw_1E {
+            get { return RamDisk.GetU16(GetPos()+0x1E); }
+            set { UndoRedo.Exec(new BindU16(this, 0x1E, value)); }
+        }
+        [Category("01 Enemy")]
+        [DisplayName("1E Random Drop")]
+        [Description("Item name of random drop")]
+        [DefaultValue("")]
+        [TypeConverter(typeof(ItemNamesListDropDown))]
+        public string RandomDrop_1E {
+            get {
+                short index = RamDisk.GetS16(GetPos()+0x1E);
+                return Model.itemnames.GetName(index);
+            }
+            set {
+                short index = (short)Model.itemnames.GetIndexByName(value);
+                UndoRedo.Exec(new BindS16(this, 0x1E, index));
+            }
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_1B")]
-        [Description("Unknown")]
-        public byte Unknown_1B {
-            get { return RamDisk.GetU8(GetPos()+0x1B); }
-            set { UndoRedo.Exec(new BindU8(this, 0x1B, value)); }
-        }
-
-        [Category("01 Enemy")]
-        [DisplayName("Unknown_1C")]
-        [Description("Unknown")]
-        public byte Unknown_1C {
-            get { return RamDisk.GetU8(GetPos()+0x1C); }
-            set { UndoRedo.Exec(new BindU8(this, 0x1C, value)); }
-        }
-
-        [Category("01 Enemy")]
-        [DisplayName("Unknown_1D")]
-        [Description("Unknown")]
-        public byte Unknown_1D {
-            get { return RamDisk.GetU8(GetPos()+0x1D); }
-            set { UndoRedo.Exec(new BindU8(this, 0x1D, value)); }
-        }
-
-        [Category("01 Enemy")]
-        [DisplayName("Unknown_1E")]
-        [Description("Unknown")]
-        public byte Unknown_1E {
-            get { return RamDisk.GetU8(GetPos()+0x1E); }
-            set { UndoRedo.Exec(new BindU8(this, 0x1E, value)); }
-        }
-
-        [Category("01 Enemy")]
-        [DisplayName("Unknown_1F")]
-        [Description("Unknown")]
-        public byte Unknown_1F {
-            get { return RamDisk.GetU8(GetPos()+0x1F); }
-            set { UndoRedo.Exec(new BindU8(this, 0x1F, value)); }
-        }
-
-        [Category("01 Enemy")]
-        [DisplayName("Unknown_20")]
-        [Description("Unknown")]
-        public byte Unknown_20 {
+        [DisplayName("20 Always Drop 1 Qty")]
+        [Description("Quantity of 1st drop")]
+        public byte AlwaysDrop1Qty_20 {
             get { return RamDisk.GetU8(GetPos()+0x20); }
             set { UndoRedo.Exec(new BindU8(this, 0x20, value)); }
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_21")]
-        [Description("Unknown")]
-        public byte Unknown_21 {
+        [DisplayName("21 Always Drop 2 Qty")]
+        [Description("Quantity of 2nd drop")]
+        public byte AlwaysDrop2Qty_21 {
             get { return RamDisk.GetU8(GetPos()+0x21); }
             set { UndoRedo.Exec(new BindU8(this, 0x21, value)); }
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_22")]
-        [Description("Unknown")]
-        public byte Unknown_22 {
+        [DisplayName("22 Random Drop %")]
+        [Description("Drop % for the random drop")]
+        public byte RandomDropPercent_22 {
             get { return RamDisk.GetU8(GetPos()+0x22); }
             set { UndoRedo.Exec(new BindU8(this, 0x22, value)); }
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_23")]
+        [DisplayName("23 Unknown")]
         [Description("Unknown")]
         public byte Unknown_23 {
             get { return RamDisk.GetU8(GetPos()+0x23); }
@@ -307,31 +352,31 @@ namespace GodHands {
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_24")]
-        [Description("Unknown")]
-        public byte Unknown_24 {
+        [DisplayName("24 Major Boss")]
+        [Description("Always 0 for normal and minor bosses")]
+        public byte MajorBoss_24 {
             get { return RamDisk.GetU8(GetPos()+0x24); }
             set { UndoRedo.Exec(new BindU8(this, 0x24, value)); }
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_25")]
-        [Description("Unknown")]
-        public byte Unknown_25 {
+        [DisplayName("25 Model Texture")]
+        [Description("Some enemies have multiple textures like blood lizards")]
+        public byte ModelTexture_25 {
             get { return RamDisk.GetU8(GetPos()+0x25); }
             set { UndoRedo.Exec(new BindU8(this, 0x25, value)); }
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_26")]
-        [Description("Unknown")]
-        public byte Unknown_26 {
+        [DisplayName("26 Initial State")]
+        [Description("Can be sleeping / playing dead")]
+        public byte InitialState_26 {
             get { return RamDisk.GetU8(GetPos()+0x26); }
             set { UndoRedo.Exec(new BindU8(this, 0x26, value)); }
         }
 
         [Category("01 Enemy")]
-        [DisplayName("Unknown_27")]
+        [DisplayName("27 Unknown")]
         [Description("Unknown")]
         public byte Unknown_27 {
             get { return RamDisk.GetU8(GetPos()+0x27); }

@@ -366,49 +366,49 @@ namespace GodHands {
         }
 
         [Category("03 Classes")]
-        [DisplayName("Evil")]
-        [Description("Evil class")]
-        public sbyte ClassEvil {
-            get { return RamDisk.GetS8(GetPos()+0x20); }
-            set { UndoRedo.Exec(new BindS8(this, 0x20, value)); }
-        }
-
-        [Category("03 Classes")]
         [DisplayName("Human")]
         [Description("Human class")]
         public sbyte ClassHuman {
-            get { return RamDisk.GetS8(GetPos()+0x21); }
-            set { UndoRedo.Exec(new BindS8(this, 0x21, value)); }
+            get { return RamDisk.GetS8(GetPos()+0x20); }
+            set { UndoRedo.Exec(new BindS8(this, 0x20, value)); }
         }
 
         [Category("03 Classes")]
         [DisplayName("Beast")]
         [Description("Beast class")]
         public sbyte ClassBeast {
-            get { return RamDisk.GetS8(GetPos()+0x22); }
-            set { UndoRedo.Exec(new BindS8(this, 0x22, value)); }
+            get { return RamDisk.GetS8(GetPos()+0x21); }
+            set { UndoRedo.Exec(new BindS8(this, 0x21, value)); }
         }
 
         [Category("03 Classes")]
         [DisplayName("Undead")]
         [Description("Undead class")]
         public sbyte ClassUndead {
-            get { return RamDisk.GetS8(GetPos()+0x23); }
-            set { UndoRedo.Exec(new BindS8(this, 0x23, value)); }
+            get { return RamDisk.GetS8(GetPos()+0x22); }
+            set { UndoRedo.Exec(new BindS8(this, 0x22, value)); }
         }
 
         [Category("03 Classes")]
         [DisplayName("Phantom")]
         [Description("Phantom class")]
         public sbyte ClassPhantom {
-            get { return RamDisk.GetS8(GetPos()+0x24); }
-            set { UndoRedo.Exec(new BindS8(this, 0x24, value)); }
+            get { return RamDisk.GetS8(GetPos()+0x23); }
+            set { UndoRedo.Exec(new BindS8(this, 0x23, value)); }
         }
 
         [Category("03 Classes")]
         [DisplayName("Dragon")]
         [Description("Dragon class")]
         public sbyte ClassDragon {
+            get { return RamDisk.GetS8(GetPos()+0x24); }
+            set { UndoRedo.Exec(new BindS8(this, 0x24, value)); }
+        }
+
+        [Category("03 Classes")]
+        [DisplayName("Evil")]
+        [Description("Evil class")]
+        public sbyte ClassEvil {
             get { return RamDisk.GetS8(GetPos()+0x25); }
             set { UndoRedo.Exec(new BindS8(this, 0x25, value)); }
         }

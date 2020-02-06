@@ -39,6 +39,14 @@ namespace GodHands {
         }
 
         [Category("02 Types")]
+        [DisplayName("Padding")]
+        [Description("Unused")]
+        public sbyte TypePadding {
+            get { return RamDisk.GetS8(GetPos()+0x04); }
+            set { UndoRedo.Exec(new BindS8(this, 0x04, value)); }
+        }
+
+        [Category("02 Types")]
         [DisplayName("Blunt")]
         [Description("Resistence to blunt attacks")]
         public sbyte Blunt {
@@ -62,18 +70,10 @@ namespace GodHands {
             set { UndoRedo.Exec(new BindS8(this, 0x07, value)); }
         }
 
-        [Category("02 Types")]
-        [DisplayName("Padding")]
-        [Description("Unused")]
-        public sbyte TypePadding {
-            get { return RamDisk.GetS8(GetPos()+0x04); }
-            set { UndoRedo.Exec(new BindS8(this, 0x04, value)); }
-        }
-
         [Category("03 Affinities")]
-        [DisplayName("Earth")]
-        [Description("Earth elemental affinity")]
-        public sbyte Earth {
+        [DisplayName("Physical")]
+        [Description("Physical affinity")]
+        public sbyte Physical {
             get { return RamDisk.GetS8(GetPos()+0x08); }
             set { UndoRedo.Exec(new BindS8(this, 0x08, value)); }
         }
@@ -95,17 +95,17 @@ namespace GodHands {
         }
 
         [Category("03 Affinities")]
-        [DisplayName("Water")]
-        [Description("Water elemental affinity")]
-        public sbyte Water {
+        [DisplayName("Earth")]
+        [Description("Earth elemental affinity")]
+        public sbyte Earth {
             get { return RamDisk.GetS8(GetPos()+0x0B); }
             set { UndoRedo.Exec(new BindS8(this, 0x0B, value)); }
         }
 
         [Category("03 Affinities")]
-        [DisplayName("Physical")]
-        [Description("Physical affinity")]
-        public sbyte Physical {
+        [DisplayName("Water")]
+        [Description("Water elemental affinity")]
+        public sbyte Water {
             get { return RamDisk.GetS8(GetPos()+0x0C); }
             set { UndoRedo.Exec(new BindS8(this, 0x0C, value)); }
         }

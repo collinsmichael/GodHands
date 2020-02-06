@@ -126,7 +126,7 @@ namespace GodHands {
             doors = new RoomDoorSection(url+"/Doors", ptrDoorSection, lenDoorSection, GetRec());
             doors.OpenSection(root.Nodes.Add(url+"/Doors", "Doors", 33, 34));
 
-            enemies = new RoomEnemySection(url+"/Enemies", ptrEnemySection, lenEnemySection, GetRec());
+            enemies = new RoomEnemySection(url+"/Enemies", ptrEnemySection, lenEnemySection, GetRec(), zone, this);
             enemies.OpenSection(root.Nodes.Add(url+"/Enemies", "Enemies", 35, 35));
 
             treasure = new RoomTreasureSection(url+"/Treasure", ptrTreasureSection, lenTreasureSection, GetRec());

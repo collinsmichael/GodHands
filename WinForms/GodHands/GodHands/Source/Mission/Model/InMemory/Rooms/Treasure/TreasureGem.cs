@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 
 namespace GodHands {
-    public class ActorGem : InMemory {
-        public ActorGem(string url, int pos, DirRec rec):
+    public class TreasureGem : InMemory {
+        public TreasureGem(string url, int pos, DirRec rec):
         base(url, pos, rec) {
         }
 

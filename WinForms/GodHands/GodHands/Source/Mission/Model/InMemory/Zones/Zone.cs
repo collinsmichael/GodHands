@@ -199,13 +199,6 @@ namespace GodHands {
             treeview.Nodes.Add(root);
             root.ToolTipText = "Zone";
 
-            int ptr_mpd = RamDisk.GetS32(pos+0x00);
-            int len_mpd = RamDisk.GetS32(pos+0x04);
-            int num_mpd = len_mpd/8;
-            for (int i = 0; i < num_mpd; i++) {
-                AddRoom(tv_rooms, i, pos + ptr_mpd);
-            }
-
             int ptr_zud = RamDisk.GetS32(pos+0x08);
             int len_zud = RamDisk.GetS32(pos+0x0C);
             int num_zud = RamDisk.GetS32(pos + ptr_zud);
@@ -236,6 +229,13 @@ namespace GodHands {
                 string text = "Image_"+index.ToString("D2");
                 int icon = (img.IsLookUpTable()) ? 4 : 3;
                 tv_image.Nodes.Add(img.GetUrl(), text, icon, icon);
+            }
+
+            int ptr_mpd = RamDisk.GetS32(pos+0x00);
+            int len_mpd = RamDisk.GetS32(pos+0x04);
+            int num_mpd = len_mpd/8;
+            for (int i = 0; i < num_mpd; i++) {
+                AddRoom(tv_rooms, i, pos + ptr_mpd);
             }
 
             root.Expand();
