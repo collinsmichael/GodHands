@@ -32,7 +32,7 @@ namespace GodHands {
         }
 
         public override int GetLen() {
-            return 0;
+            return GetRec().LenData;
         }
 
         public bool AddRoom(TreeNode root, int id, int pos) {
@@ -199,18 +199,58 @@ namespace GodHands {
             treeview.Nodes.Add(root);
             root.ToolTipText = "Zone";
 
+            string errors = "";
+            string file = GetRec().GetFileName();
+            int min = 0x20;
+            int max = GetRec().LenData;
+            if (min > max) {
+                errors += "file is smaller than ZND header\n";
+            }
+
+            int ptr_mpd = RamDisk.GetS32(pos+0x00);
+            int len_mpd = RamDisk.GetS32(pos+0x04);
+            int end_mpd = ptr_mpd + len_mpd;
+            if ((ptr_mpd < min) || (end_mpd > max)) {
+                errors += "MPD section is corrupt\n";
+            }
+            min = end_mpd;
+
             int ptr_zud = RamDisk.GetS32(pos+0x08);
             int len_zud = RamDisk.GetS32(pos+0x0C);
+            int end_zud = ptr_zud + len_zud;
+            if ((ptr_zud < min) || (end_zud > max)) {
+                errors += "ZUD section is corrupt\n";
+            }
+            min = end_zud;
+
+            int ptr_tim = RamDisk.GetS32(pos+0x10);
+            int len_tim = RamDisk.GetS32(pos+0x14);
+            int end_tim = ptr_tim + len_tim;
+            if ((ptr_tim < min) || (end_tim > max)) {
+                errors += "TIM section is corrupt\n";
+            }
+            min = end_tim;
+
+            if (end_mpd > ptr_zud) {
+                errors += "MPD and ZUD sections overlap\n";
+            }
+            if (end_zud > ptr_tim) {
+                errors += "ZUD and TIM sections overlap\n";
+            }
+            if (errors != "") {
+                return Logger.Warn(file+" is corrupt\n" + errors);
+            }
+
+            int num_mpd = len_mpd/8;
             int num_zud = RamDisk.GetS32(pos + ptr_zud);
+            int num_tim = RamDisk.GetS32(pos + ptr_tim + 0x10);
+
             for (int i = 0; i < num_zud; i++) {
                 int ptr = ptr_zud + 4 + 8*num_zud + 0x464*i;
                 int lba = RamDisk.GetS32(pos + ptr_zud + 4 + 8*i);
                 AddActor(tv_actor, i, ptr, lba);
             }
 
-            int ptr_tim = RamDisk.GetS32(pos+0x10);
-            int len_tim = RamDisk.GetS32(pos+0x14);
-            int num_tim = RamDisk.GetS32(pos + ptr_tim + 0x10);
             int ptrx = ptr_tim + 0x14;
             for (int i = 0; i < num_tim; i++) {
                 int len = RamDisk.GetS32(pos + ptrx);
@@ -231,9 +271,6 @@ namespace GodHands {
                 tv_image.Nodes.Add(img.GetUrl(), text, icon, icon);
             }
 
-            int ptr_mpd = RamDisk.GetS32(pos+0x00);
-            int len_mpd = RamDisk.GetS32(pos+0x04);
-            int num_mpd = len_mpd/8;
             for (int i = 0; i < num_mpd; i++) {
                 AddRoom(tv_rooms, i, pos + ptr_mpd);
             }
