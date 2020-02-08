@@ -12,11 +12,12 @@ namespace GodHands {
     public partial class DiskTool : Form {
         private Subscriber_PropertyGrid sub_property = null;
         private Subscriber_DiskView sub_treeview = null;
+        public bool UsingSysIcons;
 
         public DiskTool() {
             InitializeComponent();
             Icon = View.IconFromFile("/img/menu/tools-disk-16.png");
-            ShellIcons.GetShellIcons(treeview);
+            SysIcons.GetSysIcons(treeview);
             treeview.AllowDrop = true;
             treeview.ItemDrag += new ItemDragEventHandler(OnTreeDrag);
             treeview.DragEnter += new DragEventHandler(OnDrag);

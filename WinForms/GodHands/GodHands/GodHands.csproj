@@ -135,6 +135,7 @@
     <Compile Include="Source\Mission\View\Controls\ListViewFlickerFree.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Source\Mission\View\Helpers\SysIcons.cs" />
     <Compile Include="Source\Mission\View\SubScribers\Subscriber_ListView.cs" />
     <Compile Include="Source\Mission\View\SubScribers\Subscriber_TreeView.cs" />
     <Compile Include="Source\System\DataBinding\BaseClass.cs" />

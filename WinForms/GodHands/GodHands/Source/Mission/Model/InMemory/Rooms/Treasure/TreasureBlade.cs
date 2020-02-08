@@ -6,46 +6,59 @@ using System.Text;
 
 namespace GodHands {
     public class TreasureBlade : InMemory {
-        public TreasureBlade(string url, int pos, DirRec rec):
+        private bool equipped;
+        public TreasureBlade(string url, int pos, DirRec rec, bool equipped):
         base(url, pos, rec) {
+            this.equipped = equipped;
         }
 
         public override int GetLen() {
-            return 0x30;
+             return (equipped) ? 0x2C : 0x30;
+        }
+
+        [Category("01 Equipment")]
+        [DisplayName("Exists")]
+        [Description("Exists=3 if exists")]
+        public int Exists {
+            get {
+                if (!equipped) return RamDisk.GetS32(GetPos()-0x04);
+                return (ItemNameRaw != 0) ? 3 : 0;
+            }
+            set {
+                if (equipped) {
+                    UndoRedo.Exec(new BindS32(this, 0x00, value));
+                } else {
+                    Publisher.Publish(this);
+                }
+            }
         }
 
         [ReadOnly(true)]
         [Category("01 Equipment")]
-        [DisplayName("Item Names List Raw")]
+        [DisplayName("Item Name Raw")]
         [Description("Name of the item")]
-        public short ItemNamesListRaw {
-            get { return RamDisk.GetS16(GetPos()+0x00); }
-            set { UndoRedo.Exec(new BindS16(this, 0x00, value)); }
+        private byte ItemNameRaw {
+            get { return RamDisk.GetU8(GetPos()+0x00); }
+            set { UndoRedo.Exec(new BindU8(this, 0x00, value)); }
         }
 
         [Category("01 Equipment")]
-        [DisplayName("Item Names List")]
+        [DisplayName("Item Name")]
         [Description("Name of the item")]
         [DefaultValue("")]
         [TypeConverter(typeof(ItemNamesListDropDown))]
-        public string ItemNamesList {
-            get {
-                short index = RamDisk.GetS16(GetPos()+0x00);
-                return Model.itemnames.GetName(index);
-            }
-            set {
-                short index = (short)Model.itemnames.GetIndexByName(value);
-                UndoRedo.Exec(new BindS16(this, 0x00, index));
-            }
+        public string ItemName {
+            get { return Model.itemnames.GetName(ItemNameRaw); }
+            set { ItemNameRaw = (byte)Model.itemnames.GetIndexByName(value); }
         }
 
         [ReadOnly(true)]
         [Category("01 Equipment")]
         [DisplayName("Items List Raw")]
         [Description("Depends on item type")]
-        public byte ItemsListRaw {
-            get { return RamDisk.GetU8(GetPos()+0x02); }
-            set { UndoRedo.Exec(new BindU8(this, 0x02, value)); }
+        private byte ItemsListRaw {
+            get { return RamDisk.GetU8(GetPos()+0x01); }
+            set { UndoRedo.Exec(new BindU8(this, 0x01, value)); }
         }
 
         [Category("01 Equipment")]
@@ -55,12 +68,12 @@ namespace GodHands {
         [TypeConverter(typeof(ItemNameBladeDropDown))]
         public string ItemsList {
             get {
-                byte index = RamDisk.GetU8(GetPos()+0x02);
+                byte index = RamDisk.GetU8(GetPos()+0x01);
                 return Model.blade_names.GetName(index);
             }
             set {
                 byte index = (byte)Model.blade_names.GetIndexByName(value);
-                UndoRedo.Exec(new BindU8(this, 0x02, index));
+                UndoRedo.Exec(new BindU8(this, 0x01, index));
             }
         }
 
@@ -68,57 +81,49 @@ namespace GodHands {
         [DisplayName("Wep File")]
         [Description("3D model file")]
         public byte WepFile {
-            get { return RamDisk.GetU8(GetPos()+0x03); }
-            set { UndoRedo.Exec(new BindU8(this, 0x03, value)); }
+            get { return RamDisk.GetU8(GetPos()+0x02); }
+            set { UndoRedo.Exec(new BindU8(this, 0x02, value)); }
         }
 
         [ReadOnly(true)]
         [Category("01 Equipment")]
         [DisplayName("Item Category Raw")]
-        [Description("Armour category")]
-        public byte ItemCategoryRaw {
-            get { return RamDisk.GetU8(GetPos()+0x04); }
-            set { UndoRedo.Exec(new BindU8(this, 0x04, value)); }
+        [Description("Blade category")]
+        private byte ItemCategoryRaw {
+            get { return RamDisk.GetU8(GetPos()+0x03); }
+            set { UndoRedo.Exec(new BindU8(this, 0x03, value)); }
         }
 
         [Category("01 Equipment")]
         [DisplayName("Item Category")]
-        [Description("Armour category")]
+        [Description("Blade category")]
         [DefaultValue("")]
         [TypeConverter(typeof(CategoryBladesDropDown))]
         public string ItemCategory {
             get {
-                byte index = RamDisk.GetU8(GetPos()+0x04);
+                byte index = RamDisk.GetU8(GetPos()+0x03);
                 return Model.category_blades.GetName(index);
             }
             set {
                 byte index = (byte)Model.category_blades.GetIndexByName(value);
-                UndoRedo.Exec(new BindU8(this, 0x04, index));
+                UndoRedo.Exec(new BindU8(this, 0x03, index));
             }
         }
 
         [Category("01 Equipment")]
-        [DisplayName("STR")]
-        [Description("Strength bonus")]
-        public sbyte STR {
-            get { return RamDisk.GetS8(GetPos()+0x05); }
-            set { UndoRedo.Exec(new BindS8(this, 0x05, value)); }
+        [DisplayName("Max DP")]
+        [Description("Maximum damange points")]
+        public double MaxDP {
+            get { return RamDisk.GetS16(GetPos()+0x04)/100.0; }
+            set { UndoRedo.Exec(new BindS16(this, 0x04, (short)(value*100))); }
         }
 
         [Category("01 Equipment")]
-        [DisplayName("INT")]
-        [Description("Intelligence bonus")]
-        public sbyte INT {
-            get { return RamDisk.GetS8(GetPos()+0x06); }
-            set { UndoRedo.Exec(new BindS8(this, 0x06, value)); }
-        }
-
-        [Category("01 Equipment")]
-        [DisplayName("AGL")]
-        [Description("Agility bonus")]
-        public sbyte AGL {
-            get { return RamDisk.GetS8(GetPos()+0x07); }
-            set { UndoRedo.Exec(new BindS8(this, 0x07, value)); }
+        [DisplayName("Max PP")]
+        [Description("Maximum phantom points")]
+        public double MaxPP {
+            get { return RamDisk.GetS16(GetPos()+0x06); }
+            set { UndoRedo.Exec(new BindS16(this, 0x06, (short)(value))); }
         }
 
         [Category("01 Equipment")]
@@ -130,175 +135,136 @@ namespace GodHands {
         }
 
         [Category("01 Equipment")]
-        [DisplayName("Max DP")]
-        [Description("Maximum damange points")]
-        public double MaxDP {
-            get { return RamDisk.GetS16(GetPos()+0x0A)/100.0; }
-            set { UndoRedo.Exec(new BindS16(this, 0x0A, (short)(value*100))); }
-        }
-
-        [Category("01 Equipment")]
         [DisplayName("Cur PP")]
         [Description("Phantom points")]
         public double CurPP {
-            get { return RamDisk.GetS16(GetPos()+0x0C)/100.0; }
-            set { UndoRedo.Exec(new BindS16(this, 0x0C, (short)(value*100))); }
+            get { return RamDisk.GetS16(GetPos()+0x0A); }
+            set { UndoRedo.Exec(new BindS16(this, 0x0A, (short)(value))); }
         }
 
         [Category("01 Equipment")]
-        [DisplayName("Max PP")]
-        [Description("Maximum phantom points")]
-        public double MaxPP {
-            get { return RamDisk.GetS16(GetPos()+0x0E)/100.0; }
-            set { UndoRedo.Exec(new BindS16(this, 0x0E, (short)(value*100))); }
+        [DisplayName("STR")]
+        [Description("Strength bonus")]
+        public sbyte STR {
+            get { return RamDisk.GetS8(GetPos()+0x0C); }
+            set { UndoRedo.Exec(new BindS8(this, 0x0C, value)); }
+        }
+
+        [Category("01 Equipment")]
+        [DisplayName("INT")]
+        [Description("Intelligence bonus")]
+        public sbyte INT {
+            get { return RamDisk.GetS8(GetPos()+0x0D); }
+            set { UndoRedo.Exec(new BindS8(this, 0x0D, value)); }
+        }
+
+        [Category("01 Equipment")]
+        [DisplayName("AGL")]
+        [Description("Agility bonus")]
+        public sbyte AGL {
+            get { return RamDisk.GetS8(GetPos()+0x0E); }
+            set { UndoRedo.Exec(new BindS8(this, 0x0E, value)); }
+        }
+
+        [Category("01 Equipment")]
+        [DisplayName("Damage Cost")]
+        [Description("Stat cost value")]
+        public byte DamageCost {
+            get { return RamDisk.GetU8(GetPos()+0x0F); }
+            set { UndoRedo.Exec(new BindU8(this, 0x0F, value)); }
         }
 
         [ReadOnly(true)]
         [Category("01 Equipment")]
-        [DisplayName("Damage Type Raw")]
-        [Description("Damange type (blades)")]
-        public byte DamageTypeRaw {
+        [DisplayName("Damage Raw")]
+        [Description("Stat affected (1=MP 2=RISK 3=HP 4=PP 5=nothing)\n"
+                    +"Type can be (1=BLUNT 2=EDGED 3=PIERCING)")]
+        private byte DamageRaw {
             get { return RamDisk.GetU8(GetPos()+0x10); }
             set { UndoRedo.Exec(new BindU8(this, 0x10, value)); }
         }
 
         [Category("01 Equipment")]
-        [DisplayName("Damage Type")]
-        [Description("Damange type (blades)")]
+        [DisplayName("Damage Stat")]
+        [Description("Stat consumed (1=MP 2=RISK 3=HP 4=PP 5=nothing)")]
         [DefaultValue("")]
-        [TypeConverter(typeof(DamageTypesDropDown))]
-        public string DamageType {
-            get {
-                byte index = RamDisk.GetU8(GetPos()+0x10);
-                return Model.damage_types.GetName(index);
-            }
+        [TypeConverter(typeof(DamageStatsDropDown))]
+        public string DamageStat {
+            get { return Model.damage_stats.GetName(DamageRaw/4); }
             set {
-                byte index = (byte)Model.damage_types.GetIndexByName(value);
-                UndoRedo.Exec(new BindU8(this, 0x10, index));
+                int index = Model.damage_stats.GetIndexByName(value) * 4;
+                DamageRaw = (byte)((DamageRaw % 4) | index);
             }
         }
 
-        [ReadOnly(true)]
         [Category("01 Equipment")]
-        [DisplayName("Damage Cost Stats Raw")]
-        [Description("Stat affected (1=MP 2=RISK 3=HP 4=PP 5=nothing)")]
-        public byte DamageCostStatsRaw {
+        [DisplayName("Damage Type")]
+        [Description("Type can be (1=BLUNT 2=EDGED 3=PIERCING)")]
+        [DefaultValue("")]
+        [TypeConverter(typeof(DamageTypesDropDown))]
+        public string DamageType {
+            get { return Model.damage_types.GetName(DamageRaw % 4); }
+            set {
+                int index = Model.damage_types.GetIndexByName(value) % 4;
+                DamageRaw = (byte)((DamageRaw & ~3) | index);
+            }
+        }
+
+        [Category("01 Equipment")]
+        [DisplayName("Unknown 1")]
+        [Description("Unknown")]
+        public byte Unknown1 {
             get { return RamDisk.GetU8(GetPos()+0x11); }
             set { UndoRedo.Exec(new BindU8(this, 0x11, value)); }
         }
 
         [Category("01 Equipment")]
-        [DisplayName("Damage Cost Stats")]
-        [Description("Stat affected (1=MP 2=RISK 3=HP 4=PP 5=nothing)")]
-        [DefaultValue("")]
-        [TypeConverter(typeof(DamageStatsDropDown))]
-        public string DamageCostStats {
-            get {
-                byte index = RamDisk.GetU8(GetPos()+0x11);
-                return Model.damage_stats.GetName(index);
-            }
-            set {
-                byte index = (byte)Model.damage_stats.GetIndexByName(value);
-                UndoRedo.Exec(new BindU8(this, 0x11, index));
-            }
-        }
-
-        [Category("01 Equipment")]
-        [DisplayName("Damage Cost Value")]
-        [Description("Stat cost value")]
-        public byte DamageCostValue {
+        [DisplayName("Unknown 2")]
+        [Description("Unknown")]
+        public byte Unknown2 {
             get { return RamDisk.GetU8(GetPos()+0x12); }
             set { UndoRedo.Exec(new BindU8(this, 0x12, value)); }
         }
 
-        [ReadOnly(true)]
         [Category("01 Equipment")]
-        [DisplayName("Equip Material Raw")]
-        [Description("Material equipment is made of")]
-        public byte ItemMaterialRaw {
+        [DisplayName("Unknown 3")]
+        [Description("Unknown")]
+        public byte Unknown3 {
             get { return RamDisk.GetU8(GetPos()+0x13); }
             set { UndoRedo.Exec(new BindU8(this, 0x13, value)); }
-        }
-
-        [Category("01 Equipment")]
-        [DisplayName("EquipMaterial")]
-        [Description("Material equipment is made of")]
-        [DefaultValue("")]
-        [TypeConverter(typeof(ItemNameMaterialDropDown))]
-        public string ItemMaterial {
-            get {
-                byte index = RamDisk.GetU8(GetPos()+0x13);
-                return Model.materials.GetName(index);
-            }
-            set {
-                byte index = (byte)Model.materials.GetIndexByName(value);
-                UndoRedo.Exec(new BindU8(this, 0x13, index));
-            }
-        }
-
-        [Category("01 Equipment")]
-        [DisplayName("Padding")]
-        [Description("Unused")]
-        public byte UnusedPadding1 {
-            get { return RamDisk.GetU8(GetPos()+0x14); }
-            set { UndoRedo.Exec(new BindU8(this, 0x14, value)); }
-        }
-
-        [Category("01 Equipment")]
-        [DisplayName("NumSlots")]
-        [Description("Number of gem slots")]
-        public byte GemNumSlots {
-            get { return RamDisk.GetU8(GetPos()+0x15); }
-            set { UndoRedo.Exec(new BindU8(this, 0x15, value)); }
-        }
-
-        [Category("01 Equipment")]
-        [DisplayName("Gem Special Effects")]
-        [Description("Special effects (used by accessories)")]
-        public byte GemSpecialEffects {
-            get { return RamDisk.GetU8(GetPos()+0x16); }
-            set { UndoRedo.Exec(new BindU8(this, 0x16, value)); }
-        }
-
-        [Category("01 Equipment")]
-        [DisplayName("Index In GadgetBag")]
-        [Description("RAM only")]
-        public byte GadgetBagIndex {
-            get { return RamDisk.GetU8(GetPos()+0x17); }
-            set { UndoRedo.Exec(new BindU8(this, 0x17, value)); }
         }
 
         [Category("01 Equipment")]
         [DisplayName("RangeX")]
         [Description("Range horizontal")]
         public byte TargetRangeX {
-            get { return RamDisk.GetU8(GetPos()+0x18); }
-            set { UndoRedo.Exec(new BindU8(this, 0x18, value)); }
+            get { return RamDisk.GetU8(GetPos()+0x14); }
+            set { UndoRedo.Exec(new BindU8(this, 0x14, value)); }
         }
 
         [Category("01 Equipment")]
         [DisplayName("RangeY")]
         [Description("Range vertical")]
         public byte TargetRangeY {
-            get { return RamDisk.GetU8(GetPos()+0x19); }
-            set { UndoRedo.Exec(new BindU8(this, 0x19, value)); }
+            get { return RamDisk.GetU8(GetPos()+0x15); }
+            set { UndoRedo.Exec(new BindU8(this, 0x15, value)); }
         }
 
         [Category("01 Equipment")]
         [DisplayName("RangeZ")]
         [Description("Range depth")]
         public byte TargetRangeZ {
-            get { return RamDisk.GetU8(GetPos()+0x1A); }
-            set { UndoRedo.Exec(new BindU8(this, 0x1A, value)); }
+            get { return RamDisk.GetU8(GetPos()+0x16); }
+            set { UndoRedo.Exec(new BindU8(this, 0x16, value)); }
         }
 
         [ReadOnly(true)]
         [Category("01 Equipment")]
         [DisplayName("Target Sphere Raw")]
         [Description("Target sphere shape")]
-        public byte TargetSphereRaw {
-            get { return RamDisk.GetU8(GetPos()+0x1B); }
-            set { UndoRedo.Exec(new BindU8(this, 0x1B, value)); }
+        private byte TargetSphereRaw {
+            get { return RamDisk.GetU8(GetPos()+0x17); }
+            set { UndoRedo.Exec(new BindU8(this, 0x17, value)); }
         }
 
         [Category("01 Equipment")]
@@ -308,13 +274,12 @@ namespace GodHands {
         [TypeConverter(typeof(TargetSphereDropDown))]
         public string TargetSphere {
             get {
-                byte index = (byte)(RamDisk.GetU8(GetPos()+0x1B) % 8);
+                int index = TargetSphereRaw % 8;
                 return Model.targets.GetName(index);
             }
             set {
-                byte val = (byte)(RamDisk.GetU8(GetPos()+0x1B) & ~7);
                 byte index = (byte)(Model.targets.GetIndexByName(value) % 8);
-                UndoRedo.Exec(new BindU8(this, 0x1B, (byte)(val | index)));
+                TargetSphereRaw = (byte)((TargetSphereRaw & ~7) | index);
             }
         }
 
@@ -322,184 +287,148 @@ namespace GodHands {
         [DisplayName("Target Angle")]
         [Description("Angle of target sphere")]
         public byte TargetAngle {
-            get {
-                byte val = RamDisk.GetU8(GetPos()+0x1B);
-                return (byte)(val/8);
-            }
+            get { return (byte)(TargetSphereRaw / 8); }
             set {
-                byte val = RamDisk.GetU8(GetPos()+0x1B);
-                val = (byte)((val%8) | (4*(value % 32)));
-                UndoRedo.Exec(new BindU8(this, 0x1B, val));
+                int val = TargetSphereRaw % 8;
+                TargetSphereRaw = (byte)(val | (4*(value % 32)));
             }
-        }
-
-        [Category("02 Types")]
-        [DisplayName("Blunt")]
-        [Description("Resistence to blunt attacks")]
-        public sbyte TypeBlunt {
-            get { return RamDisk.GetS8(GetPos()+0x1D); }
-            set { UndoRedo.Exec(new BindS8(this, 0x1D, value)); }
-        }
-
-        [Category("02 Types")]
-        [DisplayName("Edged")]
-        [Description("Resistence to edged attacks")]
-        public sbyte TypeEdged {
-            get { return RamDisk.GetS8(GetPos()+0x1E); }
-            set { UndoRedo.Exec(new BindS8(this, 0x1E, value)); }
-        }
-
-        [Category("02 Types")]
-        [DisplayName("Piercing")]
-        [Description("Resistence to piercing attacks")]
-        public sbyte TypePiercing {
-            get { return RamDisk.GetS8(GetPos()+0x1F); }
-            set { UndoRedo.Exec(new BindS8(this, 0x1F, value)); }
-        }
-
-        [Category("02 Types")]
-        [DisplayName("Padding")]
-        [Description("Unused")]
-        public sbyte TypePadding {
-            get { return RamDisk.GetS8(GetPos()+0x1C); }
-            set { UndoRedo.Exec(new BindS8(this, 0x1C, value)); }
         }
 
         [Category("03 Classes")]
         [DisplayName("Human")]
         [Description("Human class")]
         public sbyte ClassHuman {
-            get { return RamDisk.GetS8(GetPos()+0x20); }
-            set { UndoRedo.Exec(new BindS8(this, 0x20, value)); }
+            get { return RamDisk.GetS8(GetPos()+0x18); }
+            set { UndoRedo.Exec(new BindS8(this, 0x18, value)); }
         }
 
         [Category("03 Classes")]
         [DisplayName("Beast")]
         [Description("Beast class")]
         public sbyte ClassBeast {
-            get { return RamDisk.GetS8(GetPos()+0x21); }
-            set { UndoRedo.Exec(new BindS8(this, 0x21, value)); }
+            get { return RamDisk.GetS8(GetPos()+0x19); }
+            set { UndoRedo.Exec(new BindS8(this, 0x19, value)); }
         }
 
         [Category("03 Classes")]
         [DisplayName("Undead")]
         [Description("Undead class")]
         public sbyte ClassUndead {
-            get { return RamDisk.GetS8(GetPos()+0x22); }
-            set { UndoRedo.Exec(new BindS8(this, 0x22, value)); }
+            get { return RamDisk.GetS8(GetPos()+0x1A); }
+            set { UndoRedo.Exec(new BindS8(this, 0x1A, value)); }
         }
 
         [Category("03 Classes")]
         [DisplayName("Phantom")]
         [Description("Phantom class")]
         public sbyte ClassPhantom {
-            get { return RamDisk.GetS8(GetPos()+0x23); }
-            set { UndoRedo.Exec(new BindS8(this, 0x23, value)); }
+            get { return RamDisk.GetS8(GetPos()+0x1B); }
+            set { UndoRedo.Exec(new BindS8(this, 0x1B, value)); }
         }
 
         [Category("03 Classes")]
         [DisplayName("Dragon")]
         [Description("Dragon class")]
         public sbyte ClassDragon {
-            get { return RamDisk.GetS8(GetPos()+0x24); }
-            set { UndoRedo.Exec(new BindS8(this, 0x24, value)); }
+            get { return RamDisk.GetS8(GetPos()+0x1C); }
+            set { UndoRedo.Exec(new BindS8(this, 0x1C, value)); }
         }
 
         [Category("03 Classes")]
         [DisplayName("Evil")]
         [Description("Evil class")]
         public sbyte ClassEvil {
-            get { return RamDisk.GetS8(GetPos()+0x25); }
-            set { UndoRedo.Exec(new BindS8(this, 0x25, value)); }
+            get { return RamDisk.GetS8(GetPos()+0x1D); }
+            set { UndoRedo.Exec(new BindS8(this, 0x1D, value)); }
         }
 
         [Category("03 Classes")]
         [DisplayName("Padding 1")]
         [Description("Unused")]
         public sbyte ClassPadding1 {
-            get { return RamDisk.GetS8(GetPos()+0x26); }
-            set { UndoRedo.Exec(new BindS8(this, 0x26, value)); }
+            get { return RamDisk.GetS8(GetPos()+0x1E); }
+            set { UndoRedo.Exec(new BindS8(this, 0x1E, value)); }
         }
 
         [Category("03 Classes")]
         [DisplayName("Padding 2")]
         [Description("Unused")]
         public sbyte ClassPadding2 {
-            get { return RamDisk.GetS8(GetPos()+0x27); }
-            set { UndoRedo.Exec(new BindS8(this, 0x27, value)); }
+            get { return RamDisk.GetS8(GetPos()+0x1F); }
+            set { UndoRedo.Exec(new BindS8(this, 0x1F, value)); }
         }
 
         [Category("04 Affinities")]
         [DisplayName("Earth")]
         [Description("Earth elemental affinity")]
         public sbyte AffinityEarth {
-            get { return RamDisk.GetS8(GetPos()+0x28); }
-            set { UndoRedo.Exec(new BindS8(this, 0x28, value)); }
+            get { return RamDisk.GetS8(GetPos()+0x20); }
+            set { UndoRedo.Exec(new BindS8(this, 0x20, value)); }
         }
 
         [Category("04 Affinities")]
         [DisplayName("Air")]
         [Description("Air elemental affinity")]
         public sbyte AffinityAir {
-            get { return RamDisk.GetS8(GetPos()+0x29); }
-            set { UndoRedo.Exec(new BindS8(this, 0x29, value)); }
+            get { return RamDisk.GetS8(GetPos()+0x21); }
+            set { UndoRedo.Exec(new BindS8(this, 0x21, value)); }
         }
 
         [Category("04 Affinities")]
         [DisplayName("Fire")]
         [Description("fire elemental affinity")]
         public sbyte AffinityFire {
-            get { return RamDisk.GetS8(GetPos()+0x2A); }
-            set { UndoRedo.Exec(new BindS8(this, 0x2A, value)); }
+            get { return RamDisk.GetS8(GetPos()+0x22); }
+            set { UndoRedo.Exec(new BindS8(this, 0x22, value)); }
         }
 
         [Category("04 Affinities")]
         [DisplayName("Water")]
         [Description("Water elemental affinity")]
         public sbyte AffinityWater {
-            get { return RamDisk.GetS8(GetPos()+0x2B); }
-            set { UndoRedo.Exec(new BindS8(this, 0x2B, value)); }
+            get { return RamDisk.GetS8(GetPos()+0x23); }
+            set { UndoRedo.Exec(new BindS8(this, 0x23, value)); }
         }
 
         [Category("04 Affinities")]
         [DisplayName("Physical")]
         [Description("Physical affinity")]
         public sbyte AffinityPhysical {
-            get { return RamDisk.GetS8(GetPos()+0x2C); }
-            set { UndoRedo.Exec(new BindS8(this, 0x2C, value)); }
+            get { return RamDisk.GetS8(GetPos()+0x24); }
+            set { UndoRedo.Exec(new BindS8(this, 0x24, value)); }
         }
 
         [Category("04 Affinities")]
         [DisplayName("Light")]
         [Description("Light affinity")]
         public sbyte AffinityLight {
-            get { return RamDisk.GetS8(GetPos()+0x2D); }
-            set { UndoRedo.Exec(new BindS8(this, 0x2D, value)); }
+            get { return RamDisk.GetS8(GetPos()+0x25); }
+            set { UndoRedo.Exec(new BindS8(this, 0x25, value)); }
         }
 
         [Category("04 Affinities")]
         [DisplayName("Dark")]
         [Description("Dark affinity")]
         public sbyte AffinityDark {
-            get { return RamDisk.GetS8(GetPos()+0x2E); }
-            set { UndoRedo.Exec(new BindS8(this, 0x2E, value)); }
+            get { return RamDisk.GetS8(GetPos()+0x26); }
+            set { UndoRedo.Exec(new BindS8(this, 0x26, value)); }
         }
 
         [Category("04 Affinities")]
         [DisplayName("Padding")]
         [Description("Unused")]
         public sbyte AffinityPadding {
-            get { return RamDisk.GetS8(GetPos()+0x2F); }
-            set { UndoRedo.Exec(new BindS8(this, 0x2F, value)); }
+            get { return RamDisk.GetS8(GetPos()+0x27); }
+            set { UndoRedo.Exec(new BindS8(this, 0x27, value)); }
         }
 
         [ReadOnly(true)]
         [Category("01 Equipment")]
         [DisplayName("Material Raw")]
         [Description("Material equipment is made of")]
-        public byte MaterialRaw {
-            get { return RamDisk.GetU8(GetPos()+0xF0); }
-            set { UndoRedo.Exec(new BindU8(this, 0xF0, value)); }
+        private ushort MaterialRaw {
+            get { return RamDisk.GetU16(GetPos()+0x28); }
+            set { UndoRedo.Exec(new BindU16(this, 0x28, value)); }
         }
 
         [Category("01 Equipment")]
@@ -508,44 +437,24 @@ namespace GodHands {
         [DefaultValue("")]
         [TypeConverter(typeof(ItemNameMaterialDropDown))]
         public string Material {
-            get {
-                byte index = RamDisk.GetU8(GetPos()+0xF0);
-                return Model.materials.GetName(index);
-            }
-            set {
-                byte index = (byte)Model.materials.GetIndexByName(value);
-                UndoRedo.Exec(new BindU8(this, 0xF0, index));
-            }
+            get { return Model.materials.GetName(MaterialRaw); }
+            set { MaterialRaw = (byte)Model.materials.GetIndexByName(value); }
         }
 
         [Category("01 Equipment")]
-        [DisplayName("Drop Chance")]
-        [Description("Probability that the item will be dropped (unit is percent)")]
-        public double DropChance {
-            get {
-                byte val = RamDisk.GetU8(GetPos()+0xF1);
-                return val*100/255.0;
-            }
-            set {
-                byte val = (byte)Math.Min(Math.Max(0, value*255/100), 255);
-                UndoRedo.Exec(new BindU8(this, 0xF1, val));
-            }
-        }
-
-        [Category("01 Equipment")]
-        [DisplayName("Unknown 1")]
+        [DisplayName("Unknown 4")]
         [Description("Unknown")]
-        public byte Unknown_1 {
-            get { return RamDisk.GetU8(GetPos()+0xF2); }
-            set { UndoRedo.Exec(new BindU8(this, 0xF2, value)); }
+        public byte Unknown_4 {
+            get { return RamDisk.GetU8(GetPos()+0x2A); }
+            set { UndoRedo.Exec(new BindU8(this, 0x2A, value)); }
         }
 
         [Category("01 Equipment")]
-        [DisplayName("Unknown 2")]
+        [DisplayName("Unknown 5")]
         [Description("Unknown")]
-        public byte Unknown_2 {
-            get { return RamDisk.GetU8(GetPos()+0xF3); }
-            set { UndoRedo.Exec(new BindU8(this, 0xF3, value)); }
+        public byte Unknown_5 {
+            get { return RamDisk.GetU8(GetPos()+0x2B); }
+            set { UndoRedo.Exec(new BindU8(this, 0x2B, value)); }
         }
     }
 }

@@ -29,31 +29,33 @@ namespace GodHands {
 
                 Weapon = new TreasureWeapon(key+"Weapon", pos+0x000, rec);
                 TreeNode node1 = root.Nodes.Add(key+"Weapon", Weapon.GetText(), 0, 0);
-                WeaponBlade = new TreasureBlade(key+"Weapon/Blade", pos+0x000, rec);
+                WeaponBlade = new TreasureBlade(key+"Weapon/Blade", pos+0x004, rec, true);
                 node1.Nodes.Add(key+"Weapon/Blade", WeaponBlade.GetText(), 0, 0);
-                WeaponGrip = new TreasureGrip(key+"Weapon/Grip", pos+0x030, rec);
+                WeaponGrip = new TreasureGrip(key+"Weapon/Grip", pos+0x030, rec, true);
                 node1.Nodes.Add(key+"Weapon/Grip", WeaponGrip.GetText(), 0, 0);
-                WeaponGem1 = new TreasureGem(key+"Weapon/Gem1", pos+0x040, rec);
+                WeaponGem1 = new TreasureGem(key+"Weapon/Gem1", pos+0x040, rec, true);
                 node1.Nodes.Add(key+"Weapon/Gem1", WeaponGem1.GetText(), 0, 0);
-                WeaponGem2 = new TreasureGem(key+"Weapon/Gem2", pos+0x05C, rec);
+                WeaponGem2 = new TreasureGem(key+"Weapon/Gem2", pos+0x05C, rec, true);
                 node1.Nodes.Add(key+"Weapon/Gem2", WeaponGem2.GetText(), 0, 0);
-                WeaponGem3 = new TreasureGem(key+"Weapon/Gem3", pos+0x078, rec);
+                WeaponGem3 = new TreasureGem(key+"Weapon/Gem3", pos+0x078, rec, true);
                 node1.Nodes.Add(key+"Weapon/Gem3", WeaponGem3.GetText(), 0, 0);
 
-                Blade = new TreasureBlade(key+"Blade", pos+0x0AC, rec);
+                Blade = new TreasureBlade(key+"Blade", pos+0x0AC, rec, false);
                 root.Nodes.Add(key+"Blade", Blade.GetText(), 0, 0);
-                Grip = new TreasureGrip(key+"Grip", pos+0x0CC, rec);
+                Grip = new TreasureGrip(key+"Grip", pos+0x0CC, rec, false);
                 root.Nodes.Add(key+"Grip", Grip.GetText(), 0, 0);
 
                 Shield = new TreasureShield(key+"Shield", pos+0x0DC, rec);
                 TreeNode node2 = root.Nodes.Add(key+"Shield", Shield.GetText(), 0, 0);
-                ShieldGem1 = new TreasureGem(key+"Shield/Gem1", pos+0x11C, rec);
+                ShieldGem1 = new TreasureGem(key+"Shield/Gem1", pos+0x11C, rec, true);
                 node2.Nodes.Add(key+"Shield/Gem1", ShieldGem1.GetText(), 0, 0);
-                ShieldGem2 = new TreasureGem(key+"Shield/Gem2", pos+0x138, rec);
+                ShieldGem2 = new TreasureGem(key+"Shield/Gem2", pos+0x138, rec, true);
                 node2.Nodes.Add(key+"Shield/Gem2", ShieldGem2.GetText(), 0, 0);
-                ShieldGem3 = new TreasureGem(key+"Shield/Gem3", pos+0x154, rec);
+                ShieldGem3 = new TreasureGem(key+"Shield/Gem3", pos+0x154, rec, true);
                 node2.Nodes.Add(key+"Shield/Gem3", ShieldGem3.GetText(), 0, 0);
 
+
+                /*
                 Armour1 = new TreasureArmour(key+"Armour1", pos+0x170, rec);
                 root.Nodes.Add(key+"Armour1", Armour1.GetText(), 0, 0);
                 Armour2 = new TreasureArmour(key+"Armour2", pos+0x1A0, rec);
@@ -72,6 +74,7 @@ namespace GodHands {
                 root.Nodes.Add(key+"Item3", Item3.GetText(), 0, 0);
                 Item4 = new TreasureMiscItem(key+"Item4", pos+0x22C, rec);
                 root.Nodes.Add(key+"Item4", Item4.GetText(), 0, 0);
+                */
             }
             return true;
         }
@@ -93,6 +96,7 @@ namespace GodHands {
         [ReadOnly(true)][Category(" INTERNAL")]
         public TreasureGrip Grip { get; set; }
         [ReadOnly(true)][Category(" INTERNAL")]
+
         public TreasureShield Shield { get; set; }
         [ReadOnly(true)][Category(" INTERNAL")]
         public TreasureGem ShieldGem1 { get; set; }
