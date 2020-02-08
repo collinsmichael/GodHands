@@ -13,7 +13,7 @@ namespace GodHands {
         }
 
         public override int GetLen() {
-            return (equipped) ? 0x1C : 0x20;
+            return 0x1C;
         }
 
         [Category("01 Equipment")]

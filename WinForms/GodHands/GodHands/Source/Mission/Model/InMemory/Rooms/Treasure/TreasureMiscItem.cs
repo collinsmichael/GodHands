@@ -11,37 +11,38 @@ namespace GodHands {
         }
 
         public override int GetLen() {
-            return 0x34;
+            return 0x04;
+        }
+
+        public override string GetText() {
+            string text = ItemName;
+            if (Exists == 0) {
+                text = "(Deleted)" + text;
+            }
+            return text;
         }
 
         [ReadOnly(true)]
         [Category("01 Misc Item")]
-        [DisplayName("Item Names List Raw")]
+        [DisplayName("Item Name Raw")]
         [Description("Name of the item")]
-        public short ItemNamesListRaw {
+        private short ItemNameRaw {
             get { return RamDisk.GetS16(GetPos()+0x00); }
             set { UndoRedo.Exec(new BindS16(this, 0x00, value)); }
         }
 
         [Category("01 Misc Item")]
-        [DisplayName("Item Names List")]
+        [DisplayName("Item Name")]
         [Description("Name of the item")]
         [DefaultValue("")]
         [TypeConverter(typeof(ItemNamesListDropDown))]
-        public string ItemNamesList {
-            get {
-                short index = RamDisk.GetS16(GetPos()+0x00);
-                return Model.itemnames.GetName(index);
-            }
-            set {
-                short index = (short)Model.itemnames.GetIndexByName(value);
-                UndoRedo.Exec(new BindS16(this, 0x00, index));
-            }
+        public string ItemName {
+            get { return Model.itemnames.GetName(ItemNameRaw); }
+            set { ItemNameRaw = (short)Model.itemnames.GetIndexByName(value); }
         }
 
-        [ReadOnly(true)]
         [Category("01 Misc Item")]
-        [DisplayName("Unknown")]
+        [DisplayName("Exists")]
         [Description("Always 3 if it exists zero otherwise")]
         public byte Exists {
             get { return RamDisk.GetU8(GetPos()+0x02); }

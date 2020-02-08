@@ -185,5 +185,19 @@ namespace GodHands {
             get { return RamDisk.GetU8(GetPos()+0x0F); }
             set { UndoRedo.Exec(new BindU8(this, 0x0F, value)); }
         }
+
+        [Category("03 Unknown")]
+        [DisplayName("Unknown 5")]
+        [Description("Unknown")]
+        public uint Unknown5 {
+            get { return (equipped) ? 0 : RamDisk.GetU32(GetPos()+0x10); }
+            set {
+                if (equipped) {
+                    Publisher.Publish(this);
+                } else {
+                    UndoRedo.Exec(new BindU32(this, 0x10, value));
+                }
+            }
+        }
     }
 }

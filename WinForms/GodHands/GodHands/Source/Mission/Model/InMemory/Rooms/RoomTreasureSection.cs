@@ -28,53 +28,52 @@ namespace GodHands {
                 string key = GetUrl()+"/Treasure/";
 
                 Weapon = new TreasureWeapon(key+"Weapon", pos+0x000, rec);
-                TreeNode node1 = root.Nodes.Add(key+"Weapon", Weapon.GetText(), 0, 0);
                 WeaponBlade = new TreasureBlade(key+"Weapon/Blade", pos+0x004, rec, true);
-                node1.Nodes.Add(key+"Weapon/Blade", WeaponBlade.GetText(), 0, 0);
                 WeaponGrip = new TreasureGrip(key+"Weapon/Grip", pos+0x030, rec, true);
-                node1.Nodes.Add(key+"Weapon/Grip", WeaponGrip.GetText(), 0, 0);
                 WeaponGem1 = new TreasureGem(key+"Weapon/Gem1", pos+0x040, rec, true);
-                node1.Nodes.Add(key+"Weapon/Gem1", WeaponGem1.GetText(), 0, 0);
                 WeaponGem2 = new TreasureGem(key+"Weapon/Gem2", pos+0x05C, rec, true);
-                node1.Nodes.Add(key+"Weapon/Gem2", WeaponGem2.GetText(), 0, 0);
                 WeaponGem3 = new TreasureGem(key+"Weapon/Gem3", pos+0x078, rec, true);
-                node1.Nodes.Add(key+"Weapon/Gem3", WeaponGem3.GetText(), 0, 0);
 
-                Blade = new TreasureBlade(key+"Blade", pos+0x0AC, rec, false);
-                root.Nodes.Add(key+"Blade", Blade.GetText(), 0, 0);
-                Grip = new TreasureGrip(key+"Grip", pos+0x0CC, rec, false);
-                root.Nodes.Add(key+"Grip", Grip.GetText(), 0, 0);
+                Blade = new TreasureBlade(key+"Blade", pos+0x0B0, rec, false);
+                Grip = new TreasureGrip(key+"Grip", pos+0x0DC, rec, false);
 
-                Shield = new TreasureShield(key+"Shield", pos+0x0DC, rec);
-                TreeNode node2 = root.Nodes.Add(key+"Shield", Shield.GetText(), 0, 0);
+                Shield = new TreasureShield(key+"Shield", pos+0x0F0, rec);
                 ShieldGem1 = new TreasureGem(key+"Shield/Gem1", pos+0x11C, rec, true);
-                node2.Nodes.Add(key+"Shield/Gem1", ShieldGem1.GetText(), 0, 0);
                 ShieldGem2 = new TreasureGem(key+"Shield/Gem2", pos+0x138, rec, true);
-                node2.Nodes.Add(key+"Shield/Gem2", ShieldGem2.GetText(), 0, 0);
                 ShieldGem3 = new TreasureGem(key+"Shield/Gem3", pos+0x154, rec, true);
-                node2.Nodes.Add(key+"Shield/Gem3", ShieldGem3.GetText(), 0, 0);
 
-
-                /*
                 Armour1 = new TreasureArmour(key+"Armour1", pos+0x170, rec);
-                root.Nodes.Add(key+"Armour1", Armour1.GetText(), 0, 0);
-                Armour2 = new TreasureArmour(key+"Armour2", pos+0x1A0, rec);
-                root.Nodes.Add(key+"Armour2", Armour2.GetText(), 0, 0);
+                Armour2 = new TreasureArmour(key+"Armour2", pos+0x19C, rec);
+                Accessory = new TreasureAccessory(key+"Accessory", pos+0x1C8, rec);
+                Gem = new TreasureGem(key+"Gem", pos+0x1F8, rec, false);
 
-                Accessory = new TreasureAccessory(key+"Accessory", pos+0x1D0, rec);
-                root.Nodes.Add(key+"Accessory", Accessory.GetText(), 0, 0);
-                Gem = new TreasureGem(key+"Gem", pos+0x200, rec);
-                root.Nodes.Add(key+"Gem", Gem.GetText(), 0, 0);
+                TreeNode tv_weapon = root.Nodes.Add(key+"Weapon", Weapon.GetText(), 12, 12);
+                tv_weapon.Nodes.Add(key+"Weapon/Blade", WeaponBlade.GetText(), 13, 13);
+                tv_weapon.Nodes.Add(key+"Weapon/Grip", WeaponGrip.GetText(), 14, 14);
+                tv_weapon.Nodes.Add(key+"Weapon/Gem1", WeaponGem1.GetText(), 24, 24);
+                tv_weapon.Nodes.Add(key+"Weapon/Gem2", WeaponGem2.GetText(), 25, 25);
+                tv_weapon.Nodes.Add(key+"Weapon/Gem3", WeaponGem3.GetText(), 26, 26);
 
-                Item1 = new TreasureMiscItem(key+"Item1", pos+0x220, rec);
-                root.Nodes.Add(key+"Item1", Item1.GetText(), 0, 0);
-                Item2 = new TreasureMiscItem(key+"Item2", pos+0x224, rec);
-                root.Nodes.Add(key+"Item2", Item2.GetText(), 0, 0);
-                Item3 = new TreasureMiscItem(key+"Item3", pos+0x228, rec);
-                root.Nodes.Add(key+"Item3", Item3.GetText(), 0, 0);
-                Item4 = new TreasureMiscItem(key+"Item4", pos+0x22C, rec);
-                root.Nodes.Add(key+"Item4", Item4.GetText(), 0, 0);
-                */
+                root.Nodes.Add(key+"Blade", Blade.GetText(), 13, 13);
+                root.Nodes.Add(key+"Grip", Grip.GetText(), 14, 14);
+
+                TreeNode node2 = root.Nodes.Add(key+"Shield", Shield.GetText(), 11, 11);
+                node2.Nodes.Add(key+"Shield/Gem1", ShieldGem1.GetText(), 24, 24);
+                node2.Nodes.Add(key+"Shield/Gem2", ShieldGem2.GetText(), 25, 25);
+                node2.Nodes.Add(key+"Shield/Gem3", ShieldGem3.GetText(), 26, 26);
+
+                root.Nodes.Add(key+"Armour1", Armour1.GetText(), 7, 7);
+                root.Nodes.Add(key+"Armour2", Armour2.GetText(), 7, 7);
+                root.Nodes.Add(key+"Accessory", Accessory.GetText(), 10, 10);
+                root.Nodes.Add(key+"Gem", Gem.GetText(), 24, 24);
+
+                Items = new List<TreasureMiscItem>();
+                for (int ptr = 0x214; ptr < this.len; ptr += 4) {
+                    string k = key+"Item"+Items.Count;
+                    TreasureMiscItem item = new TreasureMiscItem(k, pos+ptr, rec);
+                    root.Nodes.Add(k, item.GetText(), 44, 44);
+                    Items.Add(item);
+                }
             }
             return true;
         }
@@ -112,13 +111,8 @@ namespace GodHands {
         public TreasureAccessory Accessory { get; set; }
         [ReadOnly(true)][Category(" INTERNAL")]
         public TreasureGem Gem { get; set; }
+
         [ReadOnly(true)][Category(" INTERNAL")]
-        public TreasureMiscItem Item1 { get; set; }
-        [ReadOnly(true)][Category(" INTERNAL")]
-        public TreasureMiscItem Item2 { get; set; }
-        [ReadOnly(true)][Category(" INTERNAL")]
-        public TreasureMiscItem Item3 { get; set; }
-        [ReadOnly(true)][Category(" INTERNAL")]
-        public TreasureMiscItem Item4 { get; set; }
+        public List<TreasureMiscItem> Items { get; set; }
     }
 }

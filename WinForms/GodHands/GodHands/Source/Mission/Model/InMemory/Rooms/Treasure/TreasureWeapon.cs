@@ -11,7 +11,7 @@ namespace GodHands {
         }
 
         public override int GetLen() {
-            return 0x10C;
+            return 0xB8;
         }
 
         [Category("01 Equipment")]
