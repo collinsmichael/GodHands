@@ -16,11 +16,11 @@ namespace GodHands {
             string name = dir.GetFileName();
             TreeNode leaf = node.Nodes.Add(url, name);
             if (dir.FileFlags_Directory) {
-                leaf.ImageIndex = ShellIcons.GetDirIconIndex(false);
-                leaf.SelectedImageIndex = ShellIcons.GetDirIconIndex(true);
+                leaf.ImageIndex = SysIcons.GetDirIconIndex(false);
+                leaf.SelectedImageIndex = SysIcons.GetDirIconIndex(true);
                 Iso9660.EnumDir(url, dir, new EnumDiskView(leaf));
             } else {
-                int icon = ShellIcons.GetFileIconIndex(name);
+                int icon = SysIcons.GetFileIconIndex(name);
                 leaf.ImageIndex = leaf.SelectedImageIndex = icon;
             }
             return true;
@@ -48,11 +48,11 @@ namespace GodHands {
             if (obj != null) {
                 string volume = Iso9660.pvd.VolumeIdentifier.Trim();
                 TreeNode root = win.Nodes.Add("CD:PVD", "CDROM");
-                root.ImageIndex = ShellIcons.GetFileIconIndex("test.iso");
+                root.ImageIndex = SysIcons.GetDiskIconIndex();
                 root.SelectedImageIndex = root.ImageIndex;
 
                 TreeNode node = root.Nodes.Add("CD:ROOT", volume);
-                node.ImageIndex = ShellIcons.GetFileIconIndex("test.iso");
+                node.ImageIndex = SysIcons.GetDiskIconIndex();
                 node.SelectedImageIndex = node.ImageIndex;
                 return Iso9660.EnumFileSys(new EnumDiskView(node));
             }

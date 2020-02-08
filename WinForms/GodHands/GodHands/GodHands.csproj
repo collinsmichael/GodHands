@@ -122,11 +122,20 @@
     <Compile Include="Source\Mission\Model\InMemory\Rooms\RoomMainSection.cs" />
     <Compile Include="Source\Mission\Model\InMemory\Rooms\RoomScriptSection.cs" />
     <Compile Include="Source\Mission\Model\InMemory\Rooms\RoomTreasureSection.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Rooms\Treasure\TreasureAccessory.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Rooms\Treasure\TreasureArmour.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Rooms\Treasure\TreasureBlade.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Rooms\Treasure\TreasureGem.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Rooms\Treasure\TreasureGrip.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Rooms\Treasure\TreasureMiscItem.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Rooms\Treasure\TreasureShield.cs" />
+    <Compile Include="Source\Mission\Model\InMemory\Rooms\Treasure\TreasureWeapon.cs" />
     <Compile Include="Source\Mission\Model\InMemory\Textures\Texture.cs" />
     <Compile Include="Source\Mission\Model\OnDisk\BIN.cs" />
     <Compile Include="Source\Mission\View\Controls\ListViewFlickerFree.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Source\Mission\View\Helpers\SysIcons.cs" />
     <Compile Include="Source\Mission\View\SubScribers\Subscriber_ListView.cs" />
     <Compile Include="Source\Mission\View\SubScribers\Subscriber_TreeView.cs" />
     <Compile Include="Source\System\DataBinding\BaseClass.cs" />

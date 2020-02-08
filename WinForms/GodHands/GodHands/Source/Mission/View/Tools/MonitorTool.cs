@@ -14,12 +14,12 @@ namespace GodHands {
         public MonitorTool() {
             InitializeComponent();
             Icon = View.IconFromFile("/img/menu/tools-monitor-16.png");
-            ShellIcons.GetShellIcons(treeview);
+            SysIcons.GetSysIcons(treeview);
 
-            int iso_normal = ShellIcons.GetFileIconIndex("test.iso");
-            int dir_normal = ShellIcons.GetDirIconIndex(false);
-            int dir_select = ShellIcons.GetDirIconIndex(true);
-            int bin_normal = ShellIcons.GetFileIconIndex("test.bin");
+            int iso_normal = SysIcons.GetDiskIconIndex();
+            int dir_normal = SysIcons.GetDirIconIndex(false);
+            int dir_select = SysIcons.GetDirIconIndex(true);
+            int bin_normal = SysIcons.GetFileIconIndex("blank");
             TreeNode root = treeview.Nodes.Add("GodHands", "GodHands", iso_normal, iso_normal);
             TreeNode view = root.Nodes.Add("GodHands/View", "View", dir_normal, dir_select);
             view.Nodes.Add("GodHands/View/DiskTool", "DiskTool", bin_normal, bin_normal);

@@ -31,11 +31,11 @@ namespace GodHands {
         }
 
         [Category("01 Equipment")]
-        [DisplayName("Item Names List")]
+        [DisplayName("Item Name")]
         [Description("Name of the item")]
         [DefaultValue("")]
         [TypeConverter(typeof(ItemNamesListDropDown))]
-        public string ItemNamesList {
+        public string ItemName {
             get {
                 short index = RamDisk.GetS16(GetPos()+0x00);
                 return Model.itemnames.GetName(index);
@@ -71,11 +71,11 @@ namespace GodHands {
         }
 
         [Category("01 Equipment")]
-        [DisplayName("Item Category")]
+        [DisplayName("Category")]
         [Description("Weapon category")]
         [DefaultValue("")]
         [TypeConverter(typeof(CategoryBladesDropDown))]
-        public string ItemCategory {
+        public string Category {
             get {
                 byte index = RamDisk.GetU8(GetPos()+0x04);
                 return Model.category_blades.GetName(index);
@@ -130,16 +130,16 @@ namespace GodHands {
         [DisplayName("Cur PP")]
         [Description("Phantom points")]
         public double CurPP {
-            get { return RamDisk.GetS16(GetPos()+0x0C)/100.0; }
-            set { UndoRedo.Exec(new BindS16(this, 0x0C, (short)(value*100))); }
+            get { return RamDisk.GetS16(GetPos()+0x0C); }
+            set { UndoRedo.Exec(new BindS16(this, 0x0C, (short)(value))); }
         }
 
         [Category("01 Equipment")]
         [DisplayName("Max PP")]
         [Description("Maximum phantom points")]
         public double MaxPP {
-            get { return RamDisk.GetS16(GetPos()+0x0E)/100.0; }
-            set { UndoRedo.Exec(new BindS16(this, 0x0E, (short)(value*100))); }
+            get { return RamDisk.GetS16(GetPos()+0x0E); }
+            set { UndoRedo.Exec(new BindS16(this, 0x0E, (short)(value))); }
         }
 
         [Category("01 Equipment")]
