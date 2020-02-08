@@ -209,27 +209,42 @@ namespace GodHands {
 
             int ptr_mpd = RamDisk.GetS32(pos+0x00);
             int len_mpd = RamDisk.GetS32(pos+0x04);
-            int end_mpd = ptr_mpd + len_mpd;
-            if ((ptr_mpd < min) || (end_mpd > max)) {
-                errors += "MPD section is corrupt\n";
-            }
-            min = end_mpd;
+            int end_mpd = ptr_mpd + Math.Max(0, len_mpd);
 
             int ptr_zud = RamDisk.GetS32(pos+0x08);
             int len_zud = RamDisk.GetS32(pos+0x0C);
-            int end_zud = ptr_zud + len_zud;
-            if ((ptr_zud < min) || (end_zud > max)) {
-                errors += "ZUD section is corrupt\n";
-            }
-            min = end_zud;
+            int end_zud = ptr_zud + Math.Max(0, len_zud);
 
             int ptr_tim = RamDisk.GetS32(pos+0x10);
             int len_tim = RamDisk.GetS32(pos+0x14);
-            int end_tim = ptr_tim + len_tim;
-            if ((ptr_tim < min) || (end_tim > max)) {
-                errors += "TIM section is corrupt\n";
+            int end_tim = ptr_tim + Math.Max(0, len_tim);
+
+            if (len_mpd != 0) {
+                if ((ptr_mpd < min) || (end_mpd > max)) {
+                    errors += "MPD section is out of bounds "
+                           + ptr_mpd.ToString("X8")+"..."
+                           + len_mpd.ToString("X8")+"\n";
+                }
+                min = end_mpd;
             }
-            min = end_tim;
+
+            if (len_zud != 0) {
+                if ((ptr_zud < min) || (end_zud > max)) {
+                    errors += "ZUD section is out of bounds "
+                           + ptr_zud.ToString("X8")+"..."
+                           + len_zud.ToString("X8")+"\n";
+                }
+                min = end_zud;
+            }
+
+            if (len_tim != 0) {
+                if ((ptr_tim < min) || (end_tim > max)) {
+                    errors += "TIM section is out of bounds "
+                           + ptr_tim.ToString("X8")+"..."
+                           + len_tim.ToString("X8")+"\n";
+                }
+                min = end_tim;
+            }
 
             if (end_mpd > ptr_zud) {
                 errors += "MPD and ZUD sections overlap\n";
@@ -241,38 +256,43 @@ namespace GodHands {
                 return Logger.Warn(file+" is corrupt\n" + errors);
             }
 
-            int num_mpd = len_mpd/8;
-            int num_zud = RamDisk.GetS32(pos + ptr_zud);
-            int num_tim = RamDisk.GetS32(pos + ptr_tim + 0x10);
-
-            for (int i = 0; i < num_zud; i++) {
-                int ptr = ptr_zud + 4 + 8*num_zud + 0x464*i;
-                int lba = RamDisk.GetS32(pos + ptr_zud + 4 + 8*i);
-                AddActor(tv_actor, i, ptr, lba);
+            if (len_zud != 0) {
+                int num_zud = RamDisk.GetS32(pos + ptr_zud);
+                for (int i = 0; i < num_zud; i++) {
+                    int ptr = ptr_zud + 4 + 8*num_zud + 0x464*i;
+                    int lba = RamDisk.GetS32(pos + ptr_zud + 4 + 8*i);
+                    AddActor(tv_actor, i, ptr, lba);
+                }
             }
 
-            int ptrx = ptr_tim + 0x14;
-            for (int i = 0; i < num_tim; i++) {
-                int len = RamDisk.GetS32(pos + ptrx);
-                try {
-                    string key = GetUrl()+"/Images/Image_"+i;
-                    Texture obj = new Texture(key, ptrx+4, len, i, GetRec());
-                    images.Add(obj as Texture);
-                    Model.Add(key, obj);
-                    Publisher.Register(obj);
-                } catch {}
-                ptrx += len + 4;
+            if (len_tim != 0) {
+                int num_tim = RamDisk.GetS32(pos + ptr_tim + 0x10);
+                int ptrx = ptr_tim + 0x14;
+                for (int i = 0; i < num_tim; i++) {
+                    int len = RamDisk.GetS32(pos + ptrx);
+                    try {
+                        string key = GetUrl()+"/Images/Image_"+i;
+                        Texture obj = new Texture(key, ptrx+4, len, i, GetRec());
+                        images.Add(obj as Texture);
+                        Model.Add(key, obj);
+                        Publisher.Register(obj);
+                    } catch {}
+                    ptrx += len + 4;
+                }
+
+                foreach (Texture img in images) {
+                    int index = images.IndexOf(img);
+                    string text = "Image_"+index.ToString("D2");
+                    int icon = (img.IsLookUpTable()) ? 4 : 3;
+                    tv_image.Nodes.Add(img.GetUrl(), text, icon, icon);
+                }
             }
 
-            foreach (Texture img in images) {
-                int index = images.IndexOf(img);
-                string text = "Image_"+index.ToString("D2");
-                int icon = (img.IsLookUpTable()) ? 4 : 3;
-                tv_image.Nodes.Add(img.GetUrl(), text, icon, icon);
-            }
-
-            for (int i = 0; i < num_mpd; i++) {
-                AddRoom(tv_rooms, i, pos + ptr_mpd);
+            if (len_mpd != 0) {
+                int num_mpd = len_mpd/8;
+                for (int i = 0; i < num_mpd; i++) {
+                    AddRoom(tv_rooms, i, pos + ptr_mpd);
+                }
             }
 
             root.Expand();
