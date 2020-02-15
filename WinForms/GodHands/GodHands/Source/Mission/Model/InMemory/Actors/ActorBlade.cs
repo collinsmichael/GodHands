@@ -46,10 +46,10 @@ namespace GodHands {
         [DisplayName("Items List")]
         [Description("Depends on item type")]
         [DefaultValue("")]
-        [TypeConverter(typeof(ItemNameAccessoryDropDown))]
+        [TypeConverter(typeof(ItemNameBladeDropDown))]
         public string ItemsList {
-            get { return Model.accessory_names.GetName(ItemsListRaw); }
-            set { ItemsListRaw = (byte)Model.accessory_names.GetIndexByName(value); }
+            get { return Model.blade_names.GetName(ItemsListRaw); }
+            set { ItemsListRaw = (byte)Model.blade_names.GetIndexByName(value); }
         }
 
         [Category("01 Equipment")]
@@ -73,10 +73,10 @@ namespace GodHands {
         [DisplayName("Category")]
         [Description("Armour category")]
         [DefaultValue("")]
-        [TypeConverter(typeof(CategoryArmoursDropDown))]
+        [TypeConverter(typeof(CategoryBladesDropDown))]
         public string Category {
-            get { return Model.category_armours.GetName(CategoryRaw); }
-            set { CategoryRaw = (byte)Model.category_armours.GetIndexByName(value); }
+            get { return Model.category_blades.GetName(CategoryRaw); }
+            set { CategoryRaw = (byte)Model.category_blades.GetIndexByName(value); }
         }
 
         [Category("01 Equipment")]

@@ -46,10 +46,10 @@ namespace GodHands {
         [DisplayName("Items List")]
         [Description("Depends on item type")]
         [DefaultValue("")]
-        [TypeConverter(typeof(ItemNameAccessoryDropDown))]
+        [TypeConverter(typeof(ItemNameGemDropDown))]
         public string ItemsList {
-            get { return Model.accessory_names.GetName(ItemsListRaw); }
-            set { ItemsListRaw = (byte)Model.accessory_names.GetIndexByName(value); }
+            get { return Model.gem_names.GetName(ItemsListRaw); }
+            set { ItemsListRaw = (byte)Model.gem_names.GetIndexByName(value); }
         }
 
         [Category("01 Equipment")]
@@ -62,21 +62,11 @@ namespace GodHands {
 
         [ReadOnly(true)]
         [Category("01 Equipment")]
-        [DisplayName("Category Raw")]
-        [Description("Armour category")]
-        private byte CategoryRaw {
+        [DisplayName("Unused1")]
+        [Description("Unused (category)")]
+        private byte Unused1 {
             get { return RamDisk.GetU8(GetPos()+0x04); }
             set { UndoRedo.Exec(new BindU8(this, 0x04, value)); }
-        }
-
-        [Category("01 Equipment")]
-        [DisplayName("Category")]
-        [Description("Armour category")]
-        [DefaultValue("")]
-        [TypeConverter(typeof(CategoryArmoursDropDown))]
-        public string Category {
-            get { return Model.category_armours.GetName(CategoryRaw); }
-            set { CategoryRaw = (byte)Model.category_armours.GetIndexByName(value); }
         }
 
         [Category("01 Equipment")]
@@ -183,21 +173,11 @@ namespace GodHands {
 
         [ReadOnly(true)]
         [Category("01 Equipment")]
-        [DisplayName("Equip Material Raw")]
-        [Description("Material equipment is made of")]
-        private byte EquipMaterialRaw {
+        [DisplayName("Unused 2")]
+        [Description("Unused (Material)")]
+        private byte Unused2 {
             get { return RamDisk.GetU8(GetPos()+0x13); }
             set { UndoRedo.Exec(new BindU8(this, 0x13, value)); }
-        }
-
-        [Category("01 Equipment")]
-        [DisplayName("Equip Material")]
-        [Description("Material equipment is made of")]
-        [DefaultValue("")]
-        [TypeConverter(typeof(ItemNameMaterialDropDown))]
-        public string EquipMaterial {
-            get { return Model.materials.GetName(EquipMaterialRaw); }
-            set { EquipMaterialRaw = (byte)Model.materials.GetIndexByName(value); }
         }
 
         [Category("01 Equipment")]
