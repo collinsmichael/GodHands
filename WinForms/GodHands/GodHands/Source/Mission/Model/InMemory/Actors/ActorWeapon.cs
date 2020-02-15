@@ -86,28 +86,52 @@ namespace GodHands {
             }
         }
 
+        [ReadOnly(true)]
         [Category("01 Equipment")]
         [DisplayName("STR")]
-        [Description("Strength bonus")]
-        public sbyte STR {
-            get { return RamDisk.GetS8(GetPos()+0x05); }
-            set { UndoRedo.Exec(new BindS8(this, 0x05, value)); }
+        [Description("Strength (computed from Blade+Grip+Gems)")]
+        public int STR {
+            get {
+                int blade = RamDisk.GetS8(GetPos()+0x00+0x05);
+                int grip  = RamDisk.GetS8(GetPos()+0x30+0x05);
+                int gem1  = RamDisk.GetS8(GetPos()+0x60+0x05);
+                int gem2  = RamDisk.GetS8(GetPos()+0x90+0x05);
+                int gem3  = RamDisk.GetS8(GetPos()+0xC0+0x05);
+                return blade + grip + gem1 + gem2 + gem3;
+            }
+            set { }
         }
 
+        [ReadOnly(true)]
         [Category("01 Equipment")]
         [DisplayName("INT")]
-        [Description("Intelligence bonus")]
-        public sbyte INT {
-            get { return RamDisk.GetS8(GetPos()+0x06); }
-            set { UndoRedo.Exec(new BindS8(this, 0x06, value)); }
+        [Description("Intelligence (computed from Blade+Grip+Gems)")]
+        public int INT {
+            get {
+                int blade = RamDisk.GetS8(GetPos()+0x00+0x06);
+                int grip  = RamDisk.GetS8(GetPos()+0x30+0x06);
+                int gem1  = RamDisk.GetS8(GetPos()+0x60+0x06);
+                int gem2  = RamDisk.GetS8(GetPos()+0x90+0x06);
+                int gem3  = RamDisk.GetS8(GetPos()+0xC0+0x06);
+                return blade + grip + gem1 + gem2 + gem3;
+            }
+            set { }
         }
 
+        [ReadOnly(true)]
         [Category("01 Equipment")]
         [DisplayName("AGL")]
-        [Description("Agility bonus")]
-        public sbyte AGL {
-            get { return RamDisk.GetS8(GetPos()+0x07); }
-            set { UndoRedo.Exec(new BindS8(this, 0x07, value)); }
+        [Description("Agility (computed from Blade+Grip+Gems)")]
+        public int AGL {
+            get {
+                int blade = RamDisk.GetS8(GetPos()+0x00+0x07);
+                int grip  = RamDisk.GetS8(GetPos()+0x30+0x07);
+                int gem1  = RamDisk.GetS8(GetPos()+0x60+0x07);
+                int gem2  = RamDisk.GetS8(GetPos()+0x90+0x07);
+                int gem3  = RamDisk.GetS8(GetPos()+0xC0+0x07);
+                return blade + grip + gem1 + gem2 + gem3;
+            }
+            set { }
         }
 
         [Category("01 Equipment")]
@@ -178,6 +202,332 @@ namespace GodHands {
                 byte val = (byte)Math.Min(Math.Max(0, value*255/100), 255);
                 UndoRedo.Exec(new BindU8(this, 0xF1, val));
             }
+        }
+
+        [ReadOnly(true)]
+        [Category("01 Equipment")]
+        [DisplayName("Damage Type Raw")]
+        [Description("Damange type (blades)")]
+        private byte DamageTypeRaw {
+            get { return RamDisk.GetU8(GetPos()+0x10); }
+            set { UndoRedo.Exec(new BindU8(this, 0x10, value)); }
+        }
+
+        [Category("01 Equipment")]
+        [DisplayName("Damage Type")]
+        [Description("Damange type (blades)")]
+        [DefaultValue("")]
+        [TypeConverter(typeof(DamageTypesDropDown))]
+        public string DamageType {
+            get { return Model.damage_types.GetName(DamageTypeRaw); }
+            set { DamageTypeRaw = (byte)Model.damage_types.GetIndexByName(value); }
+        }
+
+        [ReadOnly(true)]
+        [Category("01 Equipment")]
+        [DisplayName("Damage Stat Raw")]
+        [Description("Stat affected (1=MP 2=RISK 3=HP 4=PP 5=nothing)")]
+        private byte DamageStatRaw {
+            get { return RamDisk.GetU8(GetPos()+0x11); }
+            set { UndoRedo.Exec(new BindU8(this, 0x11, value)); }
+        }
+
+        [Category("01 Equipment")]
+        [DisplayName("Damage Stats")]
+        [Description("Stat affected (1=MP 2=RISK 3=HP 4=PP 5=nothing)")]
+        [DefaultValue("")]
+        [TypeConverter(typeof(DamageStatsDropDown))]
+        public string DamageStats {
+            get { return Model.damage_stats.GetName(DamageStatRaw); }
+            set { DamageStatRaw = (byte)Model.damage_stats.GetIndexByName(value); }
+        }
+
+        [Category("01 Equipment")]
+        [DisplayName("Damage Cost")]
+        [Description("Stat cost value")]
+        public byte DamageCost {
+            get { return RamDisk.GetU8(GetPos()+0x12); }
+            set { UndoRedo.Exec(new BindU8(this, 0x12, value)); }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        [ReadOnly(true)]
+        [Category("02 Types")]
+        [DisplayName("Blunt")]
+        [Description("Resistence to blunt attacks (computed from Blade+Grip+Gems)")]
+        public int TypeBlunt {
+            get {
+                int blade = RamDisk.GetS8(GetPos()+0x00+0x1D);
+                int grip  = RamDisk.GetS8(GetPos()+0x30+0x1D);
+                int gem1  = RamDisk.GetS8(GetPos()+0x60+0x1D);
+                int gem2  = RamDisk.GetS8(GetPos()+0x90+0x1D);
+                int gem3  = RamDisk.GetS8(GetPos()+0xC0+0x1D);
+                return blade + grip + gem1 + gem2 + gem3;
+            }
+            set { }
+        }
+
+        [ReadOnly(true)]
+        [Category("02 Types")]
+        [DisplayName("Edged")]
+        [Description("Resistence to edged attacks (computed from Blade+Grip+Gems)")]
+        public int TypeEdged {
+            get {
+                int blade = RamDisk.GetS8(GetPos()+0x00+0x1E);
+                int grip  = RamDisk.GetS8(GetPos()+0x30+0x1E);
+                int gem1  = RamDisk.GetS8(GetPos()+0x60+0x1E);
+                int gem2  = RamDisk.GetS8(GetPos()+0x90+0x1E);
+                int gem3  = RamDisk.GetS8(GetPos()+0xC0+0x1E);
+                return blade + grip + gem1 + gem2 + gem3;
+            }
+            set { }
+        }
+
+        [ReadOnly(true)]
+        [Category("02 Types")]
+        [DisplayName("Piercing")]
+        [Description("Resistence to piercing attacks (computed from Blade+Grip+Gems)")]
+        public int TypePiercing {
+            get {
+                int blade = RamDisk.GetS8(GetPos()+0x00+0x1F);
+                int grip  = RamDisk.GetS8(GetPos()+0x30+0x1F);
+                int gem1  = RamDisk.GetS8(GetPos()+0x60+0x1F);
+                int gem2  = RamDisk.GetS8(GetPos()+0x90+0x1F);
+                int gem3  = RamDisk.GetS8(GetPos()+0xC0+0x1F);
+                return blade + grip + gem1 + gem2 + gem3;
+            }
+            set { }
+        }
+
+
+
+
+        [ReadOnly(true)]
+        [Category("03 Classes")]
+        [DisplayName("Human")]
+        [Description("Human class (computed from Blade+Grip+Gems)")]
+        public int ClassHuman {
+            get {
+                int blade = RamDisk.GetS8(GetPos()+0x00+0x20);
+                int grip  = RamDisk.GetS8(GetPos()+0x30+0x20);
+                int gem1  = RamDisk.GetS8(GetPos()+0x60+0x20);
+                int gem2  = RamDisk.GetS8(GetPos()+0x90+0x20);
+                int gem3  = RamDisk.GetS8(GetPos()+0xC0+0x20);
+                return blade + grip + gem1 + gem2 + gem3;
+            }
+            set { }
+        }
+
+        [ReadOnly(true)]
+        [Category("03 Classes")]
+        [DisplayName("Beast")]
+        [Description("Beast class (computed from Blade+Grip+Gems)")]
+        public int ClassBeast {
+            get {
+                int blade = RamDisk.GetS8(GetPos()+0x00+0x21);
+                int grip  = RamDisk.GetS8(GetPos()+0x30+0x21);
+                int gem1  = RamDisk.GetS8(GetPos()+0x60+0x21);
+                int gem2  = RamDisk.GetS8(GetPos()+0x90+0x21);
+                int gem3  = RamDisk.GetS8(GetPos()+0xC0+0x21);
+                return blade + grip + gem1 + gem2 + gem3;
+            }
+            set { }
+        }
+
+        [ReadOnly(true)]
+        [Category("03 Classes")]
+        [DisplayName("Undead")]
+        [Description("Undead class (computed from Blade+Grip+Gems)")]
+        public int ClassUndead {
+            get {
+                int blade = RamDisk.GetS8(GetPos()+0x00+0x22);
+                int grip  = RamDisk.GetS8(GetPos()+0x30+0x22);
+                int gem1  = RamDisk.GetS8(GetPos()+0x60+0x22);
+                int gem2  = RamDisk.GetS8(GetPos()+0x90+0x22);
+                int gem3  = RamDisk.GetS8(GetPos()+0xC0+0x22);
+                return blade + grip + gem1 + gem2 + gem3;
+            }
+            set { }
+        }
+
+        [ReadOnly(true)]
+        [Category("03 Classes")]
+        [DisplayName("Phantom")]
+        [Description("Phantom class (computed from Blade+Grip+Gems)")]
+        public int ClassPhantom {
+            get {
+                int blade = RamDisk.GetS8(GetPos()+0x00+0x23);
+                int grip  = RamDisk.GetS8(GetPos()+0x30+0x23);
+                int gem1  = RamDisk.GetS8(GetPos()+0x60+0x23);
+                int gem2  = RamDisk.GetS8(GetPos()+0x90+0x23);
+                int gem3  = RamDisk.GetS8(GetPos()+0xC0+0x23);
+                return blade + grip + gem1 + gem2 + gem3;
+            }
+            set { }
+        }
+
+        [ReadOnly(true)]
+        [Category("03 Classes")]
+        [DisplayName("Dragon")]
+        [Description("Dragon class (computed from Blade+Grip+Gems)")]
+        public int ClassDragon {
+            get {
+                int blade = RamDisk.GetS8(GetPos()+0x00+0x24);
+                int grip  = RamDisk.GetS8(GetPos()+0x30+0x24);
+                int gem1  = RamDisk.GetS8(GetPos()+0x60+0x24);
+                int gem2  = RamDisk.GetS8(GetPos()+0x90+0x24);
+                int gem3  = RamDisk.GetS8(GetPos()+0xC0+0x24);
+                return blade + grip + gem1 + gem2 + gem3;
+            }
+            set { }
+        }
+
+        [ReadOnly(true)]
+        [Category("03 Classes")]
+        [DisplayName("Evil")]
+        [Description("Evil class (computed from Blade+Grip+Gems)")]
+        public int ClassEvil {
+            get {
+                int blade = RamDisk.GetS8(GetPos()+0x00+0x25);
+                int grip  = RamDisk.GetS8(GetPos()+0x30+0x25);
+                int gem1  = RamDisk.GetS8(GetPos()+0x60+0x25);
+                int gem2  = RamDisk.GetS8(GetPos()+0x90+0x25);
+                int gem3  = RamDisk.GetS8(GetPos()+0xC0+0x25);
+                return blade + grip + gem1 + gem2 + gem3;
+            }
+            set { }
+        }
+
+
+
+
+
+        [ReadOnly(true)]
+        [Category("04 Affinities")]
+        [DisplayName("Physical")]
+        [Description("Physical affinity (computed from Blade+Grip+Gems)")]
+        public int AffinityPhysical {
+            get {
+                int blade = RamDisk.GetS8(GetPos()+0x00+0x28);
+                int grip  = RamDisk.GetS8(GetPos()+0x30+0x28);
+                int gem1  = RamDisk.GetS8(GetPos()+0x60+0x28);
+                int gem2  = RamDisk.GetS8(GetPos()+0x90+0x28);
+                int gem3  = RamDisk.GetS8(GetPos()+0xC0+0x28);
+                return blade + grip + gem1 + gem2 + gem3;
+            }
+            set { }
+        }
+
+        [ReadOnly(true)]
+        [Category("04 Affinities")]
+        [DisplayName("Air")]
+        [Description("Air elemental affinity (computed from Blade+Grip+Gems)")]
+        public int AffinityAir {
+            get {
+                int blade = RamDisk.GetS8(GetPos()+0x00+0x29);
+                int grip  = RamDisk.GetS8(GetPos()+0x30+0x29);
+                int gem1  = RamDisk.GetS8(GetPos()+0x60+0x29);
+                int gem2  = RamDisk.GetS8(GetPos()+0x90+0x29);
+                int gem3  = RamDisk.GetS8(GetPos()+0xC0+0x29);
+                return blade + grip + gem1 + gem2 + gem3;
+            }
+            set { }
+        }
+
+        [ReadOnly(true)]
+        [Category("04 Affinities")]
+        [DisplayName("Fire")]
+        [Description("fire elemental affinity (computed from Blade+Grip+Gems)")]
+        public int AffinityFire {
+            get {
+                int blade = RamDisk.GetS8(GetPos()+0x00+0x2A);
+                int grip  = RamDisk.GetS8(GetPos()+0x30+0x2A);
+                int gem1  = RamDisk.GetS8(GetPos()+0x60+0x2A);
+                int gem2  = RamDisk.GetS8(GetPos()+0x90+0x2A);
+                int gem3  = RamDisk.GetS8(GetPos()+0xC0+0x2A);
+                return blade + grip + gem1 + gem2 + gem3;
+            }
+            set { }
+        }
+
+        [ReadOnly(true)]
+        [Category("04 Affinities")]
+        [DisplayName("Earth")]
+        [Description("Earth elemental affinity (computed from Blade+Grip+Gems)")]
+        public int AffinityEarth {
+            get {
+                int blade = RamDisk.GetS8(GetPos()+0x00+0x2B);
+                int grip  = RamDisk.GetS8(GetPos()+0x30+0x2B);
+                int gem1  = RamDisk.GetS8(GetPos()+0x60+0x2B);
+                int gem2  = RamDisk.GetS8(GetPos()+0x90+0x2B);
+                int gem3  = RamDisk.GetS8(GetPos()+0xC0+0x2B);
+                return blade + grip + gem1 + gem2 + gem3;
+            }
+            set { }
+        }
+
+        [ReadOnly(true)]
+        [Category("04 Affinities")]
+        [DisplayName("Water")]
+        [Description("Water elemental affinity (computed from Blade+Grip+Gems)")]
+        public int AffinityWater {
+            get {
+                int blade = RamDisk.GetS8(GetPos()+0x00+0x2C);
+                int grip  = RamDisk.GetS8(GetPos()+0x30+0x2C);
+                int gem1  = RamDisk.GetS8(GetPos()+0x60+0x2C);
+                int gem2  = RamDisk.GetS8(GetPos()+0x90+0x2C);
+                int gem3  = RamDisk.GetS8(GetPos()+0xC0+0x2C);
+                return blade + grip + gem1 + gem2 + gem3;
+            }
+            set { }
+        }
+
+        [ReadOnly(true)]
+        [Category("04 Affinities")]
+        [DisplayName("Light")]
+        [Description("Light affinity (computed from Blade+Grip+Gems)")]
+        public int AffinityLight {
+            get {
+                int blade = RamDisk.GetS8(GetPos()+0x00+0x2D);
+                int grip  = RamDisk.GetS8(GetPos()+0x30+0x2D);
+                int gem1  = RamDisk.GetS8(GetPos()+0x60+0x2D);
+                int gem2  = RamDisk.GetS8(GetPos()+0x90+0x2D);
+                int gem3  = RamDisk.GetS8(GetPos()+0xC0+0x2D);
+                return blade + grip + gem1 + gem2 + gem3;
+            }
+            set { }
+        }
+
+        [ReadOnly(true)]
+        [Category("04 Affinities")]
+        [DisplayName("Dark")]
+        [Description("Dark affinity (computed from Blade+Grip+Gems)")]
+        public int AffinityDark {
+            get {
+                int blade = RamDisk.GetS8(GetPos()+0x00+0x2E);
+                int grip  = RamDisk.GetS8(GetPos()+0x30+0x2E);
+                int gem1  = RamDisk.GetS8(GetPos()+0x60+0x2E);
+                int gem2  = RamDisk.GetS8(GetPos()+0x90+0x2E);
+                int gem3  = RamDisk.GetS8(GetPos()+0xC0+0x2E);
+                return blade + grip + gem1 + gem2 + gem3;
+            }
+            set { }
         }
     }
 }

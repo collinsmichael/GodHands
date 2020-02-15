@@ -96,9 +96,9 @@ namespace GodHands {
         }
 
         [Category("01 Enemy")]
-        [DisplayName("07 Locale Trigger")]
+        [DisplayName("07 Local Trigger")]
         [Description("Unknown")]
-        public byte AshleyLocaleTrigger_07 {
+        public byte AshleyLocalTrigger_07 {
             get { return RamDisk.GetU8(GetPos()+0x07); }
             set { UndoRedo.Exec(new BindU8(this, 0x07, value)); }
         }
@@ -120,17 +120,17 @@ namespace GodHands {
         }
 
         [Category("01 Enemy")]
-        [DisplayName("0A Locale Trigger Param 1")]
+        [DisplayName("0A Local Trigger Param 1")]
         [Description("Unknown")]
-        public byte LocaleTriggerParam1_0A {
+        public byte LocalTriggerParam1_0A {
             get { return RamDisk.GetU8(GetPos()+0x0A); }
             set { UndoRedo.Exec(new BindU8(this, 0x0A, value)); }
         }
 
         [Category("01 Enemy")]
-        [DisplayName("0B Locale Trigger Param 2")]
+        [DisplayName("0B Local Trigger Param 2")]
         [Description("Unknown")]
-        public byte LocaleTriggerParam2_0B {
+        public byte LocalTriggerParam2_0B {
             get { return RamDisk.GetU8(GetPos()+0x0B); }
             set { UndoRedo.Exec(new BindU8(this, 0x0B, value)); }
         }
@@ -159,12 +159,23 @@ namespace GodHands {
             set { UndoRedo.Exec(new BindU8(this, 0x0E, value)); }
         }
 
+        [ReadOnly(true)]
+        [Category("01 Enemy")]
+        [DisplayName("0F Direction Raw")]
+        [Description("Can be north/south/east/west")]
+        public byte DirectionRaw {
+            get { return RamDisk.GetU8(GetPos()+0x0F); }
+            set { UndoRedo.Exec(new BindU8(this, 0x0F, value)); }
+        }
+
         [Category("01 Enemy")]
         [DisplayName("0F Direction")]
         [Description("Can be north/south/east/west")]
-        public byte FacingDirection_0F {
-            get { return RamDisk.GetU8(GetPos()+0x0F); }
-            set { UndoRedo.Exec(new BindU8(this, 0x0F, value)); }
+        [DefaultValue("")]
+        [TypeConverter(typeof(CompassDirectionDropDown))]
+        public string Direction {
+            get { return Model.compass.GetName(DirectionRaw); }
+            set { DirectionRaw = (byte)Model.compass.GetIndexByName(value); }
         }
 
         [Category("01 Enemy")]

@@ -78,6 +78,8 @@
     <Compile Include="Source\Mission\Experimental\Base.cs" />
     <Compile Include="Source\Mission\Model\Database\Categories\CategorySkills.cs" />
     <Compile Include="Source\Mission\Model\Database\Categories\CategorySkillsDropDown.cs" />
+    <Compile Include="Source\Mission\Model\Database\Items\CompassDirectionDropDown.cs" />
+    <Compile Include="Source\Mission\Model\Database\Items\CompassDirectionList.cs" />
     <Compile Include="Source\Mission\Model\Database\Items\MiscItem.cs" />
     <Compile Include="Source\Mission\Model\InMemory\Actors\ActorAccessory.cs" />
     <Compile Include="Source\Mission\Model\InMemory\Actors\ActorArmour.cs" />

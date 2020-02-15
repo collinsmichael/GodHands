@@ -124,6 +124,7 @@ namespace GodHands {
         public static DamageStats damage_stats = new DamageStats();
         public static DamageTypes damage_types = new DamageTypes();
         public static SkillsList skills = new SkillsList();
+        public static CompassDirectionList compass = new CompassDirectionList();
 
         public static int lba_00_shp = 0;
         public static int lba_01_wep = 0;
