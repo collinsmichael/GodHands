@@ -216,6 +216,31 @@ namespace GodHands {
             return EnumDir("CD:ROOT", dir, iterator);
         }
 
+        public static string FindCollision(DirRec rec, int sectors) {
+            string collisions = "";
+            int lba = rec.LbaData;
+            int len = (rec.LenData+2047)/2048;
+            for (int i = len; i < sectors; i++) {
+                int key = lba + i;
+                if (Lba2Path.ContainsKey(key)) {
+                    collisions = collisions + "    " + Lba2Path[key] + "\r\n";
+                }
+            }
+            return collisions;
+        }
+
+        public static int FindCapacity(DirRec rec) {
+            int count = (rec.LenData+2047)/2048;
+            int capacity = count;
+            for (int lba = rec.LbaData+count; lba < RamDisk.count; lba++) {
+                if (Lba2Path.ContainsKey(lba)) {
+                    break;
+                }
+                capacity++;
+            }
+            return capacity;
+        }
+
         private static int next = 0;
         public static int NextFit(int num_sectors) {
             int total = RamDisk.count;
@@ -260,6 +285,11 @@ namespace GodHands {
             int old = rec.LbaData;
             int len = (rec.LenData+2047)/2048;
             for (int i = 0; i < len; i++) {
+                // self intersection is not a problem
+                if ((lba+i >= old) && (lba+i < old+len)) {
+                    continue;
+                }
+                // check for collisions
                 if (RamDisk.map[lba + i] != 0) {
                     return Logger.Fail("Cannot move "+rec.GetFileName()+" not enough space");
                 }

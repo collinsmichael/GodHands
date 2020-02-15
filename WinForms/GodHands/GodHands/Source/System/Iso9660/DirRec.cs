@@ -134,6 +134,7 @@ namespace GodHands {
         public int LenData {
             get { return RamDisk.GetS32(GetPos()+10); }
             set {
+                int lba = LbaData;
                 int len = RamDisk.GetS32(GetPos()+10);
                 int num = (len+2047)/2048;
                 if (!sizing) {
@@ -146,24 +147,28 @@ namespace GodHands {
                             return;
                         }
                         // TODO: Free RamDisk.map;
-                        int lba = LbaData;
                         for (int i = (value+2047)/2048; i < num; i++) {
                             RamDisk.map[lba+i] = 0;
                         }
                     } else if (value > len) {
                         // TODO Find space on disk
-                        int count = (value+2047)/2048;
-                        int ptr = Iso9660.NextFit(count);
-                        string msg = "Out of space at this location!\r\n"+
-                                     "There is space at LBA="+ptr+"!\r\n"+
-                                     "Do you want to move this file there?";
-                        if (!Logger.YesNoCancel(msg)) {
-                            Publisher.Publish(GetUrl(), this);
-                            sizing = false;
-                            return;
+                        int consumed = (value+2047)/2048;
+                        int capacity = Iso9660.FindCapacity(this);
+                        if (consumed > capacity) {
+                            int ptr = Iso9660.NextFit(consumed);
+                            string overlaps = Iso9660.FindCollision(this, consumed);
+                            string msg = "Out of space at this location!\r\n"+
+                                         "This file would overlap with:\r\n"+ overlaps +
+                                         "There is space at LBA="+ptr+"!\r\n"+
+                                         "Do you want to move this file there?";
+                            if (!Logger.YesNoCancel(msg)) {
+                                Publisher.Publish(GetUrl(), this);
+                                sizing = false;
+                                return;
+                            }
+                            LbaData = ptr;
                         }
-                        LbaData = ptr;
-                        if (!Iso9660.ResizeRecord(this, count)) {
+                        if (!Iso9660.ResizeRecord(this, consumed)) {
                             sizing = false;
                             return;
                         }
