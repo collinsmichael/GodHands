@@ -46,10 +46,10 @@ namespace GodHands {
         [DisplayName("Items List")]
         [Description("Depends on item type")]
         [DefaultValue("")]
-        [TypeConverter(typeof(ItemNameAccessoryDropDown))]
+        [TypeConverter(typeof(ItemNameGripDropDown))]
         public string ItemsList {
-            get { return Model.accessory_names.GetName(ItemsListRaw); }
-            set { ItemsListRaw = (byte)Model.accessory_names.GetIndexByName(value); }
+            get { return Model.grip_names.GetName(ItemsListRaw); }
+            set { ItemsListRaw = (byte)Model.grip_names.GetIndexByName(value); }
         }
 
         [Category("01 Equipment")]
@@ -73,10 +73,10 @@ namespace GodHands {
         [DisplayName("Category")]
         [Description("Armour category")]
         [DefaultValue("")]
-        [TypeConverter(typeof(CategoryArmoursDropDown))]
+        [TypeConverter(typeof(CategoryGripsDropDown))]
         public string Category {
-            get { return Model.category_armours.GetName(CategoryRaw); }
-            set { CategoryRaw = (byte)Model.category_armours.GetIndexByName(value); }
+            get { return Model.category_grips.GetName(CategoryRaw); }
+            set { CategoryRaw = (byte)Model.category_grips.GetIndexByName(value); }
         }
 
         [Category("01 Equipment")]
@@ -183,33 +183,23 @@ namespace GodHands {
 
         [ReadOnly(true)]
         [Category("01 Equipment")]
-        [DisplayName("Equip Material Raw")]
-        [Description("Material equipment is made of")]
-        private byte EquipMaterialRaw {
+        [DisplayName("Unknown1")]
+        [Description("Unknown")]
+        private byte Unknown1 {
             get { return RamDisk.GetU8(GetPos()+0x13); }
             set { UndoRedo.Exec(new BindU8(this, 0x13, value)); }
         }
 
         [Category("01 Equipment")]
-        [DisplayName("Equip Material")]
-        [Description("Material equipment is made of")]
-        [DefaultValue("")]
-        [TypeConverter(typeof(ItemNameMaterialDropDown))]
-        public string EquipMaterial {
-            get { return Model.materials.GetName(EquipMaterialRaw); }
-            set { EquipMaterialRaw = (byte)Model.materials.GetIndexByName(value); }
-        }
-
-        [Category("01 Equipment")]
-        [DisplayName("Padding")]
-        [Description("Unused")]
-        public byte UnusedPadding1 {
+        [DisplayName("Unknown2")]
+        [Description("Unknown")]
+        private byte Unknown {
             get { return RamDisk.GetU8(GetPos()+0x14); }
             set { UndoRedo.Exec(new BindU8(this, 0x14, value)); }
         }
 
         [Category("01 Equipment")]
-        [DisplayName("NumSlots")]
+        [DisplayName("Num Gems")]
         [Description("Number of gem slots")]
         public byte GemNumSlots {
             get { return RamDisk.GetU8(GetPos()+0x15); }
@@ -225,9 +215,9 @@ namespace GodHands {
         }
 
         [Category("01 Equipment")]
-        [DisplayName("Index In GadgetBag")]
-        [Description("RAM only")]
-        public byte GadgetBagIndex {
+        [DisplayName("Equip ID")]
+        [Description("RAM only (Index in GadgetBag)")]
+        private byte EquipID {
             get { return RamDisk.GetU8(GetPos()+0x17); }
             set { UndoRedo.Exec(new BindU8(this, 0x17, value)); }
         }
@@ -235,7 +225,7 @@ namespace GodHands {
         [Category("01 Equipment")]
         [DisplayName("RangeX")]
         [Description("Range horizontal")]
-        public byte TargetRangeX {
+        private byte TargetRangeX {
             get { return RamDisk.GetU8(GetPos()+0x18); }
             set { UndoRedo.Exec(new BindU8(this, 0x18, value)); }
         }
@@ -243,7 +233,7 @@ namespace GodHands {
         [Category("01 Equipment")]
         [DisplayName("RangeY")]
         [Description("Range vertical")]
-        public byte TargetRangeY {
+        private byte TargetRangeY {
             get { return RamDisk.GetU8(GetPos()+0x19); }
             set { UndoRedo.Exec(new BindU8(this, 0x19, value)); }
         }
@@ -251,7 +241,7 @@ namespace GodHands {
         [Category("01 Equipment")]
         [DisplayName("RangeZ")]
         [Description("Range depth")]
-        public byte TargetRangeZ {
+        private byte TargetRangeZ {
             get { return RamDisk.GetU8(GetPos()+0x1A); }
             set { UndoRedo.Exec(new BindU8(this, 0x1A, value)); }
         }
@@ -259,35 +249,10 @@ namespace GodHands {
         [ReadOnly(true)]
         [Category("01 Equipment")]
         [DisplayName("Target Sphere Raw")]
-        [Description("Target sphere shape")]
+        [Description("Unused for grips")]
         private byte TargetSphereRaw {
             get { return RamDisk.GetU8(GetPos()+0x1B); }
             set { UndoRedo.Exec(new BindU8(this, 0x1B, value)); }
-        }
-
-        [Category("01 Equipment")]
-        [DisplayName("Target Sphere")]
-        [Description("Target sphere shape")]
-        [DefaultValue("")]
-        [TypeConverter(typeof(TargetSphereDropDown))]
-        public string TargetSphere {
-            get { return Model.targets.GetName(TargetSphereRaw); }
-            set {
-                byte val = (byte)(TargetSphereRaw & ~7);
-                byte index = (byte)(Model.targets.GetIndexByName(value) % 8);
-                TargetSphereRaw = (byte)(val | index);
-            }
-        }
-
-        [Category("01 Equipment")]
-        [DisplayName("Target Angle")]
-        [Description("Angle of target sphere")]
-        public byte TargetAngle {
-            get { return (byte)(TargetSphereRaw/8); }
-            set {
-                byte val = TargetSphereRaw;
-                TargetSphereRaw = (byte)((val%8) | (4*(value % 32)));
-            }
         }
 
         [Category("02 Types")]

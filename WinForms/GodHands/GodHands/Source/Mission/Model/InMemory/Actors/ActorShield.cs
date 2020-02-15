@@ -46,10 +46,10 @@ namespace GodHands {
         [DisplayName("Items List")]
         [Description("Depends on item type")]
         [DefaultValue("")]
-        [TypeConverter(typeof(ItemNameAccessoryDropDown))]
+        [TypeConverter(typeof(ItemNameArmourDropDown))]
         public string ItemsList {
-            get { return Model.accessory_names.GetName(ItemsListRaw); }
-            set { ItemsListRaw = (byte)Model.accessory_names.GetIndexByName(value); }
+            get { return Model.armour_names.GetName(ItemsListRaw); }
+            set { ItemsListRaw = (byte)Model.armour_names.GetIndexByName(value); }
         }
 
         [Category("01 Equipment")]
