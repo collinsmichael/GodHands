@@ -10,9 +10,9 @@ namespace GodHands {
         private Zone zone;
         private ZUD zud;
 
-        public Actor(string url, int pos, DirRec rec,
-        Zone zone, int zoneid, int actorid, DirRec zud_rec):
-        base(url, pos, rec) {
+        public Actor(BaseClass parent, string url, int pos, Record rec,
+        Zone zone, int zoneid, int actorid, Record zud_rec):
+        base(parent, url, pos, rec) {
             this.zone = zone;
             this.ZoneId = zoneid;
             this.ActorId = actorid;

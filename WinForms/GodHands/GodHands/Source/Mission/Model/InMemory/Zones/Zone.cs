@@ -22,8 +22,8 @@ namespace GodHands {
         public List<ActorAccessory> accessories = new List<ActorAccessory>();
         public List<Texture> images = new List<Texture>();
 
-        public Zone(string url, int pos, DirRec rec):
-        base(url, pos, rec) {
+        public Zone(BaseClass parent, string url, int pos, Record rec):
+        base(parent, url, pos, rec) {
             znd = Model.znds[rec.GetUrl()];
 
             string file = rec.GetFileName();
@@ -39,8 +39,8 @@ namespace GodHands {
             int lba = RamDisk.GetS32(pos + 8*id);
             try {
                 string url = GetUrl()+"/Room/"+id;
-                DirRec mpd = Iso9660.GetByLba(lba);
-                Room obj = new Room(mpd.GetUrl(), 0, mpd, this, zoneid, id);
+                Record mpd = Iso9660.GetByLba(lba);
+                Room obj = new Room(this, mpd.GetUrl(), 0, mpd, this, zoneid, id);
                 rooms.Add(obj);
                 Model.Add(url, obj);
                 Publisher.Register(obj);
@@ -59,8 +59,8 @@ namespace GodHands {
                 // Add the actor
                 string url = GetUrl()+"/Actors/Actor_"+id;
                 string znd_file = GetRec().GetFileName();
-                DirRec zud = Iso9660.GetByLba(lba);
-                Actor obj = new Actor(url, pos, GetRec(), this, zoneid, id, zud);
+                Record zud = Iso9660.GetByLba(lba);
+                Actor obj = new Actor(this, url, pos, GetRec(), this, zoneid, id, zud);
                 actors.Add(obj);
                 Model.Add(url, obj);
                 Publisher.Register(obj);
@@ -83,7 +83,7 @@ namespace GodHands {
 
                     int ptr_part = pos + 0x238 + j*0x5C;
                     string k1 = url+"/BodyParts/"+part_name[j];
-                    ActorBodyPart part = new ActorBodyPart(k1, ptr_part, GetRec());
+                    ActorBodyPart part = new ActorBodyPart(this, k1, ptr_part, GetRec());
                     bodyparts.Add(part);
                     Model.Add(k1, part);
                     Publisher.Register(part);
@@ -105,7 +105,7 @@ namespace GodHands {
 
                     int ptr_part = pos + 0x238 + j*0x5C + 0x20;
                     string k2 = url+"/Equip/"+part_name[j];
-                    ActorArmour armour = new ActorArmour(k2, ptr_part, GetRec());
+                    ActorArmour armour = new ActorArmour(this, k2, ptr_part, GetRec());
                     armours.Add(armour);
                     Model.Add(k2, armour);
                     Publisher.Register(armour);
@@ -120,24 +120,24 @@ namespace GodHands {
 
                 // ************************************************************
                 // Add weapon
-                ActorWeapon weapon = new ActorWeapon(url+"/Weapon", pos + 0x34, GetRec());
+                ActorWeapon weapon = new ActorWeapon(this, url+"/Weapon", pos + 0x34, GetRec());
                 weapons.Add(weapon);
                 Model.Add(url+"/Weapon", weapon);
                 Publisher.Register(weapon);
 
-                ActorBlade blade = new ActorBlade(url+"/Weapon/Blade", pos + 0x34, GetRec());
+                ActorBlade blade = new ActorBlade(this, url+"/Weapon/Blade", pos + 0x34, GetRec());
                 blades.Add(blade);
                 Model.Add(url+"/Weapon/Blade", blade);
                 Publisher.Register(blade);
 
-                ActorGrip grip = new ActorGrip(url+"/Weapon/Grip", pos + 0x64, GetRec());
+                ActorGrip grip = new ActorGrip(this, url+"/Weapon/Grip", pos + 0x64, GetRec());
                 grips.Add(grip);
                 Model.Add(url+"/Weapon/Grip", grip);
                 Publisher.Register(grip);
                 for (int j = 0; j < 3; j++) {
                     int ptr_gem = pos + 0x94 + j*0x30;
                     string key = url+"/Weapon/Gem"+(j+1);
-                    ActorGem gem = new ActorGem(key, ptr_gem, GetRec());
+                    ActorGem gem = new ActorGem(this, key, ptr_gem, GetRec());
                     weapon_gems.Add(gem);
                     Model.Add(key, gem);
                     Publisher.Register(gem);
@@ -152,14 +152,14 @@ namespace GodHands {
 
                 // ************************************************************
                 // Add shield
-                ActorShield shield = new ActorShield(url+"/Shield", pos + 0x140, GetRec());
+                ActorShield shield = new ActorShield(this, url+"/Shield", pos + 0x140, GetRec());
                 shields.Add(shield);
                 Model.Add(url+"/Shield", shield);
                 Publisher.Register(shield);
                 for (int j = 0; j < 3; j++) {
                     int ptr_gem = pos + 0x170 + j*0x30;
                     string key = url+"/Shield/Gem"+(j+1);
-                    ActorGem gem = new ActorGem(key, ptr_gem, GetRec());
+                    ActorGem gem = new ActorGem(this, key, ptr_gem, GetRec());
                     shield_gems.Add(gem);
                     Model.Add(key, gem);
                     Publisher.Register(gem);
@@ -173,7 +173,7 @@ namespace GodHands {
                 // ************************************************************
                 // Add accessory
                 TreeNode tv_accessory = node.Nodes.Add(url+"/Accessory", "Accessory", 10, 10);
-                ActorAccessory accessory = new ActorAccessory(url+"/Accessory", pos + 0x204, GetRec());
+                ActorAccessory accessory = new ActorAccessory(this, url+"/Accessory", pos + 0x204, GetRec());
                 accessories.Add(accessory);
                 Model.Add(url+"/Accessory", accessory);
                 Publisher.Register(accessory);
@@ -184,7 +184,7 @@ namespace GodHands {
         }
 
         public bool OpenZone(TreeView treeview) {
-            DirRec rec = GetRec();
+            Record rec = GetRec();
             Iso9660.ReadFile(rec);
             int pos = znd.GetPos();
 
@@ -272,7 +272,7 @@ namespace GodHands {
                     int len = RamDisk.GetS32(pos + ptrx);
                     try {
                         string key = GetUrl()+"/Images/Image_"+i;
-                        Texture obj = new Texture(key, ptrx+4, len, i, GetRec());
+                        Texture obj = new Texture(this, key, ptrx+4, len, i, GetRec());
                         images.Add(obj as Texture);
                         Model.Add(key, obj);
                         Publisher.Register(obj);

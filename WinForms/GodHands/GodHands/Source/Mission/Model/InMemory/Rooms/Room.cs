@@ -16,9 +16,9 @@ namespace GodHands {
         private RoomEnemySection enemies;
         private RoomTreasureSection treasure;
 
-        public Room(string url, int pos, DirRec rec,
+        public Room(BaseClass parent, string url, int pos, Record rec,
         Zone zone, int zoneid, int roomid):
-        base(url, pos, rec) {
+        base(parent, url, pos, rec) {
             mpd = Model.mpds[rec.GetUrl()];
             this.zone = zone;
             ZoneId = zoneid;
@@ -111,25 +111,25 @@ namespace GodHands {
         }
 
         public bool AddRoom(TreeNode root, string url, int id, int pos) {
-            main = new RoomMainSection(url+"/Main", ptrMainSection, lenMainSection, GetRec());
+            main = new RoomMainSection(this, url+"/Main", ptrMainSection, lenMainSection, GetRec());
             main.OpenSection(root.Nodes.Add(url+"/Main", "Main", 28, 28));
             //root.Nodes.Add(url+"/Geometry", "Geometry", 28, 28);
             //root.Nodes.Add(url+"/Lighting", "Lighting", 32, 32);
             //root.Nodes.Add(url+"/Collisions", "Collisions", 31, 31);
 
-            cleared = new RoomClearedSection(url+"/Cleared", ptrClearedSection, lenClearedSection, GetRec());
+            cleared = new RoomClearedSection(this, url+"/Cleared", ptrClearedSection, lenClearedSection, GetRec());
             cleared.OpenSection(root.Nodes.Add(url+"/Cleared", "Cleared", 31, 31));
 
-            script = new RoomScriptSection(url+"/Script", ptrScriptSection, lenScriptSection, GetRec());
+            script = new RoomScriptSection(this, url+"/Script", ptrScriptSection, lenScriptSection, GetRec());
             script.OpenSection(root.Nodes.Add(url+"/Script", "Script", 36, 36));
 
-            doors = new RoomDoorSection(url+"/Doors", ptrDoorSection, lenDoorSection, GetRec());
+            doors = new RoomDoorSection(this, url+"/Doors", ptrDoorSection, lenDoorSection, GetRec());
             doors.OpenSection(root.Nodes.Add(url+"/Doors", "Doors", 33, 34));
 
-            enemies = new RoomEnemySection(url+"/Enemies", ptrEnemySection, lenEnemySection, GetRec(), zone, this);
+            enemies = new RoomEnemySection(this, url+"/Enemies", ptrEnemySection, lenEnemySection, GetRec(), zone, this);
             enemies.OpenSection(root.Nodes.Add(url+"/Enemies", "Enemies", 35, 35));
 
-            treasure = new RoomTreasureSection(url+"/Treasure", ptrTreasureSection, lenTreasureSection, GetRec());
+            treasure = new RoomTreasureSection(this, url+"/Treasure", ptrTreasureSection, lenTreasureSection, GetRec());
             treasure.OpenSection(root.Nodes.Add(url+"/Treasure", "Treasure", 37, 37));
             return true;
         }

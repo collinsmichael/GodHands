@@ -12,7 +12,7 @@ namespace GodHands {
             this.node = node;
         }
 
-        public bool Visit(string url, DirRec dir) {
+        public bool Visit(string url, Record dir) {
             string name = dir.GetFileName();
             TreeNode leaf = node.Nodes.Add(url, name);
             if (dir.FileFlags_Directory) {

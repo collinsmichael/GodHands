@@ -38,7 +38,7 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.btn_clear = new System.Windows.Forms.Button();
             this.btn_close = new System.Windows.Forms.Button();
-            this.listview = new GodHands.ListViewFlickerFree();
+            this.listview = new System.Windows.Forms.ListView();
             this.menubar.SuspendLayout();
             this.statusstrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -255,6 +255,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Button btn_clear;
         private System.Windows.Forms.Button btn_close;
-        private ListViewFlickerFree listview;
+        private System.Windows.Forms.ListView listview;
     }
 }

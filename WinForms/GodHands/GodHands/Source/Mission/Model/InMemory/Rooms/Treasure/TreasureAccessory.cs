@@ -6,8 +6,8 @@ using System.Text;
 
 namespace GodHands {
     public class TreasureAccessory : InMemory {
-        public TreasureAccessory(string url, int pos, DirRec rec):
-        base(url, pos, rec) {
+        public TreasureAccessory(BaseClass parent, string url, int pos, Record rec):
+        base(parent, url, pos, rec) {
         }
 
         public override int GetLen() {

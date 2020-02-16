@@ -5,7 +5,8 @@ using System.Text;
 
 namespace GodHands {
     public class WEP : BaseClass {
-        public WEP(string url, int pos) : base(url, pos) {
+        public WEP(BaseClass parent, string url, int pos):
+        base(parent, url, pos) {
         }
 
         public override int GetLen() {

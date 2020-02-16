@@ -6,12 +6,13 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace GodHands {
-    public class DirRec : BaseClass {
+    public class Record : BaseClass {
         private int pos;
         private bool moving = false;
         private bool sizing = false;
 
-        public DirRec(string url, int pos) : base(url, pos) {
+        public Record(BaseClass parent, string url, int pos):
+        base(parent, url, pos) {
             this.pos = pos;
             if (RamDisk.map[pos/2048] == 0) {
                 RamDisk.map[pos/2048] = 0x6F;
@@ -23,19 +24,6 @@ namespace GodHands {
                 return Iso9660.pvd.VolumeIdentifier;
             }
             return GetFileName();
-        }
-
-        public override int GetPos() {
-            return pos;
-        }
-
-        public override void SetPos(int pos) {
-            this.pos = pos;
-            Model.SetPos(GetUrl(), pos);
-        }
-
-        public override int GetLen() {
-            return LenRecord;
         }
 
         public string GetFileName() {
@@ -122,7 +110,6 @@ namespace GodHands {
                     (byte)((value) % 256)
                 };
                 UndoRedo.Exec(new BindArray(this, GetPos()+2, 8, buf));
-                Model.SetPos(GetUrl(), value);
                 Publisher.Publish(GetUrl(), this);
                 Logger.Pass("Moved "+GetFileName()+" to LBA="+value);
             }
@@ -187,7 +174,6 @@ namespace GodHands {
                     (byte)((value) % 256)
                 };
                 UndoRedo.Exec(new BindArray(this, GetPos()+10, 8, buf));
-                Model.SetLen(GetUrl(), value);
                 Publisher.Publish(GetUrl(), this);
                 Logger.Pass("Resized "+GetFileName()+" to LEN="+value);
             }

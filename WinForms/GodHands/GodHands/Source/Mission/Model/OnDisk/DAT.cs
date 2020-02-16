@@ -5,7 +5,8 @@ using System.Text;
 
 namespace GodHands {
     public class DAT : BaseClass {
-        public DAT(string url, int pos) : base(url, pos) {
+        public DAT(BaseClass parent, string url, int pos):
+        base(parent, url, pos) {
         }
 
         public override int GetLen() {

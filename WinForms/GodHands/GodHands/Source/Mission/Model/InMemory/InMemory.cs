@@ -6,10 +6,11 @@ using System.Text;
 
 namespace GodHands {
     public class InMemory : BaseClass {
-        private DirRec rec;
+        private Record rec;
         private string display_text = "";
 
-        public InMemory(string url, int pos, DirRec rec) : base(url, pos) {
+        public InMemory(BaseClass parent, string url, int pos, Record rec):
+        base(parent, url, pos) {
             this.rec = rec;
             display_text = url.Substring(url.LastIndexOf('/')+1);
             Model.Add(url, this);
@@ -24,11 +25,11 @@ namespace GodHands {
             display_text = text;
         }
 
-        public DirRec GetRec() {
+        public Record GetRec() {
             return rec;
         }
 
-        public void SetRec(DirRec rec) {
+        public void SetRec(Record rec) {
             this.rec = rec;
         }
 

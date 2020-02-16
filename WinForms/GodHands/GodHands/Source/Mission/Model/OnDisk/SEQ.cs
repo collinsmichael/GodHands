@@ -5,7 +5,8 @@ using System.Text;
 
 namespace GodHands {
     public class SEQ : BaseClass {
-        public SEQ(string url, int pos) : base(url, pos) {
+        public SEQ(BaseClass parent, string url, int pos):
+        base(parent, url, pos) {
         }
 
         public override int GetLen() {

@@ -6,7 +6,8 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace GodHands {
-    public class BoundList<T> : IBound {
+    /*
+    public class BoundList<T> : BaseClass {
         private string url;
         private int pos;
         private List<T> list;
@@ -37,6 +38,7 @@ namespace GodHands {
             return list.Count;
         }
     }
+    */
 
     public class ProgressTimeout {
         public void OnTick(object sender, EventArgs e) {
@@ -53,7 +55,7 @@ namespace GodHands {
         public static List<string> log = new List<string>();
         public static List<ToolStripProgressBar> progress = new List<ToolStripProgressBar>();
         public static List<ToolStripStatusLabel> status = new List<ToolStripStatusLabel>();
-        private static BoundList<string> bound = new BoundList<string>("APP:LOG", 0, log);
+        //private static BoundList<string> bound = new BoundList<string>("APP:LOG", 0, log);
         private static ProgressTimeout timeout = new ProgressTimeout();
         public static Timer timer = new Timer();
         public static Image[] icons = new Image[4];
@@ -70,7 +72,7 @@ namespace GodHands {
             icons[3] = Image.FromFile(dir+"/img/status/status-fail.png");
             icon = icons[0];
 
-            Publisher.Register(bound);
+            //Publisher.Register(bound);
             timer.Interval = 5000;
             timer.Tick += new EventHandler(timeout.OnTick);
             timer.Enabled = false;

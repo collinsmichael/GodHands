@@ -9,8 +9,8 @@ namespace GodHands {
         private Zone zone;
         private Room room;
 
-        public RoomEnemy(string url, int pos, DirRec rec, Zone zone, Room room):
-        base(url, pos, rec) {
+        public RoomEnemy(BaseClass parent, string url, int pos, Record rec, Zone zone, Room room):
+        base(parent, url, pos, rec) {
             this.zone = zone;
             this.room = room;
         }

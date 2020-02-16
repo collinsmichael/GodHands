@@ -31,8 +31,8 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.property = new System.Windows.Forms.PropertyGrid();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.textbox = new System.Windows.Forms.TextBox();
             this.picturebox = new System.Windows.Forms.PictureBox();
+            this.textbox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -162,16 +162,6 @@
             this.splitContainer3.SplitterDistance = 333;
             this.splitContainer3.TabIndex = 0;
             // 
-            // textbox
-            // 
-            this.textbox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textbox.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textbox.Location = new System.Drawing.Point(0, 0);
-            this.textbox.Multiline = true;
-            this.textbox.Name = "textbox";
-            this.textbox.Size = new System.Drawing.Size(198, 333);
-            this.textbox.TabIndex = 0;
-            // 
             // picturebox
             // 
             this.picturebox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -183,6 +173,16 @@
             this.picturebox.TabIndex = 1;
             this.picturebox.TabStop = false;
             this.picturebox.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaintPictureBox);
+            // 
+            // textbox
+            // 
+            this.textbox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textbox.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textbox.Location = new System.Drawing.Point(0, 0);
+            this.textbox.Multiline = true;
+            this.textbox.Name = "textbox";
+            this.textbox.Size = new System.Drawing.Size(198, 333);
+            this.textbox.TabIndex = 0;
             // 
             // ZndEditor
             // 
@@ -220,9 +220,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.SplitContainer splitContainer3;
-        private System.Windows.Forms.TextBox textbox;
         private System.Windows.Forms.PropertyGrid property;
         private System.Windows.Forms.PictureBox picturebox;
+        private System.Windows.Forms.TextBox textbox;
 
     }
 }

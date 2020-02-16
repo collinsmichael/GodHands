@@ -8,8 +8,8 @@ using System.Windows.Forms;
 namespace GodHands {
     public class RoomScriptSection : InMemory {
         private int len;
-        public RoomScriptSection(string url, int pos, int len, DirRec rec):
-        base(url, pos, rec) {
+        public RoomScriptSection(BaseClass parent, string url, int pos, int len, Record rec):
+        base(parent, url, pos, rec) {
             this.len = len;
         }
 

@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace GodHands {
     public static partial class Iso9660 {
-        public static string ExportDir(DirRec rec) {
+        public static string ExportDir(Record rec) {
             if (!Iso9660.ReadFile(rec)) {
                 return null;
             }
@@ -33,7 +33,7 @@ namespace GodHands {
             }
         }
 
-        public static string ExportFile(DirRec rec) {
+        public static string ExportFile(Record rec) {
             if (!Iso9660.ReadFile(rec)) {
                 return null;
             }
@@ -59,7 +59,7 @@ namespace GodHands {
             }
         }
 
-        public static bool ImportFiles(DirRec dir, string[] files) {
+        public static bool ImportFiles(Record dir, string[] files) {
             Console.WriteLine(dir.GetUrl());
             foreach (string file in files) {
                 Console.WriteLine(file);

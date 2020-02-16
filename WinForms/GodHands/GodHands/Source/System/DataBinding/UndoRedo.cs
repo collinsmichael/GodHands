@@ -4,6 +4,15 @@ using System.Linq;
 using System.Text;
 
 namespace GodHands {
+    // ********************************************************************
+    // Performs an action which can later be undone
+    // ********************************************************************
+    public interface ICommand {
+        bool Exec();
+        bool Undo();
+        bool Redo();
+    }
+
     public static class UndoRedo {
         public static Stack<ICommand> undo = new Stack<ICommand>();
         public static Stack<ICommand> redo = new Stack<ICommand>();

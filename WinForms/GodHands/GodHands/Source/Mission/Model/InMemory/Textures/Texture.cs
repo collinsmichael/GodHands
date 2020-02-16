@@ -12,8 +12,8 @@ namespace GodHands {
         private byte[] buf;
         private int id;
 
-        public Texture(string url, int pos, int len, int id, DirRec rec):
-        base(url, pos, rec) {
+        public Texture(BaseClass parent, string url, int pos, int len, int id, Record rec):
+        base(parent, url, pos, rec) {
             this.id = id;
             FileLength = this.len = len;
             this.buf = new byte[len];
@@ -129,7 +129,7 @@ namespace GodHands {
         }
 
         public override string GetExportName() {
-            DirRec rec = GetRec();
+            Record rec = GetRec();
             string name = rec.GetFileName();
             string[] parts = name.Split(new char[] {'.'});
             return parts[0]+"-IMAGE-"+id.ToString("D2");

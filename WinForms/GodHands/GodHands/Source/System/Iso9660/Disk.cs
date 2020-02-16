@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 
 namespace GodHands {
-    public static class Config {
+    public class Disk : BaseClass {
+        public Disk() : base(null, "CD:", 0) {
+        }
     }
 }

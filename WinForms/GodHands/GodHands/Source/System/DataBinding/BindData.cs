@@ -7,13 +7,13 @@ namespace GodHands {
     // Updates a string (can be undone) and Publishes changes to Publisher
     // ********************************************************************
     public class BindString : ICommand {
-        private IBound obj;
+        private BaseClass obj;
         private string old;
         private string val;
         private int delta;
         private int len;
 
-        public BindString(IBound bound, int delta, int len, string val) {
+        public BindString(BaseClass bound, int delta, int len, string val) {
             this.obj = bound;
             this.delta = delta;
             this.len = len;
@@ -44,13 +44,13 @@ namespace GodHands {
     // Updates an array (can be undone) and Publishes changes to Publisher
     // ********************************************************************
     public class BindArray : ICommand {
-        private IBound obj;
+        private BaseClass obj;
         private byte[] old;
         private byte[] val;
         private int pos;
         private int len;
 
-        public BindArray(IBound bound, int pos, int len, byte[] val) {
+        public BindArray(BaseClass bound, int pos, int len, byte[] val) {
             this.obj = bound;
             this.pos = pos;
             this.len = len;
@@ -82,12 +82,12 @@ namespace GodHands {
     // Updates a uint (can be undone) and Publishes changes to Publisher
     // ********************************************************************
     public class BindU32 : ICommand {
-        private IBound obj;
+        private BaseClass obj;
         private uint old;
         private uint val;
         private int delta;
 
-        public BindU32(IBound bound, int delta, uint val) {
+        public BindU32(BaseClass bound, int delta, uint val) {
             this.obj = bound;
             this.delta = delta;
             this.val = val;
@@ -117,12 +117,12 @@ namespace GodHands {
     // Updates a uint (can be undone) and Publishes changes to Publisher
     // ********************************************************************
     public class BindS32 : ICommand {
-        private IBound obj;
+        private BaseClass obj;
         private int old;
         private int val;
         private int delta;
 
-        public BindS32(IBound bound, int delta, int val) {
+        public BindS32(BaseClass bound, int delta, int val) {
             this.obj = bound;
             this.delta = delta;
             this.val = val;
@@ -152,12 +152,12 @@ namespace GodHands {
     // Updates a ushort (can be undone) and Publishes changes to Publisher
     // ********************************************************************
     public class BindU16 : ICommand {
-        private IBound obj;
+        private BaseClass obj;
         private ushort old;
         private ushort val;
         private int delta;
 
-        public BindU16(IBound bound, int delta, ushort val) {
+        public BindU16(BaseClass bound, int delta, ushort val) {
             this.obj = bound;
             this.delta = delta;
             this.val = val;
@@ -187,12 +187,12 @@ namespace GodHands {
     // Updates a short (can be undone) and Publishes changes to Publisher
     // ********************************************************************
     public class BindS16 : ICommand {
-        private IBound obj;
+        private BaseClass obj;
         private short old;
         private short val;
         private int delta;
 
-        public BindS16(IBound bound, int delta, short val) {
+        public BindS16(BaseClass bound, int delta, short val) {
             this.obj = bound;
             this.delta = delta;
             this.val = val;
@@ -222,12 +222,12 @@ namespace GodHands {
     // Updates a byte (can be undone) and Publishes changes to Publisher
     // ********************************************************************
     public class BindU8 : ICommand {
-        private IBound obj;
+        private BaseClass obj;
         private byte old;
         private byte val;
         private int delta;
 
-        public BindU8(IBound bound, int delta, byte val) {
+        public BindU8(BaseClass bound, int delta, byte val) {
             this.obj = bound;
             this.delta = delta;
             this.val = val;
@@ -257,12 +257,12 @@ namespace GodHands {
     // Updates a short (can be undone) and Publishes changes to Publisher
     // ********************************************************************
     public class BindS8 : ICommand {
-        private IBound obj;
+        private BaseClass obj;
         private sbyte old;
         private sbyte val;
         private int delta;
 
-        public BindS8(IBound bound, int delta, sbyte val) {
+        public BindS8(BaseClass bound, int delta, sbyte val) {
             this.obj = bound;
             this.delta = delta;
             this.val = val;

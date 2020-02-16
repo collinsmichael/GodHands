@@ -62,7 +62,7 @@ namespace GodHands {
                 return;
             }
 
-            DirRec rec = Iso9660.GetByPath(node.Name);
+            Record rec = Iso9660.GetByPath(node.Name);
             if (rec != null) {
                 string path = (rec.FileFlags_Directory)
                     ? Iso9660.ExportDir(rec)
@@ -89,7 +89,7 @@ namespace GodHands {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             Point pt = treeview.PointToClient(new Point(e.X, e.Y));
 
-            DirRec rec = null;
+            Record rec = null;
             TreeNode node = treeview.GetNodeAt(pt);
             if (node == null) {
                 rec = Iso9660.GetByPath("CD:ROOT");
@@ -113,7 +113,7 @@ namespace GodHands {
                 if (url == "CD:PVD") {
                     sub_property.Notify(Iso9660.pvd);
                 } else {
-                    DirRec rec = Iso9660.GetByPath(url);
+                    Record rec = Iso9660.GetByPath(url);
                     sub_property.Notify(rec);
                 }
             } else {

@@ -6,8 +6,9 @@ using System.Linq;
 using System.Text;
 
 namespace GodHands {
-    public class VolDesc : BaseClass {
-        public VolDesc(string url, int pos) : base(url, pos) {
+    public class Volume : BaseClass {
+        public Volume(BaseClass parent, string url, int pos):
+        base(parent, url, pos) {
             RamDisk.map[pos/2048] = 0x6F;
         }
 
@@ -188,10 +189,10 @@ namespace GodHands {
         }
 
         //uint8_t  RootDirectory[34];    // Directory entry for the root directory
-        private DirRec root = null;
-        public DirRec GetRootDir() {
+        private Record root = null;
+        public Record GetRootDir() {
             if (root == null) {
-                root = new DirRec("CD:ROOT", GetPos()+156);
+                root = new Record(this, "CD:ROOT", GetPos()+156);
             }
             return root;
         }

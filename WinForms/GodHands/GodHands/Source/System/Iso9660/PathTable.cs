@@ -5,7 +5,8 @@ using System.Text;
 
 namespace GodHands {
     public class PathTable : BaseClass {
-        public PathTable(string url, int pos) : base(url, pos) {
+        public PathTable(BaseClass parent, string url, int pos):
+        base(parent, url, pos) {
             if (RamDisk.map[pos/2048] == 0) {
                 RamDisk.map[pos/2048] = 0x6F;
             }

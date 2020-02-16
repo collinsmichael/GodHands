@@ -67,6 +67,7 @@ namespace GodHands {
                 return null;
             }
             parameters.GenerateInMemory = true;
+            parameters.ReferencedAssemblies.Add("GodHands.exe");
             parameters.ReferencedAssemblies.Add("System.dll");
             parameters.ReferencedAssemblies.Add("System.Core.dll");
             parameters.ReferencedAssemblies.Add("System.Data.dll");

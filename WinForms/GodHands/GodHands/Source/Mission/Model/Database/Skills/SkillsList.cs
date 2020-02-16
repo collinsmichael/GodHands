@@ -15,13 +15,13 @@ namespace GodHands {
 
         public bool Load() {
             skills.Clear();
-            DirRec slus = Model.GetRec("SLUS");
+            Record slus = Model.GetRec("SLUS");
             if (slus != null) {
                 int pos = 0x0003C1DC;
                 byte[] buf = new byte[0x34];
                 for (int i = 0; i < 256; i++) {
                     string key = "DB:Skills/Skill_"+i;
-                    Skill obj = new Skill(key, pos + i*0x34, slus); 
+                    Skill obj = new Skill(null, key, pos + i*0x34, slus); 
                     skills.Add(obj);
                     Model.Add(key, obj);
                     Publisher.Register(obj);
@@ -32,7 +32,7 @@ namespace GodHands {
 
         public List<string> GetSkillNames() {
             List<string> list = new List<string>();
-            DirRec slus = Model.GetRec("SLUS");
+            Record slus = Model.GetRec("SLUS");
             if (slus != null) {
                 foreach (Skill skill in skills) {
                     string str = skill.Name;

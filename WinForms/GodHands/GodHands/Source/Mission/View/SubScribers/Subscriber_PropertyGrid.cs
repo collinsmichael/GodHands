@@ -19,11 +19,11 @@ namespace GodHands {
             try {
                 object old = win.SelectedObject;
                 if (old != null) {
-                    Publisher.Unsubscribe(old as IBound, this);
+                    Publisher.Unsubscribe(old as BaseClass, this);
                 }
                 win.SelectedObject = obj;
                 if (obj != null) {
-                    Publisher.Subscribe(obj as IBound, this);
+                    Publisher.Subscribe(obj as BaseClass, this);
                 }
             } catch {
                 //NullReferenceExeception is expected

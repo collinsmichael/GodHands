@@ -8,8 +8,8 @@ using System.Windows.Forms;
 namespace GodHands {
     public class RoomTreasureSection : InMemory {
         private int len;
-        public RoomTreasureSection(string url, int pos, int len, DirRec rec):
-        base(url, pos, rec) {
+        public RoomTreasureSection(BaseClass parent, string url, int pos, int len, Record rec):
+        base(parent, url, pos, rec) {
             this.len = len;
         }
 
@@ -20,32 +20,32 @@ namespace GodHands {
         }
 
         public bool OpenSection(TreeNode root) {
-            DirRec rec = GetRec();
+            Record rec = GetRec();
             int lba = rec.LbaData;
             int pos = GetPos() - lba*2048;
 
             if (len >= 0x220) {
                 string key = GetUrl()+"/Treasure/";
 
-                Weapon = new TreasureWeapon(key+"Weapon", pos+0x000, rec);
-                WeaponBlade = new TreasureBlade(key+"Weapon/Blade", pos+0x004, rec, true);
-                WeaponGrip = new TreasureGrip(key+"Weapon/Grip", pos+0x030, rec, true);
-                WeaponGem1 = new TreasureGem(key+"Weapon/Gem1", pos+0x040, rec, true);
-                WeaponGem2 = new TreasureGem(key+"Weapon/Gem2", pos+0x05C, rec, true);
-                WeaponGem3 = new TreasureGem(key+"Weapon/Gem3", pos+0x078, rec, true);
+                Weapon = new TreasureWeapon(this, key+"Weapon", pos+0x000, rec);
+                WeaponBlade = new TreasureBlade(this, key+"Weapon/Blade", pos+0x004, rec, true);
+                WeaponGrip = new TreasureGrip(this, key+"Weapon/Grip", pos+0x030, rec, true);
+                WeaponGem1 = new TreasureGem(this, key+"Weapon/Gem1", pos+0x040, rec, true);
+                WeaponGem2 = new TreasureGem(this, key+"Weapon/Gem2", pos+0x05C, rec, true);
+                WeaponGem3 = new TreasureGem(this, key+"Weapon/Gem3", pos+0x078, rec, true);
 
-                Blade = new TreasureBlade(key+"Blade", pos+0x0B0, rec, false);
-                Grip = new TreasureGrip(key+"Grip", pos+0x0DC, rec, false);
+                Blade = new TreasureBlade(this, key+"Blade", pos+0x0B0, rec, false);
+                Grip = new TreasureGrip(this, key+"Grip", pos+0x0DC, rec, false);
 
-                Shield = new TreasureShield(key+"Shield", pos+0x0F0, rec);
-                ShieldGem1 = new TreasureGem(key+"Shield/Gem1", pos+0x11C, rec, true);
-                ShieldGem2 = new TreasureGem(key+"Shield/Gem2", pos+0x138, rec, true);
-                ShieldGem3 = new TreasureGem(key+"Shield/Gem3", pos+0x154, rec, true);
+                Shield = new TreasureShield(this, key+"Shield", pos+0x0F0, rec);
+                ShieldGem1 = new TreasureGem(this, key+"Shield/Gem1", pos+0x11C, rec, true);
+                ShieldGem2 = new TreasureGem(this, key+"Shield/Gem2", pos+0x138, rec, true);
+                ShieldGem3 = new TreasureGem(this, key+"Shield/Gem3", pos+0x154, rec, true);
 
-                Armour1 = new TreasureArmour(key+"Armour1", pos+0x170, rec);
-                Armour2 = new TreasureArmour(key+"Armour2", pos+0x19C, rec);
-                Accessory = new TreasureAccessory(key+"Accessory", pos+0x1C8, rec);
-                Gem = new TreasureGem(key+"Gem", pos+0x1F8, rec, false);
+                Armour1 = new TreasureArmour(this, key+"Armour1", pos+0x170, rec);
+                Armour2 = new TreasureArmour(this, key+"Armour2", pos+0x19C, rec);
+                Accessory = new TreasureAccessory(this, key+"Accessory", pos+0x1C8, rec);
+                Gem = new TreasureGem(this, key+"Gem", pos+0x1F8, rec, false);
 
                 TreeNode tv_weapon = root.Nodes.Add(key+"Weapon", Weapon.GetText(), 12, 12);
                 tv_weapon.Nodes.Add(key+"Weapon/Blade", WeaponBlade.GetText(), 13, 13);
@@ -70,7 +70,7 @@ namespace GodHands {
                 Items = new List<TreasureMiscItem>();
                 for (int ptr = 0x214; ptr < this.len; ptr += 4) {
                     string k = key+"Item"+Items.Count;
-                    TreasureMiscItem item = new TreasureMiscItem(k, pos+ptr, rec);
+                    TreasureMiscItem item = new TreasureMiscItem(this, k, pos+ptr, rec);
                     root.Nodes.Add(k, item.GetText(), 44, 44);
                     Items.Add(item);
                 }

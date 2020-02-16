@@ -6,6 +6,13 @@ using System.Text;
 
 namespace GodHands {
     // ********************************************************************
+    // Recieves notification when the bound object is modified
+    // ********************************************************************
+    public interface ISubscriber {
+        bool Notify(object obj);
+    }
+
+    // ********************************************************************
     // Publisher for Publish/Subscribe
     // ********************************************************************
     public static class Publisher {
@@ -22,7 +29,7 @@ namespace GodHands {
             }
             return true;
         }
-        public static bool Register(IBound obj) {
+        public static bool Register(BaseClass obj) {
             if (obj != null) {
                 Register(obj.GetUrl(), obj);
             }
@@ -47,7 +54,7 @@ namespace GodHands {
             }
             return true;
         }
-        public static bool Unregister(IBound obj) {
+        public static bool Unregister(BaseClass obj) {
             if (obj != null) {
                 Unregister(obj.GetUrl());
             }
@@ -72,7 +79,7 @@ namespace GodHands {
             }
             return true;
         }
-        public static bool Subscribe(IBound obj, ISubscriber sub) {
+        public static bool Subscribe(BaseClass obj, ISubscriber sub) {
             if ((obj != null) && (sub != null)) {
                 Subscribe(obj.GetUrl(), sub);
             }
@@ -93,7 +100,7 @@ namespace GodHands {
             }
             return true;
         }
-        public static bool Unsubscribe(IBound obj, ISubscriber sub) {
+        public static bool Unsubscribe(BaseClass obj, ISubscriber sub) {
             if ((obj != null) && (sub != null)) {
                 Unsubscribe(obj.GetUrl(), sub);
             }
@@ -126,7 +133,7 @@ namespace GodHands {
             }
             return true;
         }
-        public static bool Publish(IBound obj) {
+        public static bool Publish(BaseClass obj) {
             if (obj != null) {
                 Publish(obj.GetUrl(), obj);
             }

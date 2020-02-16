@@ -5,7 +5,8 @@ using System.Text;
 
 namespace GodHands {
     public class BIN : BaseClass {
-        public BIN(string url, int pos) : base(url, pos) {
+        public BIN(BaseClass parent, string url, int pos):
+        base(parent, url, pos) {
         }
 
         public override int GetLen() {

@@ -5,7 +5,8 @@ using System.Text;
 
 namespace GodHands {
     public class MPD : BaseClass {
-        public MPD(string url, int pos) : base(url, pos) {
+        public MPD(BaseClass parent, string url, int pos):
+        base(parent, url, pos) {
         }
 
         public override int GetLen() {

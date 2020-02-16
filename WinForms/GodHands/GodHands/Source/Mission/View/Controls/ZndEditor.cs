@@ -51,13 +51,22 @@ namespace GodHands {
             menu.Items.Add(menu_export);
         }
 
+        protected override CreateParams CreateParams {
+            get {
+                const int WS_EX_COMPOSITED = 0x02000000;
+                CreateParams handleParam = base.CreateParams;
+                handleParam.ExStyle |= WS_EX_COMPOSITED;
+                return handleParam;
+            }
+        }
+
         public void OpenDisk() {
             treeview.Nodes.Clear();
             combobox.Items.Clear();
             combobox.Text = "";
             foreach (Zone zone in Model.zones.Values) {
                 string key = zone.GetUrl();
-                DirRec rec = zone.GetRec();
+                Record rec = zone.GetRec();
                 string txt = rec.GetFileName();
                 zones.Add(txt, key);
                 combobox.Items.Add(txt);

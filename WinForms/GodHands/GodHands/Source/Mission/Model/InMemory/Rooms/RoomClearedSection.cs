@@ -8,8 +8,8 @@ using System.Windows.Forms;
 namespace GodHands {
     public class RoomClearedSection : InMemory {
         private int len;
-        public RoomClearedSection(string url, int pos, int len, DirRec rec):
-        base(url, pos, rec) {
+        public RoomClearedSection(BaseClass parent, string url, int pos, int len, Record rec):
+        base(parent, url, pos, rec) {
             this.len = len;
         }
 

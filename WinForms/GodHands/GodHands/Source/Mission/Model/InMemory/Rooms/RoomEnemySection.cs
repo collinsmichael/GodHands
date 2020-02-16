@@ -11,8 +11,8 @@ namespace GodHands {
         private Room room;
 
         private int len;
-        public RoomEnemySection(string url, int pos, int len, DirRec rec, Zone zone, Room room):
-        base(url, pos, rec) {
+        public RoomEnemySection(BaseClass parent, string url, int pos, int len, Record rec, Zone zone, Room room):
+        base(parent, url, pos, rec) {
             this.len = len;
             this.zone = zone;
             this.room = room;
@@ -26,13 +26,13 @@ namespace GodHands {
         }
 
         public bool OpenSection(TreeNode root) {
-            DirRec rec = GetRec();
+            Record rec = GetRec();
             int lba = rec.LbaData;
             int pos = GetPos() - lba*2048;
             int count = len/0x28;
             for (int i = 0; i < count; i++) {
                 string key = GetUrl()+"/Enemy_"+i;
-                RoomEnemy enemy = new RoomEnemy(key, pos+i*0x28, rec, zone, room);
+                RoomEnemy enemy = new RoomEnemy(this, key, pos+i*0x28, rec, zone, room);
                 string name = enemy.GetText();
                 root.Nodes.Add(key, name, 35, 35);
                 Enemies.Add(enemy);

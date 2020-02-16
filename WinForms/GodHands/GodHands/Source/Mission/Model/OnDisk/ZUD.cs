@@ -5,7 +5,8 @@ using System.Text;
 
 namespace GodHands {
     public class ZUD : BaseClass {
-        public ZUD(string url, int pos) : base(url, pos) {
+        public ZUD(BaseClass parent, string url, int pos):
+        base(parent, url, pos) {
         }
 
         public override int GetLen() {

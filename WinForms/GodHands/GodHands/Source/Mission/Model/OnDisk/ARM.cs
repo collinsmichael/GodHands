@@ -5,7 +5,8 @@ using System.Text;
 
 namespace GodHands {
     public class ARM : BaseClass {
-        public ARM(string url, int pos) : base(url, pos) {
+        public ARM(BaseClass parent, string url, int pos):
+        base(parent, url, pos) {
         }
 
         public override int GetLen() {

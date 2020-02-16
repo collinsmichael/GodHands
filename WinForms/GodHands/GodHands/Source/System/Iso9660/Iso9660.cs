@@ -7,24 +7,26 @@ using System.Windows.Forms;
 
 namespace GodHands {
     public interface IEnumDir {
-        bool Visit(string url, DirRec dir);
+        bool Visit(string url, Record dir);
     }
 
     public static partial class Iso9660 {
-        private static Dictionary<string,DirRec> Records = new Dictionary<string,DirRec>();
+        private static Dictionary<string,Record> Records = new Dictionary<string,Record>();
         private static Dictionary<string,int> Path2Pos = new Dictionary<string,int>();
         private static Dictionary<int,string> Lba2Path = new Dictionary<int,string>();
-        public static VolDesc pvd = null;
-        public static DirRec root = null;
 
-        public static DirRec GetByPath(string url) {
+        public static Disk disk = null;
+        public static Volume pvd = null;
+        public static Record root = null;
+
+        public static Record GetByPath(string url) {
             if (!Records.ContainsKey(url)) {
                 return null;
             }
             return Records[url];
         }
 
-        public static DirRec GetByLba(int lba) {
+        public static Record GetByLba(int lba) {
             if (!Lba2Path.ContainsKey(lba)) {
                 return null;
             }
@@ -48,12 +50,10 @@ namespace GodHands {
                 RamDisk.map[i] = 0x6F;
             }
 
-            Model.SetPos("CD:PVD", 0x10*2048);
-            Model.SetLen("CD:PVD", 2048);
-            pvd = new VolDesc("CD:PVD", 0x10*2048);
+            disk = new Disk();
+
+            pvd = new Volume(null, "CD:PVD", 0x10*2048);
             root = pvd.GetRootDir();
-            Model.SetPos("CD:ROOT", root.LbaData*2048);
-            Model.SetLen("CD:ROOT", root.LenData);
             Model.SetRec("CD:ROOT", root);
             int lba = root.LbaData;
             int len = root.LenData;
@@ -99,7 +99,7 @@ namespace GodHands {
             pvd = null;
             root = null;
 
-            foreach (KeyValuePair<string,DirRec> pair in Records) {
+            foreach (KeyValuePair<string,Record> pair in Records) {
                 Publisher.Unregister(pair.Key);
             }
             Records.Clear();
@@ -109,7 +109,7 @@ namespace GodHands {
             return Logger.Pass("File closed");
         }
 
-        public static bool ReadFile(DirRec dir) {
+        public static bool ReadFile(Record dir) {
             int lba = dir.LbaData;
             int len = dir.LenData;
             for (int i = 0; i < len; i += 2048) {
@@ -132,7 +132,7 @@ namespace GodHands {
             return RamDisk.GetString(pos+33, len);
         }
 
-        public static bool EnumDir(string url, DirRec dir, IEnumDir iterator) {
+        public static bool EnumDir(string url, Record dir, IEnumDir iterator) {
             int pos = dir.LbaData*2048;
             int end = pos + dir.LenData;
 
@@ -144,13 +144,11 @@ namespace GodHands {
                     pos = ((pos/2048)+1)*2048;
                 } else {
                     string key = url+"/"+GetRecordFileName(pos);
-                    DirRec rec = null;
+                    Record rec = null;
                     if (Records.ContainsKey(key)) {
                         rec = Records[key];
                     } else {
-                        rec = new DirRec(key, pos);
-                        Model.SetPos(key, pos);
-                        Model.SetLen(key, rec.LenData);
+                        rec = new Record(dir, key, pos);
                         Model.SetRec(key, rec);
                         string name = rec.GetFileName();
                         int lba = rec.LbaData;
@@ -199,7 +197,7 @@ namespace GodHands {
                     pos = ((pos/2048)+1)*2048;
                 } else {
                     string key = url+"/"+GetRecordFileName(pos);
-                    DirRec rec = Records[key];
+                    Record rec = Records[key];
                     if (!rec.FileFlags_Directory) {
                         if (iterator != null) {
                             iterator.Visit(key, rec);
@@ -212,11 +210,11 @@ namespace GodHands {
         }
 
         public static bool EnumFileSys(IEnumDir iterator) {
-            DirRec dir = GetByPath("CD:ROOT");
+            Record dir = GetByPath("CD:ROOT");
             return EnumDir("CD:ROOT", dir, iterator);
         }
 
-        public static string FindCollision(DirRec rec, int sectors) {
+        public static string FindCollision(Record rec, int sectors) {
             string collisions = "";
             int lba = rec.LbaData;
             int len = (rec.LenData+2047)/2048;
@@ -229,7 +227,7 @@ namespace GodHands {
             return collisions;
         }
 
-        public static int FindCapacity(DirRec rec) {
+        public static int FindCapacity(Record rec) {
             int count = (rec.LenData+2047)/2048;
             int capacity = count;
             for (int lba = rec.LbaData+count; lba < RamDisk.count; lba++) {
@@ -259,7 +257,7 @@ namespace GodHands {
             return 0;
         }
 
-        public static bool ResizeRecord(DirRec rec, int len) {
+        public static bool ResizeRecord(Record rec, int len) {
             // first check if there is enough space
             int lba = rec.LbaData;
             int num = (rec.LenData+2047)/2048;
@@ -280,7 +278,7 @@ namespace GodHands {
             return true;
         }
 
-        public static bool MoveRecord(DirRec rec, int lba) {
+        public static bool MoveRecord(Record rec, int lba) {
             // first check if there is enough space
             int old = rec.LbaData;
             int len = (rec.LenData+2047)/2048;
@@ -310,7 +308,7 @@ namespace GodHands {
             return true;
         }
 
-        public static bool RenameRecord(DirRec rec, string name) {
+        public static bool RenameRecord(Record rec, string name) {
             // compute new size of the record
             // make space for new record
             // update the parent records LenData

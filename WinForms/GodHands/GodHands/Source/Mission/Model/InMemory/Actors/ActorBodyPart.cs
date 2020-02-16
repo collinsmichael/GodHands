@@ -6,8 +6,8 @@ using System.Text;
 
 namespace GodHands {
     public class ActorBodyPart : InMemory {
-        public ActorBodyPart(string url, int pos, DirRec rec):
-        base(url, pos, rec) {
+        public ActorBodyPart(BaseClass parent, string url, int pos, Record rec):
+        base(parent, url, pos, rec) {
         }
 
         public override int GetLen() {

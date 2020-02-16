@@ -4,12 +4,22 @@ using System.Linq;
 using System.Text;
 
 namespace GodHands {
-    public class BaseClass : IBound {
+    public class BaseClass {
+        private BaseClass parent;
         private string url;
+        private int offset;
+        private int length;
 
-        public BaseClass(string url, int pos) {
+        public int Pos {
+            get { return (parent != null) ? offset : parent.Pos + offset; }
+            set { }
+        }
+
+        public BaseClass(BaseClass parent, string url, int offset) {
+            this.parent = parent;
             this.url = url;
-            Model.SetPos(url, pos);
+            this.offset = offset;
+            //this.length = length;
         }
 
         public string GetUrl() {
@@ -21,15 +31,11 @@ namespace GodHands {
         }
 
         public virtual int GetPos() {
-            return Model.GetPos(url);
-        }
-
-        public virtual void SetPos(int pos) {
-            Model.SetPos(url, pos);
+            return offset;
         }
 
         public virtual int GetLen() {
-            return 0;
+            return length;
         }
     }
 }

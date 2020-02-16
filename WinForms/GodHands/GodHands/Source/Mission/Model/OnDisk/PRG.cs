@@ -5,7 +5,8 @@ using System.Text;
 
 namespace GodHands {
     public class PRG : BaseClass {
-        public PRG(string url, int pos) : base(url, pos) {
+        public PRG(BaseClass parent, string url, int pos):
+        base(parent, url, pos) {
         }
 
         public override int GetLen() {

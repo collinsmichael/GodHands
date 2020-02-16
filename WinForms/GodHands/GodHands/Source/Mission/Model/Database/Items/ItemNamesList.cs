@@ -12,10 +12,10 @@ namespace GodHands {
             items.Clear();
             Iso9660.ReadFile(Model.GetRec("ITEMNAME.BIN"));
             Iso9660.ReadFile(Model.GetRec("ITEMHELP.BIN"));
-            DirRec rec = Model.GetRec("ITEMNAME.BIN");
+            Record rec = Model.GetRec("ITEMNAME.BIN");
             for (int i = 0; i < 512; i++) {
                 string key = "DB:Items/Item_"+i;
-                MiscItem obj = new MiscItem(key, 0, i, rec);
+                MiscItem obj = new MiscItem(null, key, 0, i, rec);
                 items.Add(obj);
                 Model.Add(key, obj);
                 Publisher.Register(obj);
@@ -30,7 +30,7 @@ namespace GodHands {
 
         public List<string> GetList() {
             List<string> list = new List<string>();
-            DirRec bin = Model.GetRec("ITEMNAME.BIN");
+            Record bin = Model.GetRec("ITEMNAME.BIN");
             if (bin != null) {
                 int pos = bin.LbaData*2048;
                 for (int i = 0; i < 512; i++) {
@@ -44,7 +44,7 @@ namespace GodHands {
         }
 
         public string GetName(int index) {
-            DirRec bin = Model.GetRec("ITEMNAME.BIN");
+            Record bin = Model.GetRec("ITEMNAME.BIN");
             if (bin != null) {
                 int pos = bin.LbaData*2048;
                 byte[] kildean = new byte[0x18];
@@ -55,7 +55,7 @@ namespace GodHands {
         }
 
         public int GetIndexByName(string name) {
-            DirRec bin = Model.GetRec("ITEMNAME.BIN");
+            Record bin = Model.GetRec("ITEMNAME.BIN");
             if (bin != null) {
                 int pos = bin.LbaData*2048;
                 for (int i = 0; i < 512; i++) {

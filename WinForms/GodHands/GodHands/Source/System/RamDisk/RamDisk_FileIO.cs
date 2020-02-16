@@ -15,10 +15,10 @@ namespace GodHands {
     // ************************************************************************
     public static partial class RamDisk {
         private static FileStream file = null;
-        private static int size = 0;
         private static int length = 0;
         private static int offset = 0;
         private static string path = "";
+        public static int size = 0;
         public static int count = 0;
         public static byte[] disk = new byte[0x26F57800];
         public static byte[] map = new byte[0x4DEAF];

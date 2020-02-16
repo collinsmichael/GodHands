@@ -7,8 +7,8 @@ using System.Text;
 namespace GodHands {
     public class TreasureGrip : InMemory {
         private bool equipped;
-        public TreasureGrip(string url, int pos, DirRec rec, bool equipped):
-        base(url, pos, rec) {
+        public TreasureGrip(BaseClass parent, string url, int pos, Record rec, bool equipped):
+        base(parent, url, pos, rec) {
             this.equipped = equipped;
         }
 

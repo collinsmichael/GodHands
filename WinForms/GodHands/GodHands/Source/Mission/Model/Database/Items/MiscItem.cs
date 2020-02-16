@@ -6,13 +6,13 @@ using System.Text;
 
 namespace GodHands {
     public class MiscItem : InMemory {
-        private DirRec name;
-        private DirRec help;
+        private Record name;
+        private Record help;
         private int index;
         private int pos;
 
-        public MiscItem(string url, int pos, int index, DirRec rec):
-        base(url, 0, rec) {
+        public MiscItem(BaseClass parent, string url, int pos, int index, Record rec):
+        base(parent, url, 0, rec) {
             this.index = index;
             this.pos = pos;
             name = Model.GetRec("ITEMNAME.BIN");
@@ -35,7 +35,6 @@ namespace GodHands {
             get {
                 byte[] kildean = new byte[0x18];
                 base.SetRec(name);
-                SetPos(name.LbaData*2048);
                 RamDisk.Get(GetPos() + index*0x18, 0x18, kildean);
                 return Kildean.ToAscii(kildean);
             }
@@ -43,7 +42,6 @@ namespace GodHands {
                 string clip = value.Substring(0, Math.Min(0x18, value.Length));
                 byte[] kildean = Kildean.ToKildean(clip, 0x18);
                 base.SetRec(name);
-                SetPos(name.LbaData*2048);
                 UndoRedo.Exec(new BindArray(this, GetPos()+index*0x18, 0x18, kildean));
             }
         }
