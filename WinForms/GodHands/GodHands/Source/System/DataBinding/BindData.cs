@@ -23,19 +23,19 @@ namespace GodHands {
 
         public bool Exec() {
             RamDisk.SetString(obj.GetPos() + delta, len, val);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindString.Exec("+val+")");
         }
 
         public bool Undo() {
             RamDisk.SetString(obj.GetPos() + delta, len, old);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindString.Undo("+old+")");
         }
 
         public bool Redo() {
             RamDisk.SetString(obj.GetPos() + delta, len, val);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindString.Redo("+val+")");
         }
     }
@@ -61,19 +61,19 @@ namespace GodHands {
 
         public bool Exec() {
             RamDisk.Set(pos, len, val);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindArray.Exec("+len+")");
         }
 
         public bool Undo() {
             RamDisk.Set(pos, len, old);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindArray.Undo("+len+")");
         }
 
         public bool Redo() {
             RamDisk.Set(pos, len, val);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindArray.Redo("+len+")");
         }
     }
@@ -96,19 +96,19 @@ namespace GodHands {
 
         public bool Exec() {
             RamDisk.SetU32(obj.GetPos() + delta, val);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindU32.Exec("+val+")");
         }
 
         public bool Undo() {
             RamDisk.SetU32(obj.GetPos() + delta, old);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindU32.Undo("+old+")");
         }
 
         public bool Redo() {
             RamDisk.SetU32(obj.GetPos() + delta, val);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindU32.Redo("+val+")");
         }
     }
@@ -131,19 +131,19 @@ namespace GodHands {
 
         public bool Exec() {
             RamDisk.SetS32(obj.GetPos() + delta, val);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindS32.Exec("+val+")");
         }
 
         public bool Undo() {
             RamDisk.SetS32(obj.GetPos() + delta, old);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindS32.Undo("+old+")");
         }
 
         public bool Redo() {
             RamDisk.SetS32(obj.GetPos() + delta, val);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindS32.Redo("+val+")");
         }
     }
@@ -166,19 +166,19 @@ namespace GodHands {
 
         public bool Exec() {
             RamDisk.SetU16(obj.GetPos() + delta, val);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindU16.Exec("+val+")");
         }
 
         public bool Undo() {
             RamDisk.SetU16(obj.GetPos() + delta, old);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindU16.Undo("+old+")");
         }
 
         public bool Redo() {
             RamDisk.SetU16(obj.GetPos() + delta, val);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindU16.Redo("+val+")");
         }
     }
@@ -201,19 +201,19 @@ namespace GodHands {
 
         public bool Exec() {
             RamDisk.SetS16(obj.GetPos() + delta, val);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindS16.Exec("+val+")");
         }
 
         public bool Undo() {
             RamDisk.SetS16(obj.GetPos() + delta, old);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindS16.Undo("+old+")");
         }
 
         public bool Redo() {
             RamDisk.SetS16(obj.GetPos() + delta, val);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindS16.Redo("+val+")");
         }
     }
@@ -236,19 +236,19 @@ namespace GodHands {
 
         public bool Exec() {
             RamDisk.SetU8(obj.GetPos() + delta, val);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindU8.Exec("+val+")");
         }
 
         public bool Undo() {
             RamDisk.SetU8(obj.GetPos() + delta, old);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindU8.Undo("+old+")");
         }
 
         public bool Redo() {
             RamDisk.SetU8(obj.GetPos() + delta, val);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindU8.Redo("+val+")");
         }
     }
@@ -271,19 +271,19 @@ namespace GodHands {
 
         public bool Exec() {
             RamDisk.SetS8(obj.GetPos() + delta, val);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindS8.Exec("+val+")");
         }
 
         public bool Undo() {
             RamDisk.SetS8(obj.GetPos() + delta, old);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindS8.Undo("+old+")");
         }
 
         public bool Redo() {
             RamDisk.SetS8(obj.GetPos() + delta, val);
-            Publisher.Publish(obj.GetUrl(), obj);
+            Publisher.Publish(obj);
             return Logger.Info("BindS8.Redo("+val+")");
         }
     }

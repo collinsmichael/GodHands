@@ -67,7 +67,7 @@ namespace GodHands {
             get { return RamDisk.GetU8(GetPos()+0); }
             set {
                 //UndoRedo.Exec(new BindU8(this, 0, value));
-                Publisher.Publish(GetUrl(), this);
+                Publisher.Publish(this);
                 Logger.Warn("Not Implemented");
             }
         }
@@ -79,7 +79,7 @@ namespace GodHands {
             get { return RamDisk.GetU8(GetPos()+1); }
             set {
                 //UndoRedo.Exec(new BindU8(this, 1, value));
-                Publisher.Publish(GetUrl(), this);
+                Publisher.Publish(this);
                 Logger.Warn("Not Implemented");
             }
         }
@@ -110,7 +110,7 @@ namespace GodHands {
                     (byte)((value) % 256)
                 };
                 UndoRedo.Exec(new BindArray(this, GetPos()+2, 8, buf));
-                Publisher.Publish(GetUrl(), this);
+                Publisher.Publish(this);
                 Logger.Pass("Moved "+GetFileName()+" to LBA="+value);
             }
         }
@@ -129,7 +129,7 @@ namespace GodHands {
                     if (value < len) {
                         string msg = "This will truncate the file!\r\nAre you sure?";
                         if (!Logger.YesNoCancel(msg)) {
-                            Publisher.Publish(GetUrl(), this);
+                            Publisher.Publish(this);
                             sizing = false;
                             return;
                         }
@@ -149,7 +149,7 @@ namespace GodHands {
                                          "There is space at LBA="+ptr+"!\r\n"+
                                          "Do you want to move this file there?";
                             if (!Logger.YesNoCancel(msg)) {
-                                Publisher.Publish(GetUrl(), this);
+                                Publisher.Publish(this);
                                 sizing = false;
                                 return;
                             }
@@ -174,7 +174,7 @@ namespace GodHands {
                     (byte)((value) % 256)
                 };
                 UndoRedo.Exec(new BindArray(this, GetPos()+10, 8, buf));
-                Publisher.Publish(GetUrl(), this);
+                Publisher.Publish(this);
                 Logger.Pass("Resized "+GetFileName()+" to LEN="+value);
             }
         }
@@ -319,7 +319,7 @@ namespace GodHands {
             get { return RamDisk.GetU8(GetPos()+32); }
             set {
                 //UndoRedo.Exec(new BindU8(this, 32, value));
-                Publisher.Publish(GetUrl(), this);
+                Publisher.Publish(this);
                 Logger.Warn("Not Implemented");
             }
         }
@@ -331,7 +331,7 @@ namespace GodHands {
             get { return RamDisk.GetString(GetPos()+33, LenFileName); }
             set {
                 //UndoRedo.Exec(new BindString(this, 33, LenFileName, value));
-                Publisher.Publish(GetUrl(), this);
+                Publisher.Publish(this);
                 Logger.Warn("Not Implemented");
             }
         }

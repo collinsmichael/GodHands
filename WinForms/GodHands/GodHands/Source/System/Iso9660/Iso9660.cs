@@ -71,8 +71,8 @@ namespace GodHands {
             Records.Add("CD:ROOT", root);
             Path2Pos.Add("CD:ROOT", root.GetPos());
             Lba2Path.Add(lba, "CD:ROOT");
-            Publisher.Register("CD:PVD", pvd);
-            Publisher.Register("CD:ROOT", root);
+            Publisher.Register(pvd);
+            Publisher.Register(root);
 
             EnumDir("CD:ROOT", root, null);
             Model.Open();
@@ -168,7 +168,7 @@ namespace GodHands {
                             Records.Add(key, rec);
                             Path2Pos.Add(key, rec.GetPos());
                             Lba2Path.Add(lba, key);
-                            Publisher.Register(key, rec);
+                            Publisher.Register(rec);
                         } catch (Exception e) {
                             Logger.Warn("Cannot register "+name+" "+e.Message);
                         }

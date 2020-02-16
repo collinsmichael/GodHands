@@ -50,9 +50,28 @@ namespace GodHands {
         }
     }
 
+    public class Log : BaseClass {
+        public List<string> items = new List<string>();
+
+        public Log() : base(null, "LOG", 0) {
+            this.Key = "LOG";
+            Publisher.Register(this);
+        }
+
+        public void Clear() {
+            items.Clear();
+            Publisher.Publish(this);
+        }
+
+        public void Add(string str) {
+            items.Add(str);
+            Publisher.Publish(this);
+        }
+    }
+
     public static class Logger {
         public static bool enabled = true;
-        public static List<string> log = new List<string>();
+        public static Log log = new Log();
         public static List<ToolStripProgressBar> progress = new List<ToolStripProgressBar>();
         public static List<ToolStripStatusLabel> status = new List<ToolStripStatusLabel>();
         //private static BoundList<string> bound = new BoundList<string>("APP:LOG", 0, log);
@@ -83,7 +102,6 @@ namespace GodHands {
         // ********************************************************************
         public static void Clear() {
             log.Clear();
-            Publisher.Publish("APP:LOG", log);
         }
 
         public static bool AddStatusBar(ToolStripStatusLabel statusbar) {
@@ -154,7 +172,6 @@ namespace GodHands {
             string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             string msg = level + " (" + now + ") " + text;
             log.Add(msg);
-            Publisher.Publish("APP:LOG", log);
             Console.WriteLine(msg);
         }
 

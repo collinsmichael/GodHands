@@ -15,6 +15,8 @@ namespace GodHands {
             this.win = win;
         }
 
+        public bool Insert(object obj) { return Notify(obj); }
+        public bool Remove(object obj) { return Notify(obj); }
         public bool Notify(object obj) {
             try {
                 object old = win.SelectedObject;

@@ -39,10 +39,6 @@ namespace GodHands {
             return address + offset;
         }
 
-        public override int GetLen() {
-            return 0;
-        }
-
         public virtual byte[] RawBytes() {
             int len = GetLen();
             byte[] raw = new byte[len];

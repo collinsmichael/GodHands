@@ -6,21 +6,23 @@ using System.Windows.Forms;
 
 namespace GodHands {
     public class Subscriber_ListView : ISubscriber {
-        private string url = null;
+        private string key = null;
         private object obj = null;
         private string filter = null;
         private ListView win;
 
-        public Subscriber_ListView(string url, ListView win) {
-            this.url = url;
+        public Subscriber_ListView(string key, ListView win) {
+            this.key = key;
             this.win = win;
-            Publisher.Subscribe(url, this);
+            Publisher.Subscribe(key, this);
         }
 
         ~Subscriber_ListView() {
-            Publisher.Unsubscribe(url, this);
+            Publisher.Unsubscribe(key, this);
         }
 
+        public bool Insert(object obj) { return Notify(obj); }
+        public bool Remove(object obj) { return Notify(obj); }
         public bool Notify(object obj) {
             win.Items.Clear();
             this.obj = obj;

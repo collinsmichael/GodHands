@@ -21,6 +21,8 @@ namespace GodHands {
             Publisher.Unsubscribe(url, this);
         }
 
+        public bool Insert(object obj) { return Notify(obj); }
+        public bool Remove(object obj) { return Notify(obj); }
         public bool Notify(object obj) {
             win.Items.Clear();
             this.obj = obj;

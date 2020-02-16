@@ -18,6 +18,8 @@ namespace GodHands {
             Publisher.Unsubscribe("*", this);
         }
 
+        public bool Insert(object obj) { return Notify(obj); }
+        public bool Remove(object obj) { return Notify(obj); }
         public bool Notify(object obj) {
             data = obj as BaseClass;
             if (data != null) {

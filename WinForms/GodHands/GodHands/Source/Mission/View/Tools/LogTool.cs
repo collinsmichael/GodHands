@@ -9,9 +9,9 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace GodHands {
-    public partial class LogTool : Form {
+    public partial class LogTool : Form, ISubscriber {
         private SaveFileDialog sfd = new SaveFileDialog();
-        private Subscriber_ListView sub_listview = null;
+        private string filter = "";
 
         public LogTool() {
             InitializeComponent();
@@ -21,16 +21,16 @@ namespace GodHands {
             ColumnHeader header = new ColumnHeader();
             header.Text = "Log File";
             header.TextAlign = HorizontalAlignment.Left;
-            header.Width = -1;
+            header.Width = this.Width;
             listview.Columns.Add(header);
 
             Logger.AddStatusBar(statusbar);
             Logger.AddProgressBar(progressbar);
-            sub_listview = new Subscriber_ListView("APP:LOG", listview);
-            sub_listview.Notify(Logger.log);
+            Publisher.Subscribe("LOG", this);
         }
 
         private void OnClosing(object sender, FormClosingEventArgs e) {
+            Publisher.Unsubscribe("LOG", this);
             Logger.RemoveStatusBar(statusbar);
             Logger.RemoveProgressBar(progressbar);
             View.logtool = null;
@@ -41,7 +41,7 @@ namespace GodHands {
             sfd.Filter = "Log files|*.log|Text files|*.txt|All Files|*.*";
             if (sfd.ShowDialog() == DialogResult.OK) {
                 string text = "";
-                foreach (string str in Logger.log) {
+                foreach (string str in Logger.log.items) {
                     text = text + str + "\r\n";
                 }
                 File.WriteAllText(sfd.FileName, text);
@@ -64,7 +64,31 @@ namespace GodHands {
         }
 
         private void OnTextChanged(object sender, EventArgs e) {
-            sub_listview.SetFilter(textbox.Text);
+            filter = textbox.Text;
+            Notify(Logger.log);
+        }
+
+        public bool Insert(object obj) { return Notify(obj); }
+        public bool Remove(object obj) { return Notify(obj); }
+        public bool Notify(object obj) {
+            Log log = obj as Log;
+            if (log != null) {
+                List<ListViewItem> items = new List<ListViewItem>();
+                string find = (filter.Length == 0) ? " " : filter.ToUpper();
+                foreach (string str in log.items) {
+                    if (str.ToUpper().Contains(find)) {
+                        int icon = 1;
+                        if (str.Contains("[FAIL]")) icon = 0;
+                        if (str.Contains("[INFO]")) icon = 1;
+                        if (str.Contains("[PASS]")) icon = 2;
+                        if (str.Contains("[WARN]")) icon = 3;
+                        items.Add(new ListViewItem(str, icon));
+                    }
+                }
+                listview.Items.Clear();
+                listview.Items.AddRange(items.ToArray());
+            }
+            return true;
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Text;
 namespace GodHands {
     public class BaseClass {
         private BaseClass parent;
+        public string Key;
         private string url;
         private int offset;
         private int length;
@@ -19,7 +20,6 @@ namespace GodHands {
             this.parent = parent;
             this.url = url;
             this.offset = offset;
-            //this.length = length;
         }
 
         public string GetUrl() {
@@ -32,6 +32,10 @@ namespace GodHands {
 
         public virtual int GetPos() {
             return offset;
+        }
+
+        public virtual void SetLen(int length) {
+            this.length = length;
         }
 
         public virtual int GetLen() {

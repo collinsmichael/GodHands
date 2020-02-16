@@ -7,17 +7,17 @@ using System.Text;
 
 namespace GodHands {
     public class Volume : BaseClass {
-        public Volume(BaseClass parent, string url, int pos):
+        public Volume(Disk parent, string url, int pos):
         base(parent, url, pos) {
             RamDisk.map[pos/2048] = 0x6F;
         }
 
-        public override int GetLen() {
-            return 0;
-        }
-
         public override string GetText() {
             return VolumeIdentifier;
+        }
+
+        public override int GetLen() {
+            return 2048;
         }
 
         // ********************************************************************
