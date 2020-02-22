@@ -34,9 +34,11 @@ namespace GodHands {
             List<string> list = new List<string>();
             DirRec slus = Model.GetRec("SLUS");
             if (slus != null) {
+                int index = 0;
                 foreach (Skill skill in skills) {
-                    string str = skill.Name;
+                    string str = index.ToString("X2") + " " + skill.Name;
                     list.Add(str);
+                    index++;
                 }
             }
             return list;
@@ -45,18 +47,18 @@ namespace GodHands {
         public string GetName(int index) {
             Skill skill = skills.ElementAt(index);
             if (skill != null) {
-                return skill.Name;
+                return index.ToString("X2") + " " + skill.Name;
             }
             return "";
         }
 
         public int GetIndexByName(string name) {
-            int i = 0;
+            int index = 0;
             foreach (Skill skill in skills) {
-                if (skill.Name == name) {
-                    return i;
+                if (index.ToString("X2") + " " + skill.Name == name) {
+                    return index;
                 }
-                i++;
+                index++;
             }
             return 0;
         }

@@ -177,6 +177,8 @@ namespace GodHands {
         [Category("04 Skills")]
         [DisplayName("Skill_1")]
         [Description("Skills which can be used")]
+        [DefaultValue("")]
+        [TypeConverter(typeof(SkillsDropDown))]
         public string Skill_1 {
             get {
                 byte index = RamDisk.GetU8(GetPos()+0x14);
@@ -215,6 +217,8 @@ namespace GodHands {
         [Category("04 Skills")]
         [DisplayName("Skill_2")]
         [Description("Skills which can be used")]
+        [DefaultValue("")]
+        [TypeConverter(typeof(SkillsDropDown))]
         public string Skill_2 {
             get {
                 byte index = RamDisk.GetU8(GetPos()+0x18);
@@ -253,6 +257,8 @@ namespace GodHands {
         [Category("04 Skills")]
         [DisplayName("Skill_3")]
         [Description("Skills which can be used")]
+        [DefaultValue("")]
+        [TypeConverter(typeof(SkillsDropDown))]
         public string Skill_3 {
             get {
                 byte index = RamDisk.GetU8(GetPos()+0x1C);
