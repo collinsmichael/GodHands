@@ -79,7 +79,6 @@ namespace GodHands {
 
     public static class Model {
         public static Dictionary<string, Record> file_rec = new Dictionary<string, Record>();
-
         public static Dictionary<string, object> map = new Dictionary<string, object>();
         public static Dictionary<string, BIN> bins = new Dictionary<string, BIN>();
         public static Dictionary<string, DAT> dats = new Dictionary<string, DAT>();
@@ -122,6 +121,7 @@ namespace GodHands {
         // initialize model from file
         // ********************************************************************
         public static bool Open() {
+            Model.Close();
             Iso9660.EnumFileSys(new EnumModelFiles());
             itemnames.Load();
             skills.Load();
@@ -132,6 +132,7 @@ namespace GodHands {
         // release all resources
         // ********************************************************************
         public static bool Close() {
+            Program.MainForm.Reset();
             itemnames.Clear();
             skills.Clear();
 

@@ -50,16 +50,14 @@ namespace GodHands {
                 RamDisk.map[i] = 0x6F;
             }
 
-            disk = new Disk();
+            //disk = new Disk();
 
             pvd = new Volume(null, "CD:PVD", 0x10*2048);
             root = pvd.GetRootDir();
-            Model.SetRec("CD:ROOT", root);
+            //ReadFile(root);
             int lba = root.LbaData;
-            int len = root.LenData;
-            for (int i = 0; i < len; i++) {
-                RamDisk.Read(lba+i);
-            }
+
+            //Model.SetRec("CD:ROOT", root);
             int lenp = pvd.PathTableSize;
             int lba1 = pvd.LbaPathTable1;
             int lba2 = pvd.LbaPathTable2;
@@ -149,21 +147,18 @@ namespace GodHands {
                         rec = Records[key];
                     } else {
                         rec = new Record(dir, key, pos);
-                        Model.SetRec(key, rec);
                         string name = rec.GetFileName();
                         int lba = rec.LbaData;
                         int num = (rec.LenData+2047)/2048;
+
                         if (rec.FileFlags_Directory) {
-                            for (int i = 0; i < num; i++) {
-                                RamDisk.Read(lba+i);
-                            }
+                            Folder folder = new Folder(rec, rec.GetUrl()+":", 0, rec.LenData);
+                            Publisher.Register(folder);
                         } else {
-                            for (int i = 0; i < num; i++) {
-                                if (RamDisk.map[lba+i] == 0) {
-                                    RamDisk.map[lba+i] = 0x6F;
-                                }
-                            }
+                            Binary binary = new Binary(rec, rec.GetUrl()+":", 0, rec.LenData);
+                            Publisher.Register(binary);
                         }
+
                         try {
                             Records.Add(key, rec);
                             Path2Pos.Add(key, rec.GetPos());

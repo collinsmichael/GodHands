@@ -196,6 +196,7 @@
     <Compile Include="Source\Mission\Model\Model.cs" />
     <Compile Include="Source\System\Iso9660\Binary.cs" />
     <Compile Include="Source\System\Iso9660\Disk.cs" />
+    <Compile Include="Source\System\Iso9660\Folder.cs" />
     <Compile Include="Source\System\Iso9660\Record.cs" />
     <Compile Include="Source\System\Iso9660\ImportExport.cs" />
     <Compile Include="Source\System\Iso9660\Iso9660.cs" />
