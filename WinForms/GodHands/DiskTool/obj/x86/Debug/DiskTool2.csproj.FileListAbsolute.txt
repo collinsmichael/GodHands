@@ -1,0 +1,9 @@
+Z:\2020\GodHands\WinForms\GodHands\DiskTool2\bin\Debug\DiskTool2.exe
+Z:\2020\GodHands\WinForms\GodHands\DiskTool2\bin\Debug\DiskTool2.pdb
+Z:\2020\GodHands\WinForms\GodHands\DiskTool2\obj\x86\Debug\ResolveAssemblyReference.cache
+Z:\2020\GodHands\WinForms\GodHands\DiskTool2\obj\x86\Debug\DiskTool2.Properties.Resources.resources
+Z:\2020\GodHands\WinForms\GodHands\DiskTool2\obj\x86\Debug\GenerateResource.read.1.tlog
+Z:\2020\GodHands\WinForms\GodHands\DiskTool2\obj\x86\Debug\GenerateResource.write.1.tlog
+Z:\2020\GodHands\WinForms\GodHands\DiskTool2\obj\x86\Debug\DiskTool2.exe
+Z:\2020\GodHands\WinForms\GodHands\DiskTool2\obj\x86\Debug\DiskTool2.pdb
+Z:\2020\GodHands\WinForms\GodHands\DiskTool2\obj\x86\Debug\GodHands.Frame.resources

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C# Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GodHands", "GodHands\GodHands.csproj", "{E85042CF-903A-4C30-B4E6-1FBF9053DC86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiskTool2", "DiskTool2\DiskTool2.csproj", "{0C119A7F-112F-433E-A5B2-E7184928D2D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiskTool", "DiskTool\DiskTool.csproj", "{0C119A7F-112F-433E-A5B2-E7184928D2D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
